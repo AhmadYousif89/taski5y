@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .light-theme {
+    --text-color-base: 30 41 59;
+    --text-color-highlight: 98 118 230;
+    --text-color-valid: 74 180 148;
+    --text-color-invalid: 244 63 94;
+    --text-color-link: 56 109 248;
+
+    --ring-color-base: 82 82 82;
+    --ring-color-highlight: 190 180 190;
+    --ring-input-color-valid: 20 220 110;
+    --ring-input-color-validating: 256 150 10;
+    --ring-input-color-invalid: 240 63 99;
+
+    --bg-color-base: 240 240 250;
+    --bg-color-card: 220 220 220;
+
+    --btn-bg-color-base: 20 200 110;
+    --btn-bg-color-highlight: 100 180 228;
+
+    --user-img-bg-color: 40 175 140;
+    --icon-stroke-color: 30 41 59;
+  }
+
+  .dark-theme {
+    --text-color-base: 228 228 231;
+    --text-color-highlight: 228 228 23;
+    --text-color-valid: 74 222 128;
+    --text-color-invalid: 244 63 94;
+    --text-color-link: 56 189 248;
+
+    --ring-color-base: 82 82 91;
+    --ring-color-highlight: 212 212 216;
+    --ring-input-color-valid: 134 239 172;
+    --ring-input-color-validating: 251 146 60;
+    --ring-input-color-invalid: 244 63 94;
+
+    --bg-color-base: 25 25 25;
+    --bg-color-card: 38 38 38;
+
+    --btn-bg-color-base: 40 120 180;
+    --btn-bg-color-highlight: 40 175 140;
+
+    --user-img-bg-color: 40 175 140;
+    --icon-stroke-color: 228 228 231;
+  }
+}
+
+@layer utilities {
+  .border-sky {
+    @apply border-sky-400;
+  }
+  .border-amber {
+    @apply border-amber-400;
+  }
+  .border-green {
+    @apply border-green-400;
+  }
+  .text-sky {
+    @apply text-sky-400;
+  }
+  .text-amber {
+    @apply text-amber-600;
+  }
+  .text-green {
+    @apply text-green-500;
+  }
+  .btn-circle {
+    @apply h-14 w-14 cursor-pointer rounded-full ring ring-color-base hover:ring-color-highlight active:bg-btn-color-highlight;
+  }
+  .center-absolute {
+    @apply absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2;
+  }
+  .input-err-msg {
+    @apply absolute bottom-1/2 right-5 translate-y-1/2 text-xl text-color-invalid;
+  }
+}
+
+:root {
+  font-family: Inter system-ui, -apple-system, Roboto, Helvetica Neue, Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  background-color: #212121;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-width: 320px;
+  min-height: 100vh;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #ffffffde;
+    background-color: #212121;
+  }
+}

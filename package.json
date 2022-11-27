@@ -1,0 +1,50 @@
+{
+  "name": "task-manager",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "prettier": "npx prettier --write ./*.html ./src/**/*.{js,jsx,ts,tsx}",
+    "test": "vitest run",
+    "test:w": "vitest watch",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src/**/*"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.8.6",
+    "axios": "^1.1.3",
+    "date-fns": "^2.29.3",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.4",
+    "react-router-dom": "^6.4.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.42.0",
+    "@typescript-eslint/parser": "^5.42.0",
+    "@vitejs/plugin-react": "^2.1.0",
+    "@vitest/coverage-c8": "^0.24.5",
+    "@vitest/ui": "^0.24.5",
+    "autoprefixer": "^10.4.12",
+    "c8": "^7.12.0",
+    "eslint": "^8.27.0",
+    "eslint-plugin-react": "^7.31.10",
+    "jsdom": "^20.0.2",
+    "postcss": "^8.4.18",
+    "prettier": "^2.7.1",
+    "prettier-plugin-tailwindcss": "^0.1.13",
+    "tailwindcss": "^3.2.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.1.0",
+    "vite-tsconfig-paths": "^3.5.2",
+    "vitest": "^0.24.5"
+  }
+}
