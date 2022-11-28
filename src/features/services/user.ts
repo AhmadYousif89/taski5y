@@ -6,8 +6,8 @@ export const getUser = createAsyncThunk<User, void, { rejectValue: ResponseError
   'get/user',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axiosPrivate.get(`/users/me`);
-      return response.data;
+      const { data } = await axiosPrivate.get(`/users/me`);
+      return data;
     } catch (err: any) {
       return rejectWithValue(err.response.data);
     }
@@ -18,13 +18,13 @@ export const updateUser = createAsyncThunk<
   User,
   Partial<User>,
   { rejectValue: ResponseError }
->('update/user', async (data: Partial<User>, { rejectWithValue }) => {
+>('update/user', async (patch: Partial<User>, { rejectWithValue }) => {
   try {
-    const response = await axiosPrivate(`/users/me`, {
-      data: { ...data },
+    const { data } = await axiosPrivate(`/users/me`, {
+      data: { ...patch },
       method: 'PATCH',
     });
-    return response.data;
+    return data;
   } catch (err: any) {
     return rejectWithValue(err.response.data);
   }
@@ -36,8 +36,8 @@ export const deleteUser = createAsyncThunk<
   { rejectValue: ResponseError }
 >('delete/user', async (_, { rejectWithValue }) => {
   try {
-    const response = await axiosPrivate.delete(`/users/me`);
-    return response.data;
+    const { data } = await axiosPrivate.delete(`/users/me`);
+    return data;
   } catch (err: any) {
     return rejectWithValue(err.response.data);
   }

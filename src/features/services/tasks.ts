@@ -1,6 +1,6 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosPrivate } from '@features/config';
 import { Task } from '@features/types';
-import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getAllTasks = createAsyncThunk<
   Task[],
@@ -8,8 +8,8 @@ export const getAllTasks = createAsyncThunk<
   { rejectValue: { statusCode: number; message: string } }
 >('all/tasks', async (_, { rejectWithValue }) => {
   try {
-    const response = await axiosPrivate.get('/tasks');
-    return response.data;
+    const { data } = await axiosPrivate.get('/tasks');
+    return data;
   } catch (err: any) {
     return rejectWithValue(err.response.data);
   }
@@ -21,8 +21,8 @@ export const addNewTask = createAsyncThunk<
   { rejectValue: { statusCode: number; message: string } }
 >('add/task', async (task: Partial<Task>, { rejectWithValue }) => {
   try {
-    const response = await axiosPrivate.post('/tasks', task);
-    return response.data;
+    const { data } = await axiosPrivate.post('/tasks', task);
+    return data;
   } catch (err: any) {
     return rejectWithValue(err.response.data);
   }
@@ -32,13 +32,13 @@ export const updateTask = createAsyncThunk<
   Task,
   Partial<Task>,
   { rejectValue: { statusCode: number; message: string } }
->('update/task', async (task: Partial<Task>, { rejectWithValue }) => {
+>('update/task', async (patch: Partial<Task>, { rejectWithValue }) => {
   try {
-    const response = await axiosPrivate(`/tasks/${task.id}`, {
+    const { data } = await axiosPrivate(`/tasks/${patch.id}`, {
       method: 'PATCH',
-      data: { ...task },
+      data: { ...patch },
     });
-    return response.data;
+    return data;
   } catch (err: any) {
     return rejectWithValue(err.response.data);
   }
@@ -54,8 +54,8 @@ export const deleteTasks = createAsyncThunk<
       'You are about to delete this task, Are you sure?',
     );
     if (!confirmation) return;
-    const response = await axiosPrivate.delete(`/tasks/${taskId}`);
-    return response.data;
+    const { data } = await axiosPrivate.delete(`/tasks/${taskId}`);
+    return data;
   } catch (err: any) {
     return rejectWithValue(err.response.data);
   }

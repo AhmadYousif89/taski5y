@@ -12,12 +12,12 @@ import { useForm } from 'hooks/use-form';
 import { SpinnerIcon } from 'assets/icons';
 import { signIn } from '@features/services/auth';
 import { authSelector, resetAuth } from '@features/slices/auth';
-import { getUser } from '@features/services/user';
+import { TrustDevice } from './trust-device';
 
 export const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { user } = useAuth();
+  const { user, authUser } = useAuth();
   const { status, error } = useAppSelector(authSelector);
   const { getInputValidity, getInputValue, formValues, formValidity } = useForm();
 
@@ -30,19 +30,19 @@ export const LoginForm = () => {
   }, []);
 
   useEffect(() => {
-    if (user) {
+    if (authUser || user) {
       navigate('/tasks');
     }
     return () => {
       dispatch(resetAuth());
     };
-  }, [user]);
+  }, [authUser, user]);
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formIsValid) return;
     const user = { email, password };
-    dispatch(signIn(user)).then(() => dispatch(getUser()));
+    dispatch(signIn(user));
   };
 
   const userErrorMsg = Array.isArray(error.message) ? (
@@ -71,6 +71,10 @@ export const LoginForm = () => {
 
           <fieldset>
             <PasswordInput getValidity={getInputValidity} getValue={getInputValue} />
+          </fieldset>
+
+          <fieldset className="self-start">
+            <TrustDevice />
           </fieldset>
 
           <fieldset className="flex items-center justify-between">

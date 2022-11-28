@@ -1,4 +1,4 @@
-import { PropsWithChildren, useState } from 'react';
+import { useState } from 'react';
 import { useAppSelector, useAuth } from '@app/hooks';
 import { uiSelector } from '@features/slices/ui';
 
@@ -12,9 +12,10 @@ import { TaskForm } from '@tasks/task-form';
 import { UserInfo } from '@users/user-info';
 import { UserMenu } from '@users/user-menu';
 import { UserProfile } from '@users/user-profile';
+import { Outlet } from 'react-router-dom';
 
-export const AppLayout = ({ children }: PropsWithChildren) => {
-  const { user } = useAuth();
+export const AppLayout = () => {
+  const { user, authUser } = useAuth();
   const { mode } = useAppSelector(uiSelector);
   const { menuVisibility } = useAppSelector(uiSelector);
   const [showProfile, setShowProfile] = useState(false);
@@ -22,7 +23,7 @@ export const AppLayout = ({ children }: PropsWithChildren) => {
   return (
     <main className={`${mode} flex min-h-[inherit] flex-col bg-color-base`}>
       <header className="relative bg-color-card py-8 shadow-md">
-        {user ? <MenuButton /> : null}
+        {user || authUser ? <MenuButton /> : null}
         <ThemeSwitcher />
         <h1 className="mx-auto w-fit text-center text-3xl capitalize text-color-base md:text-5xl">
           personal task manager
@@ -47,7 +48,7 @@ export const AppLayout = ({ children }: PropsWithChildren) => {
         </div>
       </header>
 
-      {children}
+      <Outlet />
     </main>
   );
 };

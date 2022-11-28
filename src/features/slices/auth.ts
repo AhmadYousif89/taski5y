@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '@app/store';
-import { ResponseError, ResponseStatus } from '../types';
+import { ResponseError, ResponseStatus, User } from '../types';
 import { signUp, signIn, signOut, resetPassword } from '../services/auth';
 
 export interface AuthState {
   error: ResponseError;
   status: ResponseStatus;
+  user: User | null;
   message: string;
 }
 const initError = { statusCode: 0, message: '', error: '' };
@@ -14,6 +15,7 @@ const initialState: AuthState = {
   error: initError,
   status: 'idle',
   message: '',
+  user: null,
 };
 
 const authSlice = createSlice({
@@ -32,12 +34,12 @@ const authSlice = createSlice({
       })
       .addCase(signUp.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
-        state.message = payload;
+        state.user = payload;
       })
       .addCase(signUp.rejected, (state, { payload }) => {
         state.status = 'rejected';
         state.error = payload || initError;
-        state.message = '';
+        state.user = null;
       });
 
     builder
@@ -46,12 +48,12 @@ const authSlice = createSlice({
       })
       .addCase(signIn.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
-        state.message = payload;
+        state.user = payload;
       })
       .addCase(signIn.rejected, (state, { payload }) => {
         state.status = 'rejected';
         state.error = payload || initError;
-        state.message = '';
+        state.user = null;
       });
 
     builder
@@ -60,6 +62,8 @@ const authSlice = createSlice({
       })
       .addCase(signOut.fulfilled, state => {
         state.status = 'idle';
+        state.user = null;
+        localStorage.removeItem('persist');
       })
       .addCase(signOut.rejected, (state, { payload }) => {
         state.status = 'rejected';

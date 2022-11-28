@@ -1,19 +1,19 @@
+import { useEffect } from 'react';
+import { AppRoutes } from 'components/app';
 import { useAppDispatch } from '@app/hooks';
 import { getUser } from '@features/services/user';
-import { AppLayout, AppRoutes } from 'components/app';
-import { useEffect } from 'react';
 
 function App() {
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
 
-  return (
-    <AppLayout>
-      <AppRoutes />
-    </AppLayout>
-  );
+  const persist = localStorage.getItem('persist');
+  useEffect(() => {
+    if (persist === 'true') {
+      dispatch(getUser());
+    }
+  }, [persist]);
+
+  return <AppRoutes />;
 }
 
 export default App;

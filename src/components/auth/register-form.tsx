@@ -14,12 +14,12 @@ import { Card } from '@ui/card';
 import { SpinnerIcon } from 'assets/icons';
 import { signUp } from '@features/services/auth';
 import { authSelector, resetAuth } from '@features/slices/auth';
-import { getUser } from '@features/services/user';
+import { TrustDevice } from './trust-device';
 
 export const RegisterForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { user } = useAuth();
+  const { user, authUser } = useAuth();
   const { status, error } = useAppSelector(authSelector);
   const { getInputValidity, getInputValue, formValues, formValidity } = useForm();
 
@@ -42,19 +42,19 @@ export const RegisterForm = () => {
   );
 
   useEffect(() => {
-    if (user) {
+    if (authUser || user) {
       navigate('/tasks');
     }
     return () => {
       dispatch(resetAuth());
     };
-  }, [user]);
+  }, [authUser, user]);
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formIsValid) return;
     const newUser = { name, email, password };
-    dispatch(signUp(newUser)).then(() => dispatch(getUser()));
+    dispatch(signUp(newUser));
   };
 
   return (
@@ -75,6 +75,10 @@ export const RegisterForm = () => {
 
           <fieldset>
             <PasswordInput getValidity={getInputValidity} getValue={getInputValue} />
+          </fieldset>
+
+          <fieldset className="self-start">
+            <TrustDevice />
           </fieldset>
 
           <fieldset className="flex items-center justify-between">

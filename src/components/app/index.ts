@@ -1,2 +1,2 @@
-export * from './app-layout';
-export * from './app-routes';
+export * from './layout';
+export * from './routes';

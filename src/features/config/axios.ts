@@ -26,7 +26,7 @@ const onRequestError = (error: AxiosError): Promise<AxiosError> => {
 };
 
 const onResponse = (response: AxiosResponse): AxiosResponse => {
-  accessToken = response.data.aT;
+  accessToken = response.data.accessToken;
   return response;
 };
 
@@ -37,7 +37,7 @@ const onResponseError = async (error: AxiosError) => {
     try {
       const response = await axiosPrivate.get('/auth/refresh');
       if (prevRequest.headers) {
-        prevRequest.headers['Authorization'] = `Bearer ${response.data.aT}`;
+        prevRequest.headers['Authorization'] = `Bearer ${response.data.accessToken}`;
       }
       return axiosPrivate({
         ...prevRequest,
@@ -47,7 +47,7 @@ const onResponseError = async (error: AxiosError) => {
       return Promise.reject(refreshErr);
     }
   }
-  // I don't like this solution maybe refactor it later but for now it does the job
+  // I don't like this solution maybe will refactor it later but for now it does the job
   const authRoutes = ['/', '/login', '/password-reset'];
   const initLoad =
     authRoutes.some(path => location.pathname === path) &&

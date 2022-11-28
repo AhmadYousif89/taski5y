@@ -1,30 +1,32 @@
 import axios, { axiosPrivate } from '@features/config/axios';
-import { User, SignInRequest, ResponseError } from '@features/types';
+import { SignInRequest, ResponseError, SignUpRequest, User } from '@features/types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const signUp = createAsyncThunk<
-  string,
-  Partial<User>,
+  User,
+  SignUpRequest,
   { rejectValue: ResponseError }
->('auth/signup', async (user: Partial<User>, { rejectWithValue }) => {
+>('auth/signup', async (user: SignUpRequest, { rejectWithValue }) => {
   try {
     // DON'T USE AXIOS PRIVATE, otherwise no response will be returned
-    const response = await axios.post(`/auth/register`, user, { withCredentials: true });
-    return response.data?.message;
+    const { data } = await axios.post(`/auth/register`, user, { withCredentials: true });
+    return data;
   } catch (err: any) {
     return rejectWithValue(err?.response?.data);
   }
 });
 
 export const signIn = createAsyncThunk<
-  string,
-  Partial<User>,
+  User,
+  SignInRequest,
   { rejectValue: ResponseError }
->('auth/login', async (user: Partial<User>, { rejectWithValue }) => {
+>('auth/login', async (credentials: SignInRequest, { rejectWithValue }) => {
   try {
     // DON'T USE AXIOS PRIVATE, otherwise no response will be returned
-    const response = await axios.post(`/auth/login`, user, { withCredentials: true });
-    return response.data?.message;
+    const { data } = await axios.post(`/auth/login`, credentials, {
+      withCredentials: true,
+    });
+    return data;
   } catch (err: any) {
     return rejectWithValue(err?.response?.data);
   }
@@ -36,8 +38,8 @@ export const signOut = createAsyncThunk<
   { rejectValue: ResponseError }
 >('auth/logout', async (_, { rejectWithValue }) => {
   try {
-    const response = await axiosPrivate.post(`/auth/logout`);
-    return response.data?.message;
+    const { data } = await axiosPrivate.post(`/auth/logout`);
+    return data?.message;
   } catch (err: any) {
     return rejectWithValue(err?.response?.data);
   }
@@ -47,10 +49,10 @@ export const resetPassword = createAsyncThunk<
   string,
   SignInRequest,
   { rejectValue: ResponseError }
->('auth/reset', async (data, { rejectWithValue }) => {
+>('auth/reset', async (credentials: SignInRequest, { rejectWithValue }) => {
   try {
-    const response = await axios.post(`/auth/reset`, data);
-    return response.data?.message;
+    const { data } = await axios.post(`/auth/reset`, credentials);
+    return data?.message;
   } catch (err: any) {
     return rejectWithValue(err?.response?.data);
   }
