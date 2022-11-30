@@ -1,7 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '@app/store';
+import { createSlice } from '@reduxjs/toolkit';
 import { ResponseError, ResponseStatus, User } from '../types';
-import { signUp, signIn, signOut, resetPassword } from '../services/auth';
+import {
+  signUp,
+  signIn,
+  signOut,
+  resetPassword,
+  getUser,
+  updateUser,
+  deleteUser,
+} from '../services/auth';
 
 export interface AuthState {
   error: ResponseError;
@@ -60,9 +68,10 @@ const authSlice = createSlice({
       .addCase(signOut.pending, state => {
         state.status = 'loading';
       })
-      .addCase(signOut.fulfilled, state => {
+      .addCase(signOut.fulfilled, (state, { payload }) => {
         state.status = 'idle';
         state.user = null;
+        state.message = payload.message;
         localStorage.removeItem('persist');
       })
       .addCase(signOut.rejected, (state, { payload }) => {
@@ -82,6 +91,48 @@ const authSlice = createSlice({
         state.status = 'rejected';
         state.error = payload || initError;
         state.message = '';
+      });
+
+    builder
+      .addCase(getUser.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        state.user = action.payload;
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.status = 'rejected';
+        state.user = null;
+        state.error = action.payload || initError;
+      });
+
+    builder
+      .addCase(updateUser.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        state.user = action.payload;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.status = 'rejected';
+        state.error = action.payload || initError;
+      });
+
+    builder
+      .addCase(deleteUser.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(deleteUser.fulfilled, (state, { payload }) => {
+        state.status = 'fulfilled';
+        state.message = payload.message;
+        state.user = null;
+        localStorage.removeItem('persist');
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.status = 'rejected';
+        state.error = action.payload || initError;
       });
   },
 });

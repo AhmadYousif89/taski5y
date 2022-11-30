@@ -2,7 +2,6 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 
 import uiReducer from '@features/slices/ui';
 import authReducer from '@features/slices/auth';
-import userReducer from '@features/slices/user';
 import taskReducer from '@features/slices/task';
 
 export const store = configureStore({
@@ -10,7 +9,6 @@ export const store = configureStore({
     ui: uiReducer,
     auth: authReducer,
     tasks: taskReducer,
-    users: userReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 });

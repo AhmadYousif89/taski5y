@@ -1,19 +1,32 @@
 import { FormEvent, useState } from 'react';
 import { useAppDispatch } from '@app/hooks';
 
-import { useForm } from 'hooks/use-form';
-import { TitleInput } from './title-input';
-import { StatusInput } from './status-input';
-import { DetailsInput } from './details-input';
-import { PriorityInput } from './priority-input';
-import { addNewTask } from '@features/services/tasks';
-import { TaskPriority, TaskStatus } from '@features/types';
+import { TaskInputNames } from './types';
 import { TaskStats } from './task-stats';
+import { useForm } from 'hooks/use-form';
+import { GetInputValues, Input } from 'hooks/use-input';
+import { GetSelectValues, Select } from 'hooks/use-select';
+import { TaskPriority, TaskStatus } from '@features/types';
+import { addNewTask } from '@features/services/tasks';
+
+type FormValidity = Record<TaskInputNames, boolean>;
+type FormValues = Record<TaskInputNames, string>;
+
+const initFormValidity: FormValidity = {
+  title: false,
+  details: false,
+  priority: false,
+  status: false,
+};
+const initFormValues: FormValues = { title: '', details: '', priority: '', status: '' };
 
 export const TaskForm = () => {
   const dispatch = useAppDispatch();
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const { getInputValidity, getInputValue, formValues, formValidity } = useForm();
+  const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
+    FormValidity,
+    FormValues
+  >({ initFormValidity, initFormValues });
 
   const { title, details, status, priority } = formValues;
   const { title: titleIsValid, details: detailsIsValid } = formValidity;
@@ -23,8 +36,8 @@ export const TaskForm = () => {
     e.preventDefault();
     if (!formIsValid) return;
     const newTask = {
-      title: title.trim(),
-      details: details.trim(),
+      title,
+      details,
       status: (status as TaskStatus) || 'Todo',
       priority: (priority as TaskPriority) || 'Normal',
     };
@@ -40,41 +53,71 @@ export const TaskForm = () => {
       <TaskStats />
 
       <form className="flex flex-col gap-6" onSubmit={onFormSubmit}>
-        <fieldset>
-          <TitleInput
-            getValue={getInputValue}
-            getValidity={getInputValidity}
+        <fieldset aria-label="task-title-input">
+          <Input
+            type={'text'}
+            name={'title'}
+            value={title}
+            inputErrMsg={'Required'}
+            placeholder={'Task title'}
+            placeholderErrMsg={'please enter your task title'}
             isFormSubmitted={isSubmitted}
+            getValidity={getFormValidity}
+            getValue={getFormValues as GetInputValues}
+            inputValidator={text => text.trim().length > 0}
           />
         </fieldset>
 
-        <fieldset>
-          <DetailsInput
-            getValue={getInputValue}
-            getValidity={getInputValidity}
+        <fieldset aria-label="task-details-input">
+          <Input
+            type={'text'}
+            name={'details'}
+            value={details}
+            className={'h-28'}
+            inputErrMsg={'Required'}
+            placeholder={'Write your task details'}
+            placeholderErrMsg={'please enter some details about your task'}
             isFormSubmitted={isSubmitted}
+            getValidity={getFormValidity}
+            getValue={getFormValues as GetInputValues}
+            inputValidator={text => text.trim().length > 0}
           />
         </fieldset>
 
         <div className="grid grid-cols-2 gap-4">
           <fieldset
-            className="
-          rounded-md px-6 capitalize text-color-base
-          shadow-md ring-1 ring-color-base">
-            <StatusInput isFormSubmitted={isSubmitted} getValue={getInputValue} />
+            aria-label="task-status-input"
+            className="text-color-baseshadow-md rounded-md px-6 capitalize ring-1 ring-color-base">
+            <Select
+              name={'priority'}
+              label={'Priority'}
+              htmlFor={'priority'}
+              isFormSubmitted={isSubmitted}
+              optionValues={['High', 'Normal']}
+              getValue={getFormValues as GetSelectValues}
+            />
           </fieldset>
 
           <fieldset
-            className="
-          rounded-md px-6 capitalize text-color-base
-          shadow-md ring-1 ring-color-base">
-            <PriorityInput isFormSubmitted={isSubmitted} getValue={getInputValue} />
+            aria-label="task-priority-input"
+            className="text-color-baseshadow-md rounded-md px-6 capitalize ring-1 ring-color-base">
+            <Select
+              name={'status'}
+              label={'Status'}
+              htmlFor={'status'}
+              isFormSubmitted={isSubmitted}
+              optionValues={['Todo', 'InProgress']}
+              getValue={getFormValues as GetSelectValues}
+            />
           </fieldset>
         </div>
 
         <fieldset>
           <button
-            className={`w-full cursor-pointer rounded-md bg-transparent px-6 py-4 text-3xl capitalize text-color-base shadow-md ring-1 ring-color-base transition-all active:translate-y-1`}>
+            disabled={!formIsValid}
+            className={`${
+              formIsValid ? 'cursor-pointer' : 'cursor-not-allowed'
+            } w-full cursor-pointer rounded-md bg-transparent px-6 py-4 text-3xl capitalize text-color-base shadow-md ring-1 ring-color-base transition-all active:translate-y-1`}>
             create task
           </button>
         </fieldset>

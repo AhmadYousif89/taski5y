@@ -2,19 +2,15 @@ import { Dispatch, SetStateAction, useRef, useState } from 'react';
 
 import { Card } from '@ui/card';
 import { useAppDispatch } from '@app/hooks';
-import { signOut } from '@features/services/auth';
-import { resetUser } from '@features/slices/user';
 import { resetTasks } from '@features/slices/task';
 import { toggleSideMenu } from '@features/slices/ui';
-import { deleteUser } from '@features/services/user';
+import { deleteUser } from '@features/services/auth';
 import { useClickOutside } from 'hooks/use-click-outside';
 import { SettingsIcon } from 'assets/icons';
 
-export const UserMenu = ({
-  showUserProfile,
-}: {
-  showUserProfile: Dispatch<SetStateAction<boolean>>;
-}) => {
+type Props = { showUserProfile: Dispatch<SetStateAction<boolean>> };
+
+export const UserMenu = ({ showUserProfile }: Props) => {
   const dispatch = useAppDispatch();
   const settingRef = useRef<HTMLButtonElement>(null);
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -34,8 +30,7 @@ export const UserMenu = ({
     if (!confirm) return;
     dispatch(toggleSideMenu());
     dispatch(resetTasks());
-    dispatch(signOut());
-    dispatch(deleteUser()).then(() => dispatch(resetUser()));
+    dispatch(deleteUser());
   };
 
   const settingList = (

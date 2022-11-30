@@ -1,43 +1,59 @@
-import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
-import { ConfirmPasswordInput } from '@auth/confirm-password-input';
-import { EmailInput } from '@auth/email-input';
-import { NameInput } from '@auth/name-input';
-import { PasswordInput } from '@auth/password-input';
-import { updateUser } from '@features/services/user';
-import { userSelector } from '@features/slices/user';
-import { Button } from '@ui/button';
-import { BackArrowIcon, SpinnerIcon } from 'assets/icons';
-import { CheckMarkIcon } from 'assets/icons/check-mark';
-import { UploadIcon } from 'assets/icons/upload';
-import { useForm } from 'hooks/use-form';
 import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
+import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
+import { GetInputValidation, GetInputValues, Input } from 'hooks/use-input';
+import { BackArrowIcon, UploadIcon, CheckMarkIcon, SpinnerIcon } from 'assets/icons';
+import { Button } from '@ui/button';
+import { AuthInputNames } from '@auth/types';
+import { authSelector } from '@features/slices/auth';
+import { updateUser } from '@features/services/auth';
+import { useForm } from 'hooks/use-form';
 
-export const UserProfile = ({
-  showUserProfile,
-}: {
-  showUserProfile: Dispatch<SetStateAction<boolean>>;
-}) => {
+type Props = { showUserProfile: Dispatch<SetStateAction<boolean>> };
+type FormValidity = Record<AuthInputNames, boolean>;
+type FormValues = Record<AuthInputNames, string>;
+
+const initFormValidity: FormValidity = {
+  name: false,
+  email: false,
+  password: false,
+  confirmPassword: false,
+};
+const initFormValues: FormValues = {
+  name: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
+
+export const UserProfile = ({ showUserProfile }: Props) => {
   const { user } = useAuth();
   const dispatch = useAppDispatch();
-  const { status } = useAppSelector(userSelector);
+  const { status } = useAppSelector(authSelector);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const { getInputValidity, getInputValue, formValues, formValidity } = useForm();
+  const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
+    FormValidity,
+    FormValues
+  >({ initFormValidity, initFormValues });
 
-  const { name, email, password, confirmPassword } = formValues;
   const {
     name: nameIsValid,
     email: emailIsValid,
     password: passwordIsValid,
+    confirmPassword: confirmPasswordIsValid,
   } = formValidity;
+  const { name, email, password, confirmPassword } = formValues;
 
-  const confirmPasswordIsValid = password === confirmPassword;
-  const formIsValid =
-    [nameIsValid, emailIsValid, passwordIsValid].some(Boolean) && confirmPasswordIsValid;
+  let formIsValid: boolean = false;
+  if (nameIsValid) formIsValid = true;
+  if (emailIsValid) formIsValid = true;
+  if (passwordIsValid && confirmPassword === password) formIsValid = true;
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formIsValid) return;
-    const data = { name, email, password };
+    const data = password
+      ? { name: name || user?.name, email: email || user?.email, password }
+      : { name: name || user?.name, email: email || user?.email };
     dispatch(updateUser(data));
     setIsSubmitted(true);
     setTimeout(() => {
@@ -51,53 +67,79 @@ export const UserProfile = ({
       <form className="flex flex-col gap-6" onSubmit={onFormSubmit}>
         <div className="mt-8 flex flex-col gap-6">
           <h3 className="text-3xl">Update information</h3>
-          <fieldset className="flex items-center">
-            <NameInput
-              label="Name"
+
+          <fieldset className="flex items-center" aria-label="update-name-input">
+            <Input
+              id={'name'}
+              type={'text'}
+              name={'name'}
+              label={'Name'}
+              value={name}
               isRequired={false}
+              placeholder={user?.name}
+              showInputErr={name.length > 0}
+              inputErrMsg={'name is not valid'}
               isFormSubmitted={isSubmitted}
-              holder={user?.name}
-              getValue={getInputValue}
-              validate={name.length > 0}
-              getValidity={getInputValidity}
+              getValidity={getFormValidity}
+              getValue={getFormValues as GetInputValues}
+              inputValidator={text => text.trim().length > 0}
             />
           </fieldset>
-          <fieldset className="flex items-center">
-            <EmailInput
-              label="Email"
-              holder={user?.email}
+
+          <fieldset className="flex items-center" aria-label="update-email-input">
+            <Input
+              id={'email'}
+              type={'email'}
+              name={'email'}
+              label={'Email'}
+              value={email}
               isRequired={false}
-              msg="Email is not valid"
+              placeholder={user?.email}
+              showInputErr={email.length > 0}
+              inputErrMsg={'email is not valid'}
               isFormSubmitted={isSubmitted}
-              getValue={getInputValue}
-              validate={email.length > 0}
-              getValidity={getInputValidity}
+              getValidity={getFormValidity}
+              getValue={getFormValues as GetInputValues}
+              inputValidator={text => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)}
             />
           </fieldset>
         </div>
 
         <div className="mt-8 flex flex-col gap-6">
           <h3 className="text-3xl">Change password</h3>
-          <fieldset className="flex items-center">
-            <PasswordInput
-              label="New password"
+
+          <fieldset className="flex items-center" aria-label="update-password-input">
+            <Input
+              id={'password'}
+              type={'password'}
+              name={'password'}
+              label={'New password'}
+              value={password}
               isRequired={false}
+              placeholder={'Enter password'}
+              showInputErr={password.length > 0}
+              inputErrMsg={'required at least 3 characters'}
               isFormSubmitted={isSubmitted}
-              msg="Enter your new password"
-              getValue={getInputValue}
-              validate={password.length > 0}
-              getValidity={getInputValidity}
+              getValidity={getFormValidity}
+              getValue={getFormValues as GetInputValues}
+              inputValidator={text => /^((?!.*[\s])(?=.*\d).{3,})/.test(text)}
             />
           </fieldset>
-          <fieldset className="flex items-center">
-            <ConfirmPasswordInput
-              label="Confirm password"
-              showError={false}
-              isRequired={passwordIsValid}
+
+          <fieldset className="flex items-center" aria-label="confirm-password-input">
+            <Input
+              isRequired={password !== confirmPassword}
+              type={'password'}
+              value={confirmPassword}
+              name={'confirmPassword'}
+              label={'Confirm password'}
+              inputErrMsg={'mismatch password'}
+              placeholder={'Confirm new password'}
+              placeholderErrMsg={"your password doesn't match"}
               isFormSubmitted={isSubmitted}
-              getValue={getInputValue}
-              getValidity={getInputValidity}
-              validate={confirmPasswordIsValid}
+              getValidity={getFormValidity}
+              getValue={getFormValues as GetInputValues}
+              inputValidator={() => confirmPassword === password}
             />
           </fieldset>
         </div>

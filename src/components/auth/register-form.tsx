@@ -1,34 +1,50 @@
-import { FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import { useForm } from 'hooks/use-form';
+import { FormEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
 
-import { SwitchFormButton } from './switch-form-button';
-import { PasswordInput } from './password-input';
-import { EmailInput } from './email-input';
+import { AuthInputNames } from './types';
 import { AuthButton } from './auth-button';
-import { NameInput } from './name-input';
+import { SwitchFormButton } from './switch-form-button';
 
 import { Card } from '@ui/card';
 import { SpinnerIcon } from 'assets/icons';
 import { signUp } from '@features/services/auth';
+import { TrustDevice } from './remember-me-checkbox';
 import { authSelector, resetAuth } from '@features/slices/auth';
-import { TrustDevice } from './trust-device';
+import { GetInputValidation, GetInputValues, Input } from 'hooks/use-input';
+import { useForm } from 'hooks/use-form';
+
+type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword'>, boolean>;
+type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword'>, string>;
+
+const initFormValidity: FormValidity = {
+  name: false,
+  email: false,
+  password: false,
+};
+const initFormValues: FormValues = {
+  name: '',
+  email: '',
+  password: '',
+};
 
 export const RegisterForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { user, authUser } = useAuth();
+  const { user } = useAuth();
   const { status, error } = useAppSelector(authSelector);
-  const { getInputValidity, getInputValue, formValues, formValidity } = useForm();
+  const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
+    FormValidity,
+    FormValues
+  >({ initFormValidity, initFormValues });
 
-  const { name, email, password } = formValues;
   const {
     name: nameIsValid,
     email: emailIsValid,
     password: passwordIsValid,
   } = formValidity;
+  const { name, email, password } = formValues;
+
   const formIsValid = [nameIsValid, emailIsValid, passwordIsValid].every(Boolean);
 
   const userErrorMsg = Array.isArray(error.message) ? (
@@ -42,13 +58,13 @@ export const RegisterForm = () => {
   );
 
   useEffect(() => {
-    if (authUser || user) {
+    if (user) {
       navigate('/tasks');
     }
     return () => {
       dispatch(resetAuth());
     };
-  }, [authUser, user]);
+  }, [, user]);
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -58,26 +74,54 @@ export const RegisterForm = () => {
   };
 
   return (
-    <section>
-      <Card className="relative my-36 mx-4 max-w-screen-md sm:mx-auto">
+    <section className="translate-y-40">
+      <Card className="relative mx-4 max-w-screen-xs sm:mx-auto">
         <form className="mx-auto my-16 flex w-4/5 flex-col gap-6" onSubmit={onFormSubmit}>
           <h2 className="text-3xl capitalize tracking-widest text-color-base">
             create new account
           </h2>
 
-          <fieldset>
-            <NameInput getValidity={getInputValidity} getValue={getInputValue} />
+          <fieldset aria-label="name-input">
+            <Input
+              value={name}
+              type={'text'}
+              name={'name'}
+              placeholder={'Enter name'}
+              inputErrMsg={'name is required'}
+              placeholderErrMsg={'name is not valid'}
+              getValidity={getFormValidity}
+              getValue={getFormValues as GetInputValues}
+              inputValidator={text => text.trim().length > 0}
+            />
           </fieldset>
 
-          <fieldset>
-            <EmailInput getValidity={getInputValidity} getValue={getInputValue} />
+          <fieldset aria-label="email-input">
+            <Input
+              value={email}
+              type={'email'}
+              name={'email'}
+              placeholder={'example@gmail.com'}
+              placeholderErrMsg={'please enter a valid email'}
+              inputErrMsg={'email is not valid'}
+              getValidity={getFormValidity}
+              getValue={getFormValues as GetInputValues}
+            />
           </fieldset>
 
-          <fieldset>
-            <PasswordInput getValidity={getInputValidity} getValue={getInputValue} />
+          <fieldset aria-label="email-password">
+            <Input
+              value={password}
+              type={'password'}
+              name={'password'}
+              placeholder={'Enter password'}
+              inputErrMsg={'required at least 3 characters'}
+              placeholderErrMsg={'password is required'}
+              getValidity={getFormValidity}
+              getValue={getFormValues as GetInputValues}
+            />
           </fieldset>
 
-          <fieldset className="self-start">
+          <fieldset className="self-start" aria-label="remember-me-checkbox">
             <TrustDevice />
           </fieldset>
 

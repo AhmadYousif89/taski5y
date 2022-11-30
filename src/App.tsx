@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { AppRoutes } from 'components/app';
 import { useAppDispatch } from '@app/hooks';
-import { getUser } from '@features/services/user';
+import { getUser } from '@features/services/auth';
 
 function App() {
   const dispatch = useAppDispatch();

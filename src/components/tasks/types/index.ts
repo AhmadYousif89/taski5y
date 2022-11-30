@@ -2,7 +2,7 @@ type TaskFormValues = {
   name: TaskInputNames;
   value: string;
 };
-type TaskFormValidation = {
+export type TaskFormValidation = {
   type: TaskInputNames;
   isValid: boolean;
 };

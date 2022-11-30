@@ -19,7 +19,7 @@ export const CompletedTaskList = () => {
     ) : (
       <ul
         className="
-        mx-4 grid grid-cols-[repeat(auto-fit,minmax(30rem,.65fr))] justify-center gap-8 py-12">
+        mx-4 grid grid-cols-[repeat(auto-fit,minmax(32rem,.65fr))] justify-center gap-8 py-12">
         {filteredCompletedTasks.map(task => (
           <CompletedTaskItem key={task.id} task={task} />
         ))}

@@ -1,13 +1,19 @@
-/* eslint-env node */
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {
-      screens: {
-        xs: '570px',
-        md: '640px',
+    debugScreens: {
+      style: {
+        color: '#ffa',
       },
+    },
+    screens: {
+      xs: '570px',
+      md: '640px',
+      ...defaultTheme.screens,
+    },
+    extend: {
       ringColor: {
         color: {
           base: 'rgb(var(--ring-color-base) / <alpha-value>)',
@@ -48,5 +54,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('tailwindcss-debug-screens')],
 };

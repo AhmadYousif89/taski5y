@@ -8,6 +8,7 @@ import { store } from './app/store';
 import { BrowserRouter } from 'react-router-dom';
 
 const container = document.getElementById('root') as HTMLElement;
+import.meta.env.DEV && document.body.setAttribute('class', 'debug-screens');
 if (!container) throw new Error('Container "root" was not found!');
 const root = ReactDOM.createRoot(container);
 

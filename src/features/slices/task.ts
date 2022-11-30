@@ -134,23 +134,15 @@ const taskSlice = createSlice({
       .addCase(deleteTasks.fulfilled, (state, action) => {
         // action.payload = { id: deletedTaskId , message: 'Task deleted'}
         state.status = 'fulfilled';
-        const taskId = action?.payload?.id;
-        const deletedTask = state.tasks.find(task => task.id === taskId);
-        if (deletedTask?.status === 'Todo' && state.totalTodoTasks > 0) {
-          state.totalTodoTasks--;
-        }
-        if (deletedTask?.status === 'InProgress' && state.totalInProgressTasks > 0) {
-          state.totalInProgressTasks--;
-        }
+        const taskId = action.payload.id;
         state.tasks = state.tasks.filter(task => task.id !== taskId);
-        const deleteCompletedTask = state.completedTasks.find(task => task.id === taskId);
-        if (deleteCompletedTask) {
-          state.completedTasks = state.completedTasks.filter(
-            task => task.id !== deleteCompletedTask.id,
-          );
-          state.totalCompletedTasks--;
-        }
-        state.totalTasks--;
+        state.totalTodoTasks = state.tasks.filter(task => task.status === 'Todo').length;
+        state.totalInProgressTasks = state.tasks.filter(
+          task => task.status === 'InProgress',
+        ).length;
+        state.completedTasks = state.completedTasks.filter(task => task.id !== taskId);
+        state.totalTasks = state.tasks.length;
+        state.totalCompletedTasks = state.completedTasks.length;
       })
       .addCase(deleteTasks.rejected, (state, action) => {
         state.status = 'rejected';

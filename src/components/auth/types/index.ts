@@ -1,4 +1,4 @@
-type AuthFormValidation = {
+export type AuthFormValidation = {
   type: AuthInputNames;
   isValid: boolean;
 };

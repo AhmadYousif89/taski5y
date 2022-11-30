@@ -15,7 +15,7 @@ import { UserProfile } from '@users/user-profile';
 import { Outlet } from 'react-router-dom';
 
 export const AppLayout = () => {
-  const { user, authUser } = useAuth();
+  const { user } = useAuth();
   const { mode } = useAppSelector(uiSelector);
   const { menuVisibility } = useAppSelector(uiSelector);
   const [showProfile, setShowProfile] = useState(false);
@@ -23,7 +23,7 @@ export const AppLayout = () => {
   return (
     <main className={`${mode} flex min-h-[inherit] flex-col bg-color-base`}>
       <header className="relative bg-color-card py-8 shadow-md">
-        {user || authUser ? <MenuButton /> : null}
+        {user ? <MenuButton /> : null}
         <ThemeSwitcher />
         <h1 className="mx-auto w-fit text-center text-3xl capitalize text-color-base md:text-5xl">
           personal task manager

@@ -1,54 +1,31 @@
-import { AuthInputNames } from '@auth/types';
-import { TaskInputNames } from '@tasks/types';
 import { useState } from 'react';
+import { GetInputValidation, GetInputValues, InputPropObj } from './use-input';
+import { GetSelectValues, SelectPropObj } from './use-select';
 
-type FormValidity = Record<AuthInputNames | TaskInputNames, boolean>;
+type Form<TV1, TV2> = { initFormValidity: TV1; initFormValues: TV2 };
 
-type FormValues = Record<AuthInputNames | TaskInputNames, string>;
-
-const initFormValues: FormValues = {
-  name: '',
-  email: '',
-  password: '',
-  title: '',
-  details: '',
-  priority: '',
-  status: '',
-  confirmPassword: '',
-};
-const initFormValidity: FormValidity = {
-  name: false,
-  email: false,
-  password: false,
-  title: false,
-  details: false,
-  priority: false,
-  status: false,
-  confirmPassword: false,
-};
-
-export const useForm = () => {
+export const useForm = <TypeValidity, TypeValue>({
+  initFormValidity,
+  initFormValues,
+}: Form<TypeValidity, TypeValue>) => {
+  const [formValues, setFormValues] = useState(initFormValues);
   const [formValidity, setFormValidity] = useState(initFormValidity);
-  const [formValues, setFormValues] = useState<FormValues>(initFormValues);
 
-  const getInputValidity = <T extends Record<string, string | boolean>>(input: T) => {
+  const getFormValidity: GetInputValidation = ({ name, isValid }) => {
     setFormValidity(prevState => ({
       ...prevState,
-      [input.type as string]: input.isValid,
+      [name]: isValid,
     }));
   };
-
-  const getInputValue = <T extends Record<string, string>>(input: T): void => {
+  const getFormValues: GetInputValues | GetSelectValues = ({
+    name,
+    value,
+  }: InputPropObj | SelectPropObj) => {
     setFormValues(prevState => ({
       ...prevState,
-      [input.name]: input.value,
+      [name]: value,
     }));
   };
 
-  return {
-    getInputValue,
-    getInputValidity,
-    formValues,
-    formValidity,
-  };
+  return { formValidity, getFormValidity, formValues, getFormValues };
 };

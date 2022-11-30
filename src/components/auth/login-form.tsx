@@ -1,25 +1,34 @@
-import { FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FormEvent, useEffect } from 'react';
 
+import { GetInputValues, Input } from 'hooks/use-input';
+import { useForm } from 'hooks/use-form';
+import { signIn } from '@features/services/auth';
+import { authSelector, resetAuth } from '@features/slices/auth';
 import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
 
 import { Card } from '@ui/card';
-import { SwitchFormButton } from './switch-form-button';
-import { PasswordInput } from './password-input';
-import { EmailInput } from './email-input';
+import { AuthInputNames } from './types';
 import { AuthButton } from './auth-button';
-import { useForm } from 'hooks/use-form';
 import { SpinnerIcon } from 'assets/icons';
-import { signIn } from '@features/services/auth';
-import { authSelector, resetAuth } from '@features/slices/auth';
-import { TrustDevice } from './trust-device';
+import { TrustDevice } from './remember-me-checkbox';
+import { SwitchFormButton } from './switch-form-button';
+
+type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword' | 'name'>, boolean>;
+type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword' | 'name'>, string>;
+
+const initFormValidity: FormValidity = { email: false, password: false };
+const initFormValues: FormValues = { email: '', password: '' };
 
 export const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { user, authUser } = useAuth();
+  const { user } = useAuth();
   const { status, error } = useAppSelector(authSelector);
-  const { getInputValidity, getInputValue, formValues, formValidity } = useForm();
+  const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
+    FormValidity,
+    FormValues
+  >({ initFormValidity, initFormValues });
 
   const { email, password } = formValues;
   const { email: emailIsValid, password: passwordIsValid } = formValidity;
@@ -30,13 +39,13 @@ export const LoginForm = () => {
   }, []);
 
   useEffect(() => {
-    if (authUser || user) {
+    if (user) {
       navigate('/tasks');
     }
     return () => {
       dispatch(resetAuth());
     };
-  }, [authUser, user]);
+  }, [user]);
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -56,8 +65,8 @@ export const LoginForm = () => {
   );
 
   return (
-    <section>
-      <Card className="relative my-36 mx-4 max-w-screen-md sm:mx-auto">
+    <section className="translate-y-40">
+      <Card className="relative mx-4 max-w-screen-xs sm:mx-auto">
         <form
           className="mx-auto my-16 flex w-10/12 flex-col gap-6"
           onSubmit={onFormSubmit}>
@@ -65,15 +74,33 @@ export const LoginForm = () => {
             login to account
           </h2>
 
-          <fieldset>
-            <EmailInput getValidity={getInputValidity} getValue={getInputValue} />
+          <fieldset aria-label="email-input">
+            <Input
+              type={'email'}
+              name={'email'}
+              value={email}
+              placeholder={'example@gmail.com'}
+              placeholderErrMsg={'please enter a valid email'}
+              inputErrMsg={'email is not valid'}
+              getValue={getFormValues as GetInputValues}
+              getValidity={getFormValidity}
+            />
           </fieldset>
 
-          <fieldset>
-            <PasswordInput getValidity={getInputValidity} getValue={getInputValue} />
+          <fieldset aria-label="email-password">
+            <Input
+              type={'password'}
+              name={'password'}
+              value={password}
+              placeholder={'Enter password'}
+              inputErrMsg={'required at least 3 characters'}
+              placeholderErrMsg={'password is required'}
+              getValue={getFormValues as GetInputValues}
+              getValidity={getFormValidity}
+            />
           </fieldset>
 
-          <fieldset className="self-start">
+          <fieldset className="self-start" aria-label="remember-me-checkbox">
             <TrustDevice />
           </fieldset>
 

@@ -1,33 +1,48 @@
 import { useNavigate } from 'react-router-dom';
-import { FormEvent, useEffect } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@app/hooks';
 import { resetPassword } from '@features/services/auth';
 import { authSelector } from '@features/slices/auth';
 
 import { Card } from '@ui/card';
-import { useForm } from 'hooks/use-form';
+import { AuthInputNames } from './types';
 import { SpinnerIcon } from 'assets/icons';
 import { AuthButton } from './auth-button';
-import { EmailInput } from './email-input';
-import { PasswordInput } from './password-input';
 import { SwitchFormButton } from './switch-form-button';
-import { ConfirmPasswordInput } from './confirm-password-input';
+import { GetInputValidation, GetInputValues, Input } from 'hooks/use-input';
+import { useForm } from 'hooks/use-form';
+
+type FormValidity = Record<Exclude<AuthInputNames, 'name'>, boolean>;
+type FormValues = Record<Exclude<AuthInputNames, 'name'>, string>;
+
+const initFormValidity: FormValidity = {
+  email: false,
+  password: false,
+  confirmPassword: false,
+};
+const initFormValues: FormValues = { email: '', password: '', confirmPassword: '' };
 
 export const ResetPassword = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { status, error } = useAppSelector(authSelector);
-  const { getInputValidity, getInputValue, formValues, formValidity } = useForm();
+  const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
+    FormValidity,
+    FormValues
+  >({ initFormValidity, initFormValues });
 
   const { email, password, confirmPassword } = formValues;
-  const { email: emailIsValid, password: passwordIsValid } = formValidity;
+  const {
+    email: emailIsValid,
+    password: passwordIsValid,
+    confirmPassword: confirmPasswordIsValid,
+  } = formValidity;
 
-  const confirmPasswordIsValid = password === confirmPassword;
   const formIsValid = [emailIsValid, passwordIsValid, confirmPasswordIsValid].every(
     Boolean,
   );
-
+  console.log(formIsValid, formValidity);
   useEffect(() => {
     if (status === 'fulfilled') {
       setTimeout(() => {
@@ -43,8 +58,8 @@ export const ResetPassword = () => {
   };
 
   return (
-    <section>
-      <Card className="relative my-36 mx-4 max-w-screen-md sm:mx-auto">
+    <section className="translate-y-40">
+      <Card className="relative mx-4 max-w-screen-xs sm:mx-auto">
         <form
           className="mx-auto my-16 flex w-10/12 flex-col gap-6"
           onSubmit={onFormSubmit}>
@@ -53,24 +68,42 @@ export const ResetPassword = () => {
           </h2>
 
           <fieldset>
-            <EmailInput
-              msg={'Please enter your registration email'}
-              getValidity={getInputValidity}
-              getValue={getInputValue}
+            <Input
+              value={email}
+              type={'email'}
+              name={'email'}
+              placeholder={'example@gmail.com'}
+              placeholderErrMsg={'please enter your registration email'}
+              inputErrMsg={'email is not valid'}
+              getValidity={getFormValidity}
+              getValue={getFormValues as GetInputValues}
+              inputValidator={text => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)}
             />
           </fieldset>
           <fieldset>
-            <PasswordInput
-              msg={'Your new password'}
-              getValue={getInputValue}
-              getValidity={getInputValidity}
+            <Input
+              value={password}
+              type={'password'}
+              name={'password'}
+              placeholder={'Enter new password'}
+              inputErrMsg={'required at least 3 characters'}
+              placeholderErrMsg={'password is required'}
+              getValidity={getFormValidity}
+              getValue={getFormValues as GetInputValues}
+              inputValidator={text => /^((?!.*[\s])(?=.*\d).{3,})/.test(text)}
             />
           </fieldset>
           <fieldset>
-            <ConfirmPasswordInput
-              getValue={getInputValue}
-              getValidity={getInputValidity}
-              validate={confirmPasswordIsValid}
+            <Input
+              type={'password'}
+              value={confirmPassword}
+              name={'confirmPassword'}
+              inputErrMsg={'mismatch password'}
+              placeholder={'Confirm new password'}
+              placeholderErrMsg={"your password doesn't match"}
+              getValidity={getFormValidity}
+              getValue={getFormValues as GetInputValues}
+              inputValidator={() => password === confirmPassword}
             />
           </fieldset>
 

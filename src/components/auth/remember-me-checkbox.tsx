@@ -9,8 +9,9 @@ export const TrustDevice = () => {
         type="checkbox"
         name="persist"
         id="persist"
-        onChange={() => setPersist((p: string | boolean) => !p)}
+        onChange={() => setPersist((p: boolean) => !p)}
         checked={persist}
+        className="accent-indigo-400"
       />
       Trust this device
     </label>
