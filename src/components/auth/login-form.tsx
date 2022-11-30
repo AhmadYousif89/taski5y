@@ -117,11 +117,11 @@ export const LoginForm = () => {
               </div>
             ) : null}
 
-            {status === 'fulfilled' ? (
+            {status === 'loading' ? (
               <p
                 className={`flex items-center gap-4 text-center text-2xl text-color-valid`}>
                 <SpinnerIcon />
-                Redirecting
+                Loading
               </p>
             ) : null}
           </fieldset>

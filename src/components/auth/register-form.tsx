@@ -121,10 +121,6 @@ export const RegisterForm = () => {
             />
           </fieldset>
 
-          <fieldset className="self-start" aria-label="remember-me-checkbox">
-            <TrustDevice />
-          </fieldset>
-
           <fieldset className="flex items-center justify-between">
             <AuthButton
               title="create"
@@ -138,11 +134,11 @@ export const RegisterForm = () => {
               </div>
             ) : null}
 
-            {status === 'fulfilled' ? (
+            {status === 'loading' ? (
               <p
                 className={`flex items-center gap-4 text-center text-2xl text-color-valid`}>
                 <SpinnerIcon />
-                Redirecting
+                Loading
               </p>
             ) : null}
           </fieldset>

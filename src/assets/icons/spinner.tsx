@@ -6,7 +6,7 @@ export const SpinnerIcon = () => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-7 w-7 animate-spin">
+      className="h-10 w-10 animate-spin">
       <path
         strokeLinecap="round"
         strokeLinejoin="round"

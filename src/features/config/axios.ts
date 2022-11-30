@@ -53,6 +53,7 @@ const onResponseError = async (error: AxiosError) => {
     error?.response?.status === 403;
   if (initLoad) return;
   else if (error?.response?.status === 403) {
+    localStorage.removeItem('persist');
     window.location.reload();
     return;
   }
