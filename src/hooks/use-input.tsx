@@ -82,7 +82,6 @@ export const Input = (props: InputProps) => {
     if (isFormSubmitted) resetInput();
   }, [isFormSubmitted, inputValue, isValid]);
 
-  if (name === 'confirmPassword') console.log('con-pass: ', { isValid }, { isError });
   return (
     <div className="relative flex w-full items-center">
       {label ? (
