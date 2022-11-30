@@ -29,7 +29,7 @@ export const TaskList = ({ filterBy }: { filterBy?: TaskStatus }) => {
     dispatch(getAllTasks());
   }, []);
 
-  if (status === 'loading') return <Modal />;
+  if (status === 'fulfilled') return <Modal />;
 
   const searchedTasks = () => {
     const data = [...tasks];
