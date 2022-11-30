@@ -26,7 +26,7 @@ export const AppLayout = () => {
         {user ? <MenuButton /> : null}
         <ThemeSwitcher />
         <h1 className="mx-auto w-fit text-center text-3xl capitalize text-color-base md:text-5xl">
-          personal task manager
+          📑 personal task manager
         </h1>
 
         <div aria-label="menu" className="relative">

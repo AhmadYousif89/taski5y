@@ -46,14 +46,14 @@ export const Select = (props: SelectProps) => {
 
   return (
     <>
-      <legend className="bg-color-card text-xl">{label}</legend>
+      <legend className="bg-color-card text-xl text-color-base">{label}</legend>
       <label htmlFor={htmlFor}>
         <select
           id={id}
           name={name}
           value={selectedValue}
           onChange={onSelectChange}
-          className="w-full cursor-pointer resize-none bg-color-card py-4 text-2xl capitalize focus:outline-none">
+          className="w-full cursor-pointer bg-color-card py-4 text-2xl capitalize text-color-base focus:outline-none">
           <option value=""></option>
           {optList}
         </select>
