@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { FormEvent, useEffect } from 'react';
 
-import { GetInputValues, Input } from 'hooks/use-input';
+import { GetInputValues, Input } from '@ui/input';
 import { useForm } from 'hooks/use-form';
 import { signIn } from '@features/services/auth';
 import { authSelector, resetAuth } from '@features/slices/auth';

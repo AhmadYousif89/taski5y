@@ -4,8 +4,8 @@ import { useAppDispatch } from '@app/hooks';
 import { TaskInputNames } from './types';
 import { TaskStats } from './task-stats';
 import { useForm } from 'hooks/use-form';
-import { GetInputValues, Input } from 'hooks/use-input';
-import { GetSelectValues, Select } from 'hooks/use-select';
+import { GetInputValues, Input } from '@ui/input';
+import { GetSelectValues, Select } from '@ui/select';
 import { TaskPriority, TaskStatus } from '@features/types';
 import { addNewTask } from '@features/services/tasks';
 

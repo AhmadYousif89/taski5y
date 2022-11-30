@@ -13,12 +13,14 @@ import {
 } from '@features/types';
 import { taskSelector } from '@features/slices/task';
 import { getAllTasks } from '@features/services/tasks';
+import { Modal } from '@ui/modal';
 
 export const TaskList = ({ filterBy }: { filterBy?: TaskStatus }) => {
   const location = useLocation();
   const dispatch = useAppDispatch();
   const {
     tasks,
+    status,
     activeTaskPanel,
     searchedTaskQuery: query,
   } = useAppSelector(taskSelector);
@@ -26,6 +28,8 @@ export const TaskList = ({ filterBy }: { filterBy?: TaskStatus }) => {
   useEffect(() => {
     dispatch(getAllTasks());
   }, []);
+
+  if (status === 'loading') return <Modal />;
 
   const searchedTasks = () => {
     const data = [...tasks];

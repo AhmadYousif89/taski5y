@@ -1,6 +1,6 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
 import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
-import { GetInputValidation, GetInputValues, Input } from 'hooks/use-input';
+import { GetInputValidation, GetInputValues, Input } from '@ui/input';
 import { BackArrowIcon, UploadIcon, CheckMarkIcon, SpinnerIcon } from 'assets/icons';
 import { Button } from '@ui/button';
 import { AuthInputNames } from '@auth/types';

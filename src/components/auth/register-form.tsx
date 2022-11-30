@@ -11,7 +11,7 @@ import { SpinnerIcon } from 'assets/icons';
 import { signUp } from '@features/services/auth';
 import { TrustDevice } from './remember-me-checkbox';
 import { authSelector, resetAuth } from '@features/slices/auth';
-import { GetInputValidation, GetInputValues, Input } from 'hooks/use-input';
+import { GetInputValidation, GetInputValues, Input } from '@ui/input';
 import { useForm } from 'hooks/use-form';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword'>, boolean>;

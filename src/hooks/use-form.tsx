@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { GetInputValidation, GetInputValues, InputPropObj } from './use-input';
-import { GetSelectValues, SelectPropObj } from './use-select';
+import { GetInputValidation, GetInputValues, InputPropObj } from '../components/ui/input';
+import { GetSelectValues, SelectPropObj } from '../components/ui/select';
 
 type Form<TV1, TV2> = { initFormValidity: TV1; initFormValues: TV2 };
 

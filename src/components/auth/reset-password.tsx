@@ -10,7 +10,7 @@ import { AuthInputNames } from './types';
 import { SpinnerIcon } from 'assets/icons';
 import { AuthButton } from './auth-button';
 import { SwitchFormButton } from './switch-form-button';
-import { GetInputValidation, GetInputValues, Input } from 'hooks/use-input';
+import { GetInputValidation, GetInputValues, Input } from '@ui/input';
 import { useForm } from 'hooks/use-form';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'name'>, boolean>;
