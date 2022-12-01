@@ -1,29 +1,19 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import { Modal } from '@ui/modal';
 import { TaskItem } from './task-item';
+import { sortTasks } from './helper/sort-tasks';
 import { toggleSideMenu } from '@features/slices/ui';
-import { useAppDispatch, useAppSelector } from '@app/hooks';
-import {
-  Task,
-  TaskStatus,
-  TaskSortType,
-  TaskSortQuery,
-  TaskSortOrder,
-} from '@features/types';
 import { taskSelector } from '@features/slices/task';
 import { getAllTasks } from '@features/services/tasks';
-import { Modal } from '@ui/modal';
+import { useAppDispatch, useAppSelector } from '@app/hooks';
+import { Task, TaskSortType, TaskSortOrder } from '@features/types';
 
 export const TaskList = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const {
-    tasks,
-    status,
-    activeTaskPanel,
-    searchedTaskQuery: query,
-  } = useAppSelector(taskSelector);
+  const { tasks, status, searchedTaskQuery: query } = useAppSelector(taskSelector);
 
   useEffect(() => {
     dispatch(getAllTasks());
@@ -35,15 +25,14 @@ export const TaskList = () => {
   updatedTasks.sort((a, b) => a.priority.localeCompare(b.priority));
 
   const searchedTasks = () => {
-    const data = [...tasks];
     if (query) {
-      return data.filter(
+      return updatedTasks.filter(
         task =>
           task.title.toLowerCase().includes(query) ||
           task.details.toLowerCase().includes(query),
       );
     }
-    return data;
+    return updatedTasks;
   };
 
   if (query) updatedTasks = searchedTasks();
@@ -53,30 +42,7 @@ export const TaskList = () => {
   const sortType = params.get('type') as TaskSortType;
   const sortObj = { sortOrder, sortType };
 
-  const sortedTasks = ({ sortOrder, sortType }: TaskSortQuery) => {
-    const data = [...tasks];
-    return data.sort((taskA, taskB) => {
-      switch (sortType) {
-        case 'alpha': {
-          if (sortOrder === 'asc')
-            return taskA.title.toLowerCase().localeCompare(taskB.title.toLowerCase());
-          else return taskB.title.toLowerCase().localeCompare(taskA.title.toLowerCase());
-        }
-        case 'createdAt': {
-          if (sortOrder === 'asc') return taskA.createdAt.localeCompare(taskB.createdAt);
-          else return taskB.createdAt.localeCompare(taskA.createdAt);
-        }
-        case 'priority': {
-          if (sortOrder === 'asc') return taskA.priority === 'Normal' ? -1 : 1;
-          else return taskB.priority === 'Normal' ? -1 : 1;
-        }
-        default:
-          return 0;
-      }
-    });
-  };
-
-  if (params.has('sort')) updatedTasks = sortedTasks(sortObj);
+  if (params.has('sort')) updatedTasks = sortTasks(updatedTasks, sortObj);
 
   const searchMsg =
     query && updatedTasks.length > 0 ? (
