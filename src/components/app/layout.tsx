@@ -23,11 +23,11 @@ export const AppLayout = () => {
   return (
     <main className={`${mode} flex min-h-[inherit] flex-col bg-color-base`}>
       <header className="relative bg-color-card py-8 shadow-md">
-        {user ? <MenuButton /> : null}
         <ThemeSwitcher />
         <h1 className="mx-auto w-fit text-center text-3xl capitalize text-color-base md:text-5xl">
           📑 personal task manager
         </h1>
+        {user ? <MenuButton /> : null}
 
         <div aria-label="menu" className="relative">
           <Menu className="[&>*]:mx-12">

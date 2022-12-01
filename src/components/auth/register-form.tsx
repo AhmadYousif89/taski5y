@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
+import { useForm } from 'hooks/use-form';
 
 import { AuthInputNames } from './types';
 import { AuthButton } from './auth-button';
@@ -9,10 +10,8 @@ import { SwitchFormButton } from './switch-form-button';
 import { Card } from '@ui/card';
 import { SpinnerIcon } from 'assets/icons';
 import { signUp } from '@features/services/auth';
-import { TrustDevice } from './remember-me-checkbox';
+import { GetInputValues, Input } from '@ui/input';
 import { authSelector, resetAuth } from '@features/slices/auth';
-import { GetInputValidation, GetInputValues, Input } from '@ui/input';
-import { useForm } from 'hooks/use-form';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword'>, string>;
@@ -64,7 +63,7 @@ export const RegisterForm = () => {
     return () => {
       dispatch(resetAuth());
     };
-  }, [, user]);
+  }, [user]);
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -122,11 +121,7 @@ export const RegisterForm = () => {
           </fieldset>
 
           <fieldset className="flex items-center justify-between">
-            <AuthButton
-              title="create"
-              status={status === 'loading'}
-              formIsValid={formIsValid}
-            />
+            <AuthButton title="create" status={status} formIsValid={formIsValid} />
 
             {status === 'rejected' ? (
               <div className={`text-right text-2xl text-color-invalid`}>

@@ -20,6 +20,10 @@ export const TaskItem = ({ task }: { task: Task }) => {
     dispatch(updateTask({ id: task.id, status: 'Completed' }));
   };
   const deleteTaskHandler = () => {
+    const confirmation = window.confirm(
+      'You are about to delete this task, Are you sure?',
+    );
+    if (!confirmation) return;
     dispatch(deleteTasks(task.id));
   };
 

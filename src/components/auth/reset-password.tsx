@@ -42,7 +42,7 @@ export const ResetPassword = () => {
   const formIsValid = [emailIsValid, passwordIsValid, confirmPasswordIsValid].every(
     Boolean,
   );
-  console.log(formIsValid, formValidity);
+
   useEffect(() => {
     if (status === 'fulfilled') {
       setTimeout(() => {

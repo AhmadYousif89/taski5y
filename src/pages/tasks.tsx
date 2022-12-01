@@ -11,31 +11,33 @@ import { TaskPanelButton } from '@tasks/task-panel-button';
 
 import { TaskStatus } from '@features/types';
 import { storeTaskActivePanel, taskSelector } from '@features/slices/task';
+import { TodoTaskList } from '@tasks/todo-task-list';
+import { InProgressTaskList } from '@tasks/inprogress-task-list';
 
 export const TasksPage = () => {
-  const {
-    tasks,
-    totalTodoTasks: numOfNewTasks,
-    totalInProgressTasks: numOfInProgressTasks,
-    totalCompletedTasks: numOfCompletedTasks,
-  } = useAppSelector(taskSelector);
   const dispatch = useAppDispatch();
-  const [isActive, setIsActive] = useState<TaskStatus | boolean>(false);
+  const {
+    totalTasks,
+    totalTodoTasks,
+    totalInProgressTasks,
+    totalCompletedTasks,
+    activeTaskPanel,
+  } = useAppSelector(taskSelector);
   const [showTodoTasks, setShowTodoTasks] = useState(false);
   const [showCompletedTasks, setShowCompletedTasks] = useState(false);
   const [showInProgressTasks, setShowInProgressTasks] = useState(false);
+  const [isActive, setIsActive] = useState<TaskStatus | boolean>(false);
 
   let mainContent;
-
   mainContent = <TaskList />;
 
-  if (tasks.length === 0 && numOfCompletedTasks > 0) {
+  if (totalTasks === 0 && totalCompletedTasks > 0) {
     mainContent = (
       <div className="mt-16 flex flex-col items-center gap-4 text-3xl text-color-base">
         <h2 className="text-center text-4xl">You don't have any active task</h2>
         <span className="text-center">
-          but you can review {numOfCompletedTasks} completed task
-          {numOfCompletedTasks > 1 ? 's' : ''}
+          but you can review {totalCompletedTasks} completed task
+          {totalCompletedTasks > 1 ? 's' : ''}
         </span>
         <button
           onClick={() => setShowCompletedTasks(true)}
@@ -48,41 +50,29 @@ export const TasksPage = () => {
 
   if (showTodoTasks) {
     mainContent = (
-      <div className="mt-12">
+      <div className="mt-4">
         <TaskPanelButton
           toggleTaskPanels={setShowTodoTasks}
           toggleIsActive={setIsActive}
         />
-        {tasks.filter(t => t.status === 'Todo').length > 0 ? (
-          <TaskList filterBy={'Todo'} />
-        ) : (
-          <h2 className="mt-24 text-center text-4xl text-color-base">
-            You have 0 todo task
-          </h2>
-        )}
+        <TodoTaskList />
       </div>
     );
   }
   if (showInProgressTasks) {
     mainContent = (
-      <div className="mt-12">
+      <div className="mt-4">
         <TaskPanelButton
           toggleTaskPanels={setShowInProgressTasks}
           toggleIsActive={setIsActive}
         />
-        {tasks.filter(t => t.status === 'InProgress').length > 0 ? (
-          <TaskList filterBy={'InProgress'} />
-        ) : (
-          <h2 className="mt-24 text-center text-4xl text-color-base">
-            You have 0 in progress task
-          </h2>
-        )}
+        <InProgressTaskList />
       </div>
     );
   }
   if (showCompletedTasks) {
     mainContent = (
-      <div className="mt-12">
+      <div className="mt-4">
         <TaskPanelButton
           toggleTaskPanels={setShowCompletedTasks}
           toggleIsActive={setIsActive}
@@ -97,7 +87,7 @@ export const TasksPage = () => {
       id: 'p1',
       title: 'todo',
       color: 'sky',
-      count: numOfNewTasks,
+      count: totalTodoTasks,
       msg: 'show only new tasks',
       showFilteredTasks: setShowTodoTasks,
       togglePanels: () => {
@@ -111,7 +101,7 @@ export const TasksPage = () => {
       id: 'p2',
       title: 'in progress',
       color: 'amber',
-      count: numOfInProgressTasks,
+      count: totalInProgressTasks,
       msg: 'show only in progress tasks',
       showFilteredTasks: setShowInProgressTasks,
       togglePanels: () => {
@@ -125,7 +115,7 @@ export const TasksPage = () => {
       id: 'p3',
       title: 'completed',
       color: 'green',
-      count: numOfCompletedTasks,
+      count: totalCompletedTasks,
       msg: 'show only completed tasks',
       showFilteredTasks: setShowCompletedTasks,
       togglePanels: () => {
@@ -139,7 +129,7 @@ export const TasksPage = () => {
 
   return (
     <>
-      <section className="lg:mx-auto lg:w-10/12" aria-label="Task-aria">
+      <section className="lg:mx-auto lg:w-10/12" aria-label="Task-panel-section">
         <div className="my-16 flex items-center justify-evenly" aria-label="Task-panels">
           {panels.map(panel => (
             <TaskPanel
@@ -154,11 +144,14 @@ export const TasksPage = () => {
             />
           ))}
         </div>
-        <section
-          className="relative flex items-center justify-center"
-          aria-label="search-sort-aria">
-          <SortField />
-          <SearchBar />
+        <section className="flex flex-col" aria-label="search-sort-aria">
+          <div className="flex items-center">
+            <SortField />
+            <SearchBar />
+          </div>
+          <p className="mb-4 mt-8 text-center text-2xl tracking-wide text-color-highlight">
+            Viewing {activeTaskPanel ? activeTaskPanel : 'All'} Tasks
+          </p>
         </section>
         <>{mainContent}</>
       </section>

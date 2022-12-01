@@ -15,7 +15,7 @@ import { taskSelector } from '@features/slices/task';
 import { getAllTasks } from '@features/services/tasks';
 import { Modal } from '@ui/modal';
 
-export const TaskList = ({ filterBy }: { filterBy?: TaskStatus }) => {
+export const TaskList = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
   const {
@@ -29,37 +29,24 @@ export const TaskList = ({ filterBy }: { filterBy?: TaskStatus }) => {
     dispatch(getAllTasks());
   }, []);
 
-  if (status === 'loading') return <Modal />;
+  if (status === 'loading') return <Modal msg="Loading . . ." />;
+
+  let updatedTasks = [...tasks];
+  updatedTasks.sort((a, b) => a.priority.localeCompare(b.priority));
 
   const searchedTasks = () => {
     const data = [...tasks];
-    // general search on main task list
-    if (query && !activeTaskPanel) {
+    if (query) {
       return data.filter(
         task =>
           task.title.toLowerCase().includes(query) ||
           task.details.toLowerCase().includes(query),
       );
     }
-    // specific search based on active task panel [Todo, In Progress, Completed]
-    if (query) {
-      return data.filter(task => {
-        if (activeTaskPanel === task.status) {
-          return (
-            task.title.toLowerCase().includes(query) ||
-            task.details.toLowerCase().includes(query)
-          );
-        }
-      });
-    }
-    if (filterBy === 'Todo') {
-      return data.filter(task => task.status === 'Todo');
-    }
-    if (filterBy === 'InProgress') {
-      return data.filter(task => task.status === 'InProgress');
-    }
     return data;
   };
+
+  if (query) updatedTasks = searchedTasks();
 
   const params = new URLSearchParams(location.search);
   const sortOrder = params.get('sort') as TaskSortOrder;
@@ -89,20 +76,18 @@ export const TaskList = ({ filterBy }: { filterBy?: TaskStatus }) => {
     });
   };
 
-  let updatedTasks = [...tasks];
-  updatedTasks.sort((a, b) => a.priority.localeCompare(b.priority));
+  if (params.has('sort')) updatedTasks = sortedTasks(sortObj);
 
-  if (query || filterBy) {
-    updatedTasks = searchedTasks();
-  }
-
-  if (params.has('sort') && !query) {
-    updatedTasks = sortedTasks(sortObj);
-  }
+  const searchMsg =
+    query && updatedTasks.length > 0 ? (
+      <h3 className="ml-8 text-3xl text-color-base">Search result</h3>
+    ) : null;
 
   if (query && updatedTasks.length === 0) {
     return (
-      <h2 className="mt-20 text-center text-3xl">Your search didn't match any result!</h2>
+      <h2 className="mt-20 text-center text-3xl text-color-base">
+        Your search didn't match any result!
+      </h2>
     );
   }
 
@@ -120,12 +105,15 @@ export const TaskList = ({ filterBy }: { filterBy?: TaskStatus }) => {
   }
 
   return (
-    <ul
-      aria-label="Task-list"
-      className="my-16 mx-4 grid grid-cols-[repeat(auto-fit,minmax(31rem,.5fr))] justify-center gap-8">
-      {updatedTasks.map(task => (
-        <TaskItem key={task?.id} task={task as Task} />
-      ))}
-    </ul>
+    <>
+      {searchMsg}
+      <ul
+        aria-label="Task-list"
+        className="my-8 mx-4 grid grid-cols-[repeat(auto-fit,minmax(31rem,.5fr))] justify-center gap-8">
+        {updatedTasks.map(task => (
+          <TaskItem key={task?.id} task={task as Task} />
+        ))}
+      </ul>
+    </>
   );
 };

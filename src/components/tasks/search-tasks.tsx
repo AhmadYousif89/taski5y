@@ -21,11 +21,12 @@ export const SearchBar = () => {
           <input
             type="text"
             id="search"
+            autoComplete="off"
             onChange={onUpdatedQuery}
-            placeholder="Search . . ."
+            placeholder="Search for task . . ."
             title="Search by task title or details"
             className="
-            block w-full bg-color-base px-6 py-4 text-3xl
+            w-full bg-color-base px-6 py-4 text-3xl
             tracking-wide text-color-base placeholder:overflow-hidden placeholder:text-ellipsis placeholder:whitespace-nowrap placeholder:text-center
             placeholder:text-2xl placeholder:text-color-base placeholder:opacity-70"
           />

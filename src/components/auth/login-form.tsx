@@ -76,9 +76,9 @@ export const LoginForm = () => {
 
           <fieldset aria-label="email-input">
             <Input
+              value={email}
               type={'email'}
               name={'email'}
-              value={email}
               placeholder={'example@gmail.com'}
               placeholderErrMsg={'please enter a valid email'}
               inputErrMsg={'email is not valid'}
@@ -89,9 +89,9 @@ export const LoginForm = () => {
 
           <fieldset aria-label="email-password">
             <Input
+              value={password}
               type={'password'}
               name={'password'}
-              value={password}
               placeholder={'Enter password'}
               inputErrMsg={'required at least 3 characters'}
               placeholderErrMsg={'password is required'}
@@ -105,11 +105,7 @@ export const LoginForm = () => {
           </fieldset>
 
           <fieldset className="flex items-center justify-between">
-            <AuthButton
-              title="login"
-              status={status === 'loading'}
-              formIsValid={formIsValid}
-            />
+            <AuthButton title="login" status={status} formIsValid={formIsValid} />
 
             {status === 'rejected' ? (
               <div className={`text-right text-2xl tracking-wider text-color-invalid`}>
@@ -121,7 +117,7 @@ export const LoginForm = () => {
               <p
                 className={`flex items-center gap-4 text-center text-2xl text-color-valid`}>
                 <SpinnerIcon />
-                Loading
+                Loading . . .
               </p>
             ) : null}
           </fieldset>

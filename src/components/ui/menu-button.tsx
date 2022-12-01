@@ -9,7 +9,7 @@ export const MenuButton = () => {
   return (
     <div
       onClick={() => dispatch(toggleSideMenu())}
-      className="btn-circle fixed top-6 right-4 z-10 flex items-center transition-all md:right-16 md:top-8 lg:right-1/4">
+      className="btn-circle absolute top-6 right-4 z-10 flex items-center transition-all md:right-16 md:top-8 lg:right-1/4">
       <button type={'button'} className="relative w-full text-color-base">
         {menuVisibility ? (
           <span className="center-absolute">

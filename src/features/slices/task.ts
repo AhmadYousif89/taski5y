@@ -16,7 +16,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface TaskState {
   tasks: Task[];
+  todoTasks: Task[];
   completedTasks: Task[];
+  inProgressTasks: Task[];
   totalTasks: number;
   totalTodoTasks: number;
   totalInProgressTasks: number;
@@ -32,7 +34,9 @@ const initError: ResponseError = { statusCode: 0, message: '', error: '' };
 
 const initialState: TaskState = {
   tasks: [],
+  todoTasks: [],
   completedTasks: [],
+  inProgressTasks: [],
   totalTasks: 0,
   totalTodoTasks: 0,
   totalCompletedTasks: 0,
@@ -51,11 +55,11 @@ const taskSlice = createSlice({
     resetTasks() {
       return initialState;
     },
-    storeTaskSearchQuery(state, action: PayloadAction<string>) {
-      state.searchedTaskQuery = action.payload.toLowerCase();
+    storeTaskSearchQuery(state, { payload }: PayloadAction<string>) {
+      state.searchedTaskQuery = payload.toLowerCase();
     },
-    storeTaskActivePanel(state, action: PayloadAction<TaskStatus | string>) {
-      state.activeTaskPanel = action.payload as TaskStatus;
+    storeTaskActivePanel(state, { payload }: PayloadAction<TaskStatus | string>) {
+      state.activeTaskPanel = payload;
     },
   },
   extraReducers(builder) {
@@ -63,90 +67,92 @@ const taskSlice = createSlice({
       .addCase(getAllTasks.pending, state => {
         state.status = 'loading';
       })
-      .addCase(getAllTasks.fulfilled, (state, action) => {
+      .addCase(getAllTasks.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
-        const tasks = action.payload.filter(t => t.status !== 'Completed');
-        state.tasks = tasks;
+        state.tasks = payload.filter(t => t.status !== 'Completed');
         state.totalTasks = state.tasks.length;
-        const completedTasks = action.payload.filter(t => t.status === 'Completed');
-        state.completedTasks = completedTasks;
+        state.todoTasks = payload.filter(t => t.status === 'Todo');
+        state.totalTodoTasks = state.todoTasks.length;
+        state.completedTasks = payload.filter(t => t.status === 'Completed');
         state.totalCompletedTasks = state.completedTasks.length;
-        state.totalTodoTasks = tasks.filter(t => t.status === 'Todo').length;
-        state.totalInProgressTasks = tasks.filter(t => t.status === 'InProgress').length;
+        state.inProgressTasks = payload.filter(t => t.status === 'InProgress');
+        state.totalInProgressTasks = state.inProgressTasks.length;
       })
-      .addCase(getAllTasks.rejected, (state, action) => {
+      .addCase(getAllTasks.rejected, (state, { payload }) => {
         state.status = 'rejected';
-        state.error = action.payload || initError;
+        state.error = payload || initError;
       });
 
     builder
       .addCase(addNewTask.pending, state => {
         state.status = 'loading';
       })
-      .addCase(addNewTask.fulfilled, (state, action) => {
+      .addCase(addNewTask.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
-        if (action.payload.status === 'Todo') {
+        if (payload.status === 'Todo') {
+          state.todoTasks.push(payload);
           state.totalTodoTasks++;
-        } else if (action.payload.status === 'InProgress') {
+        }
+        if (payload.status === 'InProgress') {
+          state.inProgressTasks.push(payload);
           state.totalInProgressTasks++;
         }
-        state.tasks.push(action.payload as Task);
+        state.tasks.push(payload);
         state.totalTasks++;
       })
-      .addCase(addNewTask.rejected, (state, action) => {
+      .addCase(addNewTask.rejected, (state, { payload }) => {
         state.status = 'rejected';
-        state.error = action.payload || initError;
+        state.error = payload || initError;
       });
 
     builder
       .addCase(updateTask.pending, state => {
         state.status = 'loading';
       })
-      .addCase(updateTask.fulfilled, (state, action) => {
-        // action.payload = { API Task object }
+      .addCase(updateTask.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
-        const apiTask = action.payload;
-        state.tasks = state.tasks.map(task =>
-          task.id !== apiTask.id ? task : { ...task, ...apiTask },
-        );
-        const updatedTask = state.tasks.find(task => task.id === apiTask.id);
+        const updatedTaskId = payload.id;
+        // add updated task to the main Tasks[] then distribute to other task arrays
+        state.tasks = state.tasks.map(t => (t.id !== updatedTaskId ? t : { ...payload }));
 
-        if (updatedTask?.status === 'Completed') {
-          state.completedTasks.push(updatedTask);
+        // Case => Task details was updated or task was switched from todo to inProgress or vice versa
+        state.todoTasks = state.tasks.filter(t => t.status === 'Todo');
+        state.totalTodoTasks = state.todoTasks.length;
+        state.inProgressTasks = state.tasks.filter(t => t.status === 'InProgress');
+        state.totalInProgressTasks = state.inProgressTasks.length;
+
+        // Case => Task was marked as complete
+        if (payload.status === 'Completed') {
+          state.totalTasks--;
           state.totalCompletedTasks++;
-          if (state.totalTasks > 0) state.totalTasks--;
-          state.tasks = state.tasks.filter(task => task.id !== updatedTask?.id);
+          state.completedTasks.push(payload);
+          state.tasks = state.tasks.filter(t => t.status !== 'Completed');
         }
-        state.totalTodoTasks = state.tasks.filter(t => t.status === 'Todo').length;
-        state.totalInProgressTasks = state.tasks.filter(
-          t => t.status === 'InProgress',
-        ).length;
       })
-      .addCase(updateTask.rejected, (state, action) => {
+      .addCase(updateTask.rejected, (state, { payload }) => {
         state.status = 'rejected';
-        state.error = action.payload || initError;
+        state.error = payload || initError;
       });
 
     builder
       .addCase(deleteTasks.pending, state => {
         state.status = 'loading';
       })
-      .addCase(deleteTasks.fulfilled, (state, action) => {
-        // action.payload = { id: deletedTaskId , message: 'Task deleted'}
+      .addCase(deleteTasks.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
-        const taskId = action.payload.id;
+        const taskId = payload.id;
         state.tasks = state.tasks.filter(task => task.id !== taskId);
-        state.totalTodoTasks = state.tasks.filter(task => task.status === 'Todo').length;
-        state.totalInProgressTasks = state.tasks.filter(
-          task => task.status === 'InProgress',
-        ).length;
-        state.completedTasks = state.completedTasks.filter(task => task.id !== taskId);
         state.totalTasks = state.tasks.length;
+        state.todoTasks = state.todoTasks.filter(task => task.id !== taskId);
+        state.totalTodoTasks = state.todoTasks.length;
+        state.inProgressTasks = state.inProgressTasks.filter(t => t.id !== taskId);
+        state.totalInProgressTasks = state.inProgressTasks.length;
+        state.completedTasks = state.completedTasks.filter(task => task.id !== taskId);
         state.totalCompletedTasks = state.completedTasks.length;
       })
-      .addCase(deleteTasks.rejected, (state, action) => {
+      .addCase(deleteTasks.rejected, (state, { payload }) => {
         state.status = 'rejected';
-        state.error = action.payload || initError;
+        state.error = payload || initError;
       });
   },
 });

@@ -1,12 +1,12 @@
-import { useNavigate, useLocation } from 'react-router-dom';
 import { useRef, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-import { TaskSortOrder, TaskSortType } from '@features/types';
 import { Card } from '../ui/card';
 import { useAppSelector } from '@app/hooks';
 import { SortIcon, ArrowIcon } from 'assets/icons';
 import { useClickOutside } from 'hooks/use-click-outside';
 import { taskSelector } from '@features/slices/task';
+import { TaskSortOrder, TaskSortType } from '@features/types';
 
 export const SortField = () => {
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ export const SortField = () => {
   };
 
   const sortList = (
-    <Card className="absolute top-full -left-1 -translate-y-1">
+    <Card className="absolute top-full left-5 translate-y-1">
       <ul className="flex flex-col gap-6 text-center capitalize text-color-base">
         <li
           onClick={sortByAlphabetHandler}
@@ -106,7 +106,7 @@ export const SortField = () => {
           ref={sortMenuRef}
           title="sort tasks"
           onClick={openSortMenuHandler}
-          className="absolute top-1/2 left-16 z-10 flex h-16 w-16 -translate-y-1/2 -translate-x-1/2 cursor-pointer items-center justify-center gap-4 rounded-full text-2xl text-color-base transition-all hover:ring-2 hover:ring-color-highlight  active:ring-color-highlight lg:left-28 xl:left-48">
+          className="absolute z-10 flex h-14 w-14 translate-x-5 cursor-pointer items-center justify-center gap-4 rounded-full text-2xl text-color-base transition-all hover:ring-2 hover:ring-color-highlight active:ring-color-highlight">
           <SortIcon />
           {toggleMenu && <>{sortList}</>}
         </div>

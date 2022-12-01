@@ -50,10 +50,6 @@ export const deleteTasks = createAsyncThunk<
   { rejectValue: { statusCode: number; message: string } }
 >('delete/task', async (taskId: string, { rejectWithValue }) => {
   try {
-    const confirmation = window.confirm(
-      'You are about to delete this task, Are you sure?',
-    );
-    if (!confirmation) return;
     const { data } = await axiosPrivate.delete(`/tasks/${taskId}`);
     return data;
   } catch (err: any) {
