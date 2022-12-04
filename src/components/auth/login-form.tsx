@@ -116,7 +116,7 @@ export const LoginForm = () => {
             {status === 'loading' ? (
               <p
                 className={`flex items-center gap-4 text-center text-2xl text-color-valid`}>
-                <SpinnerIcon />
+                <SpinnerIcon className="ml-auto h-10 w-10" />
                 Loading . . .
               </p>
             ) : null}

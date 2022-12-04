@@ -1,12 +1,12 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
 import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
-import { GetInputValidation, GetInputValues, Input } from '@ui/input';
-import { BackArrowIcon, UploadIcon, CheckMarkIcon, SpinnerIcon } from 'assets/icons';
-import { Button } from '@ui/button';
 import { AuthInputNames } from '@auth/types';
+import { useForm } from 'hooks/use-form';
+import { Button } from '@ui/button';
+import { GetInputValues, Input } from '@ui/input';
 import { authSelector } from '@features/slices/auth';
 import { updateUser } from '@features/services/auth';
-import { useForm } from 'hooks/use-form';
+import { BackArrowIcon, UploadIcon, CheckMarkIcon, SpinnerIcon } from 'assets/icons';
 
 type Props = { showUserProfile: Dispatch<SetStateAction<boolean>> };
 type FormValidity = Record<AuthInputNames, boolean>;
@@ -39,7 +39,6 @@ export const UserProfile = ({ showUserProfile }: Props) => {
     name: nameIsValid,
     email: emailIsValid,
     password: passwordIsValid,
-    confirmPassword: confirmPasswordIsValid,
   } = formValidity;
   const { name, email, password, confirmPassword } = formValues;
 
@@ -160,7 +159,13 @@ export const UserProfile = ({ showUserProfile }: Props) => {
           <Button
             shouldDisable={!formIsValid}
             label="Submit"
-            icon={status === 'loading' ? <SpinnerIcon /> : <UploadIcon />}
+            icon={
+              status === 'loading' ? (
+                <SpinnerIcon className="h-10 w-10" />
+              ) : (
+                <UploadIcon />
+              )
+            }
             type="submit"
           />
         </div>

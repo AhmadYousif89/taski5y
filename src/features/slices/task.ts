@@ -1,4 +1,5 @@
 import { RootState } from '@app/store';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   getAllTasks,
   addNewTask,
@@ -11,8 +12,8 @@ import {
   TaskSortQuery,
   ResponseError,
   ResponseStatus,
+  TaskActionType,
 } from '@features/types';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface TaskState {
   tasks: Task[];
@@ -24,8 +25,9 @@ interface TaskState {
   totalInProgressTasks: number;
   totalCompletedTasks: number;
   searchedTaskQuery: string;
-  activeTaskPanel: TaskStatus | string;
+  activeTaskPanel: TaskStatus | '';
   sortedTaskQuery: TaskSortQuery | string;
+  actionType?: TaskActionType;
   status: ResponseStatus;
   error: ResponseError;
 }
@@ -35,17 +37,18 @@ const initError: ResponseError = { statusCode: 0, message: '', error: '' };
 const initialState: TaskState = {
   tasks: [],
   todoTasks: [],
-  completedTasks: [],
   inProgressTasks: [],
+  completedTasks: [],
+  status: 'idle',
   totalTasks: 0,
   totalTodoTasks: 0,
-  totalCompletedTasks: 0,
   totalInProgressTasks: 0,
+  totalCompletedTasks: 0,
   activeTaskPanel: '',
   sortedTaskQuery: '',
   searchedTaskQuery: '',
   error: initError,
-  status: 'idle',
+  actionType: '',
 };
 
 const taskSlice = createSlice({
@@ -55,11 +58,14 @@ const taskSlice = createSlice({
     resetTasks() {
       return initialState;
     },
-    storeTaskSearchQuery(state, { payload }: PayloadAction<string>) {
+    setTaskSearchQuery(state, { payload }: PayloadAction<string>) {
       state.searchedTaskQuery = payload.toLowerCase();
     },
-    storeTaskActivePanel(state, { payload }: PayloadAction<TaskStatus | string>) {
+    setTaskActivePanel(state, { payload }: PayloadAction<TaskStatus>) {
       state.activeTaskPanel = payload;
+    },
+    setTaskActionType(state, { payload }: PayloadAction<TaskActionType>) {
+      state.actionType = payload;
     },
   },
   extraReducers(builder) {
@@ -70,13 +76,13 @@ const taskSlice = createSlice({
       .addCase(getAllTasks.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
         state.tasks = payload.filter(t => t.status !== 'Completed');
-        state.totalTasks = state.tasks.length;
-        state.todoTasks = payload.filter(t => t.status === 'Todo');
-        state.totalTodoTasks = state.todoTasks.length;
         state.completedTasks = payload.filter(t => t.status === 'Completed');
+        state.totalTasks = state.tasks.length;
+        state.totalTodoTasks = state.tasks.filter(t => t.status === 'Todo').length;
+        state.totalInProgressTasks = state.tasks.filter(
+          t => t.status === 'InProgress',
+        ).length;
         state.totalCompletedTasks = state.completedTasks.length;
-        state.inProgressTasks = payload.filter(t => t.status === 'InProgress');
-        state.totalInProgressTasks = state.inProgressTasks.length;
       })
       .addCase(getAllTasks.rejected, (state, { payload }) => {
         state.status = 'rejected';
@@ -89,16 +95,10 @@ const taskSlice = createSlice({
       })
       .addCase(addNewTask.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
-        if (payload.status === 'Todo') {
-          state.todoTasks.push(payload);
-          state.totalTodoTasks++;
-        }
-        if (payload.status === 'InProgress') {
-          state.inProgressTasks.push(payload);
-          state.totalInProgressTasks++;
-        }
-        state.tasks.push(payload);
         state.totalTasks++;
+        state.tasks.push(payload);
+        if (payload.status === 'Todo') state.totalTodoTasks++;
+        if (payload.status === 'InProgress') state.totalInProgressTasks++;
       })
       .addCase(addNewTask.rejected, (state, { payload }) => {
         state.status = 'rejected';
@@ -112,15 +112,13 @@ const taskSlice = createSlice({
       .addCase(updateTask.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
         const updatedTaskId = payload.id;
-        // add updated task to the main Tasks[] then distribute to other task arrays
-        state.tasks = state.tasks.map(t => (t.id !== updatedTaskId ? t : { ...payload }));
-
-        // Case => Task details was updated or task was switched from todo to inProgress or vice versa
-        state.todoTasks = state.tasks.filter(t => t.status === 'Todo');
-        state.totalTodoTasks = state.todoTasks.length;
-        state.inProgressTasks = state.tasks.filter(t => t.status === 'InProgress');
-        state.totalInProgressTasks = state.inProgressTasks.length;
-
+        state.tasks = state.tasks.map(task =>
+          task.id !== updatedTaskId ? task : { ...payload },
+        );
+        state.totalTodoTasks = state.tasks.filter(task => task.status === 'Todo').length;
+        state.totalInProgressTasks = state.tasks.filter(
+          task => task.status === 'InProgress',
+        ).length;
         // Case => Task was marked as complete
         if (payload.status === 'Completed') {
           state.totalTasks--;
@@ -143,10 +141,10 @@ const taskSlice = createSlice({
         const taskId = payload.id;
         state.tasks = state.tasks.filter(task => task.id !== taskId);
         state.totalTasks = state.tasks.length;
-        state.todoTasks = state.todoTasks.filter(task => task.id !== taskId);
-        state.totalTodoTasks = state.todoTasks.length;
-        state.inProgressTasks = state.inProgressTasks.filter(t => t.id !== taskId);
-        state.totalInProgressTasks = state.inProgressTasks.length;
+        state.totalTodoTasks = state.tasks.filter(task => task.status === 'Todo').length;
+        state.totalInProgressTasks = state.tasks.filter(
+          task => task.status === 'InProgress',
+        ).length;
         state.completedTasks = state.completedTasks.filter(task => task.id !== taskId);
         state.totalCompletedTasks = state.completedTasks.length;
       })
@@ -157,7 +155,7 @@ const taskSlice = createSlice({
   },
 });
 
-export const { resetTasks, storeTaskSearchQuery, storeTaskActivePanel } =
+export const { resetTasks, setTaskSearchQuery, setTaskActivePanel, setTaskActionType } =
   taskSlice.actions;
 export const taskSelector = (state: RootState) => state.tasks;
 export default taskSlice.reducer;

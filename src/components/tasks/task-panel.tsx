@@ -1,12 +1,15 @@
-interface TaskPanelProps {
-  title: string;
+import { useAppSelector } from '@app/hooks';
+import { taskSelector } from '@features/slices/task';
+import { TaskStatus } from '@features/types';
+
+export interface TaskPanelProps {
+  id?: string;
   count: number;
   color: string;
   tooltip: string;
-  isActive: boolean;
+  title: TaskStatus;
   className?: string;
   togglePanels: () => void;
-  showFilteredTasks: (arg: boolean) => void;
 }
 
 export const TaskPanel = ({
@@ -14,10 +17,10 @@ export const TaskPanel = ({
   count,
   color,
   tooltip,
-  isActive,
   togglePanels,
-  showFilteredTasks,
 }: TaskPanelProps) => {
+  const { activeTaskPanel } = useAppSelector(taskSelector);
+
   const borderColor =
     color === 'sky'
       ? 'border-sky'
@@ -35,18 +38,13 @@ export const TaskPanel = ({
       ? 'text-green'
       : '';
 
-  const handleTasks = () => {
-    showFilteredTasks(true);
-    togglePanels();
-  };
-
   return (
     <div
       title={tooltip}
-      onClick={handleTasks}
-      className={`${isActive ? textColor : ''} 
+      onClick={() => togglePanels()}
+      className={`${activeTaskPanel === title ? textColor : ''} 
       flex cursor-pointer flex-col items-center gap-8 
-      rounded-sm bg-transparent text-color-base`}>
+      rounded-sm bg-transparent text-color-base transition-colors `}>
       <div
         className={`relative ${borderColor} h-28 w-28 rounded-full border-[5px] bg-transparent shadow-md md:h-32 md:w-32 lg:h-44 lg:w-44`}>
         <span

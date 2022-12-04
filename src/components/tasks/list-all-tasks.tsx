@@ -1,48 +1,47 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '@app/hooks';
 
 import { Modal } from '@ui/modal';
-import { TaskItem } from './task-item';
-import { sortTasks } from './helper/sort-tasks';
+import { TaskItem } from './task-item/task-item';
+import { sortTasks, searchTasks } from './helpers';
+import { Task } from '@features/types';
 import { toggleSideMenu } from '@features/slices/ui';
-import { taskSelector } from '@features/slices/task';
+import { setTaskActionType, taskSelector } from '@features/slices/task';
 import { getAllTasks } from '@features/services/tasks';
-import { useAppDispatch, useAppSelector } from '@app/hooks';
-import { Task, TaskSortType, TaskSortOrder } from '@features/types';
 
 export const TaskList = () => {
-  const location = useLocation();
   const dispatch = useAppDispatch();
-  const { tasks, status, searchedTaskQuery: query } = useAppSelector(taskSelector);
+  const {
+    tasks,
+    status,
+    actionType,
+    searchedTaskQuery: query,
+  } = useAppSelector(taskSelector);
 
   useEffect(() => {
+    dispatch(setTaskActionType('fetching'));
     dispatch(getAllTasks());
   }, []);
 
-  if (status === 'loading') return <Modal msg="Loading . . ." />;
+  useEffect(() => {
+    if (status === 'fulfilled') {
+      setTimeout(() => {
+        dispatch(setTaskActionType(''));
+      }, 1000);
+    }
+  }, [status]);
+
+  if (status === 'loading') {
+    if (actionType === 'fetching') return <Modal />;
+    if (actionType === 'deleting') return <Modal actionMsg="Deleting ..." />;
+  }
 
   let updatedTasks = [...tasks];
   updatedTasks.sort((a, b) => a.priority.localeCompare(b.priority));
 
-  const searchedTasks = () => {
-    if (query) {
-      return updatedTasks.filter(
-        task =>
-          task.title.toLowerCase().includes(query) ||
-          task.details.toLowerCase().includes(query),
-      );
-    }
-    return updatedTasks;
-  };
+  updatedTasks = searchTasks(updatedTasks, query);
 
-  if (query) updatedTasks = searchedTasks();
-
-  const params = new URLSearchParams(location.search);
-  const sortOrder = params.get('sort') as TaskSortOrder;
-  const sortType = params.get('type') as TaskSortType;
-  const sortObj = { sortOrder, sortType };
-
-  if (params.has('sort')) updatedTasks = sortTasks(updatedTasks, sortObj);
+  updatedTasks = sortTasks(updatedTasks);
 
   const searchMsg =
     query && updatedTasks.length > 0 ? (
@@ -60,7 +59,7 @@ export const TaskList = () => {
   if (updatedTasks.length === 0) {
     return (
       <div className="my-20 flex flex-col items-center text-color-base">
-        <h2 className="text-center text-3xl">You don't have any active tasks</h2>
+        <h2 className="text-3xl">You don't have any active tasks</h2>
         <button
           onClick={() => dispatch(toggleSideMenu())}
           className="mt-8 block rounded-md px-6 py-4 text-center text-3xl text-color-base ring-color-base transition-colors hover:ring-2 hover:transition-transform active:translate-y-1 active:bg-sky-500">

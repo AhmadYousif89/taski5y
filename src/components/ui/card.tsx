@@ -5,13 +5,17 @@ import { TaskPriority } from '@features/types';
 interface CardProps extends PropsWithChildren {
   className?: string;
   priority?: TaskPriority;
+  onClick?: (arg?: any) => void;
 }
 
-export const Card = ({ className, children, priority }: CardProps) => {
+export const Card = ({ className, children, priority, onClick }: CardProps) => {
+  const styles = className ? className : '';
+
   return (
     <div
       aria-label="card"
-      className={`${className} rounded-lg bg-color-card p-4 shadow-md drop-shadow-md`}>
+      onClick={onClick}
+      className={`${styles} rounded-lg bg-color-card p-4 shadow-md drop-shadow-md`}>
       {priority === 'High' ? (
         <span
           className="absolute -top-2 -right-4 cursor-default"

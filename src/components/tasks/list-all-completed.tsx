@@ -1,7 +1,8 @@
 import { Modal } from '@ui/modal';
 import { useAppSelector } from '@app/hooks';
+import { sortTasks, searchTasks } from './helpers';
 import { taskSelector } from '@features/slices/task';
-import { CompletedTaskItem } from './completed-task-item';
+import { CompletedTaskItem } from './task-completed-item';
 
 export const CompletedTaskList = () => {
   const {
@@ -10,13 +11,11 @@ export const CompletedTaskList = () => {
     searchedTaskQuery: query,
   } = useAppSelector(taskSelector);
 
-  const filteredCompletedTasks = completedTasks.filter(
-    task =>
-      task.title.toLowerCase().includes(query) ||
-      task.details.toLowerCase().includes(query),
-  );
+  let filteredCompletedTasks = searchTasks(completedTasks, query);
 
-  if (status === 'loading') return <Modal msg="Loading . . ." />;
+  filteredCompletedTasks = sortTasks(filteredCompletedTasks);
+
+  if (status === 'loading') return <Modal />;
 
   let content = (
     <ul
@@ -29,7 +28,7 @@ export const CompletedTaskList = () => {
   );
   if (filteredCompletedTasks.length === 0) {
     content = (
-      <h2 className="mt-8 text-center text-4xl text-color-base">
+      <h2 className="mt-8 text-center text-3xl text-color-base">
         You have {filteredCompletedTasks.length} completed task
       </h2>
     );

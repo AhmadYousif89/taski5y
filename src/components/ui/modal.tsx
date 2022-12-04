@@ -1,15 +1,17 @@
 import { SpinnerIcon } from 'assets/icons';
-import { Card } from './card';
 
-export const Modal = ({ msg }: { msg: string }) => {
+type Props = { actionMsg?: string };
+
+export const Modal = ({ actionMsg = 'Loading ...' }: Props) => {
   return (
-    <Card className="fixed top-1/2 left-1/2 z-50 h-full w-full -translate-x-1/2 -translate-y-1/2 bg-neutral-700 bg-opacity-10">
-      <div className="center-absolute flex h-1/4 w-2/3 max-w-7xl items-center justify-center gap-8 rounded-lg bg-color-card text-color-base lg:h-1/3">
-        <div className="[&>*]:h-12 [&>*]:w-12 sm:[&>*]:h-16 sm:[&>*]:w-16">
-          <SpinnerIcon />
+    <>
+      <div className="fixed top-1/2 left-1/2 z-30 h-full w-full -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-20" />
+      <section className="center-absolute z-40 flex h-1/4 w-2/3 max-w-5xl items-center justify-center rounded-lg bg-color-card p-6 text-color-base lg:h-1/3">
+        <div className="flex items-center gap-8">
+          <SpinnerIcon className="h-12 w-12 sm:h-16 sm:w-16" />
+          <h3 className="text-2xl sm:text-4xl">{actionMsg}</h3>
         </div>
-        <h3 className="text-3xl sm:text-4xl">{msg}</h3>
-      </div>
-    </Card>
+      </section>
+    </>
   );
 };

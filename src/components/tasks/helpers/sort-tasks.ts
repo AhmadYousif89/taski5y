@@ -1,6 +1,14 @@
-import { TaskSortQuery, Task } from '@features/types';
+import { useLocation } from 'react-router-dom';
+import { Task, TaskSortOrder, TaskSortType } from '@features/types';
 
-export const sortTasks = (tasks: Task[], { sortOrder, sortType }: TaskSortQuery) => {
+export const sortTasks = (data: Task[]) => {
+  const location = useLocation();
+
+  const params = new URLSearchParams(location.search);
+  const sortOrder = params.get('sort') as TaskSortOrder;
+  const sortType = params.get('type') as TaskSortType;
+
+  const tasks = [...data];
   return tasks.sort((taskA, taskB) => {
     switch (sortType) {
       case 'alpha': {

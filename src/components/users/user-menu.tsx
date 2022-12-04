@@ -7,6 +7,7 @@ import { toggleSideMenu } from '@features/slices/ui';
 import { deleteUser } from '@features/services/auth';
 import { useClickOutside } from 'hooks/use-click-outside';
 import { SettingsIcon } from 'assets/icons';
+import { ActionModal } from '@ui/action-modal';
 
 type Props = { showUserProfile: Dispatch<SetStateAction<boolean>> };
 
@@ -14,6 +15,7 @@ export const UserMenu = ({ showUserProfile }: Props) => {
   const dispatch = useAppDispatch();
   const settingRef = useRef<HTMLButtonElement>(null);
   const [toggleMenu, setToggleMenu] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const openMenuHandler = () => {
     setToggleMenu(!toggleMenu);
@@ -24,10 +26,6 @@ export const UserMenu = ({ showUserProfile }: Props) => {
   useClickOutside(settingRef, closeMenuHandler);
 
   const deleteAccountHandler = () => {
-    const confirm = window.confirm(
-      'You are about to delete your account and all related tasks, Are you sure about this action?',
-    );
-    if (!confirm) return;
     dispatch(toggleSideMenu());
     dispatch(resetTasks());
     dispatch(deleteUser());
@@ -43,7 +41,7 @@ export const UserMenu = ({ showUserProfile }: Props) => {
         </li>
         <li
           className="rounded-md p-2 ring-color-base hover:ring-2 hover:ring-color-highlight"
-          onClick={deleteAccountHandler}>
+          onClick={() => setIsDeleting(true)}>
           <span className="text-red-500">Delete account</span>
         </li>
       </ul>
@@ -51,12 +49,14 @@ export const UserMenu = ({ showUserProfile }: Props) => {
   );
 
   return (
-    <button
-      onClick={openMenuHandler}
-      ref={settingRef}
-      className="btn-circle relative flex items-center justify-center">
-      <SettingsIcon />
-      {toggleMenu && <>{settingList}</>}
-    </button>
+    <>
+      <button
+        onClick={openMenuHandler}
+        ref={settingRef}
+        className="btn-circle relative flex items-center justify-center">
+        <SettingsIcon />
+        {toggleMenu && <>{settingList}</>}
+      </button>
+    </>
   );
 };
