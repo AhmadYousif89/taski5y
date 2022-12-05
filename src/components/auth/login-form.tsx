@@ -4,7 +4,7 @@ import { FormEvent, useEffect } from 'react';
 import { GetInputValues, Input } from '@ui/input';
 import { useForm } from 'hooks/use-form';
 import { signIn } from '@features/services/auth';
-import { authSelector, resetAuth } from '@features/slices/auth';
+import { authSelector, resetAuth, setAuthActionType } from '@features/slices/auth';
 import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
 
 import { Card } from '@ui/card';
@@ -35,16 +35,10 @@ export const LoginForm = () => {
   const formIsValid = [emailIsValid, passwordIsValid].every(Boolean);
 
   useEffect(() => {
-    dispatch(resetAuth());
-  }, []);
-
-  useEffect(() => {
     if (user) {
       navigate('/tasks');
-    }
-    return () => {
       dispatch(resetAuth());
-    };
+    }
   }, [user]);
 
   const onFormSubmit = async (e: FormEvent) => {
@@ -65,7 +59,7 @@ export const LoginForm = () => {
   );
 
   return (
-    <section className="translate-y-40">
+    <section className="translate-y-40" aria-label="Login-form">
       <Card className="relative mx-4 max-w-screen-xs sm:mx-auto">
         <form
           className="mx-auto my-16 flex w-10/12 flex-col gap-6"

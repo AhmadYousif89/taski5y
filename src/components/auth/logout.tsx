@@ -4,6 +4,7 @@ import { resetTasks } from '@features/slices/task';
 import { signOut } from '@features/services/auth';
 import { LogoutIcon } from 'assets/icons';
 import { Button } from '@ui/button';
+import { setAuthActionType } from '@features/slices/auth';
 
 export const Logout = () => {
   const dispatch = useAppDispatch();
@@ -12,7 +13,12 @@ export const Logout = () => {
     dispatch(signOut());
     dispatch(resetTasks());
     dispatch(toggleSideMenu());
+    dispatch(setAuthActionType('logout'));
   };
 
-  return <Button label="Logout" icon={<LogoutIcon />} onClick={() => logoutHandler()} />;
+  return (
+    <div className="mt-16">
+      <Button label="Logout" icon={<LogoutIcon />} onClick={() => logoutHandler()} />
+    </div>
+  );
 };

@@ -22,7 +22,6 @@ const uiSlice = createSlice({
       state.mode = state.mode === 'dark-theme' ? 'light-theme' : 'dark-theme';
       localStorage.setItem('mode', state.mode);
     },
-
     toggleSideMenu(state) {
       state.menuVisibility = !state.menuVisibility;
     },

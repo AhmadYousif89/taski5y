@@ -4,10 +4,10 @@ import { useAppDispatch, useAppSelector } from '@app/hooks';
 import { Modal } from '@ui/modal';
 import { TaskItem } from './task-item/task-item';
 import { sortTasks, searchTasks } from './helpers';
-import { Task } from '@features/types';
 import { toggleSideMenu } from '@features/slices/ui';
-import { setTaskActionType, taskSelector } from '@features/slices/task';
 import { getAllTasks } from '@features/services/tasks';
+import { setTaskActionType, taskSelector } from '@features/slices/task';
+import { Backdrop } from '@ui/backdrop';
 
 export const TaskList = () => {
   const dispatch = useAppDispatch();
@@ -23,17 +23,21 @@ export const TaskList = () => {
     dispatch(getAllTasks());
   }, []);
 
-  useEffect(() => {
-    if (status === 'fulfilled') {
-      setTimeout(() => {
-        dispatch(setTaskActionType(''));
-      }, 1000);
-    }
-  }, [status]);
-
-  if (status === 'loading') {
-    if (actionType === 'fetching') return <Modal />;
-    if (actionType === 'deleting') return <Modal actionMsg="Deleting ..." />;
+  if (status === 'loading' && actionType) {
+    return (
+      <>
+        <Modal
+          actionMsg={`${
+            actionType === 'fetching'
+              ? 'Loading ...'
+              : actionType === 'deleting'
+              ? 'Deleting ...'
+              : ''
+          }`}
+        />
+        <Backdrop />
+      </>
+    );
   }
 
   let updatedTasks = [...tasks];
@@ -74,9 +78,9 @@ export const TaskList = () => {
       {searchMsg}
       <ul
         aria-label="Task-list"
-        className="my-8 mx-4 grid grid-cols-[repeat(auto-fit,minmax(31rem,.5fr))] justify-center gap-8">
+        className="my-6 mx-10 grid grid-cols-[repeat(auto-fit,minmax(32rem,.65fr))] justify-center gap-8">
         {updatedTasks.map(task => (
-          <TaskItem key={task?.id} task={task as Task} />
+          <TaskItem key={task.id} task={task} />
         ))}
       </ul>
     </>

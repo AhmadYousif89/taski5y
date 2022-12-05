@@ -1,15 +1,16 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@app/hooks';
-import { setTaskActionType, taskSelector } from '@features/slices/task';
+import { resetTaskStatus, setTaskActionType, taskSelector } from '@features/slices/task';
 import { deleteTasks, updateTask } from '@features/services/tasks';
 import { Task } from '@features/types';
 
 import { Card } from '@ui/card';
+import { Backdrop } from '@ui/backdrop';
 import { ActionModal } from '@ui/action-modal';
 import { DeleteButton } from './delete-button';
+import { ActionButtons } from './action-buttons';
 import { DisplayTaskTime } from './display-time';
 import { DetailsSection } from './details-section';
-import { ActionButtons } from './action-buttons';
 import { SwitchTaskStatus } from '@tasks/task-switcher';
 
 export const TaskItem = ({ task }: { task: Task }) => {
@@ -55,7 +56,10 @@ export const TaskItem = ({ task }: { task: Task }) => {
   useEffect(() => {
     if (status === 'fulfilled') {
       setIsUpdating(false);
+      setIsDeleting(false);
       setShowUpdateBtn(false);
+      dispatch(resetTaskStatus());
+      dispatch(setTaskActionType(''));
     }
   }, [status]);
 
@@ -65,17 +69,20 @@ export const TaskItem = ({ task }: { task: Task }) => {
   return (
     <>
       {isDeleting ? (
-        <ActionModal
-          msg="You are about to delete this task, Are you sure?"
-          confirmAction={() => deleteTaskHandler()}
-          closeModal={() => setIsDeleting(false)}
-        />
+        <>
+          <ActionModal
+            msg="Delete this task ?"
+            confirmAction={() => deleteTaskHandler()}
+            closeModal={() => setIsDeleting(false)}
+          />
+          <Backdrop onClick={() => setIsDeleting(false)} />
+        </>
       ) : null}
       <Card priority={task.priority} className={`relative ${styles}`}>
         <li className="flex flex-col gap-6 py-6 px-4 text-color-base md:text-3xl">
           <DeleteButton onDelete={() => setIsDeleting(true)} />
 
-          <header className="space-y-4">
+          <header className="space-y-4 self-start">
             <h2 className="text-3xl tracking-wide">{task.title}</h2>
             <DisplayTaskTime label="created" time={task.createdAt} />
           </header>

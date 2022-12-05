@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react';
-import { useAppDispatch } from '@app/hooks';
+import { useAppDispatch, useAppSelector } from '@app/hooks';
 
 import { TaskInputNames } from './types';
 import { TaskStats } from './task-stats';
@@ -8,6 +8,8 @@ import { GetInputValues, Input } from '@ui/input';
 import { GetSelectValues, Select } from '@ui/select';
 import { TaskPriority, TaskStatus } from '@features/types';
 import { addNewTask } from '@features/services/tasks';
+import { resetTaskStatus, setTaskActionType, taskSelector } from '@features/slices/task';
+import { CheckMarkIcon, SpinnerIcon } from 'assets/icons';
 
 type FormValidity = Record<TaskInputNames, boolean>;
 type FormValues = Record<TaskInputNames, string>;
@@ -22,6 +24,7 @@ const initFormValues: FormValues = { title: '', details: '', priority: '', statu
 
 export const TaskForm = () => {
   const dispatch = useAppDispatch();
+  const { status: taskStatus, actionType } = useAppSelector(taskSelector);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
     FormValidity,
@@ -41,11 +44,14 @@ export const TaskForm = () => {
       status: (status as TaskStatus) || 'Todo',
       priority: (priority as TaskPriority) || 'Normal',
     };
-    dispatch(addNewTask(newTask));
     setIsSubmitted(true);
+    dispatch(addNewTask(newTask));
+    dispatch(setTaskActionType('creating'));
     setTimeout(() => {
       setIsSubmitted(false);
-    }, 2000);
+      dispatch(resetTaskStatus());
+      dispatch(setTaskActionType(''));
+    }, 3000);
   };
 
   return (
@@ -122,11 +128,17 @@ export const TaskForm = () => {
           </button>
         </fieldset>
 
-        {isSubmitted && (
-          <p className="text-center text-2xl text-color-valid">
-            New task has been created
+        {isSubmitted && taskStatus === 'loading' ? (
+          <p className="flex items-center justify-center gap-4 text-center text-2xl text-color-valid">
+            <SpinnerIcon className="h-10 w-10" />
+            <span>creating new task ...</span>
           </p>
-        )}
+        ) : taskStatus === 'fulfilled' && isSubmitted ? (
+          <p className="flex items-center justify-center gap-4 text-center text-2xl text-color-valid">
+            <CheckMarkIcon />
+            <span>New task created</span>
+          </p>
+        ) : null}
       </form>
     </>
   );

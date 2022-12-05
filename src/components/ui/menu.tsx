@@ -10,26 +10,23 @@ interface SideMenuProps extends PropsWithChildren {
 export const Menu = ({ children, className }: SideMenuProps) => {
   const dispatch = useAppDispatch();
   const menuRef = useRef<HTMLDivElement>(null);
-  const { menuVisibility: sideMenuVisibility } = useAppSelector(uiSelector);
+  const { menuVisibility } = useAppSelector(uiSelector);
 
-  const animateMenu = sideMenuVisibility
+  const animateMenu = menuVisibility
     ? 'translate-y-0 opacity-100'
-    : '-translate-y-full opacity-0';
+    : '-translate-y-full opacity-0 invisible';
 
   useEffect(() => {
-    if (sideMenuVisibility === false) {
-      menuRef?.current?.blur();
-      return;
-    }
-    menuRef?.current?.focus();
-  }, [sideMenuVisibility]);
+    menuRef.current?.focus();
+    if (menuVisibility === false) menuRef.current?.blur();
+  }, [menuVisibility]);
 
   return (
     <aside
       ref={menuRef}
-      tabIndex={0}
+      tabIndex={-1}
       onKeyDown={e => (e.key === 'Escape' ? dispatch(toggleSideMenu()) : null)}
-      className={`${className} ${animateMenu} fixed top-0 left-1/2 z-30 flex min-h-screen w-full origin-top -translate-x-1/2 flex-col bg-color-card bg-opacity-95 shadow-md transition-all duration-700 md:w-2/3 lg:w-4/12 lg:min-w-[50rem]`}>
+      className={`${className} ${animateMenu} fixed top-0 left-1/2 z-20 flex min-h-screen w-full origin-top -translate-x-1/2 flex-col bg-color-card shadow-md transition-all duration-700 md:w-2/3 lg:w-4/12 lg:min-w-[50rem]`}>
       <button
         type={'button'}
         className="btn-circle absolute top-14 right-0 flex items-center justify-center text-xl font-bold text-color-base"

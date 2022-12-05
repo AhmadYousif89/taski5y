@@ -10,7 +10,7 @@ export const ThemeSwitcher = () => {
   const animateLightIcon = mode === 'light-theme' ? 'translate-x-1/2' : 'translate-x-20';
 
   return (
-    <div className="absolute top-1/2 left-4 -translate-y-1/2 transition-all md:left-16 lg:left-1/4">
+    <div className="absolute top-1/2 left-4 -translate-y-1/2 scale-[.8] transition-all xs:scale-100 md:left-16 lg:left-1/4">
       <button
         type={'button'}
         className="btn-circle relative overflow-hidden"

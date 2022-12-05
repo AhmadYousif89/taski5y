@@ -3,7 +3,7 @@ import { FormEvent, useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@app/hooks';
 import { resetPassword } from '@features/services/auth';
-import { authSelector } from '@features/slices/auth';
+import { authSelector, resetAuth } from '@features/slices/auth';
 
 import { Card } from '@ui/card';
 import { AuthInputNames } from './types';
@@ -26,7 +26,7 @@ const initFormValues: FormValues = { email: '', password: '', confirmPassword: '
 export const ResetPassword = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { status, error } = useAppSelector(authSelector);
+  const { status, message, error } = useAppSelector(authSelector);
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
     FormValidity,
     FormValues
@@ -47,7 +47,8 @@ export const ResetPassword = () => {
     if (status === 'fulfilled') {
       setTimeout(() => {
         navigate('/login');
-      }, 1500);
+        dispatch(resetAuth());
+      }, 2000);
     }
   }, [status]);
 
@@ -121,10 +122,20 @@ export const ResetPassword = () => {
             ) : null}
 
             {status === 'fulfilled' ? (
+              <div className="flex flex-col items-end gap-2 text-center text-2xl text-color-valid">
+                <p>{message}</p>
+                <p className="flex items-center gap-4">
+                  <SpinnerIcon className="h-8 w-8" />
+                  redirecting to login
+                </p>
+              </div>
+            ) : null}
+
+            {status === 'loading' ? (
               <p
                 className={`flex items-center gap-4 text-center text-2xl text-color-valid`}>
-                <SpinnerIcon />
-                Redirecting to login
+                <SpinnerIcon className="h-10 w-10" />
+                Loading ...
               </p>
             ) : null}
           </fieldset>

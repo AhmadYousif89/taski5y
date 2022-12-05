@@ -2,16 +2,17 @@ import { Dispatch, SetStateAction, useRef, useState } from 'react';
 
 import { Card } from '@ui/card';
 import { useAppDispatch } from '@app/hooks';
-import { resetTasks } from '@features/slices/task';
+import { resetTasks, setTaskActionType } from '@features/slices/task';
 import { toggleSideMenu } from '@features/slices/ui';
 import { deleteUser } from '@features/services/auth';
 import { useClickOutside } from 'hooks/use-click-outside';
 import { SettingsIcon } from 'assets/icons';
 import { ActionModal } from '@ui/action-modal';
+import { Backdrop } from '@ui/backdrop';
 
 type Props = { showUserProfile: Dispatch<SetStateAction<boolean>> };
 
-export const UserMenu = ({ showUserProfile }: Props) => {
+export const UserSettings = ({ showUserProfile }: Props) => {
   const dispatch = useAppDispatch();
   const settingRef = useRef<HTMLButtonElement>(null);
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -26,6 +27,8 @@ export const UserMenu = ({ showUserProfile }: Props) => {
   useClickOutside(settingRef, closeMenuHandler);
 
   const deleteAccountHandler = () => {
+    setIsDeleting(false);
+    dispatch(setTaskActionType('deleting'));
     dispatch(toggleSideMenu());
     dispatch(resetTasks());
     dispatch(deleteUser());
@@ -49,7 +52,17 @@ export const UserMenu = ({ showUserProfile }: Props) => {
   );
 
   return (
-    <>
+    <section className="absolute top-14 left-5">
+      {isDeleting ? (
+        <>
+          <ActionModal
+            msg="Delete my account with all related tasks ?"
+            confirmAction={deleteAccountHandler}
+            closeModal={() => setIsDeleting(false)}
+          />
+          <Backdrop className="!z-30" onClick={() => setIsDeleting(false)} />
+        </>
+      ) : null}
       <button
         onClick={openMenuHandler}
         ref={settingRef}
@@ -57,6 +70,6 @@ export const UserMenu = ({ showUserProfile }: Props) => {
         <SettingsIcon />
         {toggleMenu && <>{settingList}</>}
       </button>
-    </>
+    </section>
   );
 };

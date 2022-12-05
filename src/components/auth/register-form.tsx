@@ -73,7 +73,7 @@ export const RegisterForm = () => {
   };
 
   return (
-    <section className="translate-y-40">
+    <section className="translate-y-40" aria-label="Registration-form">
       <Card className="relative mx-4 max-w-screen-xs sm:mx-auto">
         <form className="mx-auto my-16 flex w-4/5 flex-col gap-6" onSubmit={onFormSubmit}>
           <h2 className="text-3xl capitalize tracking-widest text-color-base">
@@ -132,7 +132,7 @@ export const RegisterForm = () => {
             {status === 'loading' ? (
               <p
                 className={`flex items-center gap-4 text-center text-2xl text-color-valid`}>
-                <SpinnerIcon />
+                <SpinnerIcon className="h-10 w-10" />
                 Loading
               </p>
             ) : null}

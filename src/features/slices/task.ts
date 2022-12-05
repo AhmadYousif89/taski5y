@@ -27,7 +27,7 @@ interface TaskState {
   searchedTaskQuery: string;
   activeTaskPanel: TaskStatus | '';
   sortedTaskQuery: TaskSortQuery | string;
-  actionType?: TaskActionType;
+  actionType: TaskActionType;
   status: ResponseStatus;
   error: ResponseError;
 }
@@ -57,6 +57,9 @@ const taskSlice = createSlice({
   reducers: {
     resetTasks() {
       return initialState;
+    },
+    resetTaskStatus(state) {
+      state.status = 'idle';
     },
     setTaskSearchQuery(state, { payload }: PayloadAction<string>) {
       state.searchedTaskQuery = payload.toLowerCase();
@@ -155,7 +158,12 @@ const taskSlice = createSlice({
   },
 });
 
-export const { resetTasks, setTaskSearchQuery, setTaskActivePanel, setTaskActionType } =
-  taskSlice.actions;
+export const {
+  resetTasks,
+  resetTaskStatus,
+  setTaskSearchQuery,
+  setTaskActivePanel,
+  setTaskActionType,
+} = taskSlice.actions;
 export const taskSelector = (state: RootState) => state.tasks;
 export default taskSlice.reducer;

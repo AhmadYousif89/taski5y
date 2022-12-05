@@ -1,3 +1,3 @@
-export const persistData = (data: unknown, storageName: string) => {
-  localStorage.setItem(`${storageName}`, JSON.stringify(data));
+export const persistData = (keyName: string, data: any) => {
+  localStorage.setItem(keyName, data);
 };

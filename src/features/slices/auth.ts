@@ -1,19 +1,21 @@
 import { RootState } from '@app/store';
-import { createSlice } from '@reduxjs/toolkit';
-import { ResponseError, ResponseStatus, User } from '../types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AuthActionType, ResponseError, ResponseStatus, User } from '../types';
 import {
   signUp,
   signIn,
   signOut,
-  resetPassword,
   getUser,
   updateUser,
   deleteUser,
+  resetPassword,
 } from '../services/auth';
+import { persistData } from 'helpers/persist-data';
 
 export interface AuthState {
   error: ResponseError;
   status: ResponseStatus;
+  actionType: AuthActionType;
   user: User | null;
   message: string;
 }
@@ -24,6 +26,7 @@ const initialState: AuthState = {
   status: 'idle',
   message: '',
   user: null,
+  actionType: '',
 };
 
 const authSlice = createSlice({
@@ -31,8 +34,10 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     resetAuth(state) {
-      state.status = 'idle';
-      state.error = initError;
+      return { ...initialState, user: state.user };
+    },
+    setAuthActionType(state, { payload }: PayloadAction<AuthActionType>) {
+      state.actionType = payload;
     },
   },
   extraReducers: builder => {
@@ -43,6 +48,7 @@ const authSlice = createSlice({
       .addCase(signUp.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
         state.user = payload;
+        persistData('hasAccess', JSON.stringify(true));
       })
       .addCase(signUp.rejected, (state, { payload }) => {
         state.status = 'rejected';
@@ -57,22 +63,22 @@ const authSlice = createSlice({
       .addCase(signIn.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
         state.user = payload;
+        persistData('hasAccess', JSON.stringify(true));
       })
       .addCase(signIn.rejected, (state, { payload }) => {
         state.status = 'rejected';
-        state.error = payload || initError;
         state.user = null;
+        state.error = payload || initError;
       });
 
     builder
       .addCase(signOut.pending, state => {
         state.status = 'loading';
       })
-      .addCase(signOut.fulfilled, (state, { payload }) => {
-        state.status = 'idle';
-        state.user = null;
-        state.message = payload.message;
+      .addCase(signOut.fulfilled, () => {
         localStorage.removeItem('persist');
+        localStorage.removeItem('hasAccess');
+        return initialState;
       })
       .addCase(signOut.rejected, (state, { payload }) => {
         state.status = 'rejected';
@@ -103,6 +109,7 @@ const authSlice = createSlice({
       })
       .addCase(getUser.rejected, (state, action) => {
         state.status = 'rejected';
+        state.actionType = '';
         state.user = null;
         state.error = action.payload || initError;
       });
@@ -124,19 +131,18 @@ const authSlice = createSlice({
       .addCase(deleteUser.pending, state => {
         state.status = 'loading';
       })
-      .addCase(deleteUser.fulfilled, (state, { payload }) => {
-        state.status = 'fulfilled';
-        state.message = payload.message;
-        state.user = null;
+      .addCase(deleteUser.fulfilled, () => {
         localStorage.removeItem('persist');
+        return initialState;
       })
       .addCase(deleteUser.rejected, (state, action) => {
         state.status = 'rejected';
+        state.actionType = '';
         state.error = action.payload || initError;
       });
   },
 });
 
-export const { resetAuth } = authSlice.actions;
+export const { resetAuth, setAuthActionType } = authSlice.actions;
 export const authSelector = (state: RootState) => state.auth;
 export default authSlice.reducer;

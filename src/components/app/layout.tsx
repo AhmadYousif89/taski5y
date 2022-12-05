@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { useAppSelector, useAuth } from '@app/hooks';
-import { uiSelector } from '@features/slices/ui';
+import { Outlet } from 'react-router-dom';
+import { toggleSideMenu, uiSelector } from '@features/slices/ui';
 
+import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
 import { ThemeSwitcher } from '@ui/theme-switcher';
 import { MenuButton } from '@ui/menu-button';
 import { Backdrop } from '@ui/backdrop';
@@ -10,15 +11,14 @@ import { Menu } from '@ui/menu';
 import { Logout } from '@auth/logout';
 import { TaskForm } from '@tasks/task-form';
 import { UserInfo } from '@users/user-info';
-import { UserMenu } from '@users/user-menu';
+import { UserSettings } from '@users/user-settings';
 import { UserProfile } from '@users/user-profile';
-import { Outlet } from 'react-router-dom';
 
 export const AppLayout = () => {
   const { user } = useAuth();
-  const { mode } = useAppSelector(uiSelector);
-  const { menuVisibility } = useAppSelector(uiSelector);
+  const dispatch = useAppDispatch();
   const [showProfile, setShowProfile] = useState(false);
+  const { mode, menuVisibility } = useAppSelector(uiSelector);
 
   return (
     <main className={`${mode} flex min-h-[inherit] flex-col bg-color-base`}>
@@ -28,25 +28,15 @@ export const AppLayout = () => {
           📑 personal task manager
         </h1>
         {user ? <MenuButton /> : null}
-
-        <div aria-label="menu" className="relative">
-          <Menu className="[&>*]:mx-12">
-            <div className="absolute top-14 left-5">
-              <UserMenu showUserProfile={setShowProfile} />
-            </div>
-            <UserInfo user={user} />
-            {showProfile ? (
-              <UserProfile showUserProfile={setShowProfile} />
-            ) : (
-              <TaskForm />
-            )}
-            <div className="mt-16 flex justify-between" aria-label="profile">
-              <Logout />
-            </div>
-          </Menu>
-          {menuVisibility ? <Backdrop /> : null}
-        </div>
       </header>
+
+      <Menu aria-label="menu" className="fixed [&>*]:mx-12">
+        <UserSettings showUserProfile={setShowProfile} />
+        <UserInfo user={user} />
+        {showProfile ? <UserProfile showUserProfile={setShowProfile} /> : <TaskForm />}
+        <Logout />
+        {menuVisibility ? <Backdrop onClick={() => dispatch(toggleSideMenu())} /> : null}
+      </Menu>
 
       <Outlet />
     </main>

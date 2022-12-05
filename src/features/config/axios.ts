@@ -46,14 +46,8 @@ const onResponseError = async (error: AxiosError) => {
       return Promise.reject(refreshErr);
     }
   }
-  // I don't like this solution maybe will refactor it later but for now it does the job
-  const authRoutes = ['/', '/login', '/password-reset'];
-  const initLoad =
-    authRoutes.some(path => location.pathname === path) &&
-    error?.response?.status === 403;
-  if (initLoad) return;
-  else if (error?.response?.status === 403) {
-    localStorage.removeItem('persist');
+  if (error?.response?.status === 403) {
+    localStorage.clear();
     window.location.reload();
     return;
   }
