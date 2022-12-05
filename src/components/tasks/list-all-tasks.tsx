@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@app/hooks';
 
 import { Modal } from '@ui/modal';
+import { Backdrop } from '@ui/backdrop';
 import { TaskItem } from './task-item/task-item';
 import { sortTasks, searchTasks } from './helpers';
 import { toggleSideMenu } from '@features/slices/ui';
 import { getAllTasks } from '@features/services/tasks';
 import { setTaskActionType, taskSelector } from '@features/slices/task';
-import { Backdrop } from '@ui/backdrop';
 
 export const TaskList = () => {
   const dispatch = useAppDispatch();

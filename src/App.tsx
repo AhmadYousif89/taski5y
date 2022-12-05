@@ -13,6 +13,7 @@ function App() {
   const hasAccess = localStorage.getItem('hasAccess');
 
   useEffect(() => {
+    if (persist === 'false' || !persist) localStorage.removeItem('hasAccess');
     if (persist === 'true' && hasAccess) {
       dispatch(setAuthActionType('refresh'));
       dispatch(getUser());

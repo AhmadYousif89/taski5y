@@ -29,7 +29,7 @@ export const TasksPage = () => {
         </span>
         <Button
           onClick={() => dispatch(setTaskActivePanel('Completed'))}
-          className="mt-8 h-24 w-24 !rounded-full hover:ring hover:ring-color-highlight active:translate-y-1 [&>*]:text-2xl"
+          className="mt-8 h-24 w-24 !rounded-full hover:!ring hover:!ring-color-highlight active:translate-y-1"
           label="Here"
         />
       </div>

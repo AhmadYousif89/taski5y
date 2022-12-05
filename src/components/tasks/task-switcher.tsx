@@ -1,7 +1,6 @@
 import { useAppDispatch } from '@app/hooks';
 import { TaskStatus } from '@features/types';
 import { updateTask } from '@features/services/tasks';
-import { setTaskActionType } from '@features/slices/task';
 
 type Props = { taskId: string; taskStatus: TaskStatus; onSwitch: () => void };
 
@@ -9,7 +8,6 @@ export const SwitchTaskStatus = ({ taskId, taskStatus, onSwitch }: Props) => {
   const dispatch = useAppDispatch();
 
   const updateTaskStatus = () => {
-    dispatch(setTaskActionType('updating'));
     dispatch(
       updateTask({ id: taskId, status: taskStatus === 'Todo' ? 'InProgress' : 'Todo' }),
     );

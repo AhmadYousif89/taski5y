@@ -25,7 +25,6 @@ export const TaskItem = ({ task }: { task: Task }) => {
   const markTaskCompleted = () => {
     setIsUpdating(true);
     setShowUpdateBtn(true);
-    dispatch(setTaskActionType('updating'));
     dispatch(updateTask({ id: task.id, status: 'Completed' }));
   };
 
@@ -37,7 +36,6 @@ export const TaskItem = ({ task }: { task: Task }) => {
   const updateTaskDetailHandler = () => {
     setIsEditing(false);
     setIsUpdating(true);
-    dispatch(setTaskActionType('updating'));
     dispatch(updateTask({ id: task.id, details: updatedDetails }));
   };
 
