@@ -49,7 +49,7 @@ const onResponseError = async (error: AxiosError) => {
   if (error?.response?.status === 403) {
     localStorage.clear();
     window.location.reload();
-    console.log('call');
+    console.log('call', error.request);
     return;
   }
 

@@ -18,23 +18,28 @@ export const TaskList = () => {
     searchedTaskQuery: query,
   } = useAppSelector(taskSelector);
 
-  useEffect(() => {
+  const fetchTasks = async () => {
     dispatch(setTaskActionType('fetching'));
-    dispatch(getAllTasks());
+    await dispatch(getAllTasks());
+    dispatch(setTaskActionType(''));
+  };
+
+  useEffect(() => {
+    fetchTasks();
   }, []);
 
-  if (status === 'loading' && actionType) {
+  if (actionType === 'fetching') {
     return (
       <>
-        <Modal
-          actionMsg={`${
-            actionType === 'fetching'
-              ? 'Loading ...'
-              : actionType === 'deleting'
-              ? 'Deleting ...'
-              : ''
-          }`}
-        />
+        <Modal />
+        <Backdrop />
+      </>
+    );
+  }
+  if (actionType === 'deleting') {
+    return (
+      <>
+        <Modal actionMsg="Deleting ..." />
         <Backdrop />
       </>
     );

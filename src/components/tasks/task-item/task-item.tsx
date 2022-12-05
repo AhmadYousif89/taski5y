@@ -28,15 +28,16 @@ export const TaskItem = ({ task }: { task: Task }) => {
     dispatch(updateTask({ id: task.id, status: 'Completed' }));
   };
 
-  const deleteTaskHandler = () => {
-    dispatch(setTaskActionType('deleting'));
-    dispatch(deleteTasks(task.id));
-  };
-
   const updateTaskDetailHandler = () => {
     setIsEditing(false);
     setIsUpdating(true);
     dispatch(updateTask({ id: task.id, details: updatedDetails }));
+  };
+
+  const deleteTaskHandler = async () => {
+    dispatch(setTaskActionType('deleting'));
+    await dispatch(deleteTasks(task.id));
+    dispatch(setTaskActionType(''));
   };
 
   const onInputHandler = () => setIsEditing(true);
@@ -55,9 +56,7 @@ export const TaskItem = ({ task }: { task: Task }) => {
     if (status === 'fulfilled') {
       setIsUpdating(false);
       setIsDeleting(false);
-      setShowUpdateBtn(false);
-      dispatch(resetTaskStatus());
-      dispatch(setTaskActionType(''));
+      // setShowUpdateBtn(false);
     }
   }, [status]);
 

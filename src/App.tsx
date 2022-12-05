@@ -8,7 +8,7 @@ import { Modal } from '@ui/modal';
 
 function App() {
   const dispatch = useAppDispatch();
-  const { status: authStatus, actionType } = useAppSelector(authSelector);
+  const { status, actionType } = useAppSelector(authSelector);
   const persist = localStorage.getItem('persist');
   const hasAccess = localStorage.getItem('hasAccess');
 
@@ -20,7 +20,7 @@ function App() {
     }
   }, []);
 
-  if (authStatus === 'loading' && actionType) {
+  if (status === 'loading' && actionType) {
     return (
       <>
         <Modal

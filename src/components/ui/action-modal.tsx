@@ -16,7 +16,7 @@ export const ActionModal = ({ msg, confirmAction, closeModal }: Props) => {
           <WarningIcon />
         </span>
         <h3 className="text-2xl sm:text-4xl">{msg}</h3>
-        <p className="text-xl sm:text-2xl">This action can't be undone.</p>
+        <p className="text-xl sm:text-2xl">This action can not be undone.</p>
         <div className="mt-6 flex w-full justify-center gap-12">
           <Button
             label="Confirm"

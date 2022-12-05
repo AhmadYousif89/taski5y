@@ -24,7 +24,7 @@ const initFormValues: FormValues = { title: '', details: '', priority: '', statu
 
 export const TaskForm = () => {
   const dispatch = useAppDispatch();
-  const { status: taskStatus, actionType } = useAppSelector(taskSelector);
+  const { status: httpStatus } = useAppSelector(taskSelector);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
     FormValidity,
@@ -46,11 +46,9 @@ export const TaskForm = () => {
     };
     setIsSubmitted(true);
     dispatch(addNewTask(newTask));
-    dispatch(setTaskActionType('creating'));
     setTimeout(() => {
       setIsSubmitted(false);
       dispatch(resetTaskStatus());
-      dispatch(setTaskActionType(''));
     }, 3000);
   };
 
@@ -58,7 +56,7 @@ export const TaskForm = () => {
     <>
       <TaskStats />
 
-      <form className="flex flex-col gap-6" onSubmit={onFormSubmit}>
+      <form className="relative flex flex-col gap-6" onSubmit={onFormSubmit}>
         <fieldset aria-label="task-title-input">
           <Input
             type={'text'}
@@ -128,15 +126,17 @@ export const TaskForm = () => {
           </button>
         </fieldset>
 
-        {isSubmitted && taskStatus === 'loading' ? (
-          <p className="flex items-center justify-center gap-4 text-center text-2xl text-color-valid">
-            <SpinnerIcon className="h-10 w-10" />
-            <span>creating new task ...</span>
-          </p>
-        ) : taskStatus === 'fulfilled' && isSubmitted ? (
-          <p className="flex items-center justify-center gap-4 text-center text-2xl text-color-valid">
+        {isSubmitted && httpStatus === 'fulfilled' ? (
+          <p className="absolute -bottom-16 left-1/2 flex -translate-x-1/2 items-center justify-center gap-4 text-center text-2xl text-color-valid">
             <CheckMarkIcon />
             <span>New task created</span>
+          </p>
+        ) : null}
+
+        {isSubmitted && httpStatus === 'loading' ? (
+          <p className="absolute -bottom-16 left-1/2 flex -translate-x-1/2 items-center justify-center gap-4 text-center text-2xl text-color-valid">
+            <SpinnerIcon className="h-10 w-10" />
+            <span>creating new task ...</span>
           </p>
         ) : null}
       </form>
