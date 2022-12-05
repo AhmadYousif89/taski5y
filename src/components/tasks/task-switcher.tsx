@@ -21,7 +21,7 @@ export const SwitchTaskStatus = ({ taskId, taskStatus, onSwitch }: Props) => {
       : 'translate-x-0 bg-white';
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="mt-4 flex items-center gap-4">
       <div className="cursor-pointer" onClick={updateTaskStatus}>
         <div
           className={`${switchBgColor} p2 flex h-4 w-12 items-center rounded-full transition-all duration-200`}>

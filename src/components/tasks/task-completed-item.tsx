@@ -8,9 +8,10 @@ import { setTaskActionType } from '@features/slices/task';
 export const CompletedTaskItem = ({ task }: { task: Task }) => {
   const dispatch = useAppDispatch();
 
-  const deleteTaskHandler = () => {
+  const deleteTaskHandler = async () => {
     dispatch(setTaskActionType('deleting'));
-    dispatch(deleteTasks(task.id));
+    await dispatch(deleteTasks(task.id));
+    dispatch(setTaskActionType(''));
   };
 
   return (

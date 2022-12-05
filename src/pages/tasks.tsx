@@ -5,12 +5,12 @@ import { SortField } from '@tasks/task-sort-menu';
 import { SearchBar } from '@tasks/task-search-bar';
 import { TodoTaskList } from '@tasks/list-all-todo';
 import { CompletedTaskList } from '@tasks/list-all-completed';
+import { DisplayTaskPanels } from '@tasks/display-task-panels';
 import { InProgressTaskList } from '@tasks/list-all-inprogress';
 
 import { Button } from '@ui/button';
 import { BackArrowIcon } from 'assets/icons';
 import { setTaskActivePanel, taskSelector } from '@features/slices/task';
-import { DisplayTaskPanels } from '@tasks/display-task-panels';
 
 export const TasksPage = () => {
   const dispatch = useAppDispatch();

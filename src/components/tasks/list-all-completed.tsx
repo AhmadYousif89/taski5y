@@ -3,10 +3,11 @@ import { useAppSelector } from '@app/hooks';
 import { sortTasks, searchTasks } from './helpers';
 import { taskSelector } from '@features/slices/task';
 import { CompletedTaskItem } from './task-completed-item';
+import { Backdrop } from '@ui/backdrop';
 
 export const CompletedTaskList = () => {
   const {
-    status,
+    actionType,
     completedTasks,
     searchedTaskQuery: query,
   } = useAppSelector(taskSelector);
@@ -15,7 +16,14 @@ export const CompletedTaskList = () => {
 
   filteredCompletedTasks = sortTasks(filteredCompletedTasks);
 
-  if (status === 'loading') return <Modal />;
+  if (actionType === 'deleting') {
+    return (
+      <>
+        <Modal actionMsg="Deleting ..." />
+        <Backdrop />
+      </>
+    );
+  }
 
   let content = (
     <ul

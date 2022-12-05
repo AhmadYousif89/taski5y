@@ -31,7 +31,7 @@ const onResponse = (response: AxiosResponse): AxiosResponse => {
 
 const onResponseError = async (error: AxiosError) => {
   const prevRequest = error.config as AxiosRequestConfig & { sent: boolean };
-  if (error?.response?.status === 401 && !prevRequest.sent) {
+  if (error.response?.status === 401 && !prevRequest.sent) {
     prevRequest.sent = true;
     try {
       const response = await axiosPrivate.get('/auth/refresh');
@@ -46,10 +46,9 @@ const onResponseError = async (error: AxiosError) => {
       return Promise.reject(refreshErr);
     }
   }
-  if (error?.response?.status === 403) {
+  if (error.response?.status === 403) {
     localStorage.clear();
     window.location.reload();
-    console.log('call', error.request);
     return;
   }
 

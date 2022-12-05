@@ -11,12 +11,7 @@ import { setTaskActionType, taskSelector } from '@features/slices/task';
 
 export const TaskList = () => {
   const dispatch = useAppDispatch();
-  const {
-    tasks,
-    status,
-    actionType,
-    searchedTaskQuery: query,
-  } = useAppSelector(taskSelector);
+  const { tasks, actionType, searchedTaskQuery: query } = useAppSelector(taskSelector);
 
   const fetchTasks = async () => {
     dispatch(setTaskActionType('fetching'));
@@ -46,24 +41,6 @@ export const TaskList = () => {
   }
 
   let updatedTasks = [...tasks];
-  updatedTasks.sort((a, b) => a.priority.localeCompare(b.priority));
-
-  updatedTasks = searchTasks(updatedTasks, query);
-
-  updatedTasks = sortTasks(updatedTasks);
-
-  const searchMsg =
-    query && updatedTasks.length > 0 ? (
-      <h3 className="ml-8 text-3xl text-color-base">Search result</h3>
-    ) : null;
-
-  if (query && updatedTasks.length === 0) {
-    return (
-      <h2 className="mt-20 text-center text-3xl text-color-base">
-        Your search didn't match any result!
-      </h2>
-    );
-  }
 
   if (updatedTasks.length === 0) {
     return (
@@ -78,12 +55,31 @@ export const TaskList = () => {
     );
   }
 
+  if (query && updatedTasks.length === 0) {
+    return (
+      <h2 className="mt-20 text-center text-3xl text-color-base">
+        Your search didn't match any result!
+      </h2>
+    );
+  }
+
+  updatedTasks.sort((a, b) => a.priority.localeCompare(b.priority));
+
+  updatedTasks = searchTasks(updatedTasks, query);
+
+  updatedTasks = sortTasks(updatedTasks);
+
+  const searchMsg =
+    query && updatedTasks.length > 0 ? (
+      <h3 className="ml-8 text-3xl text-color-base">Search result</h3>
+    ) : null;
+
   return (
     <>
       {searchMsg}
       <ul
         aria-label="Task-list"
-        className="my-6 mx-10 grid grid-cols-[repeat(auto-fit,minmax(32rem,.65fr))] justify-center gap-8">
+        className="mx-10 mt-8 mb-16 grid grid-cols-[repeat(auto-fit,minmax(32rem,.65fr))] justify-center gap-8">
         {updatedTasks.map(task => (
           <TaskItem key={task.id} task={task} />
         ))}
