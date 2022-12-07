@@ -9,6 +9,7 @@ export const sortTasks = (data: Task[]) => {
   const sortType = params.get('type') as TaskSortType;
 
   const tasks = [...data];
+
   return tasks.sort((taskA, taskB) => {
     switch (sortType) {
       case 'alpha': {

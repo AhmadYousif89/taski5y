@@ -2,7 +2,8 @@ import { Dispatch, SetStateAction, useRef, useState } from 'react';
 
 import { Card } from '@ui/card';
 import { useAppDispatch } from '@app/hooks';
-import { resetTasks, setTaskActionType } from '@features/slices/task';
+import { resetTasks } from '@features/slices/task';
+import { setAuthActionType } from '@features/slices/auth';
 import { toggleSideMenu } from '@features/slices/ui';
 import { deleteUser } from '@features/services/auth';
 import { useClickOutside } from 'hooks/use-click-outside';
@@ -28,7 +29,7 @@ export const UserSettings = ({ showUserProfile }: Props) => {
 
   const deleteAccountHandler = () => {
     setIsDeleting(false);
-    dispatch(setTaskActionType('deleting'));
+    dispatch(setAuthActionType('delete'));
     dispatch(toggleSideMenu());
     dispatch(resetTasks());
     dispatch(deleteUser());

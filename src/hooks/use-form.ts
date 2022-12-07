@@ -17,10 +17,11 @@ export const useForm = <TypeValidity, TypeValue>({
       [name]: isValid,
     }));
   };
+  type FormValuesProps = InputPropObj | SelectPropObj;
   const getFormValues: GetInputValues | GetSelectValues = ({
     name,
     value,
-  }: InputPropObj | SelectPropObj) => {
+  }: FormValuesProps) => {
     setFormValues(prevState => ({
       ...prevState,
       [name]: value,

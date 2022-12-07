@@ -37,8 +37,10 @@ export const LoginForm = () => {
   useEffect(() => {
     if (user) {
       navigate('/tasks');
-      dispatch(resetAuth());
     }
+    return () => {
+      dispatch(resetAuth());
+    };
   }, [user]);
 
   const onFormSubmit = async (e: FormEvent) => {

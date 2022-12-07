@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { taskSelector } from '@features/slices/task';
 import { useAppSelector } from '@app/hooks';
 import { Task } from '@features/types';
@@ -17,18 +17,6 @@ export const TaskItem = ({ task }: { task: Task }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [updatedDetails, setUpdatedDetails] = useState('');
   const [showUpdateBtn, setShowUpdateBtn] = useState(false);
-
-  const onInputHandler = () => setIsEditing(true);
-
-  const onBlurHandler = (e: ChangeEvent<HTMLDivElement>) => {
-    if (task.details === e.target.textContent) {
-      setShowUpdateBtn(false);
-      setIsEditing(false);
-      return;
-    }
-    setShowUpdateBtn(true);
-    setUpdatedDetails(e.target.textContent as string);
-  };
 
   useEffect(() => {
     if (status === 'fulfilled') {

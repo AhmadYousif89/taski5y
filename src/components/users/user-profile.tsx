@@ -7,6 +7,8 @@ import { GetInputValues, Input } from '@ui/input';
 import { authSelector } from '@features/slices/auth';
 import { updateUser } from '@features/services/auth';
 import { BackArrowIcon, UploadIcon, CheckMarkIcon, SpinnerIcon } from 'assets/icons';
+import { addTimer } from 'helpers/timeout';
+import { TrustDevice } from '@auth/remember-me-checkbox';
 
 type Props = { showUserProfile: Dispatch<SetStateAction<boolean>> };
 type FormValidity = Record<AuthInputNames, boolean>;
@@ -55,9 +57,7 @@ export const UserProfile = ({ showUserProfile }: Props) => {
       : { name: name || user?.name, email: email || user?.email };
     dispatch(updateUser(data));
     setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
-    }, 1500);
+    addTimer(() => setIsSubmitted(false), 5);
   };
 
   return (
@@ -143,7 +143,11 @@ export const UserProfile = ({ showUserProfile }: Props) => {
           </fieldset>
         </div>
 
-        <div className="mt-8 flex items-center justify-between">
+        <fieldset className="mt-4 self-end">
+          <TrustDevice />
+        </fieldset>
+
+        <div className="relative flex items-center justify-between">
           <Button
             type="button"
             label="Back"
@@ -151,22 +155,18 @@ export const UserProfile = ({ showUserProfile }: Props) => {
             onClick={() => showUserProfile(false)}
           />
           {status === 'fulfilled' && isSubmitted && (
-            <p className="flex items-center gap-2 text-center text-2xl text-color-valid">
-              Profile updated
+            <p className="absolute -top-14 -left-3 flex items-center gap-2 text-center text-xl text-color-valid xs:left-1/3 xs:text-2xl">
               <CheckMarkIcon />
+              Profile updated
             </p>
           )}
           <Button
             shouldDisable={!formIsValid}
             label="Submit"
-            icon={
-              status === 'loading' ? (
-                <SpinnerIcon className="h-10 w-10" />
-              ) : (
-                <UploadIcon />
-              )
-            }
             type="submit"
+            icon={
+              status === 'loading' ? <SpinnerIcon className="h-8 w-8" /> : <UploadIcon />
+            }
           />
         </div>
       </form>

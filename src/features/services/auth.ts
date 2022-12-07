@@ -8,8 +8,7 @@ export const signUp = createAsyncThunk<
   { rejectValue: ResponseError }
 >('auth/signup', async (user: SignUpRequest, { rejectWithValue }) => {
   try {
-    // DON'T USE AXIOS PRIVATE, otherwise no response will be returned
-    const { data } = await axios.post(`/auth/register`, user, { withCredentials: true });
+    const { data } = await axiosPrivate.post(`/auth/register`, user);
     return data;
   } catch (err: any) {
     return rejectWithValue(err?.response?.data);
@@ -22,7 +21,7 @@ export const signIn = createAsyncThunk<
   { rejectValue: ResponseError }
 >('auth/login', async (credentials: SignInRequest, { rejectWithValue }) => {
   try {
-    // DON'T USE AXIOS PRIVATE, otherwise no response will be returned
+    // Don't use axiosPrivate on this end point !
     const { data } = await axios.post(`/auth/login`, credentials, {
       withCredentials: true,
     });

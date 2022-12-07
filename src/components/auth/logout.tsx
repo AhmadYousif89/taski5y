@@ -17,7 +17,7 @@ export const Logout = () => {
   };
 
   return (
-    <div className="mt-16">
+    <div className="mt-8 self-end">
       <Button label="Logout" icon={<LogoutIcon />} onClick={() => logoutHandler()} />
     </div>
   );

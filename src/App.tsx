@@ -20,7 +20,7 @@ function App() {
     }
   }, []);
 
-  if (status === 'loading' && actionType) {
+  if (actionType && status === 'loading') {
     return (
       <>
         <Modal
@@ -34,7 +34,7 @@ function App() {
               : ''
           }`}
         />
-        <Backdrop />
+        <Backdrop className="bg-gradient-to-b from-neutral-900 to-neutral-800" />
       </>
     );
   }

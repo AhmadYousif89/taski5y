@@ -22,7 +22,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   isFormSubmitted?: boolean;
   inputValidator?: InputValidator;
   getValue: GetInputValues;
-  getValidity: GetInputValidation;
+  getValidity?: GetInputValidation;
 }
 
 export const Input = (props: InputProps) => {
@@ -77,7 +77,7 @@ export const Input = (props: InputProps) => {
   const isError = !isValid && isTouched;
 
   useEffect(() => {
-    getValidity({ name, isValid });
+    getValidity && getValidity({ name, isValid });
     getValue({ name, value: inputValue.trim() });
     if (isFormSubmitted) resetInput();
   }, [isFormSubmitted, inputValue, isValid]);

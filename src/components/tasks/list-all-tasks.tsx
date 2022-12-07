@@ -42,6 +42,10 @@ export const TaskList = () => {
 
   let updatedTasks = [...tasks];
 
+  updatedTasks.sort((a, b) => a.priority.localeCompare(b.priority));
+  updatedTasks = sortTasks(updatedTasks);
+  updatedTasks = searchTasks(updatedTasks, query);
+
   if (updatedTasks.length === 0) {
     return (
       <div className="my-20 flex flex-col items-center text-color-base">
@@ -62,12 +66,6 @@ export const TaskList = () => {
       </h2>
     );
   }
-
-  updatedTasks.sort((a, b) => a.priority.localeCompare(b.priority));
-
-  updatedTasks = searchTasks(updatedTasks, query);
-
-  updatedTasks = sortTasks(updatedTasks);
 
   const searchMsg =
     query && updatedTasks.length > 0 ? (

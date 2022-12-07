@@ -10,12 +10,12 @@ type Props = {
 
 export const ActionModal = ({ msg, confirmAction, closeModal }: Props) => {
   const modalElement = (
-    <section className="fixed top-1/2 left-1/2 z-40 mx-auto flex h-1/4 w-10/12 max-w-3xl -translate-y-1/2 -translate-x-1/2 items-center justify-center rounded-lg bg-neutral-800 p-6 text-color-base lg:h-1/3">
-      <div className="flex w-full flex-col gap-6 text-center">
+    <section className="fixed top-1/2 left-1/2 z-40 mx-auto flex h-1/3 w-10/12 max-w-3xl -translate-y-1/2 -translate-x-1/2 items-center justify-center rounded-lg bg-neutral-800 text-color-base lg:h-1/3">
+      <div className="flex w-full flex-col gap-4 text-center">
         <span className="self-center">
           <WarningIcon />
         </span>
-        <h3 className="text-2xl sm:text-4xl">{msg}</h3>
+        <h3 className="text-2xl sm:text-3xl">{msg}</h3>
         <p className="text-xl sm:text-2xl">This action can not be undone.</p>
         <div className="mt-6 flex w-full justify-center gap-12">
           <Button

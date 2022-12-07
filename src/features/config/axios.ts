@@ -48,6 +48,7 @@ const onResponseError = async (error: AxiosError) => {
   }
   if (error.response?.status === 403) {
     localStorage.clear();
+    localStorage.setItem('error', JSON.stringify(error.response.data));
     window.location.reload();
     return;
   }

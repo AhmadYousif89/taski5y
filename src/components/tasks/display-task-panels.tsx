@@ -1,6 +1,6 @@
+import { TaskPanel, TaskPanelProps } from './task-panel';
 import { useAppDispatch, useAppSelector } from '@app/hooks';
 import { taskSelector, setTaskActivePanel } from '@features/slices/task';
-import { TaskPanel, TaskPanelProps } from './task-panel';
 
 export const DisplayTaskPanels = () => {
   const dispatch = useAppDispatch();

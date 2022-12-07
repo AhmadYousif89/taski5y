@@ -48,7 +48,8 @@ const authSlice = createSlice({
       .addCase(signUp.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
         state.user = payload;
-        persistData('hasAccess', JSON.stringify(true));
+        persistData('hasAccess', true);
+        localStorage.removeItem('error');
       })
       .addCase(signUp.rejected, (state, { payload }) => {
         state.status = 'rejected';
@@ -63,7 +64,8 @@ const authSlice = createSlice({
       .addCase(signIn.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
         state.user = payload;
-        persistData('hasAccess', JSON.stringify(true));
+        persistData('hasAccess', true);
+        localStorage.removeItem('error');
       })
       .addCase(signIn.rejected, (state, { payload }) => {
         state.status = 'rejected';
@@ -133,6 +135,7 @@ const authSlice = createSlice({
       })
       .addCase(deleteUser.fulfilled, () => {
         localStorage.removeItem('persist');
+        localStorage.removeItem('hasAccess');
         return initialState;
       })
       .addCase(deleteUser.rejected, (state, action) => {

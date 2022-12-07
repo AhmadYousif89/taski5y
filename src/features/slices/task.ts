@@ -9,7 +9,6 @@ import {
 import {
   Task,
   TaskStatus,
-  TaskSortQuery,
   ResponseError,
   ResponseStatus,
   TaskActionType,
@@ -26,7 +25,6 @@ interface TaskState {
   totalCompletedTasks: number;
   searchedTaskQuery: string;
   activeTaskPanel: TaskStatus | '';
-  sortedTaskQuery: TaskSortQuery | string;
   actionType: TaskActionType;
   status: ResponseStatus;
   error: ResponseError;
@@ -45,7 +43,6 @@ const initialState: TaskState = {
   totalInProgressTasks: 0,
   totalCompletedTasks: 0,
   activeTaskPanel: '',
-  sortedTaskQuery: '',
   searchedTaskQuery: '',
   error: initError,
   actionType: '',

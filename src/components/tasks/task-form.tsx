@@ -6,10 +6,10 @@ import { TaskStats } from './task-stats';
 import { useForm } from 'hooks/use-form';
 import { GetInputValues, Input } from '@ui/input';
 import { GetSelectValues, Select } from '@ui/select';
-import { TaskPriority, TaskStatus } from '@features/types';
-import { addNewTask } from '@features/services/tasks';
-import { resetTaskStatus, setTaskActionType, taskSelector } from '@features/slices/task';
 import { CheckMarkIcon, SpinnerIcon } from 'assets/icons';
+import { addNewTask } from '@features/services/tasks';
+import { TaskPriority, TaskStatus } from '@features/types';
+import { resetTaskStatus, taskSelector } from '@features/slices/task';
 
 type FormValidity = Record<TaskInputNames, boolean>;
 type FormValues = Record<TaskInputNames, string>;

@@ -18,20 +18,23 @@ export const DetailsSection = ({
   setUpdatedDetails,
 }: Props) => {
   const onBlurHandler = (e: ChangeEvent<HTMLDivElement>) => {
+    setUpdatedDetails(e.target.textContent as string);
+  };
+  const onInputHandler = (e: ChangeEvent<HTMLDivElement>) => {
+    setIsEditing(true);
     if (taskDetails === e.target.textContent) {
       setShowUpdateBtn(false);
       setIsEditing(false);
-      return;
     }
-    setShowUpdateBtn(true);
-    setUpdatedDetails(e.target.textContent as string);
   };
-  const onInputHandler = () => setIsEditing(true);
 
   return (
     <section className="relative">
+      <span className="absolute top-4 left-4 z-10 cursor-default text-3xl text-color-highlight opacity-60">
+        #
+      </span>
       <div
-        className="relative break-words rounded-md p-4 text-2xl ring-1 ring-color-base"
+        className="relative break-words rounded-md px-12 py-4 text-2xl ring-1 ring-color-base"
         contentEditable
         suppressContentEditableWarning
         onInput={onInputHandler}
