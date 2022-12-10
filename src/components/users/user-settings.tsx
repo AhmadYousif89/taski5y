@@ -51,7 +51,6 @@ export const UserSettings = ({ showUserProfile }: Props) => {
       {modal ? (
         <>
           <ActionModal
-            actionType="dialogue"
             msg="Delete my account with all related tasks ?"
             confirmAction={deleteAccountHandler}
             closeModal={() => setModal(false)}
