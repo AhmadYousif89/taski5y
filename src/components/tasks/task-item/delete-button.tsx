@@ -1,19 +1,16 @@
+import { useState } from 'react';
 import { useAppDispatch } from '@app/hooks';
-import { deleteTasks } from '@features/services/tasks';
-import { setTaskActionType } from '@features/slices/task';
 import { Backdrop } from '@ui/backdrop';
 import { TrashIcon } from 'assets/icons';
 import { ActionModal } from '@ui/action-modal';
-import { Dispatch, SetStateAction } from 'react';
+import { deleteTasks } from '@features/services/tasks';
+import { setTaskActionType } from '@features/slices/task';
 
-type Props = {
-  taskId: string;
-  isDeleting: boolean;
-  onDelete: Dispatch<SetStateAction<boolean>>;
-};
+type Props = { taskId: string };
 
-export const TaskDeleteButton = ({ taskId, isDeleting, onDelete }: Props) => {
+export const TaskDeleteButton = ({ taskId }: Props) => {
   const dispatch = useAppDispatch();
+  const [modal, setModal] = useState(false);
 
   const deleteTaskHandler = async () => {
     dispatch(setTaskActionType('deleting'));
@@ -23,20 +20,20 @@ export const TaskDeleteButton = ({ taskId, isDeleting, onDelete }: Props) => {
 
   return (
     <>
-      {isDeleting ? (
+      {modal ? (
         <>
           <ActionModal
             msg="Delete this task ?"
             confirmAction={() => deleteTaskHandler()}
-            closeModal={() => onDelete(false)}
+            closeModal={() => setModal(false)}
           />
-          <Backdrop onClick={() => onDelete(false)} />
+          <Backdrop onClick={() => setModal(false)} />
         </>
       ) : null}
       <button
         title="delete task"
         className="absolute top-10 right-8 cursor-pointer"
-        onClick={() => onDelete(true)}>
+        onClick={() => setModal(true)}>
         <TrashIcon className="transition-colors hover:fill-rose-600" />
       </button>
     </>

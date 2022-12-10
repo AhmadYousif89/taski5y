@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { toggleSideMenu, uiSelector } from '@features/slices/ui';
-import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
+import { uiSelector } from '@features/slices/ui';
+import { useAppSelector, useAuth } from '@app/hooks';
 
 import { ThemeSwitcher } from '@ui/theme-switcher';
 import { MenuButton } from '@ui/menu-button';
-import { Backdrop } from '@ui/backdrop';
 import { Menu } from '@ui/menu';
 
 import { Logout } from '@auth/logout';
@@ -16,9 +15,8 @@ import { UserProfile } from '@users/user-profile';
 
 export const AppLayout = () => {
   const { user } = useAuth();
-  const dispatch = useAppDispatch();
+  const { mode } = useAppSelector(uiSelector);
   const [showProfile, setShowProfile] = useState(false);
-  const { mode, menuVisibility } = useAppSelector(uiSelector);
   const sessionExpired = JSON.parse(localStorage.getItem('error') as string);
 
   const sessionExpireMsg = (
@@ -38,12 +36,11 @@ export const AppLayout = () => {
         {sessionExpired && sessionExpireMsg}
       </header>
 
-      <Menu aria-label="menu" className="fixed [&>*]:mx-12">
+      <Menu aria-label="task-menu" className="[&>*]:mx-12">
         <UserSettings showUserProfile={setShowProfile} />
         <UserInfo user={user} />
         {showProfile ? <UserProfile showUserProfile={setShowProfile} /> : <TaskForm />}
         <Logout />
-        {menuVisibility ? <Backdrop onClick={() => dispatch(toggleSideMenu())} /> : null}
       </Menu>
 
       <Outlet />

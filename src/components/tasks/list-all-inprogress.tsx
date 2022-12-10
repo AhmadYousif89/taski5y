@@ -1,19 +1,16 @@
-import { Modal } from '@ui/modal';
 import { TaskItem } from './task-item/task-item';
 import { useAppSelector } from '@app/hooks';
 import { sortTasks, searchTasks } from './helpers';
 import { taskSelector } from '@features/slices/task';
 
 export const InProgressTaskList = () => {
-  const { status, tasks, searchedTaskQuery: query } = useAppSelector(taskSelector);
+  const { tasks, searchedTaskQuery: query } = useAppSelector(taskSelector);
 
   const inProgressTasks = tasks.filter(task => task.status === 'InProgress');
 
   let filteredInProgressTasks = searchTasks(inProgressTasks, query);
 
   filteredInProgressTasks = sortTasks(filteredInProgressTasks);
-
-  if (status === 'loading') return <Modal />;
 
   let content = (
     <ul

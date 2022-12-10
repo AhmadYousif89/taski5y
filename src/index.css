@@ -41,7 +41,7 @@
     --ring-input-color-invalid: 244 63 94;
 
     --bg-color-steps: 38 38 38;
-    --bg-color-base: 25 25 25;
+    --bg-color-base: 20 20 20;
     --bg-color-card: 38 38 38;
 
     --btn-bg-color-base: 40 120 180;
@@ -53,9 +53,6 @@
 }
 
 @layer utilities {
-  .bg-gradient {
-    @apply bg-gradient-to-b from-neutral-800 to-neutral-900;
-  }
   .border-sky {
     @apply border-sky-400;
   }
@@ -69,10 +66,10 @@
     @apply text-sky-400;
   }
   .text-amber {
-    @apply text-amber-600;
+    @apply text-amber-500;
   }
   .text-green {
-    @apply text-green-500;
+    @apply text-green-400;
   }
   .btn-circle {
     @apply h-14 w-14 cursor-pointer rounded-full ring ring-color-base hover:ring-color-highlight active:bg-btn-color-highlight;

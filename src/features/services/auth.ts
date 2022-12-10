@@ -8,7 +8,7 @@ export const signUp = createAsyncThunk<
   { rejectValue: ResponseError }
 >('auth/signup', async (user: SignUpRequest, { rejectWithValue }) => {
   try {
-    const { data } = await axiosPrivate.post(`/auth/register`, user);
+    const { data } = await axios.post(`/auth/register`, user, { withCredentials: true });
     return data;
   } catch (err: any) {
     return rejectWithValue(err?.response?.data);

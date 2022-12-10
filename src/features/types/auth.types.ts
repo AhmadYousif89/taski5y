@@ -16,6 +16,7 @@ export type ResponseError = {
 };
 export interface User {
   id: string;
+  image?: string;
   name: string;
   email: string;
   createdAt: string;

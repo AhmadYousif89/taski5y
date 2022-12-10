@@ -1,14 +1,14 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
 import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
 import { AuthInputNames } from '@auth/types';
-import { useForm } from 'hooks/use-form';
 import { Button } from '@ui/button';
+import { useForm } from 'hooks/use-form';
+import { addTimer } from 'helpers/timeout';
 import { GetInputValues, Input } from '@ui/input';
 import { authSelector } from '@features/slices/auth';
 import { updateUser } from '@features/services/auth';
-import { BackArrowIcon, UploadIcon, CheckMarkIcon, SpinnerIcon } from 'assets/icons';
-import { addTimer } from 'helpers/timeout';
 import { TrustDevice } from '@auth/remember-me-checkbox';
+import { BackArrowIcon, UploadIcon, CheckMarkIcon, SpinnerIcon } from 'assets/icons';
 
 type Props = { showUserProfile: Dispatch<SetStateAction<boolean>> };
 type FormValidity = Record<AuthInputNames, boolean>;

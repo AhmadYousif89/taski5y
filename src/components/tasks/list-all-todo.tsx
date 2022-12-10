@@ -1,18 +1,15 @@
-import { Modal } from '@ui/modal';
 import { TaskItem } from './task-item/task-item';
 import { useAppSelector } from '@app/hooks';
 import { sortTasks, searchTasks } from './helpers';
 import { taskSelector } from '@features/slices/task';
 
 export const TodoTaskList = () => {
-  const { status, tasks, searchedTaskQuery: query } = useAppSelector(taskSelector);
+  const { tasks, searchedTaskQuery: query } = useAppSelector(taskSelector);
 
   const todoTasks = tasks.filter(task => task.status === 'Todo');
 
   let filteredTodoTasks = searchTasks(todoTasks, query);
   filteredTodoTasks = sortTasks(filteredTodoTasks);
-
-  if (status === 'loading') return <Modal />;
 
   let content = (
     <ul

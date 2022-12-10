@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { toggleSideMenu } from '@features/slices/ui';
 
 import { Card } from '@ui/card';
-import { useAppDispatch } from '@app/hooks';
 import { resetTasks } from '@features/slices/task';
+import { useAppDispatch, useAppSelector } from '@app/hooks';
 import { setAuthActionType } from '@features/slices/auth';
-import { toggleSideMenu } from '@features/slices/ui';
-import { deleteUser } from '@features/services/auth';
 import { useClickOutside } from 'hooks/use-click-outside';
+import { deleteUser } from '@features/services/auth';
 import { SettingsIcon } from 'assets/icons';
 import { ActionModal } from '@ui/action-modal';
 import { Backdrop } from '@ui/backdrop';
@@ -17,20 +17,14 @@ export const UserSettings = ({ showUserProfile }: Props) => {
   const dispatch = useAppDispatch();
   const settingRef = useRef<HTMLButtonElement>(null);
   const [toggleMenu, setToggleMenu] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [modal, setModal] = useState(false);
 
-  const openMenuHandler = () => {
-    setToggleMenu(!toggleMenu);
-  };
-  const closeMenuHandler = () => {
-    setToggleMenu(false);
-  };
-  useClickOutside(settingRef, closeMenuHandler);
+  useClickOutside(settingRef, () => setToggleMenu(false));
 
   const deleteAccountHandler = () => {
-    setIsDeleting(false);
     dispatch(setAuthActionType('delete'));
     dispatch(toggleSideMenu());
+    setModal(false);
     dispatch(resetTasks());
     dispatch(deleteUser());
   };
@@ -45,7 +39,7 @@ export const UserSettings = ({ showUserProfile }: Props) => {
         </li>
         <li
           className="rounded-md p-2 ring-color-base hover:ring-2 hover:ring-color-highlight"
-          onClick={() => setIsDeleting(true)}>
+          onClick={() => setModal(true)}>
           <span className="text-red-500">Delete account</span>
         </li>
       </ul>
@@ -53,19 +47,20 @@ export const UserSettings = ({ showUserProfile }: Props) => {
   );
 
   return (
-    <section className="absolute top-14 left-5">
-      {isDeleting ? (
+    <section aria-label="user-setting-menu" className="absolute top-14 left-5">
+      {modal ? (
         <>
           <ActionModal
+            actionType="dialogue"
             msg="Delete my account with all related tasks ?"
             confirmAction={deleteAccountHandler}
-            closeModal={() => setIsDeleting(false)}
+            closeModal={() => setModal(false)}
           />
-          <Backdrop className="!z-30" onClick={() => setIsDeleting(false)} />
+          <Backdrop className="!z-30" onClick={() => setModal(false)} />
         </>
       ) : null}
       <button
-        onClick={openMenuHandler}
+        onClick={() => setToggleMenu(p => !p)}
         ref={settingRef}
         className="btn-circle relative flex items-center justify-center">
         <SettingsIcon />

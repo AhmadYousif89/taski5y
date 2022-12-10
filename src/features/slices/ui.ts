@@ -4,14 +4,14 @@ import { RootState } from '../../app/store';
 type AppTheme = 'dark-theme' | 'light-theme';
 interface UiState {
   mode: AppTheme;
-  menuVisibility: boolean;
+  menuIsVisible: boolean;
 }
 
 const storedTheme = <AppTheme>localStorage.getItem('mode');
 
 const initialState: UiState = {
   mode: storedTheme ? storedTheme : 'dark-theme',
-  menuVisibility: false,
+  menuIsVisible: false,
 };
 
 const uiSlice = createSlice({
@@ -23,7 +23,7 @@ const uiSlice = createSlice({
       localStorage.setItem('mode', state.mode);
     },
     toggleSideMenu(state) {
-      state.menuVisibility = !state.menuVisibility;
+      state.menuIsVisible = !state.menuIsVisible;
     },
   },
 });

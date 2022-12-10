@@ -3,15 +3,14 @@ import { AppRoutes } from 'components/app';
 import { useAppDispatch, useAppSelector } from '@app/hooks';
 import { authSelector, setAuthActionType } from '@features/slices/auth';
 import { getUser } from '@features/services/auth';
+import { ActionModal } from '@ui/action-modal';
 import { Backdrop } from '@ui/backdrop';
-import { Modal } from '@ui/modal';
 
 function App() {
   const dispatch = useAppDispatch();
   const { status, actionType } = useAppSelector(authSelector);
   const persist = localStorage.getItem('persist');
   const hasAccess = localStorage.getItem('hasAccess');
-
   useEffect(() => {
     if (persist === 'false' || !persist) localStorage.removeItem('hasAccess');
     if (persist === 'true' && hasAccess) {
@@ -23,8 +22,9 @@ function App() {
   if (actionType && status === 'loading') {
     return (
       <>
-        <Modal
-          actionMsg={`${
+        <ActionModal
+          actionType="transition"
+          msg={`${
             actionType === 'refresh'
               ? 'Redirecting ...'
               : actionType === 'logout'
@@ -34,7 +34,7 @@ function App() {
               : ''
           }`}
         />
-        <Backdrop className="bg-gradient-to-b from-neutral-900 to-neutral-800" />
+        <Backdrop />
       </>
     );
   }

@@ -14,14 +14,12 @@ export const TaskItem = ({ task }: { task: Task }) => {
   const { status } = useAppSelector(taskSelector);
   const [isEditing, setIsEditing] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
   const [updatedDetails, setUpdatedDetails] = useState('');
   const [showUpdateBtn, setShowUpdateBtn] = useState(false);
 
   useEffect(() => {
     if (status === 'fulfilled') {
       setIsUpdating(false);
-      setIsDeleting(false);
       setShowUpdateBtn(false);
     }
   }, [status]);
@@ -32,11 +30,7 @@ export const TaskItem = ({ task }: { task: Task }) => {
   return (
     <Card priority={task.priority} className={`relative ${styles}`}>
       <li className="flex flex-col gap-6 py-6 px-4 text-color-base md:text-3xl">
-        <TaskDeleteButton
-          taskId={task.id}
-          isDeleting={isDeleting}
-          onDelete={setIsDeleting}
-        />
+        <TaskDeleteButton taskId={task.id} />
 
         <header className="space-y-4 self-start">
           <h2 className="text-3xl tracking-wide">{task.title}</h2>

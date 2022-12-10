@@ -105,28 +105,28 @@ const authSlice = createSlice({
       .addCase(getUser.pending, state => {
         state.status = 'loading';
       })
-      .addCase(getUser.fulfilled, (state, action) => {
+      .addCase(getUser.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
-        state.user = action.payload;
+        state.user = payload;
       })
-      .addCase(getUser.rejected, (state, action) => {
+      .addCase(getUser.rejected, (state, { payload }) => {
         state.status = 'rejected';
         state.actionType = '';
         state.user = null;
-        state.error = action.payload || initError;
+        state.error = payload || initError;
       });
 
     builder
       .addCase(updateUser.pending, state => {
         state.status = 'loading';
       })
-      .addCase(updateUser.fulfilled, (state, action) => {
+      .addCase(updateUser.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
-        state.user = action.payload;
+        state.user = payload;
       })
-      .addCase(updateUser.rejected, (state, action) => {
+      .addCase(updateUser.rejected, (state, { payload }) => {
         state.status = 'rejected';
-        state.error = action.payload || initError;
+        state.error = payload || initError;
       });
 
     builder
@@ -138,10 +138,10 @@ const authSlice = createSlice({
         localStorage.removeItem('hasAccess');
         return initialState;
       })
-      .addCase(deleteUser.rejected, (state, action) => {
+      .addCase(deleteUser.rejected, (state, { payload }) => {
         state.status = 'rejected';
         state.actionType = '';
-        state.error = action.payload || initError;
+        state.error = payload || initError;
       });
   },
 });

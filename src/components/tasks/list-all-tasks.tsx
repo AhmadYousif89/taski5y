@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@app/hooks';
 
-import { Modal } from '@ui/modal';
 import { Backdrop } from '@ui/backdrop';
 import { TaskItem } from './task-item/task-item';
 import { sortTasks, searchTasks } from './helpers';
 import { toggleSideMenu } from '@features/slices/ui';
 import { getAllTasks } from '@features/services/tasks';
 import { setTaskActionType, taskSelector } from '@features/slices/task';
+import { ActionModal } from '@ui/action-modal';
 
 export const TaskList = () => {
   const dispatch = useAppDispatch();
@@ -26,7 +26,7 @@ export const TaskList = () => {
   if (actionType === 'fetching') {
     return (
       <>
-        <Modal />
+        <ActionModal actionType="transition" msg="Loading ..." />
         <Backdrop />
       </>
     );
@@ -34,7 +34,7 @@ export const TaskList = () => {
   if (actionType === 'deleting') {
     return (
       <>
-        <Modal actionMsg="Deleting ..." />
+        <ActionModal actionType="transition" msg="Deleting ..." />
         <Backdrop />
       </>
     );

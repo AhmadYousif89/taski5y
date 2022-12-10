@@ -5,6 +5,7 @@ import { updateTask } from '@features/services/tasks';
 import { TaskButton } from '@tasks/task-button';
 import { ActionModal } from '@ui/action-modal';
 import { Backdrop } from '@ui/backdrop';
+import { InfoIcon } from 'assets/icons/info';
 
 type Props = {
   taskId: string;
@@ -28,11 +29,11 @@ export const TaskUpdateButtons = ({
   setIsEditing,
 }: Props) => {
   const dispatch = useAppDispatch();
-  const [openModal, setOpenModal] = useState(false);
+  const [modal, setModal] = useState(false);
 
   const markTaskCompleted = () => {
-    if (isEditing && !openModal) {
-      setOpenModal(true);
+    if (isEditing && !modal) {
+      setModal(true);
       return;
     }
     setIsUpdating(true);
@@ -48,14 +49,15 @@ export const TaskUpdateButtons = ({
 
   return (
     <>
-      {openModal ? (
+      {modal ? (
         <>
           <ActionModal
+            icon={<InfoIcon />}
             msg="You have unsaved changes ?"
             confirmAction={markTaskCompleted}
-            closeModal={() => setOpenModal(false)}
+            closeModal={() => setModal(false)}
           />
-          <Backdrop onClick={() => setOpenModal(false)} />
+          <Backdrop onClick={() => setModal(false)} />
         </>
       ) : null}
       <div aria-label="task-update-buttons" className="flex items-center gap-4">
