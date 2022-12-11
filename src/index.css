@@ -78,7 +78,7 @@
     @apply absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2;
   }
   .input-err-msg {
-    @apply absolute bottom-1/2 right-5 translate-y-1/2 text-xl text-color-invalid;
+    @apply mt-4 text-xl text-color-invalid;
   }
 }
 

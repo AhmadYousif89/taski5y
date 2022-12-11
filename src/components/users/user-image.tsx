@@ -65,7 +65,7 @@ export const UserImage = ({ maxHeight = 300 }: { maxHeight?: number }) => {
 
       <ImageFigure
         status={status}
-        className={`h-36 w-36`}
+        className={`h-36 w-36 bg-black`}
         onClick={() => setModal(true)}
         src={`${user?.image ? user?.image : '/public/user-profile-img.webp'}`}>
         <input aria-hidden={true} type="hidden" value={image} />

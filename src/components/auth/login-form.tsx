@@ -62,7 +62,7 @@ export const LoginForm = () => {
 
   return (
     <section className="translate-y-40" aria-label="Login-form">
-      <Card className="relative mx-4 max-w-screen-xs sm:mx-auto">
+      <Card className="relative mx-auto w-11/12 max-w-screen-xs">
         <form
           className="mx-auto my-16 flex w-10/12 flex-col gap-6"
           onSubmit={onFormSubmit}>
@@ -89,7 +89,7 @@ export const LoginForm = () => {
               type={'password'}
               name={'password'}
               placeholder={'Enter password'}
-              inputErrMsg={'required at least 3 characters'}
+              inputErrMsg={'password must have at least 3 characters and min 1 number'}
               placeholderErrMsg={'password is required'}
               getValue={getFormValues as GetInputValues}
               getValidity={getFormValidity}

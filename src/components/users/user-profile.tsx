@@ -41,13 +41,14 @@ export const UserProfile = ({ showUserProfile }: Props) => {
     name: nameIsValid,
     email: emailIsValid,
     password: passwordIsValid,
+    confirmPassword: confirmPasswordIsValid,
   } = formValidity;
   const { name, email, password, confirmPassword } = formValues;
 
   let formIsValid: boolean = false;
   if (nameIsValid) formIsValid = true;
   if (emailIsValid) formIsValid = true;
-  if (passwordIsValid && confirmPassword === password) formIsValid = true;
+  if (passwordIsValid && confirmPasswordIsValid) formIsValid = true;
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -117,7 +118,7 @@ export const UserProfile = ({ showUserProfile }: Props) => {
               isRequired={false}
               placeholder={'Enter password'}
               showInputErr={password.length > 0}
-              inputErrMsg={'required at least 3 characters'}
+              inputErrMsg={'required 3 characters with numbers'}
               isFormSubmitted={isSubmitted}
               getValidity={getFormValidity}
               getValue={getFormValues as GetInputValues}
@@ -132,9 +133,9 @@ export const UserProfile = ({ showUserProfile }: Props) => {
               value={confirmPassword}
               name={'confirmPassword'}
               label={'Confirm password'}
-              inputErrMsg={'mismatch password'}
+              inputErrMsg={'password mismatch'}
               placeholder={'Confirm new password'}
-              placeholderErrMsg={"your password doesn't match"}
+              placeholderErrMsg={"password doesn't match"}
               isFormSubmitted={isSubmitted}
               getValidity={getFormValidity}
               getValue={getFormValues as GetInputValues}

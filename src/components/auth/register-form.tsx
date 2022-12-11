@@ -74,7 +74,7 @@ export const RegisterForm = () => {
 
   return (
     <section className="translate-y-40" aria-label="Registration-form">
-      <Card className="relative mx-4 max-w-screen-xs sm:mx-auto">
+      <Card className="relative mx-auto w-11/12 max-w-screen-xs">
         <form className="mx-auto my-16 flex w-4/5 flex-col gap-6" onSubmit={onFormSubmit}>
           <h2 className="text-3xl capitalize tracking-widest text-color-base">
             create new account
@@ -113,7 +113,7 @@ export const RegisterForm = () => {
               type={'password'}
               name={'password'}
               placeholder={'Enter password'}
-              inputErrMsg={'required at least 3 characters'}
+              inputErrMsg={'password must have at least 3 characters and min 1 number'}
               placeholderErrMsg={'password is required'}
               getValidity={getFormValidity}
               getValue={getFormValues as GetInputValues}

@@ -35,7 +35,7 @@ export const ImageFigure = ({
       onClick={onClick}>
       {status === 'loading' && <>{loadingText}</>}
       <i className="absolute inset-0 z-10 h-full w-full translate-y-52 bg-slate-500 bg-opacity-50 transition-all duration-300 group-hover:translate-y-1/2">
-        <CameraIcon className="absolute -top-6 left-1/2 z-20 h-12 w-12 -translate-x-1/2 stroke-neutral-100" />
+        <CameraIcon className="absolute -top-6 left-1/2 h-12 w-12 -translate-x-1/2 stroke-neutral-100" />
       </i>
       <img
         src={src}

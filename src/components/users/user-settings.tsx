@@ -30,7 +30,7 @@ export const UserSettings = ({ showUserProfile }: Props) => {
   };
 
   const settingList = (
-    <Card className="absolute top-1/2 z-10 translate-x-1/2 transition-all">
+    <Card className="absolute top-1/2 z-20 translate-x-1/2 transition-all">
       <ul className="grid auto-cols-[minmax(max-content,1fr)] gap-6 text-2xl text-color-base">
         <li
           onClick={() => showUserProfile(true)}

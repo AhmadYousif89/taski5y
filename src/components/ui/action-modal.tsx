@@ -96,7 +96,7 @@ export const ActionModal = ({
             <ImageFigure
               onClick={extraAction}
               src={image}
-              className="h-44 w-44 !ring-white"
+              className="h-44 w-44 bg-white !ring-white"
             />
             {showActionButtons}
           </>
@@ -107,7 +107,7 @@ export const ActionModal = ({
               onClick={extraAction}
               className="flex w-2/3 cursor-pointer flex-col items-center justify-center gap-4 rounded-md border-2 border-dashed border-sky-500 px-4 py-8 transition-transform active:translate-y-2">
               <UploadIcon className="h-16 w-16 stroke-sky-400 " />
-              <p className="text-2xl sm:text-3xl">{'Upload your image'}</p>
+              <p className="text-2xl sm:text-3xl">Select your image</p>
             </button>
             <Button
               label="Cancel"

@@ -83,27 +83,29 @@ export const Input = (props: InputProps) => {
   }, [isFormSubmitted, inputValue, isValid]);
 
   return (
-    <div className="relative flex w-full items-center">
-      {label ? (
-        <label className="w-1/2 text-2xl" htmlFor="email">
-          {label}
-        </label>
-      ) : null}
-      <input
-        id={id}
-        name={name}
-        type={type}
-        value={inputValue}
-        onBlur={onInputBlur}
-        required={isRequired}
-        onChange={onInputChange}
-        placeholder={
-          validate && showInputErr && isError ? placeholderErrMsg : placeholder
-        }
-        className={`${
-          validate && showInputErr && isError ? 'ring-color-invalid' : 'ring-color-base'
-        } ${className} w-full rounded-md bg-transparent px-6 py-3 text-2xl text-color-base shadow-md ring-1 placeholder:text-xl placeholder:opacity-70 focus:outline-none focus:ring-2 focus:ring-color-validating focus:valid:ring-color-valid`}
-      />
+    <div className="flex w-full flex-col items-center">
+      <div className="flex w-full items-center">
+        {label ? (
+          <label className="w-1/2 text-2xl" htmlFor="email">
+            {label}
+          </label>
+        ) : null}
+        <input
+          id={id}
+          name={name}
+          type={type}
+          value={inputValue}
+          onBlur={onInputBlur}
+          required={isRequired}
+          onChange={onInputChange}
+          placeholder={
+            validate && showInputErr && isError ? placeholderErrMsg : placeholder
+          }
+          className={`${
+            validate && showInputErr && isError ? 'ring-color-invalid' : 'ring-color-base'
+          } ${className} w-full rounded-md bg-transparent px-6 py-3 text-2xl text-color-base shadow-md ring-1 placeholder:text-xl placeholder:opacity-70 focus:outline-none focus:ring-2 focus:ring-color-validating focus:valid:ring-color-valid`}
+        />
+      </div>
       {validate && showInputErr && isError ? (
         <InputError msg={inputErrMsg || ''} />
       ) : null}
