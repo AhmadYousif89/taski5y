@@ -61,13 +61,13 @@ export const ActionModal = ({
         <Button
           icon={<UploadIcon />}
           label="Upload"
-          disabled={status === 'loading'}
           onClick={confirmAction}
+          disabled={status === 'loading'}
           className={`${
             status === 'loading' ? 'cursor-not-allowed' : ''
-          } ring hover:bg-teal-500 active:translate-y-1`}
+          } hover:bg-teal-500 active:translate-y-1`}
         />
-        <Button label="Cancel" onClick={closeModal} className="ring hover:bg-sky-500" />
+        <Button label="Close" onClick={closeModal} className="hover:bg-sky-500" />
       </div>
       {status === 'loading' ? (
         <p className="text-amber absolute top-full left-1/2 flex w-full translate-y-10 -translate-x-1/2 items-center justify-center gap-4 text-2xl tracking-wider">
@@ -93,7 +93,11 @@ export const ActionModal = ({
       <div className="flex w-full flex-col items-center gap-4 text-center">
         {image ? (
           <>
-            <ImageFigure onClick={extraAction} src={image} className="ring-white" />
+            <ImageFigure
+              onClick={extraAction}
+              src={image}
+              className="h-44 w-44 !ring-white"
+            />
             {showActionButtons}
           </>
         ) : (
@@ -101,11 +105,9 @@ export const ActionModal = ({
             <button
               aria-label="upload-image-button"
               onClick={extraAction}
-              className="flex w-2/3 cursor-pointer flex-col gap-4 self-center rounded-md border-2 border-dashed border-sky-500 px-4 py-8 transition-transform active:translate-y-2">
-              <span className="self-center">
-                <UploadIcon className="h-16 w-16 stroke-sky-400" />
-              </span>
-              <h3 className="text-2xl sm:text-3xl">{'Upload your image'}</h3>
+              className="flex w-2/3 cursor-pointer flex-col items-center justify-center gap-4 rounded-md border-2 border-dashed border-sky-500 px-4 py-8 transition-transform active:translate-y-2">
+              <UploadIcon className="h-16 w-16 stroke-sky-400 " />
+              <p className="text-2xl sm:text-3xl">{'Upload your image'}</p>
             </button>
             <Button
               label="Cancel"

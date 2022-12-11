@@ -29,13 +29,13 @@
 
   .dark-theme {
     --text-color-base: 228 228 231;
-    --text-color-highlight: 228 228 23;
+    --text-color-highlight: 220 220 23;
     --text-color-valid: 74 222 128;
     --text-color-invalid: 244 63 94;
     --text-color-link: 56 189 248;
 
-    --ring-color-base: 82 82 91;
-    --ring-color-highlight: 212 212 216;
+    --ring-color-base: 82 82 82;
+    --ring-color-highlight: 212 212 212;
     --ring-input-color-valid: 134 239 172;
     --ring-input-color-validating: 251 146 60;
     --ring-input-color-invalid: 244 63 94;

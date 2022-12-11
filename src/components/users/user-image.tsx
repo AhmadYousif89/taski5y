@@ -2,14 +2,15 @@ import { ChangeEvent, useRef, useState, useEffect, useCallback } from 'react';
 import { Backdrop } from '@ui/backdrop';
 import { ActionModal } from '@ui/action-modal';
 import { ImageFigure } from '@ui/image-figure';
-import { useAppDispatch, useAuth } from '@app/hooks';
+import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
 import { readFileAsDataURL, resizeImage } from 'helpers/image-config';
 import { updateUser } from '@features/services/auth';
-import { resetAuth } from '@features/slices/auth';
+import { authSelector, resetAuth } from '@features/slices/auth';
 
 export const UserImage = ({ maxHeight = 300 }: { maxHeight?: number }) => {
   const { user } = useAuth();
   const dispatch = useAppDispatch();
+  const { status } = useAppSelector(authSelector);
   const [modal, setModal] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<string>('');
@@ -24,28 +25,28 @@ export const UserImage = ({ maxHeight = 300 }: { maxHeight?: number }) => {
         originalURL as string,
         canvas as HTMLCanvasElement,
       );
+      resetStatus();
       setImage(image as string);
-    } else setImage('');
+    }
   };
 
   const triggerFileInput = () => inputRef.current?.click();
-  const handleImageReset = useCallback(() => setImage(''), [setImage]);
+  const resetImage = useCallback(() => setImage(''), [setImage]);
+  const resetStatus = () => dispatch(resetAuth());
+  const closeModal = () => {
+    setModal(false);
+    resetImage();
+  };
 
   useEffect(() => {
     const fileInput = inputRef.current;
     const canvas = document.createElement('canvas');
     setCanvas(canvas);
-    fileInput?.addEventListener('reset', handleImageReset);
+    fileInput?.addEventListener('reset', resetImage);
     return () => {
-      fileInput?.removeEventListener('reset', handleImageReset);
+      fileInput?.removeEventListener('reset', resetImage);
     };
-  }, [inputRef, handleImageReset]);
-
-  const closeModal = () => {
-    dispatch(resetAuth());
-    setModal(false);
-    setImage('');
-  };
+  }, [inputRef, resetImage]);
 
   return (
     <>
@@ -63,7 +64,8 @@ export const UserImage = ({ maxHeight = 300 }: { maxHeight?: number }) => {
       ) : null}
 
       <ImageFigure
-        className="ring-color-base"
+        status={status}
+        className={`h-36 w-36`}
         onClick={() => setModal(true)}
         src={`${user?.image ? user?.image : '/public/user-profile-img.webp'}`}>
         <input aria-hidden={true} type="hidden" value={image} />
