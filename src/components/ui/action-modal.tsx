@@ -46,12 +46,12 @@ export const ActionModal = ({
         <Button
           label="Confirm"
           onClick={confirmAction}
-          className="ring max-xs:bg-red-500 xs:hover:bg-red-500"
+          className="max-xs:bg-red-500 xs:ring-1 xs:ring-rose-500 xs:hover:bg-red-500"
         />
         <Button
           label="Cancel"
           onClick={closeModal}
-          className="ring max-xs:bg-sky-500 xs:hover:bg-sky-500"
+          className="max-xs:bg-sky-500 xs:ring-1 xs:ring-sky-500 xs:hover:bg-sky-500"
         />
       </div>
     </div>
@@ -75,13 +75,13 @@ export const ActionModal = ({
           disabled={status === 'loading'}
           className={`${
             status === 'loading' ? 'cursor-not-allowed' : ''
-          } active:translate-y-1 max-xs:bg-teal-500 xs:hover:bg-teal-500`}
+          } ring-1 ring-teal-500 active:translate-y-1 max-xs:bg-teal-500 xs:hover:bg-teal-500`}
         />
         <Button
           label="Close"
           icon={<CloseIcon />}
           onClick={closeModal}
-          className="max-xs:bg-sky-500 xs:hover:bg-sky-500"
+          className="ring-1 ring-sky-500 max-xs:bg-sky-500 xs:hover:bg-sky-500"
         />
       </div>
       {status === 'loading' ? (
@@ -127,7 +127,7 @@ export const ActionModal = ({
             <Button
               label="Cancel"
               onClick={closeModal}
-              className="mt-8 self-center ring max-xs:bg-sky-500 xs:hover:bg-sky-500"
+              className="mt-8 ring-1 ring-sky-500 max-xs:bg-sky-500 xs:hover:bg-sky-500"
             />
           </>
         )}
