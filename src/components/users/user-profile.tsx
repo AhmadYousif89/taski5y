@@ -5,7 +5,7 @@ import { Button } from '@ui/button';
 import { useForm } from 'hooks/use-form';
 import { addTimer } from 'helpers/timeout';
 import { GetInputValues, Input } from '@ui/input';
-import { authSelector } from '@features/slices/auth';
+import { authSelector, resetAuthStatus } from '@features/slices/auth';
 import { updateUser } from '@features/services/auth';
 import { TrustDevice } from '@auth/remember-me-checkbox';
 import { BackArrowIcon, UploadIcon, CheckMarkIcon, SpinnerIcon } from 'assets/icons';
@@ -30,7 +30,7 @@ const initFormValues: FormValues = {
 export const UserProfile = ({ showUserProfile }: Props) => {
   const { user } = useAuth();
   const dispatch = useAppDispatch();
-  const { status } = useAppSelector(authSelector);
+  const { status, actionType } = useAppSelector(authSelector);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
     FormValidity,
@@ -58,7 +58,10 @@ export const UserProfile = ({ showUserProfile }: Props) => {
       : { name: name || user?.name, email: email || user?.email };
     dispatch(updateUser(data));
     setIsSubmitted(true);
-    addTimer(() => setIsSubmitted(false), 5);
+    addTimer(() => {
+      dispatch(resetAuthStatus());
+      setIsSubmitted(false);
+    }, 3);
   };
 
   return (
@@ -75,14 +78,13 @@ export const UserProfile = ({ showUserProfile }: Props) => {
               name={'name'}
               label={'Name'}
               value={name}
+              validate={false}
               isRequired={false}
+              inputErrMsg="name is not valid"
               placeholder={user?.name}
-              showInputErr={name.length > 0}
-              inputErrMsg={'name is not valid'}
               isFormSubmitted={isSubmitted}
               getValidity={getFormValidity}
               getValue={getFormValues as GetInputValues}
-              inputValidator={text => text.trim().length > 0}
             />
           </fieldset>
 
@@ -100,7 +102,6 @@ export const UserProfile = ({ showUserProfile }: Props) => {
               isFormSubmitted={isSubmitted}
               getValidity={getFormValidity}
               getValue={getFormValues as GetInputValues}
-              inputValidator={text => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)}
             />
           </fieldset>
         </div>
@@ -122,7 +123,6 @@ export const UserProfile = ({ showUserProfile }: Props) => {
               isFormSubmitted={isSubmitted}
               getValidity={getFormValidity}
               getValue={getFormValues as GetInputValues}
-              inputValidator={text => /^((?!.*[\s])(?=.*\d).{3,})/.test(text)}
             />
           </fieldset>
 
@@ -150,12 +150,11 @@ export const UserProfile = ({ showUserProfile }: Props) => {
 
         <div className="relative flex items-center justify-between">
           <Button
-            type="button"
             label="Back"
             icon={<BackArrowIcon />}
             onClick={() => showUserProfile(false)}
           />
-          {status === 'fulfilled' && isSubmitted && (
+          {isSubmitted && status === 'fulfilled' && (
             <p className="absolute -top-14 -left-3 flex items-center gap-2 text-center text-xl text-color-valid xs:left-1/3 xs:text-2xl">
               <CheckMarkIcon />
               Profile updated
@@ -166,7 +165,11 @@ export const UserProfile = ({ showUserProfile }: Props) => {
             label="Submit"
             type="submit"
             icon={
-              status === 'loading' ? <SpinnerIcon className="h-8 w-8" /> : <UploadIcon />
+              isSubmitted && status === 'loading' ? (
+                <SpinnerIcon className="h-8 w-8" />
+              ) : (
+                <UploadIcon />
+              )
             }
           />
         </div>

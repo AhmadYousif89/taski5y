@@ -90,7 +90,6 @@ export const RegisterForm = () => {
               placeholderErrMsg={'name is not valid'}
               getValidity={getFormValidity}
               getValue={getFormValues as GetInputValues}
-              inputValidator={text => text.trim().length > 0}
             />
           </fieldset>
 

@@ -78,7 +78,6 @@ export const ResetPassword = () => {
               inputErrMsg={'email is not valid'}
               getValidity={getFormValidity}
               getValue={getFormValues as GetInputValues}
-              inputValidator={text => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)}
             />
           </fieldset>
           <fieldset>
@@ -91,7 +90,6 @@ export const ResetPassword = () => {
               placeholderErrMsg={'password is required'}
               getValidity={getFormValidity}
               getValue={getFormValues as GetInputValues}
-              inputValidator={text => /^((?!.*[\s])(?=.*\d).{3,})/.test(text)}
             />
           </fieldset>
           <fieldset>
@@ -99,9 +97,9 @@ export const ResetPassword = () => {
               type={'password'}
               value={confirmPassword}
               name={'confirmPassword'}
-              inputErrMsg={'mismatch password'}
+              inputErrMsg={'password mismatch'}
               placeholder={'Confirm new password'}
-              placeholderErrMsg={"your password doesn't match"}
+              placeholderErrMsg={"password doesn't match"}
               getValidity={getFormValidity}
               getValue={getFormValues as GetInputValues}
               inputValidator={() => password === confirmPassword}

@@ -70,6 +70,15 @@ export const Input = (props: InputProps) => {
     case 'password':
       isValid = PASSWORD_REGEX.test(inputValue);
       break;
+    case 'name':
+      isValid = inputValue.trim().length > 0;
+      break;
+    case 'title':
+      isValid = inputValue.trim().length > 0;
+      break;
+    case 'details':
+      isValid = inputValue.trim().length > 0;
+      break;
     default:
       isValid = inputValidator ? inputValidator(inputValue) : true;
   }

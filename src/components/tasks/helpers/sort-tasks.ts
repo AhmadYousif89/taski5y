@@ -26,7 +26,7 @@ export const sortTasks = (data: Task[]) => {
         else return taskB.priority === 'Normal' ? -1 : 1;
       }
       default:
-        return 0;
+        return taskA.priority.localeCompare(taskB.priority);
     }
   });
 };

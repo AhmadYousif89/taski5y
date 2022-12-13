@@ -22,7 +22,7 @@ export const CompletedTaskItem = ({ task }: { task: Task }) => {
         <div className="text-2xl">{task.details}</div>
         <button
           onClick={deleteTaskHandler}
-          className="mt-4 cursor-pointer self-center rounded-md px-6 py-2 text-2xl ring-color-base hover:ring-2 active:bg-btn-color-base">
+          className="mt-4 cursor-pointer self-center rounded-md px-6 py-2 text-2xl ring-2 ring-color-base active:bg-btn-color-base">
           Delete
         </button>
       </li>

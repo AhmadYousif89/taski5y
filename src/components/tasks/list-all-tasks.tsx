@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@app/hooks';
 
 import { Backdrop } from '@ui/backdrop';
+import { ActionModal } from '@ui/action-modal';
 import { TaskItem } from './task-item/task-item';
 import { sortTasks, searchTasks } from './helpers';
 import { toggleSideMenu } from '@features/slices/ui';
 import { getAllTasks } from '@features/services/tasks';
 import { setTaskActionType, taskSelector } from '@features/slices/task';
-import { ActionModal } from '@ui/action-modal';
 
 export const TaskList = () => {
   const dispatch = useAppDispatch();
@@ -42,9 +42,7 @@ export const TaskList = () => {
 
   let updatedTasks = [...tasks];
 
-  updatedTasks.sort((a, b) => a.priority.localeCompare(b.priority));
   updatedTasks = sortTasks(updatedTasks);
-  updatedTasks = searchTasks(updatedTasks, query);
 
   if (updatedTasks.length === 0) {
     return (
@@ -58,6 +56,8 @@ export const TaskList = () => {
       </div>
     );
   }
+
+  updatedTasks = searchTasks(updatedTasks, query);
 
   if (query && updatedTasks.length === 0) {
     return (

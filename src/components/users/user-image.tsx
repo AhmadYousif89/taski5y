@@ -5,12 +5,17 @@ import { ImageFigure } from '@ui/image-figure';
 import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
 import { readFileAsDataURL, resizeImage } from 'helpers/image-config';
 import { updateUser } from '@features/services/auth';
-import { authSelector, resetAuth } from '@features/slices/auth';
+import {
+  authSelector,
+  resetAuth,
+  resetAuthStatus,
+  setAuthActionType,
+} from '@features/slices/auth';
 
 export const UserImage = ({ maxHeight = 300 }: { maxHeight?: number }) => {
   const { user } = useAuth();
   const dispatch = useAppDispatch();
-  const { status } = useAppSelector(authSelector);
+  const { status, actionType } = useAppSelector(authSelector);
   const [modal, setModal] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<string>('');
@@ -25,18 +30,26 @@ export const UserImage = ({ maxHeight = 300 }: { maxHeight?: number }) => {
         originalURL as string,
         canvas as HTMLCanvasElement,
       );
-      resetStatus();
+      dispatch(resetAuthStatus());
       setImage(image as string);
     }
   };
 
   const triggerFileInput = () => inputRef.current?.click();
-  const resetImage = useCallback(() => setImage(''), [setImage]);
-  const resetStatus = () => dispatch(resetAuth());
+  const resetImage = useCallback(() => setImage(''), []);
   const closeModal = () => {
     setModal(false);
     resetImage();
   };
+  const uploadImage = () => {
+    dispatch(setAuthActionType('uploading image'));
+    dispatch(updateUser({ image }));
+  };
+
+  useEffect(() => {
+    if (status !== 'loading' && actionType === 'uploading image')
+      dispatch(setAuthActionType(''));
+  }, [status]);
 
   useEffect(() => {
     const fileInput = inputRef.current;
@@ -57,7 +70,7 @@ export const UserImage = ({ maxHeight = 300 }: { maxHeight?: number }) => {
             actionType="upload"
             closeModal={closeModal}
             extraAction={triggerFileInput}
-            confirmAction={() => dispatch(updateUser({ image }))}
+            confirmAction={uploadImage}
           />
           <Backdrop onClick={closeModal} className="z-30" />
         </>
@@ -65,8 +78,9 @@ export const UserImage = ({ maxHeight = 300 }: { maxHeight?: number }) => {
 
       <ImageFigure
         status={status}
+        actionType={actionType}
         className={`h-36 w-36 bg-black`}
-        onClick={() => setModal(true)}
+        onClick={() => (status !== 'loading' ? setModal(true) : null)}
         src={`${user?.image ? user?.image : '/public/user-profile-img.webp'}`}>
         <input aria-hidden={true} type="hidden" value={image} />
         <input

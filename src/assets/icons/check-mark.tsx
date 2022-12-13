@@ -6,7 +6,7 @@ export const CheckMarkIcon = () => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-9 w-9">
+      className="h-10 w-10">
       <path
         strokeLinecap="round"
         strokeLinejoin="round"

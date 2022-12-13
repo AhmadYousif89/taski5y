@@ -19,24 +19,30 @@ function App() {
     }
   }, []);
 
-  if (actionType && status === 'loading') {
-    return (
-      <>
-        <ActionModal
-          actionType="transition"
-          msg={`${
-            actionType === 'refresh'
-              ? 'Redirecting ...'
-              : actionType === 'logout'
-              ? 'Logging out ...'
-              : actionType === 'delete'
-              ? 'Deleting user account ...'
-              : ''
-          }`}
-        />
-        <Backdrop />
-      </>
-    );
+  if (status === 'loading') {
+    switch (actionType) {
+      case 'refresh':
+        return (
+          <>
+            <ActionModal actionType="transition" msg={'Redirecting . . . '} />
+            <Backdrop />
+          </>
+        );
+      case 'logout':
+        return (
+          <>
+            <ActionModal actionType="transition" msg={'Logging out . . .'} />
+            <Backdrop />
+          </>
+        );
+      case 'delete':
+        return (
+          <>
+            <ActionModal actionType="transition" msg={'Deleting account . . .'} />
+            <Backdrop />
+          </>
+        );
+    }
   }
 
   return <AppRoutes />;

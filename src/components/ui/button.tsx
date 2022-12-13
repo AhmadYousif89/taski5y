@@ -12,19 +12,17 @@ export const Button = ({
   icon,
   className,
   shouldDisable = false,
-  type,
+  type = 'button',
 }: IButton) => {
   const style = shouldDisable ? 'cursor-not-allowed' : 'cursor-pointer';
 
   return (
     <button
       disabled={shouldDisable}
-      className={`${style} ${className} rounded-md px-6 py-3 ring-color-base transition-transform hover:ring-1 hover:ring-color-base active:translate-y-1`}
+      className={`${style} ${className} flex min-w-[11rem] items-center justify-center gap-4 rounded-md px-6 py-3 text-2xl text-color-base ring-color-base transition-transform hover:ring-1 hover:ring-color-base active:translate-y-1`}
       onClick={onClick}
       type={type}>
-      <span className="flex items-center gap-4 text-2xl text-color-base">
-        {icon} {label}
-      </span>
+      {icon} {label}
     </button>
   );
 };

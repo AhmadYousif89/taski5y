@@ -24,14 +24,14 @@ const initFormValues: FormValues = { title: '', details: '', priority: '', statu
 
 export const TaskForm = () => {
   const dispatch = useAppDispatch();
-  const { status: httpStatus } = useAppSelector(taskSelector);
+  const { status } = useAppSelector(taskSelector);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
     FormValidity,
     FormValues
   >({ initFormValidity, initFormValues });
 
-  const { title, details, status, priority } = formValues;
+  const { title, details, status: statusValue, priority } = formValues;
   const { title: titleIsValid, details: detailsIsValid } = formValidity;
   const formIsValid = [titleIsValid, detailsIsValid].every(Boolean);
 
@@ -41,7 +41,7 @@ export const TaskForm = () => {
     const newTask = {
       title,
       details,
-      status: (status as TaskStatus) || 'Todo',
+      status: (statusValue as TaskStatus) || 'Todo',
       priority: (priority as TaskPriority) || 'Normal',
     };
     setIsSubmitted(true);
@@ -68,7 +68,6 @@ export const TaskForm = () => {
             isFormSubmitted={isSubmitted}
             getValidity={getFormValidity}
             getValue={getFormValues as GetInputValues}
-            inputValidator={text => text.trim().length > 0}
           />
         </fieldset>
 
@@ -84,7 +83,6 @@ export const TaskForm = () => {
             isFormSubmitted={isSubmitted}
             getValidity={getFormValidity}
             getValue={getFormValues as GetInputValues}
-            inputValidator={text => text.trim().length > 0}
           />
         </fieldset>
 
@@ -126,17 +124,17 @@ export const TaskForm = () => {
           </button>
         </fieldset>
 
-        {isSubmitted && httpStatus === 'fulfilled' ? (
-          <p className="absolute -bottom-16 left-1/2 flex -translate-x-1/2 items-center justify-center gap-4 text-center text-2xl text-color-valid">
+        {isSubmitted && status === 'fulfilled' ? (
+          <p className="absolute -bottom-20 -left-24 flex w-full items-center justify-center gap-2 text-center text-2xl text-color-valid xs:left-1/2 xs:-translate-x-1/2">
             <CheckMarkIcon />
             <span>New task created</span>
           </p>
         ) : null}
 
-        {isSubmitted && httpStatus === 'loading' ? (
-          <p className="absolute -bottom-16 left-1/2 flex -translate-x-1/2 items-center justify-center gap-4 text-center text-2xl text-color-valid">
+        {isSubmitted && status === 'loading' ? (
+          <p className="absolute -bottom-20 -left-24 flex w-full items-center justify-center gap-2 text-center text-2xl text-color-valid xs:left-1/2 xs:-translate-x-1/2">
             <SpinnerIcon className="h-10 w-10" />
-            <span>creating new task ...</span>
+            <span>creating new task</span>
           </p>
         ) : null}
       </form>

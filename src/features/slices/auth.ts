@@ -36,6 +36,9 @@ const authSlice = createSlice({
     resetAuth(state) {
       return { ...initialState, user: state.user };
     },
+    resetAuthStatus(state) {
+      state.status = 'idle';
+    },
     setAuthActionType(state, { payload }: PayloadAction<AuthActionType>) {
       state.actionType = payload;
     },
@@ -146,6 +149,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { resetAuth, setAuthActionType } = authSlice.actions;
+export const { resetAuth, setAuthActionType, resetAuthStatus } = authSlice.actions;
 export const authSelector = (state: RootState) => state.auth;
 export default authSlice.reducer;

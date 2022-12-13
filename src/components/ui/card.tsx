@@ -17,10 +17,8 @@ export const Card = ({ className, children, priority, onClick }: CardProps) => {
       onClick={onClick}
       className={`${styles} rounded-lg bg-color-card p-4 shadow-md drop-shadow-md`}>
       {priority === 'High' ? (
-        <span
-          className="absolute -top-2 -right-4 cursor-default"
-          title="High priority task">
-          <StarIcon className="rotate-[35deg] scale-150 fill-amber-500 stroke-black" />
+        <span className="absolute top-0 left-0 cursor-default" title="High priority task">
+          <StarIcon className="rotate-[35deg] scale-125 fill-amber-500 stroke-black" />
         </span>
       ) : (
         ''

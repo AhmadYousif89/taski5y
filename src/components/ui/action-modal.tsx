@@ -3,7 +3,13 @@ import { Button } from '../ui/button';
 import { useAppSelector } from '@app/hooks';
 import { ImageFigure } from './image-figure';
 import { authSelector } from '@features/slices/auth';
-import { CheckMarkIcon, SpinnerIcon, UploadIcon, WarningIcon } from 'assets/icons';
+import {
+  CheckMarkIcon,
+  CloseIcon,
+  SpinnerIcon,
+  UploadIcon,
+  WarningIcon,
+} from 'assets/icons';
 
 type ModalActionType = 'transition' | 'upload';
 type Props = {
@@ -32,17 +38,21 @@ export const ActionModal = ({
   let content = (
     <div className="flex w-full flex-col gap-4 text-center">
       <span className="mb-4 self-center">{icon ? icon : <WarningIcon />}</span>
-      <h3 className="text-2xl sm:text-3xl">{msg}</h3>
+      <h3 className="px-2 text-2xl xs:text-3xl">{msg}</h3>
       {showWarning && (
-        <p className="text-xl sm:text-2xl">This action can not be undone.</p>
+        <p className="text-xl xs:text-2xl">This action can not be undone.</p>
       )}
       <div className="mt-6 flex w-full justify-center gap-12">
         <Button
           label="Confirm"
           onClick={confirmAction}
-          className="ring hover:bg-red-500"
+          className="ring max-xs:bg-red-500 xs:hover:bg-red-500"
         />
-        <Button label="Cancel" onClick={closeModal} className="ring hover:bg-sky-500" />
+        <Button
+          label="Cancel"
+          onClick={closeModal}
+          className="ring max-xs:bg-sky-500 xs:hover:bg-sky-500"
+        />
       </div>
     </div>
   );
@@ -50,8 +60,8 @@ export const ActionModal = ({
   if (actionType === 'transition')
     content = (
       <div className="flex items-center gap-8">
-        <SpinnerIcon className="h-12 w-12 sm:h-14 sm:w-14" />
-        <h3 className="text-2xl sm:text-4xl">{msg}</h3>
+        <SpinnerIcon className="text-sky h-12 w-12" />
+        <h3 className="text-3xl">{msg}</h3>
       </div>
     );
 
@@ -65,9 +75,14 @@ export const ActionModal = ({
           disabled={status === 'loading'}
           className={`${
             status === 'loading' ? 'cursor-not-allowed' : ''
-          } hover:bg-teal-500 active:translate-y-1`}
+          } active:translate-y-1 max-xs:bg-teal-500 xs:hover:bg-teal-500`}
         />
-        <Button label="Close" onClick={closeModal} className="hover:bg-sky-500" />
+        <Button
+          label="Close"
+          icon={<CloseIcon />}
+          onClick={closeModal}
+          className="max-xs:bg-sky-500 xs:hover:bg-sky-500"
+        />
       </div>
       {status === 'loading' ? (
         <p className="text-amber absolute top-full left-1/2 flex w-full translate-y-10 -translate-x-1/2 items-center justify-center gap-4 text-2xl tracking-wider">
@@ -94,8 +109,8 @@ export const ActionModal = ({
         {image ? (
           <>
             <ImageFigure
-              onClick={extraAction}
               src={image}
+              onClick={extraAction}
               className="h-44 w-44 bg-white !ring-white"
             />
             {showActionButtons}
@@ -112,7 +127,7 @@ export const ActionModal = ({
             <Button
               label="Cancel"
               onClick={closeModal}
-              className="mt-8 self-center ring hover:bg-sky-500"
+              className="mt-8 self-center ring max-xs:bg-sky-500 xs:hover:bg-sky-500"
             />
           </>
         )}

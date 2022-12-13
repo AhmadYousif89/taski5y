@@ -18,9 +18,8 @@
     "baseUrl": "src",
     "paths": {
       "@app/*": ["app/*"],
-      "@models/*": ["models/*"],
-      "@features/*": ["features/*"],
       "@ui/*": ["components/ui/*"],
+      "@features/*": ["features/*"],
       "@tasks/*": ["components/tasks/*"],
       "@auth/*": ["components/auth/*"],
       "@users/*": ["components/users/*"]
