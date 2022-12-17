@@ -75,7 +75,7 @@ export const LoginForm = () => {
               value={email}
               type={'email'}
               name={'email'}
-              placeholder={'example@gmail.com'}
+              placeholder={'enter email'}
               placeholderErrMsg={'please enter a valid email'}
               inputErrMsg={'email is not valid'}
               getValue={getFormValues as GetInputValues}
@@ -88,9 +88,9 @@ export const LoginForm = () => {
               value={password}
               type={'password'}
               name={'password'}
-              placeholder={'Enter password'}
+              placeholder={'enter password'}
               inputErrMsg={'password must have at least 3 characters and min 1 number'}
-              placeholderErrMsg={'password is required'}
+              placeholderErrMsg={'password not valid'}
               getValue={getFormValues as GetInputValues}
               getValidity={getFormValidity}
             />

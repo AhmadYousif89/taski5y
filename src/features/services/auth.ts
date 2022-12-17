@@ -1,6 +1,6 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios, { axiosPrivate } from '@features/config/axios';
 import { SignInRequest, ResponseError, SignUpRequest, User } from '@features/types';
-import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const signUp = createAsyncThunk<
   User,

@@ -117,7 +117,7 @@ export const UserProfile = ({ showUserProfile }: Props) => {
               label={'New password'}
               value={password}
               isRequired={false}
-              placeholder={'Enter password'}
+              placeholder={'enter password'}
               showInputErr={password.length > 0}
               inputErrMsg={'required 3 characters with numbers'}
               isFormSubmitted={isSubmitted}
@@ -134,7 +134,7 @@ export const UserProfile = ({ showUserProfile }: Props) => {
               name={'confirmPassword'}
               label={'Confirm password'}
               inputErrMsg={'password mismatch'}
-              placeholder={'Confirm new password'}
+              placeholder={'confirm new password'}
               placeholderErrMsg={"password doesn't match"}
               isFormSubmitted={isSubmitted}
               getValidity={getFormValidity}
@@ -161,7 +161,7 @@ export const UserProfile = ({ showUserProfile }: Props) => {
             </p>
           )}
           <Button
-            shouldDisable={!formIsValid}
+            isDisabled={!formIsValid}
             label="Submit"
             type="submit"
             icon={

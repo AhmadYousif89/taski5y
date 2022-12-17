@@ -56,9 +56,10 @@ export const TaskForm = () => {
     <>
       <TaskStats />
 
-      <form className="relative flex flex-col gap-6" onSubmit={onFormSubmit}>
+      <form className="relative flex flex-col gap-10" onSubmit={onFormSubmit}>
         <fieldset aria-label="task-title-input">
           <Input
+            id={'title'}
             type={'text'}
             name={'title'}
             value={title}
@@ -73,6 +74,7 @@ export const TaskForm = () => {
 
         <fieldset aria-label="task-details-input">
           <Input
+            id={'details'}
             type={'text'}
             name={'details'}
             value={details}

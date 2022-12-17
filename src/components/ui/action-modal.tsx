@@ -72,7 +72,7 @@ export const ActionModal = ({
           icon={<UploadIcon />}
           label="Upload"
           onClick={confirmAction}
-          disabled={status === 'loading'}
+          isDisabled={status === 'loading'}
           className={`${
             status === 'loading' ? 'cursor-not-allowed' : ''
           } ring-1 ring-teal-500 active:translate-y-1 max-xs:bg-teal-500 xs:hover:bg-teal-500`}

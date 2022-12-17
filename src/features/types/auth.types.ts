@@ -14,11 +14,12 @@ export type ResponseError = {
   message: string | string[];
   error?: string;
 };
-export interface User {
+export type User = {
   id: string;
   image?: string;
   name: string;
   email: string;
+  provider: string;
   createdAt: string;
   updatedAt: string;
-}
+};

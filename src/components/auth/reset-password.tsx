@@ -73,7 +73,7 @@ export const ResetPassword = () => {
               value={email}
               type={'email'}
               name={'email'}
-              placeholder={'example@gmail.com'}
+              placeholder={'enter email'}
               placeholderErrMsg={'please enter your registration email'}
               inputErrMsg={'email is not valid'}
               getValidity={getFormValidity}
@@ -85,9 +85,9 @@ export const ResetPassword = () => {
               value={password}
               type={'password'}
               name={'password'}
-              placeholder={'Enter new password'}
-              inputErrMsg={'required at least 3 characters'}
-              placeholderErrMsg={'password is required'}
+              placeholder={'enter new password'}
+              inputErrMsg={'password must have at least 3 characters and min 1 number'}
+              placeholderErrMsg={'password not valid'}
               getValidity={getFormValidity}
               getValue={getFormValues as GetInputValues}
             />
@@ -98,7 +98,7 @@ export const ResetPassword = () => {
               value={confirmPassword}
               name={'confirmPassword'}
               inputErrMsg={'password mismatch'}
-              placeholder={'Confirm new password'}
+              placeholder={'confirm new password'}
               placeholderErrMsg={"password doesn't match"}
               getValidity={getFormValidity}
               getValue={getFormValues as GetInputValues}

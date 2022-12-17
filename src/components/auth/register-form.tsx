@@ -9,9 +9,10 @@ import { SwitchFormButton } from './switch-form-button';
 
 import { Card } from '@ui/card';
 import { SpinnerIcon } from 'assets/icons';
-import { signUp } from '@features/services/auth';
+import { googleLogin, signUp } from '@features/services/auth';
 import { GetInputValues, Input } from '@ui/input';
 import { authSelector, resetAuth } from '@features/slices/auth';
+import { Button } from '@ui/button';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword'>, string>;
@@ -75,17 +76,18 @@ export const RegisterForm = () => {
   return (
     <section className="translate-y-40" aria-label="Registration-form">
       <Card className="relative mx-auto w-11/12 max-w-screen-xs">
-        <form className="mx-auto my-16 flex w-4/5 flex-col gap-6" onSubmit={onFormSubmit}>
-          <h2 className="text-3xl capitalize tracking-widest text-color-base">
+        <form className="mx-auto my-16 flex w-4/5 flex-col gap-8" onSubmit={onFormSubmit}>
+          <h2 className="mb-4 text-3xl capitalize tracking-widest text-color-base">
             create new account
           </h2>
 
           <fieldset aria-label="name-input">
             <Input
+              id={'name'}
               value={name}
               type={'text'}
               name={'name'}
-              placeholder={'Enter name'}
+              placeholder={'enter name'}
               inputErrMsg={'name is required'}
               placeholderErrMsg={'name is not valid'}
               getValidity={getFormValidity}
@@ -95,10 +97,11 @@ export const RegisterForm = () => {
 
           <fieldset aria-label="email-input">
             <Input
+              id={'email'}
               value={email}
               type={'email'}
               name={'email'}
-              placeholder={'example@gmail.com'}
+              placeholder={'enter email'}
               placeholderErrMsg={'please enter a valid email'}
               inputErrMsg={'email is not valid'}
               getValidity={getFormValidity}
@@ -111,15 +114,15 @@ export const RegisterForm = () => {
               value={password}
               type={'password'}
               name={'password'}
-              placeholder={'Enter password'}
+              placeholder={'enter password'}
               inputErrMsg={'password must have at least 3 characters and min 1 number'}
-              placeholderErrMsg={'password is required'}
+              placeholderErrMsg={'password not valid'}
               getValidity={getFormValidity}
               getValue={getFormValues as GetInputValues}
             />
           </fieldset>
 
-          <fieldset className="flex items-center justify-between">
+          <fieldset className="flex items-center justify-between gap-4">
             <AuthButton title="create" status={status} formIsValid={formIsValid} />
 
             {status === 'rejected' ? (

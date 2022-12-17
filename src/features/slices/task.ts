@@ -24,7 +24,7 @@ interface TaskState {
   totalInProgressTasks: number;
   totalCompletedTasks: number;
   searchedTaskQuery: string;
-  activeTaskPanel: TaskStatus | '';
+  activeTaskPanel: TaskStatus;
   actionType: TaskActionType;
   status: ResponseStatus;
   error: ResponseError;
