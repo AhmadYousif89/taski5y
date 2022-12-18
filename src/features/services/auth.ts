@@ -31,6 +31,21 @@ export const signIn = createAsyncThunk<
   }
 });
 
+export const googleLogin = createAsyncThunk<
+  User,
+  { credential: string },
+  { rejectValue: ResponseError }
+>('auth/login-with-google', async (credentials, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.post(`/auth/google/login`, credentials, {
+      withCredentials: true,
+    });
+    return data;
+  } catch (err: any) {
+    return rejectWithValue(err?.response?.data);
+  }
+});
+
 export const signOut = createAsyncThunk<
   { message: string },
   void,

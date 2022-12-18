@@ -1,9 +1,11 @@
-import { useNavigate } from 'react-router-dom';
 import { FormEvent, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
 
+import googleLogo from '../../assets/google.png';
 import { GetInputValues, Input } from '@ui/input';
 import { useForm } from 'hooks/use-form';
-import { signIn } from '@features/services/auth';
+import { googleLogin, signIn } from '@features/services/auth';
 import { authSelector, resetAuth, setAuthActionType } from '@features/slices/auth';
 import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
 
@@ -13,6 +15,7 @@ import { AuthButton } from './auth-button';
 import { SpinnerIcon } from 'assets/icons';
 import { TrustDevice } from './remember-me-checkbox';
 import { SwitchFormButton } from './switch-form-button';
+import { Button } from '@ui/button';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword' | 'name'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword' | 'name'>, string>;
@@ -116,6 +119,21 @@ export const LoginForm = () => {
                 Loading . . .
               </p>
             ) : null}
+          </fieldset>
+
+          <fieldset>
+            <Button
+              label="Sign in with google"
+              className="w-full ring-1 ring-color-base xs:w-1/2">
+              <img src={googleLogo} className="h-8" />
+              <span className="absolute [&>*]:opacity-0">
+                <GoogleLogin
+                  onSuccess={({ credential }) => {
+                    if (credential) dispatch(googleLogin({ credential }));
+                  }}
+                />
+              </span>
+            </Button>
           </fieldset>
 
           <fieldset className="xs:w-1/2">

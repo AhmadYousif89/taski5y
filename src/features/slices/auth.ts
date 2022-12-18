@@ -9,6 +9,7 @@ import {
   updateUser,
   deleteUser,
   resetPassword,
+  googleLogin,
 } from '../services/auth';
 import { persistData } from 'helpers/persist-data';
 
@@ -71,6 +72,22 @@ const authSlice = createSlice({
         localStorage.removeItem('error');
       })
       .addCase(signIn.rejected, (state, { payload }) => {
+        state.status = 'rejected';
+        state.user = null;
+        state.error = payload || initError;
+      });
+
+    builder
+      .addCase(googleLogin.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(googleLogin.fulfilled, (state, { payload }) => {
+        state.status = 'fulfilled';
+        state.user = payload;
+        persistData('hasAccess', true);
+        localStorage.removeItem('error');
+      })
+      .addCase(googleLogin.rejected, (state, { payload }) => {
         state.status = 'rejected';
         state.user = null;
         state.error = payload || initError;

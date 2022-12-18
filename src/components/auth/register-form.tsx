@@ -1,18 +1,20 @@
-import { useNavigate } from 'react-router-dom';
 import { FormEvent, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
 import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
-import { useForm } from 'hooks/use-form';
 
+import googleLogo from '../../assets/google.png';
+import { useForm } from 'hooks/use-form';
 import { AuthInputNames } from './types';
 import { AuthButton } from './auth-button';
 import { SwitchFormButton } from './switch-form-button';
 
 import { Card } from '@ui/card';
-import { SpinnerIcon } from 'assets/icons';
-import { googleLogin, signUp } from '@features/services/auth';
-import { GetInputValues, Input } from '@ui/input';
-import { authSelector, resetAuth } from '@features/slices/auth';
 import { Button } from '@ui/button';
+import { SpinnerIcon } from 'assets/icons';
+import { GetInputValues, Input } from '@ui/input';
+import { googleLogin, signUp } from '@features/services/auth';
+import { authSelector, resetAuth } from '@features/slices/auth';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword'>, string>;
@@ -138,6 +140,21 @@ export const RegisterForm = () => {
                 Loading
               </p>
             ) : null}
+          </fieldset>
+
+          <fieldset>
+            <Button
+              label="Continue with google"
+              className="w-full ring-1 ring-color-base xs:w-1/2">
+              <img src={googleLogo} className="h-8" />
+              <span className="absolute [&>*]:opacity-0">
+                <GoogleLogin
+                  onSuccess={({ credential }) => {
+                    if (credential) dispatch(googleLogin({ credential }));
+                  }}
+                />
+              </span>
+            </Button>
           </fieldset>
 
           <fieldset className="xs:w-1/2">
