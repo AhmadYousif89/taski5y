@@ -7,7 +7,6 @@ import { ThemeSwitcher } from '@ui/theme-switcher';
 import { MenuButton } from '@ui/menu-button';
 import { Menu } from '@ui/menu';
 
-import { Logo } from 'assets/icons';
 import { Logout } from '@auth/logout';
 import { TaskForm } from '@tasks/task-form';
 import { UserInfo } from '@users/user-info';
@@ -30,9 +29,9 @@ export const AppLayout = () => {
     <main className={`${mode} flex min-h-[inherit] flex-col bg-color-base`}>
       <header className="relative bg-color-card py-8 shadow-md">
         <ThemeSwitcher />
-        <h1 className="mx-auto flex w-fit items-center gap-2 text-2xl capitalize text-color-base xs:text-3xl md:text-4xl">
-          <span>personal task manager</span>
-          <Logo />
+        <h1 className="mx-auto flex w-fit items-center gap-2 text-3xl capitalize text-color-base md:text-4xl">
+          <span>Taskify</span>
+          <img src="/public/logo.png" alt="logo" width={30} />
         </h1>
         {user ? <MenuButton /> : null}
         {sessionExpired && sessionExpireMsg}

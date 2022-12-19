@@ -1,16 +1,13 @@
 import { ChangeEvent, useRef, useState, useEffect, useCallback } from 'react';
+
 import { Backdrop } from '@ui/backdrop';
 import { ActionModal } from '@ui/action-modal';
 import { ImageFigure } from '@ui/image-figure';
+import { updateUser } from '@features/services/auth';
 import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
 import { readFileAsDataURL, resizeImage } from 'helpers/image-config';
-import { updateUser } from '@features/services/auth';
-import {
-  authSelector,
-  resetAuth,
-  resetAuthStatus,
-  setAuthActionType,
-} from '@features/slices/auth';
+import { authSelector, resetAuthStatus, setAuthActionType } from '@features/slices/auth';
+import defaultUserImg from '../../assets/user-default-image.webp';
 
 export const UserImage = ({ maxHeight = 300 }: { maxHeight?: number }) => {
   const { user } = useAuth();
@@ -81,7 +78,7 @@ export const UserImage = ({ maxHeight = 300 }: { maxHeight?: number }) => {
         actionType={actionType}
         className={`h-36 w-36 bg-black`}
         onClick={() => (status !== 'loading' ? setModal(true) : null)}
-        src={`${user?.image ? user?.image : '/public/user-profile-img.webp'}`}>
+        src={`${user?.image ? user?.image : defaultUserImg}`}>
         <input aria-hidden={true} type="hidden" value={image} />
         <input
           type="file"

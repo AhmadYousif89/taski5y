@@ -6,7 +6,7 @@ import { TaskStats } from './task-stats';
 import { useForm } from 'hooks/use-form';
 import { GetInputValues, Input } from '@ui/input';
 import { GetSelectValues, Select } from '@ui/select';
-import { CheckMarkIcon, SpinnerIcon } from 'assets/icons';
+import { CheckMarkIcon, SpinnerIcon, TaskIcon } from 'assets/icons';
 import { addNewTask } from '@features/services/tasks';
 import { TaskPriority, TaskStatus } from '@features/types';
 import { resetTaskStatus, taskSelector } from '@features/slices/task';
@@ -121,8 +121,9 @@ export const TaskForm = () => {
             disabled={!formIsValid}
             className={`${
               formIsValid ? 'cursor-pointer' : 'cursor-not-allowed'
-            } w-full cursor-pointer rounded-md bg-transparent px-6 py-4 text-3xl capitalize text-color-base shadow-md ring-1 ring-color-base transition-all active:translate-y-1`}>
-            create task
+            } flex-center w-full cursor-pointer gap-4 rounded-md bg-transparent px-6 py-4 text-3xl capitalize text-color-base shadow-md ring-1 ring-color-base transition-all active:translate-y-1`}>
+            <span>create task</span>
+            <TaskIcon />
           </button>
         </fieldset>
 

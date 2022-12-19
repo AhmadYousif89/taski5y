@@ -19,7 +19,7 @@ export type User = {
   image?: string;
   name: string;
   email: string;
-  provider: 'google' | 'No provider';
+  provider: 'google' | 'No_Provider';
   createdAt: string;
   updatedAt: string;
 };

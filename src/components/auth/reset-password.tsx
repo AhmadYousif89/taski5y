@@ -66,11 +66,9 @@ export const ResetPassword = () => {
   };
 
   return (
-    <section className="translate-y-40">
-      <Card className="relative mx-4 max-w-screen-xs sm:mx-auto">
-        <form
-          className="mx-auto my-16 flex w-10/12 flex-col gap-6"
-          onSubmit={onFormSubmit}>
+    <section className="mx-4 translate-y-40">
+      <Card className="relative mx-auto flex max-w-4xl flex-col items-center">
+        <form className="flex w-full flex-col gap-8 py-10 px-6" onSubmit={onFormSubmit}>
           <h2 className="mb-4 text-3xl capitalize tracking-widest text-color-base">
             reset your password
           </h2>
@@ -81,7 +79,7 @@ export const ResetPassword = () => {
               type={'email'}
               name={'email'}
               placeholder={'enter email'}
-              placeholderErrMsg={'please enter your registration email'}
+              placeholderErrMsg={'please enter your registered email'}
               inputErrMsg={'email is not valid'}
               getValidity={getFormValidity}
               getValue={getFormValues as GetInputValues}

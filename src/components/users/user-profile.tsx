@@ -117,7 +117,7 @@ export const UserProfile = ({ showUserProfile }: Props) => {
           </fieldset>
         </div>
 
-        {user?.provider === 'No provider' && (
+        {user?.provider !== 'google' && (
           <div className="mt-8 flex flex-col gap-6">
             <h3 className="text-3xl">Change password</h3>
 
@@ -170,7 +170,7 @@ export const UserProfile = ({ showUserProfile }: Props) => {
           {isSubmitted && status === 'fulfilled' && (
             <p className="absolute -top-14 -left-3 flex items-center gap-2 text-center text-xl text-color-valid xs:left-1/3 xs:text-2xl">
               <CheckMarkIcon />
-              Profile updated
+              Profile Updated
             </p>
           )}
           <Button
