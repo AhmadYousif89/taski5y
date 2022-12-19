@@ -25,7 +25,7 @@ export const ImageFigure = ({
       ? 'before:absolute before:inset-0 before:z-10 before:h-full before:w-full before:rounded-full before:border-4 before:animate-spin before:border-x-amber-500 before:border-y-neutral-900'
       : 'ring-4 ring-neutral-900';
   const loadingText = (
-    <p className="center-absolute text-amber z-20 flex h-full w-full items-center justify-center bg-neutral-800 bg-opacity-50 text-lg font-bold uppercase tracking-wider">
+    <p className="center-absolute text-amber flex-center z-20 h-full w-full bg-neutral-800 bg-opacity-50 text-lg font-bold uppercase tracking-wider">
       updating
     </p>
   );

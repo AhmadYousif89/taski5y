@@ -85,7 +85,7 @@ export const ActionModal = ({
         />
       </div>
       {status === 'loading' ? (
-        <p className="text-amber absolute top-full left-1/2 flex w-full translate-y-10 -translate-x-1/2 items-center justify-center gap-4 text-2xl tracking-wider">
+        <p className="text-amber flex-center absolute top-full left-1/2 w-full translate-y-10 -translate-x-1/2 gap-4 text-2xl tracking-wider">
           <SpinnerIcon className="h-10 w-10" />
           uploading . . .
         </p>
@@ -120,7 +120,7 @@ export const ActionModal = ({
             <button
               aria-label="upload-image-button"
               onClick={extraAction}
-              className="flex w-2/3 cursor-pointer flex-col items-center justify-center gap-4 rounded-md border-2 border-dashed border-sky-500 px-4 py-8 transition-transform active:translate-y-2">
+              className="flex-center w-2/3 cursor-pointer flex-col gap-4 rounded-md border-2 border-dashed border-sky-500 px-4 py-8 transition-transform active:translate-y-2">
               <UploadIcon className="h-16 w-16 stroke-sky-400 " />
               <p className="text-2xl sm:text-3xl">Select your image</p>
             </button>
@@ -139,7 +139,7 @@ export const ActionModal = ({
   const modalElement = (
     <section
       aria-label="modal"
-      className="fixed top-1/2 left-1/2 z-40 mx-auto flex min-h-[300px] w-10/12 max-w-3xl -translate-y-1/2 -translate-x-1/2 items-center justify-center rounded-lg bg-neutral-800 py-12 text-color-base">
+      className="flex-center fixed top-1/2 left-1/2 z-40 mx-auto min-h-[300px] w-10/12 max-w-3xl -translate-y-1/2 -translate-x-1/2 rounded-lg bg-neutral-800 py-12 text-color-base">
       {content}
     </section>
   );

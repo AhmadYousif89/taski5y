@@ -106,7 +106,7 @@ export const SortField = () => {
           ref={sortMenuRef}
           title="sort tasks"
           onClick={openSortMenuHandler}
-          className="absolute z-10 flex h-14 w-14 translate-x-10 cursor-pointer items-center justify-center gap-4 rounded-full text-2xl text-color-base transition-all hover:ring-2 hover:ring-color-highlight active:ring-color-highlight">
+          className="flex-center absolute z-10 h-14 w-14 translate-x-10 cursor-pointer gap-4 rounded-full text-2xl text-color-base transition-all hover:ring-2 hover:ring-color-highlight active:ring-color-highlight">
           <SortIcon />
           {toggleMenu && <>{sortList}</>}
         </div>

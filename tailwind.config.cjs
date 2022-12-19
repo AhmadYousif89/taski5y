@@ -8,12 +8,16 @@ module.exports = {
         color: '#ffa',
       },
     },
+
     screens: {
       xs: '570px',
       md: '640px',
       ...defaultTheme.screens,
     },
     extend: {
+      fontFamily: {
+        'Roboto Mono': ['Roboto Mono', ...defaultTheme.fontFamily.sans],
+      },
       ringColor: {
         color: {
           base: 'rgb(var(--ring-color-base) / <alpha-value>)',

@@ -4,9 +4,7 @@ export const TrustDevice = () => {
   const [persist, setPersist] = usePersist();
 
   return (
-    <label
-      htmlFor="persist"
-      className="flex w-full items-center justify-center gap-2 text-2xl text-color-base">
+    <label htmlFor="persist" className="flex-center w-full gap-2 text-xl text-color-base">
       <input
         type="checkbox"
         name="persist"
@@ -15,7 +13,7 @@ export const TrustDevice = () => {
         checked={persist}
         className="w-max accent-indigo-400"
       />
-      Trust device
+      Trust me bro
     </label>
   );
 };

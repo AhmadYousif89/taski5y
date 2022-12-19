@@ -31,9 +31,9 @@ export const Menu = ({ children, className }: SideMenuProps) => {
         className={`${className} ${animateMenu} fixed top-0 left-1/2 z-20 flex min-h-screen w-full origin-top -translate-x-1/2 flex-col bg-color-card shadow-md transition-all duration-700 md:w-2/3 lg:w-4/12 lg:min-w-[50rem]`}>
         <button
           type={'button'}
-          className="btn-circle absolute top-14 right-0 flex items-center justify-center text-xl font-bold text-color-base"
+          className="btn-circle absolute top-14 right-0 text-xl font-bold text-color-base"
           onClick={() => dispatch(toggleSideMenu())}>
-          Esc
+          <span className="center-absolute">Esc</span>
         </button>
         {children}
       </aside>

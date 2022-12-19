@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,7 +18,7 @@
     --ring-input-color-invalid: 240 63 99;
 
     --bg-color-steps: 25 25 25;
-    --bg-color-base: 240 240 250;
+    --bg-color-base: 250 250 250;
     --bg-color-card: 241 245 249;
 
     --btn-bg-color-base: 20 200 110;
@@ -72,10 +73,13 @@
     @apply text-green-400;
   }
   .btn-circle {
-    @apply h-14 w-14 cursor-pointer rounded-full ring ring-color-base hover:ring-color-highlight active:bg-btn-color-highlight;
+    @apply h-12 w-12 cursor-pointer rounded-full ring ring-color-base hover:ring-color-highlight active:bg-btn-color-highlight xs:h-14 xs:w-14;
   }
   .center-absolute {
     @apply absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2;
+  }
+  .flex-center {
+    @apply flex items-center justify-center;
   }
   .input-err-msg {
     @apply mt-4 text-xl text-color-invalid;
@@ -83,7 +87,7 @@
 }
 
 :root {
-  font-family: Inter system-ui, -apple-system, Roboto, Helvetica Neue, Arial, sans-serif;
+  font-family: Roboto Mono, sans-serif;
   font-size: 10px;
   font-weight: 400;
 

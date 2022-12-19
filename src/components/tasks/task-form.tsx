@@ -127,14 +127,14 @@ export const TaskForm = () => {
         </fieldset>
 
         {isSubmitted && status === 'fulfilled' ? (
-          <p className="absolute -bottom-20 -left-24 flex w-full items-center justify-center gap-2 text-center text-2xl text-color-valid xs:left-1/2 xs:-translate-x-1/2">
+          <p className="flex-center absolute -bottom-20 -left-24 w-full gap-2 text-center text-2xl text-color-valid xs:left-1/2 xs:-translate-x-1/2">
             <CheckMarkIcon />
             <span>New task created</span>
           </p>
         ) : null}
 
         {isSubmitted && status === 'loading' ? (
-          <p className="absolute -bottom-20 -left-24 flex w-full items-center justify-center gap-2 text-center text-2xl text-color-valid xs:left-1/2 xs:-translate-x-1/2">
+          <p className="flex-center absolute -bottom-20 -left-24 w-full gap-2 text-center text-2xl text-color-valid xs:left-1/2 xs:-translate-x-1/2">
             <SpinnerIcon className="h-10 w-10" />
             <span>creating new task</span>
           </p>

@@ -66,7 +66,7 @@ export const LoginForm = () => {
 
   return (
     <section className="relative mx-4 translate-y-40" aria-label="Login-form">
-      <Card className="mx-auto flex max-w-3xl flex-col items-center">
+      <Card className="mx-auto flex max-w-4xl flex-col items-center">
         <form className="flex w-full flex-col gap-8 py-10 px-6" onSubmit={onFormSubmit}>
           <h2 className="mb-4 text-center text-3xl capitalize tracking-widest text-color-base">
             login to account

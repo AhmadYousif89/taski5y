@@ -1,12 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
 
+import { AppLayout } from './layout';
 import { NotFound } from 'pages/404';
 import { TasksPage } from 'pages/tasks';
 import { LoginForm } from '@auth/login-form';
 import { RequireAuth } from '@auth/require-auth';
 import { RegisterForm } from '@auth/register-form';
 import { ResetPassword } from '@auth/reset-password';
-import { AppLayout } from './layout';
 
 export const AppRoutes = () => {
   return (

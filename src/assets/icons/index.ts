@@ -12,6 +12,7 @@ export * from './star';
 export * from './sun';
 export * from './trash';
 export * from './logout';
+export * from './logo';
 export * from './upload';
 export * from './check-mark';
 export * from './warning';

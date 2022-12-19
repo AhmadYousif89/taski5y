@@ -78,7 +78,7 @@ export const RegisterForm = () => {
 
   return (
     <section className="mx-4 translate-y-40" aria-label="Registration-form">
-      <Card className="relative mx-auto flex max-w-3xl flex-col items-center">
+      <Card className="relative mx-auto flex max-w-4xl flex-col items-center">
         <form className="flex w-full flex-col gap-8 py-10 px-6" onSubmit={onFormSubmit}>
           <h2 className="mb-4 text-center text-3xl capitalize tracking-widest text-color-base">
             create new account
