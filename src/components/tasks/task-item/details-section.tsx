@@ -46,7 +46,7 @@ export const DetailsSection = ({
           updating
         </p>
       ) : null}
-      {true ? (
+      {isEditing && !isUpdating ? (
         <p className="text-amber absolute left-0 -bottom-12 text-xl uppercase tracking-wide">
           edited
         </p>
