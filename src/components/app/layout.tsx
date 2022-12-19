@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { uiSelector } from '@features/slices/ui';
 import { useAppSelector, useAuth } from '@app/hooks';
 
+import appLogo from '../../assets/logo.png';
 import { ThemeSwitcher } from '@ui/theme-switcher';
 import { MenuButton } from '@ui/menu-button';
 import { Menu } from '@ui/menu';
@@ -31,7 +32,7 @@ export const AppLayout = () => {
         <ThemeSwitcher />
         <h1 className="mx-auto flex w-fit items-center gap-2 text-3xl capitalize text-color-base md:text-4xl">
           <span>Taskify</span>
-          <img src="/public/logo.png" alt="logo" width={30} />
+          <img src={appLogo} alt="logo" width={30} />
         </h1>
         {user ? <MenuButton /> : null}
         {sessionExpired && sessionExpireMsg}
