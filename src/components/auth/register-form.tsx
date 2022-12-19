@@ -118,7 +118,7 @@ export const RegisterForm = () => {
               type={'password'}
               name={'password'}
               placeholder={'enter password'}
-              inputErrMsg={'password must have at least 3 characters and min 1 number'}
+              inputErrMsg={'must be 3 or more character with min 1 number'}
               placeholderErrMsg={'password not valid'}
               getValidity={getFormValidity}
               getValue={getFormValues as GetInputValues}

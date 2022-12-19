@@ -91,7 +91,7 @@ export const LoginForm = () => {
               type={'password'}
               name={'password'}
               placeholder={'enter password'}
-              inputErrMsg={'password must have at least 3 characters and min 1 number'}
+              inputErrMsg={'must be 3 or more character with min 1 number'}
               placeholderErrMsg={'password not valid'}
               getValue={getFormValues as GetInputValues}
               getValidity={getFormValidity}

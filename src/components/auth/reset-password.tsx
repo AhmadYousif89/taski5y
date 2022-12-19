@@ -1,17 +1,18 @@
 import { useNavigate } from 'react-router-dom';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@app/hooks';
 import { resetPassword } from '@features/services/auth';
-import { authSelector, resetAuth } from '@features/slices/auth';
+import { authSelector, resetAuth, resetAuthStatus } from '@features/slices/auth';
 
 import { Card } from '@ui/card';
 import { AuthInputNames } from './types';
 import { SpinnerIcon } from 'assets/icons';
 import { AuthButton } from './auth-button';
+import { GetInputValues, Input } from '@ui/input';
 import { SwitchFormButton } from './switch-form-button';
-import { GetInputValidation, GetInputValues, Input } from '@ui/input';
 import { useForm } from 'hooks/use-form';
+import { addTimer } from 'helpers/timeout';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'name'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'name'>, string>;
@@ -45,12 +46,18 @@ export const ResetPassword = () => {
 
   useEffect(() => {
     if (status === 'fulfilled') {
-      setTimeout(() => {
+      addTimer(() => {
         navigate('/login');
         dispatch(resetAuth());
       }, 2000);
     }
   }, [status]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetAuthStatus());
+    };
+  }, []);
 
   const onFormSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -86,7 +93,7 @@ export const ResetPassword = () => {
               type={'password'}
               name={'password'}
               placeholder={'enter new password'}
-              inputErrMsg={'password must have at least 3 characters and min 1 number'}
+              inputErrMsg={'must be 3 or more character with min 1 number'}
               placeholderErrMsg={'password not valid'}
               getValidity={getFormValidity}
               getValue={getFormValues as GetInputValues}
