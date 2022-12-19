@@ -20,7 +20,7 @@ export const AppLayout = () => {
   const sessionExpired = JSON.parse(localStorage.getItem('error') as string);
 
   const sessionExpireMsg = (
-    <p className="absolute top-full left-1/2 mx-auto mt-10 w-full max-w-md -translate-x-1/2 rounded-lg bg-slate-800 p-6 text-3xl text-sky-300">
+    <p className="absolute top-full left-1/2 mx-auto mt-10 w-full max-w-md -translate-x-1/2 rounded-md bg-slate-800 p-6 text-3xl text-sky-300">
       Your last session was expired
     </p>
   );

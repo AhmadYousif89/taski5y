@@ -1,4 +1,11 @@
-import { ChangeEvent, InputHTMLAttributes, useEffect, useState } from 'react';
+import {
+  Ref,
+  useState,
+  useEffect,
+  forwardRef,
+  ChangeEvent,
+  InputHTMLAttributes,
+} from 'react';
 import { InputError } from '@ui/input-error';
 import { AuthInputNames } from '@auth/types';
 import { TaskInputNames } from '@tasks/types';
@@ -25,14 +32,14 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   getValidity?: GetInputValidation;
 }
 
-export const Input = (props: InputProps) => {
+const CustomInput = (props: InputProps, ref: Ref<HTMLInputElement>) => {
   const {
     id,
     type,
     name,
     label,
-    className,
     getValue,
+    className,
     placeholder,
     inputErrMsg,
     getValidity,
@@ -102,12 +109,13 @@ export const Input = (props: InputProps) => {
     <div className="flex w-full flex-col items-center">
       <div className="relative flex w-full items-center">
         {label ? (
-          <label className="w-1/2 text-2xl" htmlFor="email">
+          <label className="w-1/2 text-2xl" htmlFor={id}>
             {label}
           </label>
         ) : null}
         <input
           id={id}
+          ref={ref}
           name={name}
           type={type}
           value={inputValue}
@@ -124,3 +132,5 @@ export const Input = (props: InputProps) => {
     </div>
   );
 };
+
+export const Input = forwardRef(CustomInput);

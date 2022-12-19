@@ -15,6 +15,7 @@ import { SpinnerIcon } from 'assets/icons';
 import { GetInputValues, Input } from '@ui/input';
 import { googleLogin, signUp } from '@features/services/auth';
 import { authSelector, resetAuth } from '@features/slices/auth';
+import { AuthErrorMsg } from './auth-error-msg';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword'>, string>;
@@ -76,10 +77,10 @@ export const RegisterForm = () => {
   };
 
   return (
-    <section className="translate-y-40" aria-label="Registration-form">
-      <Card className="relative mx-auto w-11/12 max-w-screen-xs">
-        <form className="mx-auto my-16 flex w-4/5 flex-col gap-8" onSubmit={onFormSubmit}>
-          <h2 className="mb-4 text-3xl capitalize tracking-widest text-color-base">
+    <section className="mx-4 translate-y-40" aria-label="Registration-form">
+      <Card className="relative mx-auto flex max-w-3xl flex-col items-center">
+        <form className="flex w-full flex-col gap-8 py-10 px-6" onSubmit={onFormSubmit}>
+          <h2 className="mb-4 text-center text-3xl capitalize tracking-widest text-color-base">
             create new account
           </h2>
 
@@ -124,25 +125,27 @@ export const RegisterForm = () => {
             />
           </fieldset>
 
-          <fieldset className="flex items-center justify-between gap-4">
+          <fieldset className="xs:mx-auto xs:w-1/2">
             <AuthButton title="create" status={status} formIsValid={formIsValid} />
-
-            {status === 'rejected' ? (
-              <div className={`text-right text-2xl text-color-invalid`}>
-                {userErrorMsg}
-              </div>
-            ) : null}
-
-            {status === 'loading' ? (
-              <p
-                className={`flex items-center gap-4 text-center text-2xl text-color-valid`}>
-                <SpinnerIcon className="h-10 w-10" />
-                Loading
-              </p>
-            ) : null}
           </fieldset>
 
-          <fieldset>
+          <fieldset className="mx-auto xs:w-1/2">
+            <SwitchFormButton
+              onClick={() => navigate(`/login`)}
+              msg="i have an account"
+              title="sign in"
+            />
+          </fieldset>
+
+          <div
+            aria-label="divider"
+            className="relative my-4 before:absolute before:right-0 before:top-0 before:h-px before:w-[45%] before:bg-neutral-500 after:absolute after:left-0 after:top-0 after:h-px after:w-[45%] after:bg-neutral-500">
+            <span className="center-absolute text-xl font-bold tracking-wider text-color-base">
+              Or
+            </span>
+          </div>
+
+          <fieldset className="flex justify-center">
             <Button
               label="Continue with google"
               className="w-full ring-1 ring-color-base xs:w-1/2">
@@ -155,14 +158,8 @@ export const RegisterForm = () => {
                 />
               </span>
             </Button>
-          </fieldset>
 
-          <fieldset className="xs:w-1/2">
-            <SwitchFormButton
-              onClick={() => navigate(`/login`)}
-              msg="i have an account"
-              title="sign in"
-            />
+            <AuthErrorMsg status={status} errorMsg={userErrorMsg} />
           </fieldset>
         </form>
       </Card>

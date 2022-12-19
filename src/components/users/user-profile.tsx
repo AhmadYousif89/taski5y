@@ -1,4 +1,4 @@
-import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
+import { Dispatch, FormEvent, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
 import { AuthInputNames } from '@auth/types';
 import { Button } from '@ui/button';
@@ -30,7 +30,8 @@ const initFormValues: FormValues = {
 export const UserProfile = ({ showUserProfile }: Props) => {
   const { user } = useAuth();
   const dispatch = useAppDispatch();
-  const { status, actionType } = useAppSelector(authSelector);
+  const { status } = useAppSelector(authSelector);
+  const emailRef = useRef<HTMLInputElement>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
     FormValidity,
@@ -47,15 +48,18 @@ export const UserProfile = ({ showUserProfile }: Props) => {
 
   let formIsValid: boolean = false;
   if (nameIsValid) formIsValid = true;
-  if (emailIsValid) formIsValid = true;
+  if (emailIsValid && user?.provider !== 'google') formIsValid = true;
   if (passwordIsValid && confirmPasswordIsValid) formIsValid = true;
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formIsValid) return;
-    const data = password
-      ? { name: name || user?.name, email: email || user?.email, password }
-      : { name: name || user?.name, email: email || user?.email };
+    const data =
+      user?.provider === 'google'
+        ? { name: name || user?.name } // just update the username if the user sign in with google
+        : password
+        ? { name: name || user?.name, email: email || user?.email, password } // case we need to update the password
+        : { name: name || user?.name, email: email || user?.email }; // update only the username and email
     dispatch(updateUser(data));
     setIsSubmitted(true);
     addTimer(() => {
@@ -64,12 +68,18 @@ export const UserProfile = ({ showUserProfile }: Props) => {
     }, 3);
   };
 
+  useEffect(() => {
+    if (user?.provider === 'google') emailRef.current!.disabled = true;
+  }, [user?.provider]);
+
   return (
     <section className="mt-8 text-color-base">
       <h2 className="mb-8 text-center text-4xl">Manage your account</h2>
       <form className="flex flex-col gap-6" onSubmit={onFormSubmit}>
         <div className="mt-8 flex flex-col gap-6">
-          <h3 className="text-3xl">Update information</h3>
+          <h3 className="text-3xl">
+            {user?.provider === 'google' ? 'User' : 'Update'} information
+          </h3>
 
           <fieldset className="flex items-center" aria-label="update-name-input">
             <Input
@@ -91,6 +101,7 @@ export const UserProfile = ({ showUserProfile }: Props) => {
           <fieldset className="flex items-center" aria-label="update-email-input">
             <Input
               id={'email'}
+              ref={emailRef}
               type={'email'}
               name={'email'}
               label={'Email'}
@@ -106,43 +117,45 @@ export const UserProfile = ({ showUserProfile }: Props) => {
           </fieldset>
         </div>
 
-        <div className="mt-8 flex flex-col gap-6">
-          <h3 className="text-3xl">Change password</h3>
+        {user?.provider === 'No provider' && (
+          <div className="mt-8 flex flex-col gap-6">
+            <h3 className="text-3xl">Change password</h3>
 
-          <fieldset className="flex items-center" aria-label="update-password-input">
-            <Input
-              id={'password'}
-              type={'password'}
-              name={'password'}
-              label={'New password'}
-              value={password}
-              isRequired={false}
-              placeholder={'enter password'}
-              showInputErr={password.length > 0}
-              inputErrMsg={'required 3 characters with numbers'}
-              isFormSubmitted={isSubmitted}
-              getValidity={getFormValidity}
-              getValue={getFormValues as GetInputValues}
-            />
-          </fieldset>
+            <fieldset className="flex items-center" aria-label="update-password-input">
+              <Input
+                id={'password'}
+                type={'password'}
+                name={'password'}
+                label={'New password'}
+                value={password}
+                isRequired={false}
+                placeholder={'enter password'}
+                showInputErr={password.length > 0}
+                inputErrMsg={'required 3 characters with numbers'}
+                isFormSubmitted={isSubmitted}
+                getValidity={getFormValidity}
+                getValue={getFormValues as GetInputValues}
+              />
+            </fieldset>
 
-          <fieldset className="flex items-center" aria-label="confirm-password-input">
-            <Input
-              isRequired={password !== confirmPassword}
-              type={'password'}
-              value={confirmPassword}
-              name={'confirmPassword'}
-              label={'Confirm password'}
-              inputErrMsg={'password mismatch'}
-              placeholder={'confirm new password'}
-              placeholderErrMsg={"password doesn't match"}
-              isFormSubmitted={isSubmitted}
-              getValidity={getFormValidity}
-              getValue={getFormValues as GetInputValues}
-              inputValidator={() => confirmPassword === password}
-            />
-          </fieldset>
-        </div>
+            <fieldset className="flex items-center" aria-label="confirm-password-input">
+              <Input
+                isRequired={password !== confirmPassword}
+                type={'password'}
+                value={confirmPassword}
+                name={'confirmPassword'}
+                label={'Confirm password'}
+                inputErrMsg={'password mismatch'}
+                placeholder={'confirm new password'}
+                placeholderErrMsg={"password doesn't match"}
+                isFormSubmitted={isSubmitted}
+                getValidity={getFormValidity}
+                getValue={getFormValues as GetInputValues}
+                inputValidator={() => confirmPassword === password}
+              />
+            </fieldset>
+          </div>
+        )}
 
         <fieldset className="mt-4 self-end">
           <TrustDevice />

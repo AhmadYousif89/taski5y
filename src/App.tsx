@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
+import { Backdrop } from '@ui/backdrop';
 import { AppRoutes } from 'components/app';
+import { ActionModal } from '@ui/action-modal';
+import { getUser } from '@features/services/auth';
 import { useAppDispatch, useAppSelector } from '@app/hooks';
 import { authSelector, setAuthActionType } from '@features/slices/auth';
-import { getUser } from '@features/services/auth';
-import { ActionModal } from '@ui/action-modal';
-import { Backdrop } from '@ui/backdrop';
 
 function App() {
   const dispatch = useAppDispatch();

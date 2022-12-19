@@ -16,6 +16,7 @@ import { SpinnerIcon } from 'assets/icons';
 import { TrustDevice } from './remember-me-checkbox';
 import { SwitchFormButton } from './switch-form-button';
 import { Button } from '@ui/button';
+import { AuthErrorMsg } from './auth-error-msg';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword' | 'name'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword' | 'name'>, string>;
@@ -64,12 +65,10 @@ export const LoginForm = () => {
   );
 
   return (
-    <section className="translate-y-40" aria-label="Login-form">
-      <Card className="relative mx-auto w-11/12 max-w-screen-xs">
-        <form
-          className="mx-auto my-16 flex w-10/12 flex-col gap-6"
-          onSubmit={onFormSubmit}>
-          <h2 className="text-3xl capitalize tracking-widest text-color-base">
+    <section className="relative mx-4 translate-y-40" aria-label="Login-form">
+      <Card className="mx-auto flex max-w-3xl flex-col items-center">
+        <form className="flex w-full flex-col gap-8 py-10 px-6" onSubmit={onFormSubmit}>
+          <h2 className="mb-4 text-center text-3xl capitalize tracking-widest text-color-base">
             login to account
           </h2>
 
@@ -99,29 +98,39 @@ export const LoginForm = () => {
             />
           </fieldset>
 
-          <fieldset className="self-start" aria-label="remember-me-checkbox">
+          <fieldset className="" aria-label="remember-me-checkbox"></fieldset>
+
+          <fieldset className="flex justify-between gap-4">
+            <AuthButton title="login" status={status} formIsValid={formIsValid} />
             <TrustDevice />
           </fieldset>
 
-          <fieldset className="flex items-center justify-between">
-            <AuthButton title="login" status={status} formIsValid={formIsValid} />
+          <div className="gap-4 space-y-8 xs:flex xs:space-y-0">
+            <fieldset className="xs:w-1/2">
+              <SwitchFormButton
+                onClick={() => navigate(`/`)}
+                msg="need an account?"
+                title="sign up"
+              />
+            </fieldset>
+            <fieldset className="xs:w-1/2">
+              <SwitchFormButton
+                onClick={() => navigate(`/password-reset`)}
+                msg="forget your password?"
+                title="Reset"
+              />
+            </fieldset>
+          </div>
 
-            {status === 'rejected' ? (
-              <div className={`text-right text-2xl tracking-wider text-color-invalid`}>
-                <p>{userErrorMsg}</p>
-              </div>
-            ) : null}
+          <div
+            aria-label="divider"
+            className="relative my-4 before:absolute before:right-0 before:top-0 before:h-px before:w-[45%] before:bg-neutral-500 after:absolute after:left-0 after:top-0 after:h-px after:w-[45%] after:bg-neutral-500">
+            <span className="center-absolute text-xl font-bold tracking-wider text-color-base">
+              Or
+            </span>
+          </div>
 
-            {status === 'loading' ? (
-              <p
-                className={`flex items-center gap-4 text-center text-2xl text-color-valid`}>
-                <SpinnerIcon className="ml-auto h-10 w-10" />
-                Loading . . .
-              </p>
-            ) : null}
-          </fieldset>
-
-          <fieldset>
+          <fieldset className="flex justify-center">
             <Button
               label="Sign in with google"
               className="w-full ring-1 ring-color-base xs:w-1/2">
@@ -136,20 +145,7 @@ export const LoginForm = () => {
             </Button>
           </fieldset>
 
-          <fieldset className="xs:w-1/2">
-            <SwitchFormButton
-              onClick={() => navigate(`/`)}
-              msg="need an account?"
-              title="sign up"
-            />
-          </fieldset>
-          <fieldset className="xs:w-1/2">
-            <SwitchFormButton
-              onClick={() => navigate(`/password-reset`)}
-              msg="forget your password?"
-              title="Reset"
-            />
-          </fieldset>
+          <AuthErrorMsg status={status} errorMsg={userErrorMsg} />
         </form>
       </Card>
     </section>

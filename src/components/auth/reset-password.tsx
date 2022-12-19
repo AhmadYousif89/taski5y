@@ -64,7 +64,7 @@ export const ResetPassword = () => {
         <form
           className="mx-auto my-16 flex w-10/12 flex-col gap-6"
           onSubmit={onFormSubmit}>
-          <h2 className="text-3xl capitalize tracking-widest text-color-base">
+          <h2 className="mb-4 text-3xl capitalize tracking-widest text-color-base">
             reset your password
           </h2>
 
@@ -106,21 +106,22 @@ export const ResetPassword = () => {
             />
           </fieldset>
 
-          <fieldset className="flex items-center justify-between">
+          <fieldset className="flex items-center justify-between text-xl">
             <AuthButton
+              className="w-1/2"
               title="reset"
               status={status === 'loading'}
               formIsValid={formIsValid}
             />
 
             {status === 'rejected' ? (
-              <div className={`text-right text-2xl text-color-invalid`}>
+              <div className={`text-color-invalid`}>
                 <p>{error.message}</p>
               </div>
             ) : null}
 
             {status === 'fulfilled' ? (
-              <div className="flex flex-col items-end gap-2 text-center text-2xl text-color-valid">
+              <div className="flex flex-col items-end gap-2 text-center text-color-valid">
                 <p>{message}</p>
                 <p className="flex items-center gap-4">
                   <SpinnerIcon className="h-8 w-8" />
@@ -130,8 +131,7 @@ export const ResetPassword = () => {
             ) : null}
 
             {status === 'loading' ? (
-              <p
-                className={`flex items-center gap-4 text-center text-2xl text-color-valid`}>
+              <p className={`flex items-center gap-4 text-center text-color-valid`}>
                 <SpinnerIcon className="h-10 w-10" />
                 Loading ...
               </p>

@@ -11,7 +11,7 @@ export const signUp = createAsyncThunk<
     const { data } = await axios.post(`/auth/register`, user, { withCredentials: true });
     return data;
   } catch (err: any) {
-    return rejectWithValue(err?.response?.data);
+    return rejectWithValue(err.response.data);
   }
 });
 
@@ -27,7 +27,7 @@ export const signIn = createAsyncThunk<
     });
     return data;
   } catch (err: any) {
-    return rejectWithValue(err?.response?.data);
+    return rejectWithValue(err.response.data);
   }
 });
 
@@ -42,7 +42,7 @@ export const googleLogin = createAsyncThunk<
     });
     return data;
   } catch (err: any) {
-    return rejectWithValue(err?.response?.data);
+    return rejectWithValue(err.response.data);
   }
 });
 
@@ -55,7 +55,7 @@ export const signOut = createAsyncThunk<
     const { data } = await axiosPrivate.post(`/auth/logout`);
     return data?.message;
   } catch (err: any) {
-    return rejectWithValue(err?.response?.data);
+    return rejectWithValue(err.response.data);
   }
 });
 
@@ -68,7 +68,7 @@ export const resetPassword = createAsyncThunk<
     const { data } = await axios.post(`/auth/reset`, credentials);
     return data?.message;
   } catch (err: any) {
-    return rejectWithValue(err?.response?.data);
+    return rejectWithValue(err.response.data);
   }
 });
 
