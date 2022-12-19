@@ -44,6 +44,7 @@ export const TaskUpdateButtons = ({
   const updateTaskDetailHandler = () => {
     setIsEditing(false);
     setIsUpdating(true);
+    setShowUpdateBtn(true);
     dispatch(updateTask({ id: taskId, details: updatedDetails }));
   };
 

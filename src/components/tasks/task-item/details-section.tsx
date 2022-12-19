@@ -42,11 +42,13 @@ export const DetailsSection = ({
         {taskDetails}
       </div>
       {isUpdating ? (
-        <p className={`text-green absolute left-0 -bottom-10 text-xl`}>updating . . .</p>
+        <p className={`text-green absolute left-0 -bottom-12 text-xl uppercase`}>
+          updating
+        </p>
       ) : null}
-      {isEditing && !isUpdating ? (
-        <p className="text-amber absolute left-0 -bottom-10 text-xl tracking-wide">
-          edited . . .
+      {true ? (
+        <p className="text-amber absolute left-0 -bottom-12 text-xl uppercase tracking-wide">
+          edited
         </p>
       ) : null}
     </section>
