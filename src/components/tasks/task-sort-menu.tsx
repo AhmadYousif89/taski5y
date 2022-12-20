@@ -1,11 +1,11 @@
 import { useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useAppSelector } from '@app/hooks';
 
 import { Card } from '../ui/card';
-import { useAppSelector } from '@app/hooks';
-import { SortIcon, ArrowIcon } from 'assets/icons';
-import { useClickOutside } from 'hooks/use-click-outside';
+import { ArrowIcon, SortIcon } from 'assets/icons';
 import { taskSelector } from '@features/slices/task';
+import { useClickOutside } from 'hooks/use-click-outside';
 import { TaskSortOrder, TaskSortType } from '@features/types';
 
 export const SortField = () => {
@@ -43,11 +43,11 @@ export const SortField = () => {
   };
 
   const sortList = (
-    <Card className="absolute top-full left-5 translate-y-1">
+    <Card className="absolute top-full left-0 z-10 translate-y-2">
       <ul className="flex flex-col gap-6 text-center capitalize text-color-base">
         <li
           onClick={sortByAlphabetHandler}
-          className="grid grid-cols-[6rem,auto] items-center gap-2 rounded-sm p-2 ring-color-base hover:ring-2 hover:ring-color-highlight">
+          className="grid grid-cols-[5rem,auto] items-center gap-2 rounded-sm p-2 ring-color-base hover:ring-2 hover:ring-color-highlight">
           <span className="flex items-center">
             {sortType === 'alpha' ? (
               <ArrowIcon
@@ -56,13 +56,13 @@ export const SortField = () => {
                 } transition-all duration-300`}
               />
             ) : null}
-            {sortType === 'alpha' ? sortOrder : 'sort by'}
+            {sortType === 'alpha' ? sortOrder : 'by'}
           </span>
           <span>alphabet</span>
         </li>
         <li
           onClick={sortByDateHandler}
-          className="grid grid-cols-[6rem,auto] items-center gap-2 rounded-sm p-2 ring-color-base hover:ring-2 hover:ring-color-highlight ">
+          className="grid grid-cols-[5rem,auto] items-center gap-2 rounded-sm p-2 ring-color-base hover:ring-2 hover:ring-color-highlight ">
           <span className="flex items-center">
             {sortType === 'createdAt' ? (
               <ArrowIcon
@@ -71,13 +71,13 @@ export const SortField = () => {
                 } transition-all duration-300`}
               />
             ) : null}
-            {sortType === 'createdAt' ? sortOrder : 'sort by'}
+            {sortType === 'createdAt' ? sortOrder : 'by'}
           </span>
           <span>date</span>
         </li>
         <li
           onClick={sortByPriorityHandler}
-          className="grid grid-cols-[6rem,auto] items-center gap-2 rounded-sm p-2 ring-color-base hover:ring-2 hover:ring-color-highlight ">
+          className="grid grid-cols-[5rem,auto] items-center gap-2 rounded-sm p-2 ring-color-base hover:ring-2 hover:ring-color-highlight ">
           <span className="flex items-center">
             {sortType === 'priority' ? (
               <ArrowIcon
@@ -86,7 +86,7 @@ export const SortField = () => {
                 } transition-all duration-300`}
               />
             ) : null}
-            {sortType === 'priority' ? sortOrder : 'sort by'}
+            {sortType === 'priority' ? sortOrder : 'by'}
           </span>
           <span>priority</span>
         </li>
@@ -106,8 +106,8 @@ export const SortField = () => {
           ref={sortMenuRef}
           title="sort tasks"
           onClick={openSortMenuHandler}
-          className="flex-center absolute z-10 h-14 w-14 translate-x-10 cursor-pointer gap-4 rounded-full text-2xl text-color-base transition-all hover:ring-2 hover:ring-color-highlight active:ring-color-highlight">
-          <SortIcon />
+          className="flex-center absolute left-5 cursor-pointer rounded-md bg-color-card py-5 pl-4 pr-1 text-xl text-color-base ring-2 ring-color-base transition-all active:ring-color-highlight xs:left-[10%] lg:left-[20%]">
+          Sort <SortIcon />
           {toggleMenu && <>{sortList}</>}
         </div>
       ) : null}

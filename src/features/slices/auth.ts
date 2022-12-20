@@ -97,7 +97,7 @@ const authSlice = createSlice({
       .addCase(signOut.pending, state => {
         state.status = 'loading';
       })
-      .addCase(signOut.fulfilled, () => {
+      .addCase(signOut.fulfilled, state => {
         localStorage.removeItem('persist');
         localStorage.removeItem('hasAccess');
         return initialState;
