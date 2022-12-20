@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { FormEvent, useEffect } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@app/hooks';
 import { resetPassword } from '@features/services/auth';
@@ -13,6 +13,7 @@ import { GetInputValues, Input } from '@ui/input';
 import { SwitchFormButton } from './switch-form-button';
 import { useForm } from 'hooks/use-form';
 import { addTimer } from 'helpers/timeout';
+import { AuthErrorMsg } from './auth-error-msg';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'name'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'name'>, string>;
@@ -28,6 +29,7 @@ export const ResetPassword = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { status, message, error } = useAppSelector(authSelector);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
     FormValidity,
     FormValues
@@ -46,10 +48,12 @@ export const ResetPassword = () => {
 
   useEffect(() => {
     if (status === 'fulfilled') {
+      setIsSubmitted(true);
       addTimer(() => {
         navigate('/login');
         dispatch(resetAuth());
-      }, 2000);
+        setIsSubmitted(false);
+      });
     }
   }, [status]);
 
@@ -69,7 +73,7 @@ export const ResetPassword = () => {
     <section className="mx-4 translate-y-40">
       <Card className="relative mx-auto flex max-w-4xl flex-col items-center">
         <form className="flex w-full flex-col gap-8 py-10 px-6" onSubmit={onFormSubmit}>
-          <h2 className="mb-4 text-3xl capitalize tracking-widest text-color-base">
+          <h2 className="mb-4 text-center text-3xl capitalize tracking-widest text-color-base">
             reset your password
           </h2>
 
@@ -81,6 +85,7 @@ export const ResetPassword = () => {
               placeholder={'enter email'}
               placeholderErrMsg={'please enter your registered email'}
               inputErrMsg={'email is not valid'}
+              isFormSubmitted={isSubmitted}
               getValidity={getFormValidity}
               getValue={getFormValues as GetInputValues}
             />
@@ -93,6 +98,7 @@ export const ResetPassword = () => {
               placeholder={'enter new password'}
               inputErrMsg={'must be 3 or more character with min 1 number'}
               placeholderErrMsg={'password not valid'}
+              isFormSubmitted={isSubmitted}
               getValidity={getFormValidity}
               getValue={getFormValues as GetInputValues}
             />
@@ -105,51 +111,36 @@ export const ResetPassword = () => {
               inputErrMsg={'password mismatch'}
               placeholder={'confirm new password'}
               placeholderErrMsg={"password doesn't match"}
+              isFormSubmitted={isSubmitted}
               getValidity={getFormValidity}
               getValue={getFormValues as GetInputValues}
               inputValidator={() => password === confirmPassword}
             />
           </fieldset>
 
-          <fieldset className="flex items-center justify-between text-xl">
+          <fieldset>
             <AuthButton
-              className="w-1/2"
               title="reset"
-              status={status === 'loading'}
+              status={status}
               formIsValid={formIsValid}
+              className="mx-auto w-1/2"
             />
-
-            {status === 'rejected' ? (
-              <div className={`text-color-invalid`}>
-                <p>{error.message}</p>
-              </div>
-            ) : null}
-
-            {status === 'fulfilled' ? (
-              <div className="flex flex-col items-end gap-2 text-center text-color-valid">
-                <p>{message}</p>
-                <p className="flex items-center gap-4">
-                  <SpinnerIcon className="h-8 w-8" />
-                  redirecting to login
-                </p>
-              </div>
-            ) : null}
-
-            {status === 'loading' ? (
-              <p className={`flex items-center gap-4 text-center text-color-valid`}>
-                <SpinnerIcon className="h-10 w-10" />
-                Loading ...
-              </p>
-            ) : null}
           </fieldset>
 
-          <fieldset className="xs:w-1/2">
+          <fieldset className="xs:mx-auto xs:w-1/2">
             <SwitchFormButton
               onClick={() => navigate(`/login`)}
               msg="back to"
               title="Login"
             />
           </fieldset>
+
+          <AuthErrorMsg
+            status={status}
+            extraMsg={message}
+            errorMsg={error.message}
+            successMsg="redirecting to login"
+          />
         </form>
       </Card>
     </section>

@@ -98,8 +98,6 @@ export const LoginForm = () => {
             />
           </fieldset>
 
-          <fieldset className="" aria-label="remember-me-checkbox"></fieldset>
-
           <fieldset className="flex justify-between gap-4">
             <AuthButton title="login" status={status} formIsValid={formIsValid} />
             <TrustDevice />
