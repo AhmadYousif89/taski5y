@@ -16,7 +16,7 @@ export const AuthErrorMsg = ({ status, errorMsg, successMsg, extraMsg }: Props) 
       } flex-center absolute -top-10 left-1/2 w-full -translate-y-full -translate-x-1/2 rounded-md bg-slate-800 py-6 text-2xl transition-all duration-200`}>
       {status === 'rejected' ? (
         <div className={`tracking-wider text-color-invalid`}>
-          <p>{errorMsg}</p>
+          <p>{errorMsg ? errorMsg : 'something went wrong!'}</p>
         </div>
       ) : null}
 
