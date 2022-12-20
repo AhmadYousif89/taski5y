@@ -24,21 +24,21 @@ function App() {
       case 'refresh':
         return (
           <>
-            <ActionModal actionType="transition" msg={'Redirecting . . . '} />
+            <ActionModal actionType="transition" msg={'redirecting'} />
             <Backdrop />
           </>
         );
       case 'logout':
         return (
           <>
-            <ActionModal actionType="transition" msg={'Logging out . . .'} />
+            <ActionModal actionType="transition" msg={'logging out'} />
             <Backdrop />
           </>
         );
       case 'delete':
         return (
           <>
-            <ActionModal actionType="transition" msg={'Deleting account . . .'} />
+            <ActionModal actionType="transition" msg={'deleting account'} />
             <Backdrop />
           </>
         );

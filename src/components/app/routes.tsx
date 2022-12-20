@@ -6,18 +6,20 @@ import { TasksPage } from 'pages/tasks';
 import { LoginForm } from '@auth/login-form';
 import { RequireAuth } from '@auth/require-auth';
 import { RegisterForm } from '@auth/register-form';
-import { ResetPassword } from '@auth/reset-password';
+import { ResetPassword } from '@auth/reset-password-form';
 
 export const AppRoutes = () => {
   return (
     <Routes>
       <Route element={<AppLayout />}>
-        <Route index element={<RegisterForm />} />
-        <Route path="/login" element={<LoginForm />} />
-        <Route path="/password-reset" element={<ResetPassword />} />
+        {['/', 'register'].map((path, i) => (
+          <Route key={i} path={path} element={<RegisterForm />} />
+        ))}
+        <Route path="login" element={<LoginForm />} />
+        <Route path="password-reset" element={<ResetPassword />} />
 
         <Route element={<RequireAuth />}>
-          <Route path="/tasks" element={<TasksPage />} />
+          <Route path="tasks" element={<TasksPage />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

@@ -10,6 +10,7 @@ import { CheckMarkIcon, SpinnerIcon, TaskIcon } from 'assets/icons';
 import { addNewTask } from '@features/services/tasks';
 import { TaskPriority, TaskStatus } from '@features/types';
 import { resetTaskStatus, taskSelector } from '@features/slices/task';
+import { addTimer } from 'helpers/timeout';
 
 type FormValidity = Record<TaskInputNames, boolean>;
 type FormValues = Record<TaskInputNames, string>;
@@ -46,10 +47,10 @@ export const TaskForm = () => {
     };
     setIsSubmitted(true);
     dispatch(addNewTask(newTask));
-    setTimeout(() => {
+    addTimer(() => {
       setIsSubmitted(false);
       dispatch(resetTaskStatus());
-    }, 3000);
+    });
   };
 
   return (

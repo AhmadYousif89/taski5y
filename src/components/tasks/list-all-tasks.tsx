@@ -8,15 +8,16 @@ import { sortTasks, searchTasks } from './helpers';
 import { toggleSideMenu } from '@features/slices/ui';
 import { getAllTasks } from '@features/services/tasks';
 import { setTaskActionType, taskSelector } from '@features/slices/task';
+import { addTimer } from 'helpers/timeout';
 
 export const TaskList = () => {
   const dispatch = useAppDispatch();
   const { tasks, actionType, searchedTaskQuery: query } = useAppSelector(taskSelector);
 
-  const fetchTasks = async () => {
+  const fetchTasks = () => {
     dispatch(setTaskActionType('fetching'));
-    await dispatch(getAllTasks());
-    dispatch(setTaskActionType(''));
+    dispatch(getAllTasks());
+    addTimer(() => dispatch(setTaskActionType('')), 1);
   };
 
   useEffect(() => {
@@ -26,7 +27,7 @@ export const TaskList = () => {
   if (actionType === 'fetching') {
     return (
       <>
-        <ActionModal actionType="transition" msg="Loading ..." />
+        <ActionModal actionType="transition" msg="loading" />
         <Backdrop />
       </>
     );
@@ -34,7 +35,7 @@ export const TaskList = () => {
   if (actionType === 'deleting') {
     return (
       <>
-        <ActionModal actionType="transition" msg="Deleting ..." />
+        <ActionModal actionType="transition" msg="deleting" />
         <Backdrop />
       </>
     );

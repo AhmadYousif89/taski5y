@@ -1,15 +1,11 @@
 import { createPortal } from 'react-dom';
+
 import { Button } from '../ui/button';
 import { useAppSelector } from '@app/hooks';
 import { ImageFigure } from './image-figure';
 import { authSelector } from '@features/slices/auth';
-import {
-  CheckMarkIcon,
-  CloseIcon,
-  SpinnerIcon,
-  UploadIcon,
-  WarningIcon,
-} from 'assets/icons';
+import { DisplayImageStatus } from '@users/image-status';
+import { CloseIcon, SpinnerIcon, UploadIcon, WarningIcon } from 'assets/icons';
 
 type ModalActionType = 'transition' | 'upload';
 type Props = {
@@ -61,11 +57,11 @@ export const ActionModal = ({
     content = (
       <div className="flex items-center gap-8">
         <SpinnerIcon className="text-sky h-12 w-12" />
-        <h3 className="text-3xl">{msg}</h3>
+        <h3 className="text-3xl uppercase">{msg}</h3>
       </div>
     );
 
-  const showActionButtons = (
+  const showImgUploadBtns = (
     <div className="relative w-full">
       <div className="mt-10 flex w-full justify-center gap-12">
         <Button
@@ -84,22 +80,7 @@ export const ActionModal = ({
           className="ring-1 ring-sky-500 max-xs:bg-sky-500 xs:hover:bg-sky-500"
         />
       </div>
-      {status === 'loading' ? (
-        <p className="text-amber flex-center absolute top-full left-1/2 w-full translate-y-10 -translate-x-1/2 gap-4 text-2xl tracking-wider">
-          <SpinnerIcon className="h-10 w-10" />
-          uploading . . .
-        </p>
-      ) : null}
-      {status === 'fulfilled' ? (
-        <p className="text-green absolute top-full left-1/2 flex w-full translate-y-10 -translate-x-1/2 justify-center gap-2 text-2xl tracking-wider">
-          Image uploaded successfully <CheckMarkIcon />
-        </p>
-      ) : null}
-      {status === 'rejected' ? (
-        <p className="absolute top-full left-1/2 flex w-full translate-y-10 -translate-x-1/2 justify-center gap-2 text-2xl tracking-wider text-rose-500">
-          Image upload failed <WarningIcon className="h-10 w-10" />
-        </p>
-      ) : null}
+      <DisplayImageStatus status={status} />
     </div>
   );
 
@@ -113,7 +94,7 @@ export const ActionModal = ({
               onClick={extraAction}
               className="h-44 w-44 bg-white !ring-white"
             />
-            {showActionButtons}
+            {showImgUploadBtns}
           </>
         ) : (
           <>
@@ -139,7 +120,7 @@ export const ActionModal = ({
   const modalElement = (
     <section
       aria-label="modal"
-      className="flex-center fixed top-1/2 left-1/2 z-40 mx-auto min-h-[300px] w-10/12 max-w-3xl -translate-y-1/2 -translate-x-1/2 rounded-lg bg-neutral-800 py-12 text-color-base">
+      className="flex-center fixed top-1/2 left-1/2 z-40 mx-auto w-10/12 max-w-3xl -translate-y-1/2 -translate-x-1/2 rounded-lg bg-neutral-800 py-24 text-color-base">
       {content}
     </section>
   );

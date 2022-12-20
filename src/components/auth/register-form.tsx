@@ -16,6 +16,8 @@ import { GetInputValues, Input } from '@ui/input';
 import { googleLogin, signUp } from '@features/services/auth';
 import { authSelector, resetAuth } from '@features/slices/auth';
 import { AuthErrorMsg } from './auth-error-msg';
+import { Divider } from '@ui/divider';
+import { AuthContainer } from './auth-container';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword'>, string>;
@@ -77,92 +79,81 @@ export const RegisterForm = () => {
   };
 
   return (
-    <section className="mx-4 translate-y-40" aria-label="Registration-form">
-      <Card className="relative mx-auto flex max-w-4xl flex-col items-center">
-        <form className="flex w-full flex-col gap-8 py-10 px-6" onSubmit={onFormSubmit}>
-          <h2 className="mb-4 text-center text-3xl capitalize tracking-widest text-color-base">
-            create new account
-          </h2>
+    <AuthContainer>
+      <form
+        onSubmit={onFormSubmit}
+        aria-label="register-form"
+        className="flex w-full flex-col gap-8 py-10 px-6">
+        <h2 className="mb-4 text-center text-3xl capitalize tracking-widest text-color-base">
+          create new account
+        </h2>
 
-          <fieldset aria-label="name-input">
-            <Input
-              id={'name'}
-              value={name}
-              type={'text'}
-              name={'name'}
-              placeholder={'enter name'}
-              inputErrMsg={'name is required'}
-              placeholderErrMsg={'name is not valid'}
-              getValidity={getFormValidity}
-              getValue={getFormValues as GetInputValues}
-            />
-          </fieldset>
+        <fieldset aria-label="name-input">
+          <Input
+            id={'name'}
+            value={name}
+            type={'text'}
+            name={'name'}
+            placeholder={'enter name'}
+            inputErrMsg={'name is required'}
+            placeholderErrMsg={'name is not valid'}
+            getValidity={getFormValidity}
+            getValue={getFormValues as GetInputValues}
+          />
+        </fieldset>
 
-          <fieldset aria-label="email-input">
-            <Input
-              id={'email'}
-              value={email}
-              type={'email'}
-              name={'email'}
-              placeholder={'enter email'}
-              placeholderErrMsg={'please enter a valid email'}
-              inputErrMsg={'email is not valid'}
-              getValidity={getFormValidity}
-              getValue={getFormValues as GetInputValues}
-            />
-          </fieldset>
+        <fieldset aria-label="email-input">
+          <Input
+            id={'email'}
+            value={email}
+            type={'email'}
+            name={'email'}
+            placeholder={'enter email'}
+            placeholderErrMsg={'please enter a valid email'}
+            inputErrMsg={'email is not valid'}
+            getValidity={getFormValidity}
+            getValue={getFormValues as GetInputValues}
+          />
+        </fieldset>
 
-          <fieldset aria-label="email-password">
-            <Input
-              value={password}
-              type={'password'}
-              name={'password'}
-              placeholder={'enter password'}
-              inputErrMsg={'must be 3 or more character with min 1 number'}
-              placeholderErrMsg={'password not valid'}
-              getValidity={getFormValidity}
-              getValue={getFormValues as GetInputValues}
-            />
-          </fieldset>
+        <fieldset aria-label="email-password">
+          <Input
+            value={password}
+            type={'password'}
+            name={'password'}
+            placeholder={'enter password'}
+            inputErrMsg={'must be 3 or more character with min 1 number'}
+            placeholderErrMsg={'password not valid'}
+            getValidity={getFormValidity}
+            getValue={getFormValues as GetInputValues}
+          />
+        </fieldset>
 
-          <fieldset className="xs:mx-auto xs:w-1/2">
-            <AuthButton title="create" status={status} formIsValid={formIsValid} />
-          </fieldset>
+        <fieldset className="xs:mx-auto xs:w-1/2">
+          <AuthButton title="create" status={status} formIsValid={formIsValid} />
+        </fieldset>
 
-          <fieldset className="mx-auto xs:w-1/2">
-            <SwitchFormButton
-              onClick={() => navigate(`/login`)}
-              msg="i have an account"
-              title="sign in"
-            />
-          </fieldset>
+        <Divider>
+          <span className="center-absolute flex-center h-14 w-14 cursor-default rounded-full text-xl font-bold tracking-wider text-color-base ring-2 ring-color-base">
+            OR
+          </span>
+        </Divider>
 
-          <div
-            aria-label="divider"
-            className="relative my-4 before:absolute before:right-0 before:top-0 before:h-px before:w-[45%] before:bg-neutral-500 after:absolute after:left-0 after:top-0 after:h-px after:w-[45%] after:bg-neutral-500">
-            <span className="center-absolute text-xl font-bold tracking-wider text-color-base">
-              Or
+        <fieldset className="flex justify-center">
+          <Button label="Continue with google" className="ring-1 ring-color-base">
+            <img src={googleLogo} className="h-8" />
+            <span className="absolute [&>*]:opacity-0">
+              <GoogleLogin
+                onSuccess={({ credential }) => {
+                  if (credential) dispatch(googleLogin({ credential }));
+                }}
+              />
             </span>
-          </div>
+          </Button>
 
-          <fieldset className="flex justify-center">
-            <Button
-              label="Continue with google"
-              className="w-full ring-1 ring-color-base xs:w-1/2">
-              <img src={googleLogo} className="h-8" />
-              <span className="absolute [&>*]:opacity-0">
-                <GoogleLogin
-                  onSuccess={({ credential }) => {
-                    if (credential) dispatch(googleLogin({ credential }));
-                  }}
-                />
-              </span>
-            </Button>
-
-            <AuthErrorMsg status={status} errorMsg={userErrorMsg} />
-          </fieldset>
-        </form>
-      </Card>
-    </section>
+          <AuthErrorMsg status={status} errorMsg={userErrorMsg} />
+        </fieldset>
+      </form>
+    </AuthContainer>
   );
 };

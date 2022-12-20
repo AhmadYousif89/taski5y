@@ -67,7 +67,7 @@ export const TaskUpdateButtons = ({
             {isUpdating ? <SpinnerIcon className="h-7 w-7" /> : 'save'}
           </TaskButton>
         ) : null}
-        <TaskButton onClick={markTaskCompleted} title={'mark complete'} />
+        <TaskButton onClick={markTaskCompleted} title={'completed'} />
       </div>
     </>
   );
