@@ -7,7 +7,7 @@ type Props = {} & PropsWithChildren;
 
 export const AuthContainer: FC<Props> = ({ children }) => {
   return (
-    <section className="mx-4 translate-y-48" aria-label="auth-container">
+    <section className="mx-4 translate-y-40" aria-label="auth-container">
       <Card className="relative mx-auto flex max-w-2xl flex-col items-center">
         <div className="relative flex w-10/12 items-center justify-between py-8 ">
           <NavLink

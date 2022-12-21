@@ -18,13 +18,6 @@ export const AppLayout = () => {
   const { user } = useAuth();
   const { mode } = useAppSelector(uiSelector);
   const [showProfile, setShowProfile] = useState(false);
-  const sessionExpired = JSON.parse(localStorage.getItem('error') as string);
-
-  const sessionExpireMsg = (
-    <p className="absolute top-full left-1/2 mx-auto mt-10 w-full max-w-md -translate-x-1/2 rounded-md bg-slate-800 py-4 text-center text-2xl text-sky-300">
-      Your last session was expired
-    </p>
-  );
 
   return (
     <main className={`${mode} flex min-h-[inherit] flex-col bg-color-base`}>
@@ -35,7 +28,6 @@ export const AppLayout = () => {
           <img src={appLogo} alt="logo" width={30} />
         </h1>
         {user ? <MenuButton /> : null}
-        {sessionExpired && sessionExpireMsg}
       </header>
 
       <Menu aria-label="task-menu" className="[&>*]:mx-12">
