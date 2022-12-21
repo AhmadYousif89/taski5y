@@ -10,21 +10,17 @@ export const ThemeSwitcher = () => {
   const animateLightIcon = mode === 'light-theme' ? 'translate-x-1/2' : 'translate-x-20';
 
   return (
-    <div className="absolute top-1/2 left-4 -translate-y-1/2 transition-all xs:left-16 md:left-[20%]">
-      <button
-        type={'button'}
-        className="btn-circle relative h-full w-full overflow-hidden"
-        title={`switch to ${mode === 'dark-theme' ? 'light' : 'dark'} mode`}
-        onClick={() => dispatch(toggleAppTheme())}>
-        <SunIcon
-          className={`
-          icon absolute top-1/2 left-1/2 -translate-y-1/2 stroke-color-base transition-transform duration-500 ${animateDarkIcon}`}
-        />
-        <MoonIcon
-          className={`
-          icon absolute top-1/2 right-1/2 -translate-y-1/2 stroke-color-base transition-transform duration-500 ${animateLightIcon}`}
-        />
-      </button>
-    </div>
+    <button
+      type={'button'}
+      className="btn-circle absolute top-1/2 left-[3%] h-full w-full -translate-y-1/2 overflow-hidden transition-all xs:left-[6%] lg:left-[9%]"
+      title={`switch to ${mode === 'dark-theme' ? 'light' : 'dark'} mode`}
+      onClick={() => dispatch(toggleAppTheme())}>
+      <SunIcon
+        className={`icon absolute top-1/2 left-1/2 -translate-y-1/2 stroke-color-base transition-transform duration-500 ${animateDarkIcon}`}
+      />
+      <MoonIcon
+        className={`icon absolute top-1/2 right-1/2 -translate-y-1/2 stroke-color-base transition-transform duration-500 ${animateLightIcon}`}
+      />
+    </button>
   );
 };

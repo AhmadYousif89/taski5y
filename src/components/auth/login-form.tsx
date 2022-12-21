@@ -121,21 +121,22 @@ export const LoginForm = () => {
           </span>
         </Divider>
 
-        <fieldset className="flex justify-center">
-          <Button label="Sign in with google" className="ring-1 ring-color-base">
-            <img src={googleLogo} className="h-8" />
-            <span className="absolute [&>*]:opacity-0">
-              <GoogleLogin
-                onSuccess={({ credential }) => {
-                  if (credential) dispatch(googleLogin({ credential }));
-                }}
-              />
-            </span>
-          </Button>
-        </fieldset>
-
-        <AuthErrorMsg status={status} errorMsg={userErrorMsg} />
+        <Button
+          type={'button'}
+          label="Sign in with google"
+          className="self-center ring-1 ring-color-base">
+          <img src={googleLogo} className="h-8" />
+          <span className="absolute [&>*]:opacity-0">
+            <GoogleLogin
+              onSuccess={({ credential }) => {
+                if (credential) dispatch(googleLogin({ credential }));
+              }}
+            />
+          </span>
+        </Button>
       </form>
+
+      <AuthErrorMsg status={status} errorMsg={userErrorMsg} />
     </AuthContainer>
   );
 };

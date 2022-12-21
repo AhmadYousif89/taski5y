@@ -139,21 +139,21 @@ export const RegisterForm = () => {
           </span>
         </Divider>
 
-        <fieldset className="flex justify-center">
-          <Button label="Continue with google" className="ring-1 ring-color-base">
-            <img src={googleLogo} className="h-8" />
-            <span className="absolute [&>*]:opacity-0">
-              <GoogleLogin
-                onSuccess={({ credential }) => {
-                  if (credential) dispatch(googleLogin({ credential }));
-                }}
-              />
-            </span>
-          </Button>
-
-          <AuthErrorMsg status={status} errorMsg={userErrorMsg} />
-        </fieldset>
+        <Button
+          label="Continue with google"
+          className="self-center ring-1 ring-color-base">
+          <img src={googleLogo} className="h-8" />
+          <span className="absolute [&>*]:opacity-0">
+            <GoogleLogin
+              onSuccess={({ credential }) => {
+                if (credential) dispatch(googleLogin({ credential }));
+              }}
+            />
+          </span>
+        </Button>
       </form>
+
+      <AuthErrorMsg status={status} errorMsg={userErrorMsg} />
     </AuthContainer>
   );
 };

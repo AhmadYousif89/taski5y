@@ -73,6 +73,8 @@ export const UserSettings = ({ showUserProfile }: Props) => {
         </>
       ) : null}
       <button
+        type={'button'}
+        title="settings"
         ref={settingRef}
         onClick={() => setToggleMenu(p => !p)}
         className="btn-circle flex-center relative">

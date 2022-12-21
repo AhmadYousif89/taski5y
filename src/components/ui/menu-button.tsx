@@ -15,21 +15,20 @@ export const MenuButton = ({ setShowProfile }: Props) => {
   };
 
   return (
-    <div
-      aria-label="menu-button"
+    <button
+      type={'button'}
+      title="menu button"
       onClick={onClickHandler}
-      className="btn-circle absolute top-1/2 right-[3%] z-10 flex -translate-y-1/2 items-center transition-all xs:right-[6%] lg:right-[9%]">
-      <button type={'button'} className="relative h-full w-full text-color-base">
-        {menuIsVisible ? (
-          <span className="center-absolute">
-            <CloseIcon />
-          </span>
-        ) : (
-          <span className="center-absolute">
-            <MenuIcon />
-          </span>
-        )}
-      </button>
-    </div>
+      className="btn-circle absolute top-1/2 right-[3%] z-10 flex h-full w-full -translate-y-1/2 items-center text-color-base transition-all xs:right-[6%] lg:right-[9%]">
+      {menuIsVisible ? (
+        <span className="center-absolute">
+          <CloseIcon />
+        </span>
+      ) : (
+        <span className="center-absolute">
+          <MenuIcon />
+        </span>
+      )}
+    </button>
   );
 };
