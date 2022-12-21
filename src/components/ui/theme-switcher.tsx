@@ -13,7 +13,7 @@ export const ThemeSwitcher = () => {
     <div className="absolute top-1/2 left-4 -translate-y-1/2 transition-all xs:left-16 md:left-[20%]">
       <button
         type={'button'}
-        className="btn-circle relative overflow-hidden"
+        className="btn-circle relative h-full w-full overflow-hidden"
         title={`switch to ${mode === 'dark-theme' ? 'light' : 'dark'} mode`}
         onClick={() => dispatch(toggleAppTheme())}>
         <SunIcon

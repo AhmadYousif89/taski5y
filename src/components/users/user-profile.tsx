@@ -162,9 +162,10 @@ export const UserProfile = ({ showUserProfile }: Props) => {
           <TrustDevice />
         </fieldset>
 
-        <div className="relative flex items-center justify-between">
+        <div className="relative mt-8 flex items-center justify-between">
           <Button
             label="Back"
+            title="back to task form"
             icon={<BackArrowIcon />}
             onClick={() => showUserProfile(false)}
           />
@@ -177,6 +178,7 @@ export const UserProfile = ({ showUserProfile }: Props) => {
           <Button
             isDisabled={!formIsValid}
             label="Submit"
+            title="submit your changes"
             type="submit"
             icon={
               isSubmitted && status === 'loading' ? (

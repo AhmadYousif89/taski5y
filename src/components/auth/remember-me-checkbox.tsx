@@ -13,7 +13,7 @@ export const TrustDevice = () => {
         checked={persist}
         className="w-max accent-indigo-400"
       />
-      Trust me bro
+      <span>Trust device</span>
     </label>
   );
 };

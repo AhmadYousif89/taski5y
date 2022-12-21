@@ -6,8 +6,8 @@ import { resetTasks } from '@features/slices/task';
 import { useAppDispatch, useAppSelector } from '@app/hooks';
 import { setAuthActionType } from '@features/slices/auth';
 import { useClickOutside } from 'hooks/use-click-outside';
-import { deleteUser } from '@features/services/auth';
-import { SettingsIcon } from 'assets/icons';
+import { deleteUser, signOut } from '@features/services/auth';
+import { LogoutIcon, SettingsIcon } from 'assets/icons';
 import { ActionModal } from '@ui/action-modal';
 import { Backdrop } from '@ui/backdrop';
 
@@ -21,33 +21,47 @@ export const UserSettings = ({ showUserProfile }: Props) => {
 
   useClickOutside(settingRef, () => setToggleMenu(false));
 
+  const logoutHandler = () => {
+    dispatch(signOut());
+    dispatch(resetTasks());
+    dispatch(setAuthActionType('logout'));
+  };
+
   const deleteAccountHandler = () => {
     dispatch(setAuthActionType('delete'));
     dispatch(toggleSideMenu());
-    setModal(false);
     dispatch(resetTasks());
     dispatch(deleteUser());
+    setModal(false);
   };
 
   const settingList = (
-    <Card className="absolute top-1/2 z-20 translate-x-1/2 transition-all">
+    <Card className="absolute top-full -translate-x-1/2 translate-y-1 transition-all">
       <ul className="grid auto-cols-[minmax(max-content,1fr)] gap-6 text-2xl text-color-base">
         <li
           onClick={() => showUserProfile(true)}
           className="rounded-md p-2 ring-color-base hover:ring-2 hover:ring-color-highlight">
-          <span>Manage account</span>
+          <span onClick={() => dispatch(toggleSideMenu())}>Manage account</span>
         </li>
         <li
           className="rounded-md p-2 ring-color-base hover:ring-2 hover:ring-color-highlight"
           onClick={() => setModal(true)}>
           <span className="text-red-500">Delete account</span>
         </li>
+        <li
+          className="flex-center gap-4 rounded-md p-2 ring-color-base hover:ring-2 hover:ring-color-highlight"
+          onClick={() => logoutHandler()}>
+          <LogoutIcon />
+          <span>Logout</span>
+        </li>
       </ul>
     </Card>
   );
 
   return (
-    <section aria-label="user-setting-menu" className="absolute top-14 left-5">
+    <section
+      aria-label="user-setting-menu"
+      className="absolute top-1/2 right-[15%] z-10 -translate-y-1/2">
       {modal ? (
         <>
           <ActionModal
@@ -59,8 +73,8 @@ export const UserSettings = ({ showUserProfile }: Props) => {
         </>
       ) : null}
       <button
-        onClick={() => setToggleMenu(p => !p)}
         ref={settingRef}
+        onClick={() => setToggleMenu(p => !p)}
         className="btn-circle flex-center relative">
         <SettingsIcon />
         {toggleMenu && <>{settingList}</>}

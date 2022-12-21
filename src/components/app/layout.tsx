@@ -2,17 +2,18 @@ import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { uiSelector } from '@features/slices/ui';
 import { useAppSelector, useAuth } from '@app/hooks';
-
 import appLogo from '../../assets/logo.png';
-import { ThemeSwitcher } from '@ui/theme-switcher';
-import { MenuButton } from '@ui/menu-button';
-import { Menu } from '@ui/menu';
 
-import { Logout } from '@auth/logout';
 import { TaskForm } from '@tasks/task-form';
+
+import { Menu } from '@ui/menu';
+import { Button } from '@ui/button';
+import { MenuButton } from '@ui/menu-button';
+import { ThemeSwitcher } from '@ui/theme-switcher';
+
 import { UserInfo } from '@users/user-info';
-import { UserSettings } from '@users/user-settings';
 import { UserProfile } from '@users/user-profile';
+import { UserSettings } from '@users/user-settings';
 
 export const AppLayout = () => {
   const { user } = useAuth();
@@ -27,14 +28,21 @@ export const AppLayout = () => {
           <span>Taskify</span>
           <img src={appLogo} alt="logo" width={30} />
         </h1>
-        {user ? <MenuButton /> : null}
+        {user ? <MenuButton setShowProfile={setShowProfile} /> : null}
+        {user ? <UserSettings showUserProfile={setShowProfile} /> : null}
       </header>
 
       <Menu aria-label="task-menu" className="[&>*]:mx-12">
-        <UserSettings showUserProfile={setShowProfile} />
         <UserInfo user={user} />
         {showProfile ? <UserProfile showUserProfile={setShowProfile} /> : <TaskForm />}
-        <Logout />
+        {!showProfile && (
+          <Button
+            label="Manage account"
+            title="go to user settings"
+            className="mt-24 self-center"
+            onClick={() => setShowProfile(true)}
+          />
+        )}
       </Menu>
 
       <Outlet />

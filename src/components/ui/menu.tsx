@@ -33,7 +33,9 @@ export const Menu = ({ children, className }: SideMenuProps) => {
           type={'button'}
           className="btn-circle absolute top-14 right-0 text-xl font-bold text-color-base"
           onClick={() => dispatch(toggleSideMenu())}>
-          <span className="center-absolute">Esc</span>
+          <span className="center-absolute" title="close menu">
+            Esc
+          </span>
         </button>
         {children}
       </aside>
