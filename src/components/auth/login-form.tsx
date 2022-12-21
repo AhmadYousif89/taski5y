@@ -3,22 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 
 import googleLogo from '../../assets/google.png';
-import { GetInputValues, Input } from '@ui/input';
+
 import { useForm } from 'hooks/use-form';
+import { AuthInputNames } from './types';
+import { GetInputValues, Input } from '@ui/input';
 import { googleLogin, signIn } from '@features/services/auth';
-import { authSelector, resetAuth, setAuthActionType } from '@features/slices/auth';
+import { authSelector, resetAuth } from '@features/slices/auth';
 import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
 
-import { Card } from '@ui/card';
-import { AuthInputNames } from './types';
 import { AuthButton } from './auth-button';
-import { SpinnerIcon } from 'assets/icons';
 import { TrustDevice } from './remember-me-checkbox';
 import { SwitchFormButton } from './switch-form-button';
+
 import { Button } from '@ui/button';
+import { Divider } from '@ui/divider';
+
 import { AuthErrorMsg } from './auth-error-msg';
 import { AuthContainer } from './auth-container';
-import { Divider } from '@ui/divider';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword' | 'name'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword' | 'name'>, string>;
@@ -122,7 +123,6 @@ export const LoginForm = () => {
         </Divider>
 
         <Button
-          type={'button'}
           label="Sign in with google"
           className="self-center ring-1 ring-color-base">
           <img src={googleLogo} className="h-8" />

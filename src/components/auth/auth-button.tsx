@@ -10,6 +10,7 @@ interface Props {
 export const AuthButton = ({ title, className = '', status, formIsValid }: Props) => {
   return (
     <button
+      type={'submit'}
       disabled={!formIsValid || status === 'loading'}
       className={`${
         formIsValid ? 'cursor-pointer' : 'cursor-not-allowed'

@@ -7,6 +7,7 @@ export * from './menu';
 export * from './moon';
 export * from './sort';
 export * from './spinner';
+export * from './info';
 export * from './settings';
 export * from './star';
 export * from './sun';

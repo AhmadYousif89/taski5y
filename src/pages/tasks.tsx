@@ -56,8 +56,8 @@ export const TasksPage = () => {
           </p>
           {activeTaskPanel !== '' ? (
             <Button
-              className="self-center"
               label="Back"
+              className="self-center"
               icon={<BackArrowIcon />}
               onClick={() => dispatch(setTaskActivePanel(''))}
             />

@@ -4,19 +4,19 @@ import { GoogleLogin } from '@react-oauth/google';
 import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
 
 import googleLogo from '../../assets/google.png';
+
 import { useForm } from 'hooks/use-form';
 import { AuthInputNames } from './types';
 import { AuthButton } from './auth-button';
-import { SwitchFormButton } from './switch-form-button';
 
-import { Card } from '@ui/card';
 import { Button } from '@ui/button';
-import { SpinnerIcon } from 'assets/icons';
+import { Divider } from '@ui/divider';
 import { GetInputValues, Input } from '@ui/input';
+
 import { googleLogin, signUp } from '@features/services/auth';
 import { authSelector, resetAuth } from '@features/slices/auth';
+
 import { AuthErrorMsg } from './auth-error-msg';
-import { Divider } from '@ui/divider';
 import { AuthContainer } from './auth-container';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword'>, boolean>;

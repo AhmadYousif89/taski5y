@@ -1,18 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { FormEvent, useEffect, useState } from 'react';
 
-import { useAppDispatch, useAppSelector } from '@app/hooks';
+import { useForm } from 'hooks/use-form';
 import { resetPassword } from '@features/services/auth';
+import { useAppDispatch, useAppSelector } from '@app/hooks';
 import { authSelector, resetAuth, resetAuthStatus } from '@features/slices/auth';
 
-import { Card } from '@ui/card';
 import { AuthInputNames } from './types';
-import { SpinnerIcon } from 'assets/icons';
 import { AuthButton } from './auth-button';
-import { GetInputValues, Input } from '@ui/input';
-import { SwitchFormButton } from './switch-form-button';
-import { useForm } from 'hooks/use-form';
 import { addTimer } from 'helpers/timeout';
+import { GetInputValues, Input } from '@ui/input';
 import { AuthErrorMsg } from './auth-error-msg';
 import { AuthContainer } from './auth-container';
 
@@ -125,8 +122,8 @@ export const ResetPassword = () => {
           <AuthButton
             title="reset"
             status={status}
-            formIsValid={formIsValid}
             className="mx-auto w-1/2"
+            formIsValid={formIsValid}
           />
         </fieldset>
 

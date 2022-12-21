@@ -1,17 +1,17 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { SpinnerIcon } from 'assets/icons';
 import { useAppDispatch } from '@app/hooks';
+
 import { updateTask } from '@features/services/tasks';
+import { SpinnerIcon, InfoIcon } from 'assets/icons';
 import { TaskButton } from '@tasks/task-button';
 import { ActionModal } from '@ui/action-modal';
 import { Backdrop } from '@ui/backdrop';
-import { InfoIcon } from 'assets/icons/info';
 
 type Props = {
   taskId: string;
-  updatedDetails: string;
-  isUpdating: boolean;
   isEditing: boolean;
+  isUpdating: boolean;
+  updatedDetails: string;
   showUpdateBtn: boolean;
   setIsEditing: Dispatch<SetStateAction<boolean>>;
   setIsUpdating: Dispatch<SetStateAction<boolean>>;

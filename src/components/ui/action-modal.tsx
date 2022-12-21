@@ -65,8 +65,8 @@ export const ActionModal = ({
     <div className="relative w-full">
       <div className="mt-10 flex w-full justify-center gap-12">
         <Button
-          icon={<UploadIcon />}
           label="Upload"
+          icon={<UploadIcon />}
           onClick={confirmAction}
           isDisabled={status === 'loading'}
           className={`${

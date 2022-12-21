@@ -1,15 +1,16 @@
 import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { useClickOutside } from 'hooks/use-click-outside';
 import { toggleSideMenu } from '@features/slices/ui';
+import { useAppDispatch } from '@app/hooks';
 
 import { Card } from '@ui/card';
-import { resetTasks } from '@features/slices/task';
-import { useAppDispatch, useAppSelector } from '@app/hooks';
-import { setAuthActionType } from '@features/slices/auth';
-import { useClickOutside } from 'hooks/use-click-outside';
-import { deleteUser, signOut } from '@features/services/auth';
-import { LogoutIcon, SettingsIcon } from 'assets/icons';
-import { ActionModal } from '@ui/action-modal';
 import { Backdrop } from '@ui/backdrop';
+import { ActionModal } from '@ui/action-modal';
+import { LogoutIcon, SettingsIcon } from 'assets/icons';
+
+import { resetTasks } from '@features/slices/task';
+import { setAuthActionType } from '@features/slices/auth';
+import { deleteUser, signOut } from '@features/services/auth';
 
 type Props = { showUserProfile: Dispatch<SetStateAction<boolean>> };
 

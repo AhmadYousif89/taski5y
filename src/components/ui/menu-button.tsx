@@ -1,7 +1,8 @@
+import { Dispatch, SetStateAction } from 'react';
+
 import { toggleSideMenu, uiSelector } from '@features/slices/ui';
 import { useAppDispatch, useAppSelector } from '@app/hooks';
 import { MenuIcon, CloseIcon } from 'assets/icons';
-import { Dispatch, SetStateAction } from 'react';
 
 type Props = { setShowProfile: Dispatch<SetStateAction<boolean>> };
 

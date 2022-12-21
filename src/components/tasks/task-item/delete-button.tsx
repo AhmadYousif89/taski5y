@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useAppDispatch } from '@app/hooks';
+
 import { Backdrop } from '@ui/backdrop';
 import { TrashIcon } from 'assets/icons';
+import { addTimer } from 'helpers/timeout';
 import { ActionModal } from '@ui/action-modal';
 import { deleteTasks } from '@features/services/tasks';
 import { setTaskActionType } from '@features/slices/task';
@@ -12,10 +14,10 @@ export const TaskDeleteButton = ({ taskId }: Props) => {
   const dispatch = useAppDispatch();
   const [modal, setModal] = useState(false);
 
-  const deleteTaskHandler = async () => {
+  const deleteTaskHandler = () => {
     dispatch(setTaskActionType('deleting'));
-    await dispatch(deleteTasks(taskId));
-    dispatch(setTaskActionType(''));
+    dispatch(deleteTasks(taskId));
+    addTimer(() => dispatch(setTaskActionType('')), 1);
   };
 
   return (
@@ -31,6 +33,7 @@ export const TaskDeleteButton = ({ taskId }: Props) => {
         </>
       ) : null}
       <button
+        type={'button'}
         title="delete task"
         className="absolute top-10 right-8 cursor-pointer"
         onClick={() => setModal(true)}>
