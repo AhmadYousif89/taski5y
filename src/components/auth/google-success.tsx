@@ -11,9 +11,10 @@ export const GoogleSuccess = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // addTimer(() =>
-    //   dispatch(loginWithGoogle()).then(() => navigate('/tasks', { replace: true })),
-    // );
+    addTimer(
+      () => dispatch(loginWithGoogle()).then(() => navigate('/tasks', { replace: true })),
+      1,
+    );
   }, []);
 
   return (

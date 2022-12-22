@@ -19,6 +19,7 @@ import { Divider } from '@ui/divider';
 
 import { AuthErrorMsg } from './auth-error-msg';
 import { AuthContainer } from './auth-container';
+import { API_URL } from '@features/config';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword' | 'name'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword' | 'name'>, string>;
@@ -123,7 +124,12 @@ export const LoginForm = () => {
 
         <Button
           onClick={() => {
-            window.open('http://localhost:8520/auth/google', '_self');
+            window.open(
+              import.meta.env.PROD
+                ? `${import.meta.env.VITE_API_URL}/auth/google`
+                : `${API_URL}/auth/google`,
+              '_self',
+            );
           }}
           label="Sign in with google"
           className="self-center ring-1 ring-color-base">
