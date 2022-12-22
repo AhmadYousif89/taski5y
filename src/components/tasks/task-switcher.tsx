@@ -14,21 +14,23 @@ export const SwitchTaskStatus = ({ taskId, taskStatus, onSwitch }: Props) => {
     onSwitch();
   };
 
-  const switchBgColor = taskStatus === 'InProgress' ? 'bg-amber-400' : 'bg-zinc-400';
+  const switchBgColor = taskStatus === 'InProgress' ? 'bg-amber-400' : 'bg-neutral-500';
   const switchAnimation =
     taskStatus === 'InProgress'
       ? 'translate-x-full bg-amber-600'
-      : 'translate-x-0 bg-white';
+      : 'translate-x-0 bg-btn-color-base';
 
   return (
-    <div className="mt-4 flex items-center gap-4">
-      <div className="cursor-pointer" onClick={updateTaskStatus}>
+    <div className="flex items-center gap-4">
+      <button className="flex cursor-default items-center">
         <div
-          className={`${switchBgColor} p2 flex h-4 w-12 items-center rounded-full transition-all duration-200`}>
+          onClick={updateTaskStatus}
+          className={`${switchBgColor} flex h-4 w-14 cursor-pointer items-center rounded-full transition-colors duration-200`}>
           <div
-            className={`${switchAnimation} h-6 w-6 rounded-full shadow-sm transition-all duration-200`}></div>
+            className={`${switchAnimation} h-7 w-7 rounded-full transition-all duration-200`}
+          />
         </div>
-      </div>
+      </button>
       <span className="text-xl capitalize">in progress</span>
     </div>
   );

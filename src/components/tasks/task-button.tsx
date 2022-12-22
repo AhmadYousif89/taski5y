@@ -12,7 +12,7 @@ export const TaskButton = ({ title, onClick, children }: TaskButtonProps) => {
       onClick={() => {
         if (!isTouchDevice) onClick();
       }}
-      onTouchStart={() => {
+      onTouchEnd={() => {
         if (isTouchDevice) onClick();
       }}
       className="rounded-md bg-btn-color-base p-4 text-lg capitalize tracking-wide text-color-base transition-all duration-200 hover:bg-btn-color-highlight active:translate-y-1 md:text-xl

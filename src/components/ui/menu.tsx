@@ -37,7 +37,7 @@ export const Menu = ({ children, className }: SideMenuProps) => {
           onClick={() => {
             if (!isTouchDevice) dispatch(toggleSideMenu());
           }}
-          onTouchStart={() => {
+          onTouchEnd={() => {
             if (isTouchDevice) dispatch(toggleSideMenu());
           }}>
           <span className="center-absolute" title="close menu">

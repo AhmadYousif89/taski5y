@@ -42,7 +42,7 @@ export const SortField = () => {
     navigate(`/tasks?`);
   };
 
-  const isTouchDevice = 'ontouchstart' in document.documentElement;
+  const isTouchDevice = 'onTouchEnd' in document.documentElement;
 
   const sortList = (
     <Card className="absolute top-full left-0 z-10 translate-y-2">
@@ -51,7 +51,7 @@ export const SortField = () => {
           onClick={() => {
             if (!isTouchDevice) sortByAlphabetHandler();
           }}
-          onTouchStart={() => {
+          onTouchEnd={() => {
             if (isTouchDevice) sortByAlphabetHandler();
           }}
           className="grid grid-cols-[5rem,auto] items-center gap-2 rounded-sm p-2 ring-color-base hover:ring-2 hover:ring-color-highlight">
@@ -71,7 +71,7 @@ export const SortField = () => {
           onClick={() => {
             if (!isTouchDevice) sortByDateHandler();
           }}
-          onTouchStart={() => {
+          onTouchEnd={() => {
             if (isTouchDevice) sortByDateHandler();
           }}
           className="grid grid-cols-[5rem,auto] items-center gap-2 rounded-sm p-2 ring-color-base hover:ring-2 hover:ring-color-highlight ">
@@ -91,7 +91,7 @@ export const SortField = () => {
           onClick={() => {
             if (!isTouchDevice) sortByPriorityHandler();
           }}
-          onTouchStart={() => {
+          onTouchEnd={() => {
             if (isTouchDevice) sortByPriorityHandler();
           }}
           className="grid grid-cols-[5rem,auto] items-center gap-2 rounded-sm p-2 ring-color-base hover:ring-2 hover:ring-color-highlight ">
@@ -111,7 +111,7 @@ export const SortField = () => {
           onClick={() => {
             if (!isTouchDevice) unsortHandler();
           }}
-          onTouchStart={() => {
+          onTouchEnd={() => {
             if (isTouchDevice) unsortHandler();
           }}
           className="rounded-sm p-2 ring-color-base hover:ring-2 hover:ring-color-highlight">

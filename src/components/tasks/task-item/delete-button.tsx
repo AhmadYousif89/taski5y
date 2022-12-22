@@ -41,7 +41,7 @@ export const TaskDeleteButton = ({ taskId }: Props) => {
         onClick={() => {
           if (!isTouchDevice) setModal(true);
         }}
-        onTouchStart={() => {
+        onTouchEnd={() => {
           if (isTouchDevice) setModal(true);
         }}>
         <TrashIcon className="transition-colors hover:fill-rose-600" />

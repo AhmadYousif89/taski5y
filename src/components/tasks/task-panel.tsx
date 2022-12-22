@@ -1,8 +1,8 @@
 import { useAppSelector } from '@app/hooks';
-import { taskSelector } from '@features/slices/task';
 import { TaskStatus } from '@features/types';
+import { taskSelector } from '@features/slices/task';
 
-export interface TaskPanelProps {
+type TaskPanelProps = {
   id?: string;
   count: number;
   color: string;
@@ -10,7 +10,7 @@ export interface TaskPanelProps {
   title: TaskStatus;
   className?: string;
   togglePanels: () => void;
-}
+};
 
 export const TaskPanel = ({
   title,
@@ -41,17 +41,17 @@ export const TaskPanel = ({
   const isTouchDevice = 'ontouchstart' in document.documentElement;
 
   return (
-    <div
+    <button
       title={tooltip}
       onClick={() => {
         if (!isTouchDevice) togglePanels();
       }}
-      onTouchStart={() => {
+      onTouchEnd={() => {
         if (isTouchDevice) togglePanels();
       }}
-      className={`${activeTaskPanel === title ? textColor : ''} 
-      flex cursor-pointer flex-col items-center gap-8 
-      rounded-sm bg-transparent text-color-base transition-colors `}>
+      className={`${
+        activeTaskPanel === title ? textColor : ''
+      } flex h-full w-full cursor-pointer flex-col items-center gap-8 rounded-sm bg-transparent text-color-base transition-colors `}>
       <div
         className={`relative ${borderColor} h-28 w-28 rounded-full border-[5px] bg-transparent shadow-md md:h-32 md:w-32 lg:h-44 lg:w-44`}>
         <span
@@ -62,6 +62,6 @@ export const TaskPanel = ({
       <p className={`rounded-md p-3 text-2xl capitalize tracking-wide md:text-4xl`}>
         {title}
       </p>
-    </div>
+    </button>
   );
 };

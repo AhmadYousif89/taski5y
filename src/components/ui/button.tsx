@@ -32,7 +32,7 @@ export const Button = ({
       onClick={() => {
         if (!isTouchDevice && onClick) onClick();
       }}
-      onTouchStart={() => {
+      onTouchEnd={() => {
         if (isTouchDevice && onClick) onClick();
       }}
       type={type}>

@@ -19,7 +19,7 @@ export const ThemeSwitcher = () => {
       onClick={() => {
         if (!isTouchDevice) dispatch(toggleAppTheme());
       }}
-      onTouchStart={() => {
+      onTouchEnd={() => {
         if (isTouchDevice) dispatch(toggleAppTheme());
       }}>
       <SunIcon
