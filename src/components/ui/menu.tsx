@@ -22,6 +22,8 @@ export const Menu = ({ children, className }: SideMenuProps) => {
     if (menuIsVisible === false) menuRef.current?.blur();
   }, [menuIsVisible]);
 
+  const isTouchDevice = 'ontouchstart' in document.documentElement;
+
   return (
     <>
       <aside
@@ -32,7 +34,12 @@ export const Menu = ({ children, className }: SideMenuProps) => {
         <button
           type={'button'}
           className="btn-circle absolute top-14 right-0 text-xl font-bold text-color-base"
-          onClick={() => dispatch(toggleSideMenu())}>
+          onClick={() => {
+            if (!isTouchDevice) dispatch(toggleSideMenu());
+          }}
+          onTouchStart={() => {
+            if (isTouchDevice) dispatch(toggleSideMenu());
+          }}>
           <span className="center-absolute" title="close menu">
             Esc
           </span>

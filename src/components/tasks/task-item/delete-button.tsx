@@ -20,6 +20,8 @@ export const TaskDeleteButton = ({ taskId }: Props) => {
     addTimer(() => dispatch(setTaskActionType('')), 1);
   };
 
+  const isTouchDevice = 'ontouchstart' in document.documentElement;
+
   return (
     <>
       {modal ? (
@@ -36,7 +38,12 @@ export const TaskDeleteButton = ({ taskId }: Props) => {
         type={'button'}
         title="delete task"
         className="absolute top-10 right-8 cursor-pointer"
-        onClick={() => setModal(true)}>
+        onClick={() => {
+          if (!isTouchDevice) setModal(true);
+        }}
+        onTouchStart={() => {
+          if (isTouchDevice) setModal(true);
+        }}>
         <TrashIcon className="transition-colors hover:fill-rose-600" />
       </button>
     </>

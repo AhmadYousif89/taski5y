@@ -15,11 +15,18 @@ export const MenuButton = ({ setShowProfile }: Props) => {
     setShowProfile(false);
   };
 
+  const isTouchDevice = 'ontouchstart' in document.documentElement;
+
   return (
     <button
       type={'button'}
       title="menu button"
-      onClick={onClickHandler}
+      onClick={() => {
+        if (!isTouchDevice) onClickHandler();
+      }}
+      onTouchStart={() => {
+        if (isTouchDevice) onClickHandler();
+      }}
       className="btn-circle absolute top-1/2 right-[3%] z-10 flex h-full w-full -translate-y-1/2 items-center text-color-base transition-all xs:right-[6%] lg:right-[9%]">
       {menuIsVisible ? (
         <span className="center-absolute">

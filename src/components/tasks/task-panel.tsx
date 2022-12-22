@@ -38,10 +38,17 @@ export const TaskPanel = ({
       ? 'text-green'
       : '';
 
+  const isTouchDevice = 'ontouchstart' in document.documentElement;
+
   return (
     <div
       title={tooltip}
-      onClick={() => togglePanels()}
+      onClick={() => {
+        if (!isTouchDevice) togglePanels();
+      }}
+      onTouchStart={() => {
+        if (isTouchDevice) togglePanels();
+      }}
       className={`${activeTaskPanel === title ? textColor : ''} 
       flex cursor-pointer flex-col items-center gap-8 
       rounded-sm bg-transparent text-color-base transition-colors `}>

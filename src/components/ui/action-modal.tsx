@@ -71,7 +71,7 @@ export const ActionModal = ({
           isDisabled={status === 'loading'}
           className={`${
             status === 'loading' ? 'cursor-not-allowed' : ''
-          } ring-1 ring-teal-500 active:translate-y-1 max-xs:bg-teal-500 xs:hover:bg-teal-500`}
+          } ring-1 ring-teal-500 max-xs:bg-teal-500 xs:hover:bg-teal-500`}
         />
         <Button
           label="Close"
@@ -98,17 +98,17 @@ export const ActionModal = ({
           </>
         ) : (
           <>
-            <button
-              aria-label="upload-image-button"
+            <Button
               onClick={extraAction}
-              className="flex-center w-2/3 cursor-pointer flex-col gap-4 rounded-md border-2 border-dashed border-sky-500 px-4 py-8 transition-transform active:translate-y-2">
-              <UploadIcon className="h-16 w-16 stroke-sky-400 " />
+              aria-label="upload-image-button"
+              className="w-2/3 flex-col border-2 border-dashed border-sky-500 !py-8">
+              <UploadIcon className="h-14 w-14 stroke-sky-400 " />
               <p className="text-2xl sm:text-3xl">Select your image</p>
-            </button>
+            </Button>
             <Button
               label="Cancel"
               onClick={closeModal}
-              className="mt-8 ring-1 ring-sky-500 max-xs:bg-sky-500 xs:hover:bg-sky-500"
+              className="mt-8 ring-1 ring-sky-500  max-xs:bg-sky-500 xs:hover:bg-sky-500"
             />
           </>
         )}

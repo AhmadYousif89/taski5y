@@ -4,11 +4,18 @@ interface TaskButtonProps extends PropsWithChildren {
   onClick: () => void;
 }
 export const TaskButton = ({ title, onClick, children }: TaskButtonProps) => {
+  const isTouchDevice = 'ontouchstart' in document.documentElement;
+
   return (
     <button
       type={'button'}
-      onClick={onClick}
-      className="rounded-md bg-btn-color-base p-4 text-lg capitalize tracking-wide text-color-base transition-colors hover:bg-btn-color-highlight active:translate-y-1 md:text-xl
+      onClick={() => {
+        if (!isTouchDevice) onClick();
+      }}
+      onTouchStart={() => {
+        if (isTouchDevice) onClick();
+      }}
+      className="rounded-md bg-btn-color-base p-4 text-lg capitalize tracking-wide text-color-base transition-all duration-200 hover:bg-btn-color-highlight active:translate-y-1 md:text-xl
       ">
       <span>{title}</span>
       {children}
