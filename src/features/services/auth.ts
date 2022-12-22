@@ -31,13 +31,13 @@ export const signIn = createAsyncThunk<
   }
 });
 
-export const googleLogin = createAsyncThunk<
+export const loginWithGoogle = createAsyncThunk<
   User,
-  { credential: string },
+  void,
   { rejectValue: ResponseError }
->('auth/login-with-google', async (credentials, { rejectWithValue }) => {
+>('auth/google/login', async (_, { rejectWithValue }) => {
   try {
-    const { data } = await axios.post(`/auth/google/login`, credentials, {
+    const { data } = await axios.get(`/auth/google/login`, {
       withCredentials: true,
     });
     return data;

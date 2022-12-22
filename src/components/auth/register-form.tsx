@@ -1,6 +1,5 @@
 import { FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GoogleLogin } from '@react-oauth/google';
 import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
 
 import googleLogo from '../../assets/google.png';
@@ -13,7 +12,7 @@ import { Button } from '@ui/button';
 import { Divider } from '@ui/divider';
 import { GetInputValues, Input } from '@ui/input';
 
-import { googleLogin, signUp } from '@features/services/auth';
+import { signUp } from '@features/services/auth';
 import { authSelector, resetAuth } from '@features/slices/auth';
 
 import { AuthErrorMsg } from './auth-error-msg';
@@ -140,16 +139,12 @@ export const RegisterForm = () => {
         </Divider>
 
         <Button
+          onClick={() => {
+            window.open('http://localhost:8520/auth/google', '_self');
+          }}
           label="Continue with google"
           className="self-center ring-1 ring-color-base">
           <img src={googleLogo} className="h-8" />
-          <span className="absolute [&>*]:opacity-0">
-            <GoogleLogin
-              onSuccess={({ credential }) => {
-                if (credential) dispatch(googleLogin({ credential }));
-              }}
-            />
-          </span>
         </Button>
       </form>
 

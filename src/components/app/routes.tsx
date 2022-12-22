@@ -7,6 +7,7 @@ import { LoginForm } from '@auth/login-form';
 import { RequireAuth } from '@auth/require-auth';
 import { RegisterForm } from '@auth/register-form';
 import { ResetPassword } from '@auth/reset-password-form';
+import { GoogleSuccess } from '@auth/google-success';
 
 export const AppRoutes = () => {
   return (
@@ -16,6 +17,7 @@ export const AppRoutes = () => {
           <Route key={i} path={path} element={<RegisterForm />} />
         ))}
         <Route path="login" element={<LoginForm />} />
+        <Route path="google/login" element={<GoogleSuccess />} />
         <Route path="password-reset" element={<ResetPassword />} />
 
         <Route element={<RequireAuth />}>

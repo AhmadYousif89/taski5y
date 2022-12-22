@@ -1,13 +1,12 @@
 import { FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GoogleLogin } from '@react-oauth/google';
 
 import googleLogo from '../../assets/google.png';
 
 import { useForm } from 'hooks/use-form';
 import { AuthInputNames } from './types';
 import { GetInputValues, Input } from '@ui/input';
-import { googleLogin, signIn } from '@features/services/auth';
+import { signIn } from '@features/services/auth';
 import { authSelector, resetAuth } from '@features/slices/auth';
 import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
 
@@ -123,16 +122,12 @@ export const LoginForm = () => {
         </Divider>
 
         <Button
+          onClick={() => {
+            window.open('http://localhost:8520/auth/google', '_self');
+          }}
           label="Sign in with google"
           className="self-center ring-1 ring-color-base">
           <img src={googleLogo} className="h-8" />
-          <span className="absolute [&>*]:opacity-0">
-            <GoogleLogin
-              onSuccess={({ credential }) => {
-                if (credential) dispatch(googleLogin({ credential }));
-              }}
-            />
-          </span>
         </Button>
       </form>
 
