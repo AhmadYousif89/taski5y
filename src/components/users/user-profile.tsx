@@ -1,4 +1,12 @@
-import { Dispatch, FormEvent, SetStateAction, useEffect, useRef, useState } from 'react';
+import {
+  Dispatch,
+  FC,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
 import { AuthInputNames } from '@auth/types';
 
@@ -28,7 +36,7 @@ const initFormValues: FormValues = {
   confirmPassword: '',
 };
 
-export const UserProfile = ({ showUserProfile }: Props) => {
+export const UserProfile: FC<Props> = ({ showUserProfile }) => {
   const { user } = useAuth();
   const dispatch = useAppDispatch();
   const { status } = useAppSelector(authSelector);

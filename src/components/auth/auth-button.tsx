@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { ResponseStatus } from '@features/types';
 
 interface Props {
@@ -7,7 +8,7 @@ interface Props {
   className?: string;
 }
 
-export const AuthButton = ({ title, className = '', status, formIsValid }: Props) => {
+export const AuthButton: FC<Props> = ({ title, className = '', status, formIsValid }) => {
   return (
     <button
       type={'submit'}

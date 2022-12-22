@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { ChangeEvent, Dispatch, FC, SetStateAction } from 'react';
 
 type Props = {
   taskDetails: string;
@@ -9,14 +9,14 @@ type Props = {
   setIsEditing: Dispatch<SetStateAction<boolean>>;
 };
 
-export const DetailsSection = ({
+export const DetailsSection: FC<Props> = ({
   taskDetails,
   isUpdating,
   isEditing,
   setIsEditing,
   setShowUpdateBtn,
   setUpdatedDetails,
-}: Props) => {
+}) => {
   const onBlurHandler = (e: ChangeEvent<HTMLDivElement>) => {
     setUpdatedDetails(e.target.textContent as string);
   };

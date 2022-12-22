@@ -1,7 +1,8 @@
+import { FC } from 'react';
 import { User } from '@features/types';
 import { UserImage } from './user-image';
 
-export const UserInfo = ({ user }: { user: User | null }) => {
+export const UserInfo: FC<{ user: User | null }> = ({ user }) => {
   return (
     <section className="my-8 flex flex-col items-center gap-8 text-color-base">
       <UserImage />

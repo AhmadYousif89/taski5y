@@ -3,7 +3,7 @@ export type TaskSortType = 'alpha' | 'priority' | 'createdAt' | 'updatedAt';
 export type TaskActionType = 'fetching' | 'creating' | 'updating' | 'deleting' | '';
 export type TaskStatus = 'Todo' | 'InProgress' | 'Completed' | '';
 export type TaskPriority = 'Normal' | 'High';
-export interface Task {
+export type Task = {
   id: string;
   userId: string;
   title: string;
@@ -12,4 +12,4 @@ export interface Task {
   priority: TaskPriority;
   createdAt: string;
   updatedAt: string;
-}
+};

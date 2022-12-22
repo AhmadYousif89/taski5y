@@ -1,6 +1,6 @@
+import { FC } from 'react';
 import { ResponseStatus } from '@features/types';
 import { SpinnerIcon, CheckMarkIcon, WarningIcon } from 'assets/icons';
-import { FC } from 'react';
 
 type ImageStatusProps = {
   status: ResponseStatus;

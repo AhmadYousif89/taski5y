@@ -1,8 +1,9 @@
+import { FC } from 'react';
 import { createPortal } from 'react-dom';
 
 type Props = { className?: string; onClick?: () => void };
 
-export const Backdrop = ({ onClick, className = '' }: Props) => {
+export const Backdrop: FC<Props> = ({ onClick, className = '' }) => {
   const backdropElement = (
     <div
       onClick={onClick}

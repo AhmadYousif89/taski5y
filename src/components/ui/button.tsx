@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react';
+import { FC, PropsWithChildren } from 'react';
 
 type ButtonProps = {
   label?: string;
@@ -10,7 +10,7 @@ type ButtonProps = {
   onClick?: () => void;
 } & PropsWithChildren;
 
-export const Button = ({
+export const Button: FC<ButtonProps> = ({
   icon,
   title,
   label,
@@ -19,7 +19,7 @@ export const Button = ({
   className,
   isDisabled = false,
   type = 'button',
-}: ButtonProps) => {
+}) => {
   const cursorStyle = isDisabled ? 'cursor-not-allowed' : 'cursor-pointer';
 
   return (

@@ -1,9 +1,9 @@
-import { PropsWithChildren } from 'react';
+import { FC, PropsWithChildren } from 'react';
 interface TaskButtonProps extends PropsWithChildren {
   title?: string;
   onClick: () => void;
 }
-export const TaskButton = ({ title, onClick, children }: TaskButtonProps) => {
+export const TaskButton: FC<TaskButtonProps> = ({ title, onClick, children }) => {
   return (
     <button
       type={'button'}

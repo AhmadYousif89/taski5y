@@ -1,3 +1,5 @@
+import { FC } from 'react';
+
 import { Card } from '@ui/card';
 import { Task } from '@features/types';
 import { useAppDispatch } from '@app/hooks';
@@ -5,7 +7,7 @@ import { deleteTasks } from '@features/services/tasks';
 import { DisplayTaskTime } from './task-item/display-time';
 import { setTaskActionType } from '@features/slices/task';
 
-export const CompletedTaskItem = ({ task }: { task: Task }) => {
+export const CompletedTaskItem: FC<{ task: Task }> = ({ task }) => {
   const dispatch = useAppDispatch();
 
   const deleteTaskHandler = async () => {

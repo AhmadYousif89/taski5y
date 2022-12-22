@@ -1,10 +1,11 @@
 import { useAppDispatch } from '@app/hooks';
 import { TaskStatus } from '@features/types';
 import { updateTask } from '@features/services/tasks';
+import { FC } from 'react';
 
-type Props = { taskId: string; taskStatus: TaskStatus; onSwitch: () => void };
+type SwitcherProps = { taskId: string; taskStatus: TaskStatus; onSwitch: () => void };
 
-export const SwitchTaskStatus = ({ taskId, taskStatus, onSwitch }: Props) => {
+export const SwitchTaskStatus: FC<SwitcherProps> = ({ taskId, taskStatus, onSwitch }) => {
   const dispatch = useAppDispatch();
 
   const updateTaskStatus = () => {

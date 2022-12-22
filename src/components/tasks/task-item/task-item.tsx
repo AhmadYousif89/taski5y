@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { taskSelector } from '@features/slices/task';
 import { useAppSelector } from '@app/hooks';
 import { Task } from '@features/types';
@@ -10,7 +10,7 @@ import { DisplayTaskTime } from './display-time';
 import { DetailsSection } from './details-section';
 import { SwitchTaskStatus } from '@tasks/task-switcher';
 
-export const TaskItem = ({ task }: { task: Task }) => {
+export const TaskItem: FC<{ task: Task }> = ({ task }) => {
   const { status } = useAppSelector(taskSelector);
   const [isEditing, setIsEditing] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);

@@ -1,6 +1,6 @@
 import { AuthActionType, ResponseStatus } from '@features/types';
 import { CameraIcon } from 'assets/icons';
-import { PropsWithChildren } from 'react';
+import { FC, PropsWithChildren } from 'react';
 
 type ImageFigureProps = {
   src?: string;
@@ -11,7 +11,7 @@ type ImageFigureProps = {
   actionType?: AuthActionType;
 } & PropsWithChildren;
 
-export const ImageFigure = ({
+export const ImageFigure: FC<ImageFigureProps> = ({
   src,
   alt,
   status,
@@ -19,7 +19,7 @@ export const ImageFigure = ({
   children,
   actionType,
   className = '',
-}: ImageFigureProps) => {
+}) => {
   const animateBorder =
     actionType === 'uploading image'
       ? 'before:absolute before:inset-0 before:z-10 before:h-full before:w-full before:rounded-full before:border-4 before:animate-spin before:border-x-amber-500 before:border-y-neutral-900'

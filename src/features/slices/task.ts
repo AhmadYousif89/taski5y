@@ -27,10 +27,10 @@ interface TaskState {
   activeTaskPanel: TaskStatus;
   actionType: TaskActionType;
   status: ResponseStatus;
-  error: ResponseError;
+  error: Partial<ResponseError>;
 }
 
-const initError: ResponseError = { statusCode: 0, message: '', error: '' };
+const initError: Partial<ResponseError> = { statusCode: 0, message: '', error: '' };
 
 const initialState: TaskState = {
   tasks: [],

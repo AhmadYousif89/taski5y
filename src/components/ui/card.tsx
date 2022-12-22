@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react';
+import { FC, PropsWithChildren } from 'react';
 import { StarIcon } from 'assets/icons';
 import { TaskPriority } from '@features/types';
 
@@ -8,7 +8,7 @@ interface CardProps extends PropsWithChildren {
   onClick?: (arg?: any) => void;
 }
 
-export const Card = ({ className, children, priority, onClick }: CardProps) => {
+export const Card: FC<CardProps> = ({ className, children, priority, onClick }) => {
   const styles = className ? className : '';
 
   return (

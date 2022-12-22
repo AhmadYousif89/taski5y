@@ -8,16 +8,10 @@ export type SignInRequest = {
   password: string;
 };
 export type AuthActionType = 'logout' | 'delete' | 'refresh' | 'uploading image' | '';
-export type ResponseStatus = 'idle' | 'loading' | 'fulfilled' | 'rejected';
-export type ResponseError = {
-  statusCode: number;
-  message: string | string[];
-  error?: string;
-};
 export type User = {
   id: string;
-  image?: string;
   name: string;
+  image: string;
   email: string;
   provider: 'google' | 'No_Provider';
   createdAt: string;

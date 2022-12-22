@@ -6,20 +6,20 @@ import { ImageFigure } from './image-figure';
 import { authSelector } from '@features/slices/auth';
 import { DisplayImageStatus } from '@users/image-status';
 import { CloseIcon, SpinnerIcon, UploadIcon, WarningIcon } from 'assets/icons';
+import { FC } from 'react';
 
-type ModalActionType = 'transition' | 'upload';
-type Props = {
+type ActionModalProps = {
   image?: any;
   msg?: string;
   icon?: JSX.Element;
   showWarning?: boolean;
-  actionType?: ModalActionType;
+  actionType?: 'transition' | 'upload';
   closeModal?: () => void;
   extraAction?: () => void;
   confirmAction?: () => void;
 };
 
-export const ActionModal = ({
+export const ActionModal: FC<ActionModalProps> = ({
   msg,
   icon,
   image,
@@ -28,7 +28,7 @@ export const ActionModal = ({
   extraAction,
   showWarning = true,
   confirmAction,
-}: Props) => {
+}) => {
   const { status } = useAppSelector(authSelector);
 
   let content = (

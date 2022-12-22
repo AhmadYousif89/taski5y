@@ -1,10 +1,12 @@
+import { FC } from 'react';
+
 interface Props {
   title: string;
   msg: string;
   onClick: () => void;
 }
 
-export const SwitchFormButton = ({ title, msg, onClick }: Props) => {
+export const SwitchFormButton: FC<Props> = ({ title, msg, onClick }) => {
   return (
     <button
       type={'button'}

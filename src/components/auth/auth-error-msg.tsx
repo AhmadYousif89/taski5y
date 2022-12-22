@@ -1,5 +1,6 @@
-import { ResponseStatus } from '@features/types';
+import { FC } from 'react';
 import { SpinnerIcon } from 'assets/icons';
+import { ResponseStatus } from '@features/types';
 
 type Props = {
   extraMsg?: string;
@@ -8,7 +9,7 @@ type Props = {
   errorMsg: string | string[] | JSX.Element;
 };
 
-export const AuthErrorMsg = ({ status, errorMsg, successMsg, extraMsg }: Props) => {
+export const AuthErrorMsg: FC<Props> = ({ status, errorMsg, successMsg, extraMsg }) => {
   const sessionExpired = JSON.parse(localStorage.getItem('error') as string);
 
   const sessionExpireMsg = (

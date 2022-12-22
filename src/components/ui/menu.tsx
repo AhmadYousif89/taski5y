@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect, useRef } from 'react';
+import { FC, PropsWithChildren, useEffect, useRef } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@app/hooks';
 import { toggleSideMenu, uiSelector } from '@features/slices/ui';
@@ -8,7 +8,7 @@ interface SideMenuProps extends PropsWithChildren {
   className?: string;
 }
 
-export const Menu = ({ children, className }: SideMenuProps) => {
+export const Menu: FC<SideMenuProps> = ({ children, className }) => {
   const dispatch = useAppDispatch();
   const menuRef = useRef<HTMLDivElement>(null);
   const { menuIsVisible } = useAppSelector(uiSelector);

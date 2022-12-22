@@ -1,4 +1,4 @@
-import { ChangeEvent, SelectHTMLAttributes, useEffect, useState } from 'react';
+import { ChangeEvent, FC, SelectHTMLAttributes, useEffect, useState } from 'react';
 import { TaskStatus, TaskPriority } from '@features/types';
 import { TaskInputNames } from '@tasks/types';
 
@@ -17,7 +17,7 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   getValue: GetSelectValues;
 }
 
-export const Select = (props: SelectProps) => {
+export const Select: FC<SelectProps> = props => {
   const {
     id,
     name,

@@ -1,6 +1,7 @@
 import { useAppSelector } from '@app/hooks';
 import { TaskStatus } from '@features/types';
 import { taskSelector } from '@features/slices/task';
+import { FC } from 'react';
 
 export type TaskPanelProps = {
   id?: string;
@@ -12,13 +13,13 @@ export type TaskPanelProps = {
   togglePanels: () => void;
 };
 
-export const TaskPanel = ({
+export const TaskPanel: FC<TaskPanelProps> = ({
   title,
   count,
   color,
   tooltip,
   togglePanels,
-}: TaskPanelProps) => {
+}) => {
   const { activeTaskPanel } = useAppSelector(taskSelector);
 
   const borderColor =

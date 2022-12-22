@@ -5,7 +5,7 @@ import { ActionModal } from '@ui/action-modal';
 import { ImageFigure } from '@ui/image-figure';
 import { updateUser } from '@features/services/auth';
 import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
-import { readFileAsDataURL, resizeImage } from 'helpers/image-config';
+import { readFileAsDataURL, resizeImage } from 'helpers/image-processing';
 import { authSelector, resetAuthStatus, setAuthActionType } from '@features/slices/auth';
 import defaultUserImg from '../../assets/user-default-image.webp';
 

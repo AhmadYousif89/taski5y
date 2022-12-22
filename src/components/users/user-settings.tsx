@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useRef, useState } from 'react';
 import { useClickOutside } from 'hooks/use-click-outside';
 import { toggleSideMenu } from '@features/slices/ui';
 import { useAppDispatch } from '@app/hooks';
@@ -14,7 +14,7 @@ import { deleteUser, signOut } from '@features/services/auth';
 
 type Props = { showUserProfile: Dispatch<SetStateAction<boolean>> };
 
-export const UserSettings = ({ showUserProfile }: Props) => {
+export const UserSettings: FC<Props> = ({ showUserProfile }) => {
   const dispatch = useAppDispatch();
   const settingRef = useRef<HTMLButtonElement>(null);
   const [toggleMenu, setToggleMenu] = useState(false);

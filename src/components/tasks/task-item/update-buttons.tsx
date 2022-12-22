@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { useAppDispatch } from '@app/hooks';
 
 import { updateTask } from '@features/services/tasks';
@@ -18,7 +18,7 @@ type Props = {
   setShowUpdateBtn: Dispatch<SetStateAction<boolean>>;
 };
 
-export const TaskUpdateButtons = ({
+export const TaskUpdateButtons: FC<Props> = ({
   taskId,
   isEditing,
   isUpdating,
@@ -27,7 +27,7 @@ export const TaskUpdateButtons = ({
   showUpdateBtn,
   setIsUpdating,
   setIsEditing,
-}: Props) => {
+}) => {
   const dispatch = useAppDispatch();
   const [modal, setModal] = useState(false);
 

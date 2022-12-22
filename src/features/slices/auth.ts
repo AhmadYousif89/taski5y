@@ -14,13 +14,13 @@ import {
 import { persistData } from 'helpers/persist-data';
 
 export interface AuthState {
+  user: User | null;
+  message: string;
   error: ResponseError;
   status: ResponseStatus;
   actionType: AuthActionType;
-  user: User | null;
-  message: string;
 }
-const initError = { statusCode: 0, message: '', error: '' };
+const initError: ResponseError = { statusCode: 0, message: '', error: '' };
 
 const initialState: AuthState = {
   error: initError,
