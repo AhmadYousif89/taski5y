@@ -2,7 +2,7 @@ import { useAppSelector } from '@app/hooks';
 import { TaskStatus } from '@features/types';
 import { taskSelector } from '@features/slices/task';
 
-type TaskPanelProps = {
+export type TaskPanelProps = {
   id?: string;
   count: number;
   color: string;
