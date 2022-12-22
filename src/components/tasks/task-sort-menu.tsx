@@ -42,18 +42,11 @@ export const SortField = () => {
     navigate(`/tasks?`);
   };
 
-  const isTouchDevice = 'onTouchEnd' in document.documentElement;
-
   const sortList = (
     <Card className="absolute top-full left-0 z-10 translate-y-2">
       <ul className="flex flex-col gap-6 text-center capitalize text-color-base">
         <li
-          onClick={() => {
-            if (!isTouchDevice) sortByAlphabetHandler();
-          }}
-          onTouchEnd={() => {
-            if (isTouchDevice) sortByAlphabetHandler();
-          }}
+          onClick={() => sortByAlphabetHandler()}
           className="grid grid-cols-[5rem,auto] items-center gap-2 rounded-sm p-2 ring-color-base hover:ring-2 hover:ring-color-highlight">
           <span className="flex items-center">
             {sortType === 'alpha' ? (
@@ -68,12 +61,7 @@ export const SortField = () => {
           <span>alphabet</span>
         </li>
         <li
-          onClick={() => {
-            if (!isTouchDevice) sortByDateHandler();
-          }}
-          onTouchEnd={() => {
-            if (isTouchDevice) sortByDateHandler();
-          }}
+          onClick={() => sortByDateHandler()}
           className="grid grid-cols-[5rem,auto] items-center gap-2 rounded-sm p-2 ring-color-base hover:ring-2 hover:ring-color-highlight ">
           <span className="flex items-center">
             {sortType === 'createdAt' ? (
@@ -88,12 +76,7 @@ export const SortField = () => {
           <span>date</span>
         </li>
         <li
-          onClick={() => {
-            if (!isTouchDevice) sortByPriorityHandler();
-          }}
-          onTouchEnd={() => {
-            if (isTouchDevice) sortByPriorityHandler();
-          }}
+          onClick={() => sortByPriorityHandler()}
           className="grid grid-cols-[5rem,auto] items-center gap-2 rounded-sm p-2 ring-color-base hover:ring-2 hover:ring-color-highlight ">
           <span className="flex items-center">
             {sortType === 'priority' ? (
@@ -108,12 +91,7 @@ export const SortField = () => {
           <span>priority</span>
         </li>
         <li
-          onClick={() => {
-            if (!isTouchDevice) unsortHandler();
-          }}
-          onTouchEnd={() => {
-            if (isTouchDevice) unsortHandler();
-          }}
+          onClick={() => unsortHandler()}
           className="rounded-sm p-2 ring-color-base hover:ring-2 hover:ring-color-highlight">
           <span>unsort</span>
         </li>

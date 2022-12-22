@@ -35,7 +35,7 @@ export const DisplayTaskPanels = () => {
   ];
 
   return (
-    <div className="my-16 flex items-center justify-evenly" aria-label="Task-panels">
+    <section className="my-16 flex items-center justify-evenly" aria-label="task-panels">
       {panels.map(panel => (
         <TaskPanel
           key={panel.id}
@@ -46,6 +46,6 @@ export const DisplayTaskPanels = () => {
           togglePanels={panel.togglePanels}
         />
       ))}
-    </div>
+    </section>
   );
 };

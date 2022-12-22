@@ -44,10 +44,10 @@ export const TasksPage = () => {
 
   return (
     <>
-      <section className="lg:mx-auto lg:w-10/12" aria-label="Task-panel-section">
+      <section className="lg:mx-auto lg:w-10/12" aria-label="tasks-section">
         <DisplayTaskPanels />
-        <section className="flex flex-col">
-          <div className="flex items-center" aria-label="search-sort-aria">
+        <section className="flex flex-col" aria-label="task-search-sort">
+          <div className="flex items-center">
             <SortField />
             <SearchBar />
           </div>

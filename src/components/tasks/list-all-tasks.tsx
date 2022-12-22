@@ -77,7 +77,7 @@ export const TaskList = () => {
     <>
       {searchMsg}
       <ul
-        aria-label="Task-list"
+        aria-label="task-list"
         className="mx-10 mt-8 mb-16 grid grid-cols-[repeat(auto-fit,minmax(32rem,.65fr))] justify-center gap-8">
         {updatedTasks.map(task => (
           <TaskItem key={task.id} task={task} />
