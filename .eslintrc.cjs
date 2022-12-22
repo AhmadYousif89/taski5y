@@ -27,8 +27,8 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint'],
   rules: {
-    'react/jsx-uses-react': 'error',
-    'react/jsx-uses-vars': 'warning',
+    'react/jsx-uses-vars': 'warn',
+    'react/jsx-uses-react': 'warn',
     'react/no-unescaped-entities': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
   },

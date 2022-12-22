@@ -47,7 +47,7 @@ export const UserProfile = ({ showUserProfile }: Props) => {
   } = formValidity;
   const { name, email, password, confirmPassword } = formValues;
 
-  let formIsValid: boolean = false;
+  let formIsValid = false;
   if (nameIsValid) formIsValid = true;
   if (emailIsValid && user?.provider !== 'google') formIsValid = true;
   if (passwordIsValid && confirmPasswordIsValid) formIsValid = true;
@@ -70,7 +70,7 @@ export const UserProfile = ({ showUserProfile }: Props) => {
   };
 
   useEffect(() => {
-    if (user?.provider === 'google') emailRef.current!.disabled = true;
+    if (user?.provider === 'google' && emailRef.current) emailRef.current.disabled = true;
   }, [user?.provider]);
 
   return (

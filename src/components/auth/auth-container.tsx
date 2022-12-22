@@ -3,7 +3,7 @@ import { Card } from '@ui/card';
 import { NavLink } from 'react-router-dom';
 import { ThemeSwitcher } from '@ui/theme-switcher';
 
-type Props = {} & PropsWithChildren;
+type Props = PropsWithChildren;
 
 export const AuthContainer: FC<Props> = ({ children }) => {
   return (
