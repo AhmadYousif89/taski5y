@@ -10,9 +10,8 @@ export const RedirectSuccess = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    addTimer(
-      () => dispatch(loginWithGoogle()).then(() => navigate('/tasks', { replace: true })),
-      1,
+    addTimer(() =>
+      dispatch(loginWithGoogle()).then(() => navigate('/tasks', { replace: true })),
     );
   }, []);
 
