@@ -30,27 +30,26 @@ export const UserSettings: FC<Props> = ({ showUserProfile }) => {
 
   const deleteAccountHandler = () => {
     dispatch(setAuthActionType('delete'));
-    dispatch(toggleSideMenu());
     dispatch(resetTasks());
     dispatch(deleteUser());
     setModal(false);
   };
 
   const settingList = (
-    <Card className="absolute top-full -translate-x-1/2 translate-y-1 transition-all">
+    <Card className="absolute top-full -translate-x-1/2 translate-y-3 ring-1 ring-color-highlight transition-all">
       <ul className="grid auto-cols-[minmax(max-content,1fr)] gap-6 text-2xl text-color-base">
         <li
           onClick={() => showUserProfile(true)}
-          className="rounded-md p-2 ring-color-base hover:ring-2 hover:ring-color-highlight">
+          className="rounded-lg bg-color-card p-4 ring-1 ring-color-base hover:ring-color-highlight">
           <span onClick={() => dispatch(toggleSideMenu())}>Manage account</span>
         </li>
         <li
-          className="rounded-md p-2 ring-color-base hover:ring-2 hover:ring-color-highlight"
+          className="rounded-lg bg-color-card p-4 ring-1 ring-color-base hover:ring-color-highlight"
           onClick={() => setModal(true)}>
           <span className="text-red-500">Delete account</span>
         </li>
         <li
-          className="flex-center gap-4 rounded-md p-2 ring-color-base hover:ring-2 hover:ring-color-highlight"
+          className="flex-center gap-4 rounded-lg bg-color-card p-4 ring-1 ring-color-base hover:ring-color-highlight"
           onClick={() => logoutHandler()}>
           <LogoutIcon />
           <span>Logout</span>

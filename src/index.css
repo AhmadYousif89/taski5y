@@ -11,15 +11,15 @@
     --text-color-invalid: 244 63 94;
     --text-color-link: 56 109 248;
 
-    --ring-color-base: 82 82 82;
-    --ring-color-highlight: 190 180 190;
+    --ring-color-base: 150 150 150;
+    --ring-color-highlight: 82 82 82;
     --ring-input-color-valid: 20 220 110;
     --ring-input-color-validating: 256 150 10;
     --ring-input-color-invalid: 240 63 99;
 
     --bg-color-steps: 25 25 25;
     --bg-color-base: 250 250 250;
-    --bg-color-card: 241 245 249;
+    --bg-color-card: 245 245 245;
 
     --btn-bg-color-base: 20 200 120;
     --btn-bg-color-highlight: 100 170 228;
@@ -36,7 +36,7 @@
     --text-color-link: 56 189 248;
 
     --ring-color-base: 82 82 82;
-    --ring-color-highlight: 212 212 212;
+    --ring-color-highlight: 140 140 140;
     --ring-input-color-valid: 134 239 172;
     --ring-input-color-validating: 251 146 60;
     --ring-input-color-invalid: 244 63 94;

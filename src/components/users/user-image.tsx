@@ -7,7 +7,7 @@ import { updateUser } from '@features/services/auth';
 import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
 import { readFileAsDataURL, resizeImage } from 'helpers/image-processing';
 import { authSelector, resetAuthStatus, setAuthActionType } from '@features/slices/auth';
-import defaultUserImg from '../../assets/user-default-image.webp';
+import defaultUserImg from '../../assets/avatar-default.png';
 
 export const UserImage = ({ maxHeight = 300 }: { maxHeight?: number }) => {
   const { user } = useAuth();
@@ -76,7 +76,7 @@ export const UserImage = ({ maxHeight = 300 }: { maxHeight?: number }) => {
       <ImageFigure
         status={status}
         actionType={actionType}
-        className={`h-36 w-36 bg-black`}
+        className={`h-36 w-36`}
         onClick={() => (status !== 'loading' ? setModal(true) : null)}
         src={`${user?.image ? user?.image : defaultUserImg}`}>
         <input aria-hidden={true} type="hidden" value={image} />

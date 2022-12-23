@@ -47,11 +47,11 @@ export const TaskList = () => {
 
   if (updatedTasks.length === 0) {
     return (
-      <div className="my-20 flex flex-col items-center text-color-base">
+      <div className="my-20 flex flex-col text-center text-color-base">
         <h2 className="text-3xl">You don't have any active tasks</h2>
         <button
           onClick={() => dispatch(toggleSideMenu())}
-          className="mt-8 block rounded-md px-6 py-4 text-center text-3xl text-color-base ring-color-base transition-colors hover:ring-2 hover:transition-transform active:translate-y-1 active:bg-sky-500">
+          className="mt-8 block self-center rounded-md px-6 py-4 text-3xl text-color-base ring-color-base transition-colors hover:ring-2 hover:transition-transform active:translate-y-1 active:bg-sky-500">
           Create new task ?
         </button>
       </div>
