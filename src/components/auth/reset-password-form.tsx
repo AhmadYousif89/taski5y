@@ -3,8 +3,8 @@ import { FormEvent, useEffect, useState } from 'react';
 
 import { useForm } from 'hooks/use-form';
 import { resetPassword } from '@features/services/auth';
-import { useAppDispatch, useAppSelector } from '@app/hooks';
-import { authSelector, resetAuth, resetAuthStatus } from '@features/slices/auth';
+import { authSelector, resetAuth } from '@features/slices/auth';
+import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
 
 import { AuthInputNames } from './types';
 import { AuthButton } from './auth-button';
@@ -24,6 +24,7 @@ const initFormValidity: FormValidity = {
 const initFormValues: FormValues = { email: '', password: '', confirmPassword: '' };
 
 export const ResetPassword = () => {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { status, message, error } = useAppSelector(authSelector);
@@ -45,19 +46,19 @@ export const ResetPassword = () => {
   );
 
   useEffect(() => {
+    if (user) navigate('/dashboard');
     if (status === 'fulfilled') {
       setIsSubmitted(true);
       addTimer(() => {
         navigate('/login');
-        dispatch(resetAuth());
         setIsSubmitted(false);
       });
     }
-  }, [status]);
+  }, [status, user]);
 
   useEffect(() => {
     return () => {
-      dispatch(resetAuthStatus());
+      dispatch(resetAuth());
     };
   }, []);
 

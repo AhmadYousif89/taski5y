@@ -34,9 +34,9 @@ const initFormValues: FormValues = {
 };
 
 export const RegisterForm = () => {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { user } = useAuth();
   const { status, error } = useAppSelector(authSelector);
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
     FormValidity,
@@ -63,9 +63,7 @@ export const RegisterForm = () => {
   );
 
   useEffect(() => {
-    if (user) {
-      navigate('/tasks');
-    }
+    if (user) navigate('/dashboard');
     return () => {
       dispatch(resetAuth());
     };

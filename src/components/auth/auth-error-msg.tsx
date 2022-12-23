@@ -32,8 +32,8 @@ export const AuthErrorMsg: FC<Props> = ({ status, errorMsg, successMsg, extraMsg
         ) : null}
 
         {status === 'fulfilled' ? (
-          <div className="xs:flex-center text-center text-color-valid">
-            <p>{extraMsg},</p>
+          <div className="xs:flex-center gap-4 text-center text-color-valid">
+            <p>{extraMsg}</p>
             <p className="flex items-center gap-4">
               <span>{successMsg}</span>
               <SpinnerIcon className="h-8 w-8" />

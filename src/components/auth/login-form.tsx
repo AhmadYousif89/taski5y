@@ -28,9 +28,9 @@ const initFormValidity: FormValidity = { email: false, password: false };
 const initFormValues: FormValues = { email: '', password: '' };
 
 export const LoginForm = () => {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { user } = useAuth();
   const { status, error } = useAppSelector(authSelector);
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
     FormValidity,
@@ -42,9 +42,7 @@ export const LoginForm = () => {
   const formIsValid = [emailIsValid, passwordIsValid].every(Boolean);
 
   useEffect(() => {
-    if (user) {
-      navigate('/tasks');
-    }
+    if (user) navigate('/dashboard');
     return () => {
       dispatch(resetAuth());
     };

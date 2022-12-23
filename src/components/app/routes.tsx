@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import { AppLayout } from './layout';
 import { NotFound } from 'pages/404';
-import { TasksPage } from 'pages/tasks';
+import { TasksPage } from 'pages/dashboard';
 import { LoginForm } from '@auth/login-form';
 import { RequireAuth } from '@auth/require-auth';
 import { RegisterForm } from '@auth/register-form';
@@ -20,7 +20,7 @@ export const AppRoutes = () => {
         <Route path="password-reset" element={<ResetPassword />} />
 
         <Route element={<RequireAuth />}>
-          <Route path="tasks" element={<TasksPage />} />
+          <Route path="dashboard" element={<TasksPage />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
