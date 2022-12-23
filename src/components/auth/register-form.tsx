@@ -149,9 +149,9 @@ export const RegisterForm = () => {
             );
           }}
           label="Continue with google"
-          className="self-center ring-1 ring-color-base">
-          <img src={googleLogo} className="h-8" />
-        </Button>
+          icon={<img src={googleLogo} className="h-7" />}
+          className="self-center text-xl ring-1 ring-color-base"
+        />
       </form>
 
       <AuthErrorMsg status={status} errorMsg={userErrorMsg} />
