@@ -4,6 +4,9 @@
   "version": "0.0.1",
   "type": "module",
   "author": "Jo89",
+  "engines": {
+    "node": "16.14.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
