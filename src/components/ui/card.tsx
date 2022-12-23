@@ -15,14 +15,12 @@ export const Card: FC<CardProps> = ({ className, children, priority, onClick }) 
     <div
       aria-label="card"
       onClick={onClick}
-      className={`${styles} rounded-lg bg-color-card p-4 shadow-md drop-shadow-md`}>
+      className={`${styles} rounded-md bg-color-card p-4 shadow-md`}>
       {priority === 'High' ? (
-        <span className="absolute top-0 left-0 cursor-default" title="High priority task">
-          <StarIcon className="rotate-[35deg] scale-125 fill-amber-500 stroke-black" />
+        <span title="high priority task" className="absolute top-24 right-6">
+          <StarIcon />
         </span>
-      ) : (
-        ''
-      )}
+      ) : null}
 
       {children}
     </div>

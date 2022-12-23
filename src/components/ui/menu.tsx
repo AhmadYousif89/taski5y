@@ -33,7 +33,7 @@ export const Menu: FC<SideMenuProps> = ({ children, className }) => {
         tabIndex={0}
         onTouchMove={() => dispatch(toggleSideMenu())}
         onKeyDown={e => (e.key === 'Escape' ? dispatch(toggleSideMenu()) : null)}
-        className={`${className} ${animateMenu} fixed top-0 left-1/2 z-20 flex min-h-screen w-full origin-top -translate-x-1/2 flex-col bg-color-card shadow-md transition-all duration-700 md:w-2/3 lg:w-4/12 lg:min-w-[50rem]`}>
+        className={`${className} ${animateMenu} fixed top-0 left-1/2 z-30 flex min-h-screen w-full origin-top -translate-x-1/2 flex-col bg-color-card shadow-md transition-all duration-700 md:w-2/3 lg:w-4/12 lg:min-w-[50rem]`}>
         <button
           type={'button'}
           className="btn-circle absolute top-14 right-0 text-xl font-bold text-color-base"

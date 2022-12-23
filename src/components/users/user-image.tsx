@@ -69,7 +69,7 @@ export const UserImage = ({ maxHeight = 300 }: { maxHeight?: number }) => {
             extraAction={triggerFileInput}
             confirmAction={uploadImage}
           />
-          <Backdrop onClick={closeModal} className="z-30" />
+          <Backdrop onClick={closeModal} className="z-[35]" />
         </>
       ) : null}
 

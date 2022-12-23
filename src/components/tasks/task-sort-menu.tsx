@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppSelector } from '@app/hooks';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { Card } from '../ui/card';
 import { ArrowIcon, SortIcon } from 'assets/icons';
@@ -43,11 +43,11 @@ export const SortField = () => {
   };
 
   const sortList = (
-    <Card className="absolute top-full left-0 z-10 translate-y-2">
-      <ul className="flex flex-col gap-6 text-center capitalize text-color-base">
+    <Card className="absolute top-full left-0 translate-y-2 ring-1 ring-color-base">
+      <ul className="flex flex-col gap-6 py-2 text-center capitalize text-color-base">
         <li
           onClick={() => sortByAlphabetHandler()}
-          className="grid grid-cols-[5rem,auto] items-center gap-2 rounded-sm p-2 ring-color-base hover:ring-2 hover:ring-color-highlight">
+          className="li-item grid grid-cols-[5rem,auto] items-center gap-2">
           <span className="flex items-center">
             {sortType === 'alpha' ? (
               <ArrowIcon
@@ -62,7 +62,7 @@ export const SortField = () => {
         </li>
         <li
           onClick={() => sortByDateHandler()}
-          className="grid grid-cols-[5rem,auto] items-center gap-2 rounded-sm p-2 ring-color-base hover:ring-2 hover:ring-color-highlight ">
+          className="li-item grid grid-cols-[5rem,auto] items-center gap-2">
           <span className="flex items-center">
             {sortType === 'createdAt' ? (
               <ArrowIcon
@@ -77,7 +77,7 @@ export const SortField = () => {
         </li>
         <li
           onClick={() => sortByPriorityHandler()}
-          className="grid grid-cols-[5rem,auto] items-center gap-2 rounded-sm p-2 ring-color-base hover:ring-2 hover:ring-color-highlight ">
+          className="li-item grid grid-cols-[5rem,auto] items-center gap-2">
           <span className="flex items-center">
             {sortType === 'priority' ? (
               <ArrowIcon
@@ -90,9 +90,7 @@ export const SortField = () => {
           </span>
           <span>priority</span>
         </li>
-        <li
-          onClick={() => unsortHandler()}
-          className="rounded-sm p-2 ring-color-base hover:ring-2 hover:ring-color-highlight">
+        <li onClick={() => unsortHandler()} className="li-item !py-2">
           <span>unsort</span>
         </li>
       </ul>
@@ -106,8 +104,8 @@ export const SortField = () => {
           ref={sortMenuRef}
           title="sort tasks"
           onClick={openSortMenuHandler}
-          className="flex-center absolute left-5 cursor-pointer rounded-md bg-color-card py-5 pl-4 pr-1 text-xl text-color-base ring-2 ring-color-base transition-all active:ring-color-highlight xs:left-[10%] lg:left-[20%]">
-          Sort <SortIcon />
+          className="flex-center absolute left-5 z-[15] cursor-pointer rounded-md bg-color-card py-5 pl-4 pr-1 text-xl text-color-base ring-2 ring-color-base active:ring-color-highlight xs:left-[10%] lg:left-[20%]">
+          <span>Sort</span> <SortIcon />
           {toggleMenu && <>{sortList}</>}
         </div>
       ) : null}

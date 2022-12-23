@@ -1,4 +1,4 @@
-import { TaskItem } from './task-item/task-item';
+import { TaskItem } from './task-item';
 import { useAppSelector } from '@app/hooks';
 import { sortTasks, searchTasks } from './helpers';
 import { taskSelector } from '@features/slices/task';
@@ -13,9 +13,7 @@ export const InProgressTaskList = () => {
   filteredInProgressTasks = sortTasks(filteredInProgressTasks);
 
   let content = (
-    <ul
-      className="
-        mx-4 grid grid-cols-[repeat(auto-fit,minmax(32rem,.65fr))] justify-center gap-8 py-12">
+    <ul className="grid-container">
       {filteredInProgressTasks.map(task => (
         <TaskItem key={task.id} task={task} />
       ))}

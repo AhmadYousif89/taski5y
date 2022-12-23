@@ -1,12 +1,9 @@
 {
-  "name": "taskify",
   "private": true,
-  "version": "0.0.1",
   "type": "module",
-  "author": "Jo89",
-  "engines": {
-    "node": "16.14.0"
-  },
+  "author": "AY89",
+  "name": "taskify",
+  "version": "1.0.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

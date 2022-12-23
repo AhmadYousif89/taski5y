@@ -35,7 +35,7 @@ export const TaskDeleteButton: FC<Props> = ({ taskId }) => {
       <button
         type={'button'}
         title="delete task"
-        className="absolute top-10 right-8 cursor-pointer"
+        className="absolute top-10 right-[18px] cursor-pointer"
         onClick={() => setModal(true)}>
         <TrashIcon className="transition-colors hover:fill-rose-600" />
       </button>

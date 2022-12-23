@@ -36,21 +36,17 @@ export const UserSettings: FC<Props> = ({ showUserProfile }) => {
   };
 
   const settingList = (
-    <Card className="absolute top-full -translate-x-1/2 translate-y-3 ring-1 ring-color-highlight transition-all">
-      <ul className="grid auto-cols-[minmax(max-content,1fr)] gap-6 text-2xl text-color-base">
-        <li
-          onClick={() => showUserProfile(true)}
-          className="rounded-lg bg-color-card p-4 ring-1 ring-color-base hover:ring-color-highlight">
+    <Card className="absolute top-full -translate-x-1/2 translate-y-3 ring-1 ring-color-base transition-all">
+      <ul
+        aria-label="account-setting-menu"
+        className="grid auto-cols-[minmax(max-content,1fr)] gap-6 py-2 text-xl text-color-base">
+        <li onClick={() => showUserProfile(true)} className="li-item">
           <span onClick={() => dispatch(toggleSideMenu())}>Manage account</span>
         </li>
-        <li
-          className="rounded-lg bg-color-card p-4 ring-1 ring-color-base hover:ring-color-highlight"
-          onClick={() => setModal(true)}>
+        <li className="li-item" onClick={() => setModal(true)}>
           <span className="text-red-500">Delete account</span>
         </li>
-        <li
-          className="flex-center gap-4 rounded-lg bg-color-card p-4 ring-1 ring-color-base hover:ring-color-highlight"
-          onClick={() => logoutHandler()}>
+        <li className="flex-center li-item gap-4" onClick={() => logoutHandler()}>
           <LogoutIcon />
           <span>Logout</span>
         </li>
