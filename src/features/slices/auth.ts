@@ -11,15 +11,16 @@ import {
   resetPassword,
   loginWithGoogle,
 } from '../services/auth';
-import { persistData } from 'helpers/persist-data';
+import { modifyLocalStorage } from 'helpers/modify-local-storage';
 
-export interface AuthState {
+export type AuthState = {
   user: User | null;
   message: string;
   error: ResponseError;
   status: ResponseStatus;
   actionType: AuthActionType;
-}
+};
+
 const initError: ResponseError = { statusCode: 0, message: '', error: '' };
 
 const initialState: AuthState = {
@@ -52,8 +53,8 @@ const authSlice = createSlice({
       .addCase(signUp.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
         state.user = payload;
-        persistData('hasAccess', true);
-        localStorage.removeItem('error');
+        modifyLocalStorage({ type: 'set', key: 'has_access', value: 'true' });
+        modifyLocalStorage({ type: 'set', key: 'server_error' });
       })
       .addCase(signUp.rejected, (state, { payload }) => {
         state.status = 'rejected';
@@ -68,8 +69,8 @@ const authSlice = createSlice({
       .addCase(signIn.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
         state.user = payload;
-        persistData('hasAccess', true);
-        localStorage.removeItem('error');
+        modifyLocalStorage({ type: 'set', key: 'has_access', value: 'true' });
+        modifyLocalStorage({ type: 'set', key: 'server_error' });
       })
       .addCase(signIn.rejected, (state, { payload }) => {
         state.status = 'rejected';
@@ -84,8 +85,8 @@ const authSlice = createSlice({
       .addCase(loginWithGoogle.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
         state.user = payload;
-        persistData('hasAccess', true);
-        localStorage.removeItem('error');
+        modifyLocalStorage({ type: 'set', key: 'has_access', value: 'true' });
+        modifyLocalStorage({ type: 'set', key: 'server_error' });
       })
       .addCase(loginWithGoogle.rejected, (state, { payload }) => {
         state.status = 'rejected';
@@ -98,8 +99,8 @@ const authSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(signOut.fulfilled, () => {
-        localStorage.removeItem('persist');
-        localStorage.removeItem('hasAccess');
+        modifyLocalStorage({ type: 'remove', key: 'persist' });
+        modifyLocalStorage({ type: 'remove', key: 'has_access' });
         return initialState;
       })
       .addCase(signOut.rejected, (state, { payload }) => {
@@ -154,8 +155,8 @@ const authSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(deleteUser.fulfilled, () => {
-        localStorage.removeItem('persist');
-        localStorage.removeItem('hasAccess');
+        modifyLocalStorage({ type: 'remove', key: 'persist' });
+        modifyLocalStorage({ type: 'remove', key: 'has_access' });
         return initialState;
       })
       .addCase(deleteUser.rejected, (state, { payload }) => {
