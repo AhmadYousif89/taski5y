@@ -1,15 +1,10 @@
+import { AppTheme, UIState } from '@features/types';
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
-type AppTheme = 'dark-theme' | 'light-theme';
-interface UiState {
-  mode: AppTheme;
-  menuIsVisible: boolean;
-}
-
 const storedTheme = <AppTheme>localStorage.getItem('mode');
 
-const initialState: UiState = {
+const initialState: UIState = {
   mode: storedTheme ? storedTheme : 'dark-theme',
   menuIsVisible: false,
 };

@@ -11,6 +11,7 @@ function App() {
   const { status, actionType } = useAppSelector(authSelector);
   const persist = localStorage.getItem('persist');
   const hasAccess = localStorage.getItem('hasAccess');
+
   useEffect(() => {
     if (persist === 'false' || !persist) localStorage.removeItem('hasAccess');
     if (persist === 'true' && hasAccess) {
