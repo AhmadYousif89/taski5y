@@ -1,7 +1,8 @@
-import { useAppDispatch } from '@app/hooks';
-import { TaskStatus } from '@features/types';
-import { updateTask } from '@features/services/tasks';
 import { FC } from 'react';
+
+import { useAppDispatch } from 'app/hooks';
+import { TaskStatus } from 'features/types';
+import { updateTask } from 'features/services/tasks';
 
 type SwitcherProps = { taskId: string; taskStatus: TaskStatus; onSwitch: () => void };
 

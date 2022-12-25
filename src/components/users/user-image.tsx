@@ -1,13 +1,13 @@
 import { ChangeEvent, useRef, useState, useEffect, useCallback } from 'react';
 
-import { Backdrop } from '@ui/backdrop';
-import { ActionModal } from '@ui/action-modal';
-import { ImageFigure } from '@ui/image-figure';
-import { updateUser } from '@features/services/auth';
-import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
+import { useAuth, useAppDispatch, useAppSelector } from 'app/hooks';
+import { ActionModal, Backdrop, ImageFigure } from 'components/ui';
+
+import { updateUser } from 'features/services/auth';
+import { authSelector, resetAuthStatus, setAuthActionType } from 'features/slices/auth';
+
 import { readFileAsDataURL, resizeImage } from 'helpers/image-processing';
-import { authSelector, resetAuthStatus, setAuthActionType } from '@features/slices/auth';
-import defaultUserImg from '../../assets/avatar-default.png';
+import defaultUserImg from 'assets/avatar-default.png';
 
 export const UserImage = ({ maxHeight = 300 }: { maxHeight?: number }) => {
   const { user } = useAuth();

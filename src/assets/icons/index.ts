@@ -5,6 +5,7 @@ export * from './close';
 export * from './camera';
 export * from './menu';
 export * from './moon';
+export * from './home';
 export * from './sort';
 export * from './spinner';
 export * from './info';

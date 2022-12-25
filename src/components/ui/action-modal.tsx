@@ -1,12 +1,13 @@
+import { FC } from 'react';
 import { createPortal } from 'react-dom';
 
-import { Button } from '../ui/button';
-import { useAppSelector } from '@app/hooks';
+import { useAppSelector } from 'app/hooks';
 import { ImageFigure } from './image-figure';
-import { authSelector } from '@features/slices/auth';
-import { DisplayImageStatus } from '@users/image-status';
+import { authSelector } from 'features/slices/auth';
+
+import { Button } from 'components/ui/button';
+import { DisplayImageStatus } from 'components/users/image-status';
 import { CloseIcon, SpinnerIcon, UploadIcon, WarningIcon } from 'assets/icons';
-import { FC } from 'react';
 
 type ActionModalProps = {
   image?: any;

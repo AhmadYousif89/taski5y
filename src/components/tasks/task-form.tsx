@@ -1,16 +1,17 @@
 import { FormEvent, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '@app/hooks';
 
-import { TaskInputNames } from './types';
-import { TaskStats } from './task-stats';
-import { useForm } from 'hooks/use-form';
-import { GetInputValues, Input } from '@ui/input';
-import { GetSelectValues, Select } from '@ui/select';
-import { CheckMarkIcon, SpinnerIcon, TaskIcon } from 'assets/icons';
-import { addNewTask } from '@features/services/tasks';
-import { TaskPriority, TaskStatus } from '@features/types';
-import { resetTaskStatus, taskSelector } from '@features/slices/task';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { TaskIcon, CheckMarkIcon, SpinnerIcon } from 'assets/icons';
+import { GetInputValues, Select, GetSelectValues, Input } from 'components/ui';
+
+import { addNewTask } from 'features/services/tasks';
+import { TaskStatus, TaskPriority } from 'features/types';
+import { taskSelector, resetTaskStatus } from 'features/slices/task';
+
 import { addTimer } from 'helpers/timeout';
+import { useForm } from 'hooks/use-form';
+import { TaskStats } from './task-stats';
+import { TaskInputNames } from './types';
 
 type FormValidity = Record<TaskInputNames, boolean>;
 type FormValues = Record<TaskInputNames, string>;

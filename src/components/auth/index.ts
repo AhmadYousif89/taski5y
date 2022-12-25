@@ -9,3 +9,5 @@ export * from './remember-me-checkbox';
 export * from './require-auth';
 export * from './reset-password-form';
 export * from './switch-form-button';
+export * from './google-login';
+export * from './google-check';

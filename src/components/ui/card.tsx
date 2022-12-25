@@ -1,6 +1,7 @@
 import { FC, PropsWithChildren } from 'react';
+
+import { TaskPriority } from 'features/types';
 import { StarIcon } from 'assets/icons';
-import { TaskPriority } from '@features/types';
 
 interface CardProps extends PropsWithChildren {
   className?: string;

@@ -1,14 +1,16 @@
 import { FC, useEffect, useState } from 'react';
-import { taskSelector } from '@features/slices/task';
-import { useAppSelector } from '@app/hooks';
-import { Task } from '@features/types';
 
-import { Card } from '@ui/card';
+import { useAppSelector } from 'app/hooks';
+
+import { Card } from 'components/ui';
+import { Task } from 'features/types';
+import { taskSelector } from 'features/slices/task';
+
 import { TaskDeleteButton } from './delete-button';
+import { SwitchTaskStatus } from '../task-switcher';
 import { TaskUpdateButtons } from './update-buttons';
 import { DisplayTaskTime } from './display-time';
 import { DetailsSection } from './details-section';
-import { SwitchTaskStatus } from '@tasks/task-switcher';
 
 export const TaskItem: FC<{ task: Task }> = ({ task }) => {
   const { status } = useAppSelector(taskSelector);

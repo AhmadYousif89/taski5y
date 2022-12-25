@@ -1,5 +1,5 @@
-import { formatDistanceToNow, parseISO } from 'date-fns';
 import { FC } from 'react';
+import { formatDistanceToNow, parseISO } from 'date-fns';
 
 export const TaskTime: FC<{ time: string }> = ({ time }) => {
   let timeAgo = '';

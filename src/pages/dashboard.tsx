@@ -1,21 +1,29 @@
-import { useAppSelector, useAppDispatch } from '@app/hooks';
+import { useEffect } from 'react';
 
-import { TaskList } from '@tasks/list-all-tasks';
-import { SortField } from '@tasks/task-sort-menu';
-import { SearchBar } from '@tasks/task-search-bar';
-import { TodoTaskList } from '@tasks/list-all-todo';
-import { CompletedTaskList } from '@tasks/list-all-completed';
-import { DisplayTaskPanels } from '@tasks/display-task-panels';
-import { InProgressTaskList } from '@tasks/list-all-inprogress';
-
-import { Button } from '@ui/button';
+import { useAuth, useAppDispatch, useAppSelector } from 'app/hooks';
+import {
+  TaskList,
+  TodoTaskList,
+  InProgressTaskList,
+  CompletedTaskList,
+  DisplayTaskPanels,
+  SortField,
+  SearchBar,
+} from 'components/tasks';
+import { Button } from 'components/ui';
 import { BackArrowIcon } from 'assets/icons';
-import { setTaskActivePanel, taskSelector } from '@features/slices/task';
+import { updateUser } from 'features/services/auth';
+import { taskSelector, setTaskActivePanel } from 'features/slices/task';
 
-export const TasksPage = () => {
+export const Dashboard = () => {
+  const { user } = useAuth();
   const dispatch = useAppDispatch();
   const { totalTasks, totalCompletedTasks, activeTaskPanel } =
     useAppSelector(taskSelector);
+
+  useEffect(() => {
+    if (user && !user.isRegistered) dispatch(updateUser({ isRegistered: true }));
+  }, [user]);
 
   let content = <TaskList />;
 

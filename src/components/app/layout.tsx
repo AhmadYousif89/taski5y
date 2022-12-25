@@ -1,19 +1,14 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { uiSelector } from '@features/slices/ui';
-import { useAppSelector, useAuth } from '@app/hooks';
-import appLogo from '../../assets/logo.png';
 
-import { TaskForm } from '@tasks/task-form';
+import { TaskForm } from 'components/tasks';
+import { ThemeSwitcher, MenuButton, Menu, Button } from 'components/ui';
+import { UserSettings, UserInfo, UserProfile } from 'components/users';
 
-import { Menu } from '@ui/menu';
-import { Button } from '@ui/button';
-import { MenuButton } from '@ui/menu-button';
-import { ThemeSwitcher } from '@ui/theme-switcher';
+import { useAuth, useAppSelector } from 'app/hooks';
+import { uiSelector } from 'features/slices/ui';
 
-import { UserInfo } from '@users/user-info';
-import { UserProfile } from '@users/user-profile';
-import { UserSettings } from '@users/user-settings';
+import appLogo from 'assets/logo.png';
 
 export const AppLayout = () => {
   const { user } = useAuth();

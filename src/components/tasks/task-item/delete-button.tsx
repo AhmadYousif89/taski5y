@@ -1,12 +1,12 @@
 import { FC, useState } from 'react';
-import { useAppDispatch } from '@app/hooks';
 
-import { Backdrop } from '@ui/backdrop';
+import { useAppDispatch } from 'app/hooks';
+import { ActionModal, Backdrop } from 'components/ui';
+import { deleteTasks } from 'features/services/tasks';
+import { setTaskActionType } from 'features/slices/task';
+
 import { TrashIcon } from 'assets/icons';
 import { addTimer } from 'helpers/timeout';
-import { ActionModal } from '@ui/action-modal';
-import { deleteTasks } from '@features/services/tasks';
-import { setTaskActionType } from '@features/slices/task';
 
 type Props = { taskId: string };
 

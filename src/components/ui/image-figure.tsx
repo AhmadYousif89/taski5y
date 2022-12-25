@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren } from 'react';
 
 import { CameraIcon } from 'assets/icons';
-import { AuthActionType, ResponseStatus } from '@features/types';
+import { AuthActionType, ResponseStatus } from 'features/types';
 
 type ImageFigureProps = {
   src?: string;

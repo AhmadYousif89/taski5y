@@ -1,24 +1,23 @@
 import { FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
 
-import googleLogo from '../../assets/google.png';
+import googleLogo from 'assets/google.png';
 
+import { useAppDispatch, useAppSelector, useAuth } from 'app/hooks';
 import { useForm } from 'hooks/use-form';
 import { AuthInputNames } from './types';
 import { AuthButton } from './auth-button';
 
-import { Button } from '@ui/button';
-import { Divider } from '@ui/divider';
-import { GetInputValues, Input } from '@ui/input';
+import { API_URL } from 'features/config';
+import { SignUpType } from 'features/types';
+import { signUp } from 'features/services/auth';
+import { authSelector } from 'features/slices/auth';
 
-import { signUp } from '@features/services/auth';
-import { authSelector, resetAuth } from '@features/slices/auth';
+import { path } from 'components/app';
+import { GetInputValues, Divider, Button, Input } from 'components/ui';
 
 import { AuthErrorMsg } from './auth-error-msg';
 import { AuthContainer } from './auth-container';
-import { API_URL } from '@features/config';
-import { path } from 'components/app';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword'>, string>;
@@ -64,16 +63,14 @@ export const RegisterForm = () => {
   );
 
   useEffect(() => {
-    if (user) navigate(path.dashboard);
-    return () => {
-      dispatch(resetAuth());
-    };
+    if (user && !user.isRegistered) navigate(path.redirect);
+    if (user && user.isRegistered) navigate(path.dashboard);
   }, [user]);
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formIsValid) return;
-    const newUser = { name, email, password };
+    const newUser: SignUpType = { name, email, password };
     dispatch(signUp(newUser));
   };
 

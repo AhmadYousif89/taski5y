@@ -6,9 +6,10 @@ import {
   ChangeEvent,
   InputHTMLAttributes,
 } from 'react';
-import { InputError } from '@ui/input-error';
-import { AuthInputNames } from '@auth/types';
-import { TaskInputNames } from '@tasks/types';
+
+import { InputError } from './input-error';
+import { AuthInputNames } from 'components/auth/types';
+import { TaskInputNames } from 'components/tasks/types';
 
 type InputNames = AuthInputNames | TaskInputNames;
 type InputValidator = (arg: string) => boolean;

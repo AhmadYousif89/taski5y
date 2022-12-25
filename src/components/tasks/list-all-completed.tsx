@@ -1,9 +1,8 @@
-import { useAppSelector } from '@app/hooks';
-import { sortTasks, searchTasks } from './helpers';
-import { taskSelector } from '@features/slices/task';
+import { useAppSelector } from 'app/hooks';
+import { searchTasks, sortTasks } from './helpers';
+import { taskSelector } from 'features/slices/task';
+import { ActionModal, Backdrop } from 'components/ui';
 import { CompletedTaskItem } from './task-completed-item';
-import { ActionModal } from '@ui/action-modal';
-import { Backdrop } from '@ui/backdrop';
 
 export const CompletedTaskList = () => {
   const {

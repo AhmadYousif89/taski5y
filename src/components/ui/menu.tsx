@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren, useEffect, useRef } from 'react';
 
-import { useAppDispatch, useAppSelector } from '@app/hooks';
-import { toggleSideMenu, uiSelector } from '@features/slices/ui';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { toggleSideMenu, uiSelector } from 'features/slices/ui';
 import { Backdrop } from './backdrop';
 
 interface SideMenuProps extends PropsWithChildren {

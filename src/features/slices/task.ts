@@ -1,18 +1,19 @@
-import { RootState } from '@app/store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { RootState } from 'app/store';
 import {
   getAllTasks,
   addNewTask,
   updateTask,
   deleteTasks,
-} from '@features/services/tasks';
+} from 'features/services/tasks';
 import {
   Task,
   TaskStatus,
   ResponseError,
   ResponseStatus,
   TaskActionType,
-} from '@features/types';
+} from 'features/types';
 
 interface TaskState {
   tasks: Task[];

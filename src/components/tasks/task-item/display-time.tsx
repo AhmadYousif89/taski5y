@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { TaskTime } from '@tasks/task-time';
+import { TaskTime } from '../task-time';
 
 type Props = { time: string; label: string; className?: string };
 

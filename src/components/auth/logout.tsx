@@ -1,10 +1,11 @@
-import { useAppDispatch } from '@app/hooks';
-import { toggleSideMenu } from '@features/slices/ui';
-import { resetTasks } from '@features/slices/task';
-import { signOut } from '@features/services/auth';
+import { useAppDispatch } from 'app/hooks';
 import { LogoutIcon } from 'assets/icons';
-import { Button } from '@ui/button';
-import { setAuthActionType } from '@features/slices/auth';
+import { Button } from 'components/ui';
+
+import { signOut } from 'features/services/auth';
+import { resetTasks } from 'features/slices/task';
+import { toggleSideMenu } from 'features/slices/ui';
+import { setAuthActionType } from 'features/slices/auth';
 
 export const Logout = () => {
   const dispatch = useAppDispatch();

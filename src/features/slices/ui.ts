@@ -1,6 +1,7 @@
-import { AppTheme, UIState } from '@features/types';
 import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
+
+import { RootState } from 'app/store';
+import { AppTheme, UIState } from 'features/types';
 
 const storedTheme = <AppTheme>localStorage.getItem('mode');
 

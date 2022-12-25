@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
-import { Backdrop } from '@ui/backdrop';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+
 import { AppRoutes } from 'components/app';
-import { ActionModal } from '@ui/action-modal';
-import { getUser } from '@features/services/auth';
-import { useAppDispatch, useAppSelector } from '@app/hooks';
-import { authSelector, setAuthActionType } from '@features/slices/auth';
+import { Backdrop, ActionModal } from 'components/ui';
+
+import { getUser } from 'features/services/auth';
+import { authSelector, setAuthActionType } from 'features/slices/auth';
+
 import { modifyLocalStorage } from 'helpers/modify-local-storage';
 
 function App() {

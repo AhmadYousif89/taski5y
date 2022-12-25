@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { Task, TaskSortOrder, TaskSortType } from '@features/types';
+import { Task, TaskSortOrder, TaskSortType } from 'features/types';
 
 export const sortTasks = (data: Task[]) => {
   const location = useLocation();

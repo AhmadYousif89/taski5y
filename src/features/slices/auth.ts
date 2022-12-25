@@ -1,5 +1,6 @@
-import { RootState } from '@app/store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { RootState } from 'app/store';
 import { AuthActionType, ResponseError, ResponseStatus, User } from '../types';
 import {
   signUp,
@@ -54,7 +55,7 @@ const authSlice = createSlice({
         state.status = 'fulfilled';
         state.user = payload;
         modifyLocalStorage({ type: 'set', key: 'has_access', value: 'true' });
-        modifyLocalStorage({ type: 'set', key: 'server_error' });
+        modifyLocalStorage({ type: 'remove', key: 'server_error' });
       })
       .addCase(signUp.rejected, (state, { payload }) => {
         state.status = 'rejected';
@@ -70,7 +71,7 @@ const authSlice = createSlice({
         state.status = 'fulfilled';
         state.user = payload;
         modifyLocalStorage({ type: 'set', key: 'has_access', value: 'true' });
-        modifyLocalStorage({ type: 'set', key: 'server_error' });
+        modifyLocalStorage({ type: 'remove', key: 'server_error' });
       })
       .addCase(signIn.rejected, (state, { payload }) => {
         state.status = 'rejected';
@@ -86,7 +87,7 @@ const authSlice = createSlice({
         state.status = 'fulfilled';
         state.user = payload;
         modifyLocalStorage({ type: 'set', key: 'has_access', value: 'true' });
-        modifyLocalStorage({ type: 'set', key: 'server_error' });
+        modifyLocalStorage({ type: 'remove', key: 'server_error' });
       })
       .addCase(loginWithGoogle.rejected, (state, { payload }) => {
         state.status = 'rejected';

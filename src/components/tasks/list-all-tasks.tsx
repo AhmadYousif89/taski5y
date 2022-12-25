@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '@app/hooks';
 
-import { Backdrop } from '@ui/backdrop';
-import { ActionModal } from '@ui/action-modal';
-import { TaskItem } from './task-item/task-item';
-import { sortTasks, searchTasks } from './helpers';
-import { toggleSideMenu } from '@features/slices/ui';
-import { getAllTasks } from '@features/services/tasks';
-import { setTaskActionType, taskSelector } from '@features/slices/task';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { ActionModal, Backdrop } from 'components/ui';
+
+import { toggleSideMenu } from 'features/slices/ui';
+import { getAllTasks } from 'features/services/tasks';
+import { taskSelector, setTaskActionType } from 'features/slices/task';
+
+import { TaskItem } from './task-item';
 import { addTimer } from 'helpers/timeout';
+import { sortTasks, searchTasks } from './helpers';
 
 export const TaskList = () => {
   const dispatch = useAppDispatch();

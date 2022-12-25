@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { SpinnerIcon } from 'assets/icons';
-import { ResponseStatus } from '@features/types';
+import { ResponseStatus } from 'features/types';
 
 type Props = {
   extraMsg?: string;

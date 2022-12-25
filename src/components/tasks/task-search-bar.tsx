@@ -1,6 +1,6 @@
+import { useAppDispatch } from 'app/hooks';
 import { debounce } from 'helpers/debouncer';
-import { useAppDispatch } from '@app/hooks';
-import { setTaskSearchQuery } from '@features/slices/task';
+import { setTaskSearchQuery } from 'features/slices/task';
 
 export const SearchBar = () => {
   const dispatch = useAppDispatch();

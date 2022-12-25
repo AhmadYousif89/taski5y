@@ -1,12 +1,14 @@
 import { FC } from 'react';
 
-import { Card } from '@ui/card';
-import { Task } from '@features/types';
-import { useAppDispatch } from '@app/hooks';
-import { deleteTasks } from '@features/services/tasks';
-import { DisplayTaskTime } from './task-item/display-time';
-import { setTaskActionType } from '@features/slices/task';
+import { Card } from 'components/ui';
+import { useAppDispatch } from 'app/hooks';
+
+import { Task } from 'features/types';
+import { deleteTasks } from 'features/services/tasks';
+import { setTaskActionType } from 'features/slices/task';
+
 import { addTimer } from 'helpers/timeout';
+import { DisplayTaskTime } from './task-item/display-time';
 
 export const CompletedTaskItem: FC<{ task: Task }> = ({ task }) => {
   const dispatch = useAppDispatch();

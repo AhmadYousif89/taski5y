@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { AppDispatch, RootState } from './store';
-import { authSelector } from '@features/slices/auth';
+import { authSelector } from 'features/slices/auth';
 import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();

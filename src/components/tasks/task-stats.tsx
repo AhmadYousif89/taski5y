@@ -1,5 +1,5 @@
-import { useAppSelector } from '@app/hooks';
-import { taskSelector } from '@features/slices/task';
+import { useAppSelector } from 'app/hooks';
+import { taskSelector } from 'features/slices/task';
 
 export const TaskStats = () => {
   const { totalTasks } = useAppSelector(taskSelector);

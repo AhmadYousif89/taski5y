@@ -1,4 +1,4 @@
-import { Task } from '@features/types';
+import { Task } from 'features/types';
 
 export const searchTasks = (tasks: Task[], query: string) => {
   if (query) {

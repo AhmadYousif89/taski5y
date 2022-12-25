@@ -1,6 +1,6 @@
-import { Button } from '@ui/button';
-import { HomeIcon } from 'assets/icons/home';
 import { useNavigate } from 'react-router-dom';
+import { HomeIcon } from 'assets/icons';
+import { Button } from 'components/ui';
 
 export const NotFound = () => {
   const navigate = useNavigate();

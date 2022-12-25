@@ -1,5 +1,5 @@
-import { toggleAppTheme, uiSelector } from '@features/slices/ui';
-import { useAppDispatch, useAppSelector } from '@app/hooks';
+import { toggleAppTheme, uiSelector } from 'features/slices/ui';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { SunIcon, MoonIcon } from 'assets/icons';
 
 export const ThemeSwitcher = () => {

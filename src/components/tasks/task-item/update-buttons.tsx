@@ -1,11 +1,10 @@
 import { Dispatch, FC, SetStateAction, useState } from 'react';
-import { useAppDispatch } from '@app/hooks';
 
-import { updateTask } from '@features/services/tasks';
-import { SpinnerIcon, InfoIcon } from 'assets/icons';
-import { TaskButton } from '@tasks/task-button';
-import { ActionModal } from '@ui/action-modal';
-import { Backdrop } from '@ui/backdrop';
+import { useAppDispatch } from 'app/hooks';
+import { TaskButton } from '../task-button';
+import { InfoIcon, SpinnerIcon } from 'assets/icons';
+import { ActionModal, Backdrop } from 'components/ui';
+import { updateTask } from 'features/services/tasks';
 
 type Props = {
   taskId: string;

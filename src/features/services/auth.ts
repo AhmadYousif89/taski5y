@@ -1,35 +1,36 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios, { axiosPrivate } from '@features/config/axios';
-import { SignInRequest, ResponseError, SignUpRequest, User } from '@features/types';
 
-export const signUp = createAsyncThunk<
-  User,
-  SignUpRequest,
-  { rejectValue: ResponseError }
->('auth/signup', async (user: SignUpRequest, { rejectWithValue }) => {
-  try {
-    const { data } = await axios.post(`/auth/register`, user, { withCredentials: true });
-    return data;
-  } catch (err: any) {
-    return rejectWithValue(err.response.data);
-  }
-});
+import axios, { axiosPrivate } from 'features/config/axios';
+import { SignInType, ResponseError, SignUpType, User } from 'features/types';
 
-export const signIn = createAsyncThunk<
-  User,
-  SignInRequest,
-  { rejectValue: ResponseError }
->('auth/login', async (credentials: SignInRequest, { rejectWithValue }) => {
-  try {
-    // Don't use axiosPrivate on this end point !
-    const { data } = await axios.post(`/auth/login`, credentials, {
-      withCredentials: true,
-    });
-    return data;
-  } catch (err: any) {
-    return rejectWithValue(err.response.data);
-  }
-});
+export const signUp = createAsyncThunk<User, SignUpType, { rejectValue: ResponseError }>(
+  'auth/signup',
+  async (user: SignUpType, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(`/auth/register`, user, {
+        withCredentials: true,
+      });
+      return data;
+    } catch (err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  },
+);
+
+export const signIn = createAsyncThunk<User, SignInType, { rejectValue: ResponseError }>(
+  'auth/login',
+  async (credentials: SignInType, { rejectWithValue }) => {
+    try {
+      // Don't use axiosPrivate on this end point !
+      const { data } = await axios.post(`/auth/login`, credentials, {
+        withCredentials: true,
+      });
+      return data;
+    } catch (err: any) {
+      return rejectWithValue(err.response.data);
+    }
+  },
+);
 
 export const loginWithGoogle = createAsyncThunk<
   User,
@@ -61,9 +62,9 @@ export const signOut = createAsyncThunk<
 
 export const resetPassword = createAsyncThunk<
   string,
-  SignInRequest,
+  SignInType,
   { rejectValue: ResponseError }
->('auth/reset', async (credentials: SignInRequest, { rejectWithValue }) => {
+>('auth/reset', async (credentials: SignInType, { rejectWithValue }) => {
   try {
     const { data } = await axios.post(`/auth/reset`, credentials);
     return data?.message;

@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { modifyLocalStorage } from 'helpers/modify-local-storage';
 import { API_URL } from '.';
 
 export default axios.create({ baseURL: API_URL });
@@ -48,7 +49,11 @@ const onResponseError = async (error: AxiosError) => {
   }
   if (error.response?.status === 403) {
     localStorage.clear();
-    localStorage.setItem('error', JSON.stringify(error.response.data));
+    modifyLocalStorage({
+      type: 'set',
+      key: 'server_error',
+      value: JSON.stringify(error.response.data),
+    });
     window.location.reload();
     return;
   }

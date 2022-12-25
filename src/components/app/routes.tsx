@@ -1,20 +1,26 @@
 import { Routes, Route } from 'react-router-dom';
 
-import { AppPaths } from '@features/types';
+import { AppPaths } from 'features/types';
 import { AppLayout } from './layout';
 import { NotFound } from 'pages/404';
-import { TasksPage } from 'pages/dashboard';
-import { LoginForm } from '@auth/login-form';
-import { RequireAuth } from '@auth/require-auth';
-import { RegisterForm } from '@auth/register-form';
-import { ResetPassword } from '@auth/reset-password-form';
-import { RedirectSuccess } from '@auth/redirect-success';
+import { Dashboard } from 'pages/dashboard';
+import {
+  LoginForm,
+  RequireAuth,
+  RegisterForm,
+  ResetPassword,
+  RedirectOnSuccess,
+  RedirectGoogleCheck,
+  RedirectGoogleLogin,
+} from 'components/auth';
 
 export const path: AppPaths = {
   root: '/',
   login: '/login',
   register: '/register',
+  redirect: '/redirect',
   dashboard: '/dashboard',
+  googleCheck: '/google/check',
   googleLogin: '/google/login',
   passwordReset: '/password-reset',
   notFound: '*',
@@ -31,12 +37,14 @@ export const AppRoutes = () => {
         <Route path={path.passwordReset} element={<ResetPassword />} />
 
         <Route element={<RequireAuth />}>
-          <Route path={path.dashboard} element={<TasksPage />} />
+          <Route path={path.dashboard} element={<Dashboard />} />
         </Route>
 
         <Route path={path.notFound} element={<NotFound />} />
       </Route>
-      <Route path={path.googleLogin} element={<RedirectSuccess />} />
+      <Route path={path.googleLogin} element={<RedirectGoogleLogin />} />
+      <Route path={path.googleCheck} element={<RedirectGoogleCheck />} />
+      <Route path={path.redirect} element={<RedirectOnSuccess />} />
     </Routes>
   );
 };

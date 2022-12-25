@@ -1,6 +1,7 @@
 import { ChangeEvent, FC, SelectHTMLAttributes, useEffect, useState } from 'react';
-import { TaskStatus, TaskPriority } from '@features/types';
-import { TaskInputNames } from '@tasks/types';
+
+import { TaskStatus, TaskPriority } from 'features/types';
+import { TaskInputNames } from 'components/tasks/types';
 
 type SelectValues = TaskStatus | TaskPriority;
 type SelectNames = Exclude<TaskInputNames, 'title' | 'details'>;

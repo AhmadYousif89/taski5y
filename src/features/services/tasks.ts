@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { axiosPrivate } from '@features/config';
-import { ResponseError, Task } from '@features/types';
+
+import { axiosPrivate } from 'features/config';
+import { ResponseError, Task } from 'features/types';
 
 export const getAllTasks = createAsyncThunk<
   Task[],

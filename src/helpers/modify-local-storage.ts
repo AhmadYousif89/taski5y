@@ -19,10 +19,6 @@ export const modifyLocalStorage = (action: LocalStorageType) => {
       localStorage.removeItem(key);
       break;
     }
-    case 'clear': {
-      localStorage.clear();
-      break;
-    }
 
     default:
       throw new Error('');

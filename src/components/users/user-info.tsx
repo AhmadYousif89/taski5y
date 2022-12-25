@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { User } from '@features/types';
+import { User } from 'features/types';
 import { UserImage } from './user-image';
 
 export const UserInfo: FC<{ user: User | null }> = ({ user }) => {

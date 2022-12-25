@@ -7,17 +7,19 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
-import { AuthInputNames } from '@auth/types';
 
-import { Button } from '@ui/button';
-import { useForm } from 'hooks/use-form';
-import { addTimer } from 'helpers/timeout';
-import { GetInputValues, Input } from '@ui/input';
-import { updateUser } from '@features/services/auth';
-import { TrustDevice } from '@auth/remember-me-checkbox';
-import { authSelector, resetAuthStatus } from '@features/slices/auth';
+import { useAuth, useAppDispatch, useAppSelector } from 'app/hooks';
+
+import { updateUser } from 'features/services/auth';
+import { authSelector, resetAuthStatus } from 'features/slices/auth';
+
+import { TrustDevice } from 'components/auth';
+import { AuthInputNames } from 'components/auth/types';
+import { GetInputValues, Button, Input } from 'components/ui';
+
 import { BackArrowIcon, UploadIcon, CheckMarkIcon, SpinnerIcon } from 'assets/icons';
+import { addTimer } from 'helpers/timeout';
+import { useForm } from 'hooks/use-form';
 
 type Props = { showUserProfile: Dispatch<SetStateAction<boolean>> };
 type FormValidity = Record<AuthInputNames, boolean>;

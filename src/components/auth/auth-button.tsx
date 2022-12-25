@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { ResponseStatus } from '@features/types';
+import { ResponseStatus } from 'features/types';
 
 interface Props {
   title: string;

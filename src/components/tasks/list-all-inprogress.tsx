@@ -1,7 +1,8 @@
+import { useAppSelector } from 'app/hooks';
+import { taskSelector } from 'features/slices/task';
+
 import { TaskItem } from './task-item';
-import { useAppSelector } from '@app/hooks';
 import { sortTasks, searchTasks } from './helpers';
-import { taskSelector } from '@features/slices/task';
 
 export const InProgressTaskList = () => {
   const { tasks, searchedTaskQuery: query } = useAppSelector(taskSelector);

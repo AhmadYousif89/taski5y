@@ -1,26 +1,22 @@
 import { FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import googleLogo from '../../assets/google.png';
-
+import { path } from 'components/app';
 import { useForm } from 'hooks/use-form';
+import { GetInputValues, Divider, Button, Input } from 'components/ui';
+import { useAuth, useAppDispatch, useAppSelector } from 'app/hooks';
+
 import { AuthInputNames } from './types';
-import { GetInputValues, Input } from '@ui/input';
-import { signIn } from '@features/services/auth';
-import { authSelector, resetAuth } from '@features/slices/auth';
-import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
+import { API_URL } from 'features/config';
+import { signIn } from 'features/services/auth';
+import { authSelector, resetAuth } from 'features/slices/auth';
 
+import googleLogo from 'assets/google.png';
 import { AuthButton } from './auth-button';
-import { TrustDevice } from './remember-me-checkbox';
-import { SwitchFormButton } from './switch-form-button';
-
-import { Button } from '@ui/button';
-import { Divider } from '@ui/divider';
-
 import { AuthErrorMsg } from './auth-error-msg';
 import { AuthContainer } from './auth-container';
-import { API_URL } from '@features/config';
-import { path } from 'components/app';
+import { TrustDevice } from './remember-me-checkbox';
+import { SwitchFormButton } from './switch-form-button';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword' | 'name'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword' | 'name'>, string>;

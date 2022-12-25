@@ -1,13 +1,15 @@
 import { useRef, useState } from 'react';
-import { useAppSelector } from '@app/hooks';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { Card } from '../ui/card';
-import { ArrowIcon, SortIcon } from 'assets/icons';
-import { taskSelector } from '@features/slices/task';
-import { useClickOutside } from 'hooks/use-click-outside';
-import { TaskSortOrder, TaskSortType } from '@features/types';
 import { path } from 'components/app';
+import { Card } from 'components/ui';
+import { ArrowIcon, SortIcon } from 'assets/icons';
+
+import { useAppSelector } from 'app/hooks';
+import { taskSelector } from 'features/slices/task';
+import { TaskSortOrder, TaskSortType } from 'features/types';
+
+import { useClickOutside } from 'hooks/use-click-outside';
 
 export const SortField = () => {
   const navigate = useNavigate();

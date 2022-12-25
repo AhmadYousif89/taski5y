@@ -1,8 +1,8 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 
-import uiReducer from '@features/slices/ui';
-import authReducer from '@features/slices/auth';
-import taskReducer from '@features/slices/task';
+import uiReducer from 'features/slices/ui';
+import authReducer from 'features/slices/auth';
+import taskReducer from 'features/slices/task';
 
 export const store = configureStore({
   reducer: {

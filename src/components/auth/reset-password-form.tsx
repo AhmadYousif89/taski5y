@@ -2,17 +2,18 @@ import { useNavigate } from 'react-router-dom';
 import { FormEvent, useEffect, useState } from 'react';
 
 import { useForm } from 'hooks/use-form';
-import { resetPassword } from '@features/services/auth';
-import { authSelector, resetAuth } from '@features/slices/auth';
-import { useAppDispatch, useAppSelector, useAuth } from '@app/hooks';
+import { resetPassword } from 'features/services/auth';
+import { authSelector, resetAuth } from 'features/slices/auth';
+import { useAuth, useAppDispatch, useAppSelector } from 'app/hooks';
+
+import { path } from 'components/app';
+import { GetInputValues, Input } from 'components/ui';
 
 import { AuthInputNames } from './types';
 import { AuthButton } from './auth-button';
 import { addTimer } from 'helpers/timeout';
-import { GetInputValues, Input } from '@ui/input';
 import { AuthErrorMsg } from './auth-error-msg';
 import { AuthContainer } from './auth-container';
-import { path } from 'components/app';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'name'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'name'>, string>;
