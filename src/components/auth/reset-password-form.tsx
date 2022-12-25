@@ -12,6 +12,7 @@ import { addTimer } from 'helpers/timeout';
 import { GetInputValues, Input } from '@ui/input';
 import { AuthErrorMsg } from './auth-error-msg';
 import { AuthContainer } from './auth-container';
+import { path } from 'components/app';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'name'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'name'>, string>;
@@ -46,11 +47,11 @@ export const ResetPassword = () => {
   );
 
   useEffect(() => {
-    if (user) navigate('/dashboard');
+    if (user) navigate(path.dashboard);
     if (status === 'fulfilled') {
       setIsSubmitted(true);
       addTimer(() => {
-        navigate('/login');
+        navigate(path.login);
         setIsSubmitted(false);
       });
     }

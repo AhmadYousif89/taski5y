@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { loginWithGoogle } from '@features/services/auth';
 import { useAppDispatch, useAuth } from '@app/hooks';
 import { addTimer } from 'helpers/timeout';
+import { path } from 'components/app';
 
 export const RedirectSuccess = () => {
   const dispatch = useAppDispatch();
@@ -11,9 +12,9 @@ export const RedirectSuccess = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    if (user) navigate('/dashboard');
+    if (user) navigate(path.dashboard);
     addTimer(() =>
-      dispatch(loginWithGoogle()).then(() => navigate('/dashboard', { replace: true })),
+      dispatch(loginWithGoogle()).then(() => navigate(path.dashboard, { replace: true })),
     );
   }, [user]);
 

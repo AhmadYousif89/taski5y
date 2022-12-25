@@ -20,6 +20,7 @@ import { Divider } from '@ui/divider';
 import { AuthErrorMsg } from './auth-error-msg';
 import { AuthContainer } from './auth-container';
 import { API_URL } from '@features/config';
+import { path } from 'components/app';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword' | 'name'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword' | 'name'>, string>;
@@ -42,7 +43,7 @@ export const LoginForm = () => {
   const formIsValid = [emailIsValid, passwordIsValid].every(Boolean);
 
   useEffect(() => {
-    if (user) navigate('/dashboard');
+    if (user) navigate(path.dashboard);
     return () => {
       dispatch(resetAuth());
     };

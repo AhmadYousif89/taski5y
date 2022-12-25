@@ -5,16 +5,22 @@ import { ActionModal } from '@ui/action-modal';
 import { getUser } from '@features/services/auth';
 import { useAppDispatch, useAppSelector } from '@app/hooks';
 import { authSelector, setAuthActionType } from '@features/slices/auth';
+import { modifyLocalStorage } from 'helpers/modify-local-storage';
 
 function App() {
   const dispatch = useAppDispatch();
   const { status, actionType } = useAppSelector(authSelector);
-  const persist = localStorage.getItem('persist');
-  const hasAccess = localStorage.getItem('hasAccess');
+  const persist = modifyLocalStorage({ type: 'get', key: 'persist' });
+  const hasAccess = modifyLocalStorage({ type: 'get', key: 'has_access' });
 
   useEffect(() => {
-    if (persist === 'false' || !persist) localStorage.removeItem('hasAccess');
-    if (persist === 'true' && hasAccess) {
+    if (hasAccess === 'false' || !hasAccess) {
+      modifyLocalStorage({ type: 'remove', key: 'persist' });
+    }
+    if (persist === 'false' || !persist) {
+      modifyLocalStorage({ type: 'remove', key: 'has_access' });
+    }
+    if (persist === 'true' && hasAccess === 'true') {
       dispatch(setAuthActionType('refresh'));
       dispatch(getUser());
     }

@@ -7,6 +7,7 @@ import { ArrowIcon, SortIcon } from 'assets/icons';
 import { taskSelector } from '@features/slices/task';
 import { useClickOutside } from 'hooks/use-click-outside';
 import { TaskSortOrder, TaskSortType } from '@features/types';
+import { path } from 'components/app';
 
 export const SortField = () => {
   const navigate = useNavigate();
@@ -30,16 +31,16 @@ export const SortField = () => {
   const isSortAsc = sortOrder === 'asc';
 
   const sortByAlphabetHandler = () => {
-    navigate(`/tasks?sort=${isSortAsc ? 'desc' : 'asc'}&type=alpha`);
+    navigate(`${path.dashboard}?sort=${isSortAsc ? 'desc' : 'asc'}&type=alpha`);
   };
   const sortByDateHandler = () => {
-    navigate(`/tasks?sort=${isSortAsc ? 'desc' : 'asc'}&type=createdAt`);
+    navigate(`${path.dashboard}?sort=${isSortAsc ? 'desc' : 'asc'}&type=createdAt`);
   };
   const sortByPriorityHandler = () => {
-    navigate(`/tasks?sort=${isSortAsc ? 'desc' : 'asc'}&type=priority`);
+    navigate(`${path.dashboard}?sort=${isSortAsc ? 'desc' : 'asc'}&type=priority`);
   };
   const unsortHandler = () => {
-    navigate(`/tasks?`);
+    navigate(`${path.dashboard}?`);
   };
 
   const sortList = (

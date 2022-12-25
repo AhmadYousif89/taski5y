@@ -18,6 +18,7 @@ import { authSelector, resetAuth } from '@features/slices/auth';
 import { AuthErrorMsg } from './auth-error-msg';
 import { AuthContainer } from './auth-container';
 import { API_URL } from '@features/config';
+import { path } from 'components/app';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword'>, string>;
@@ -63,7 +64,7 @@ export const RegisterForm = () => {
   );
 
   useEffect(() => {
-    if (user) navigate('/dashboard');
+    if (user) navigate(path.dashboard);
     return () => {
       dispatch(resetAuth());
     };
