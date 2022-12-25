@@ -7,7 +7,7 @@ export const AuthSuccessMsg: FC<{ isRegister?: boolean }> = ({ isRegister = true
         {isRegister && (
           <h1 className="text-3xl leading-10 xs:text-4xl">Thank you for using Taskify</h1>
         )}{' '}
-        <p className="text-2xl xs:text-3xl">Redirecting to Dashboard . . .</p>
+        <p className="text-2xl xs:text-3xl">Redirecting please wait</p>
       </div>
     </div>
   );
