@@ -9,7 +9,7 @@ import {
   RequireAuth,
   RegisterForm,
   ResetPassword,
-  RedirectOnSuccess,
+  RedirectOnRegister,
   RedirectGoogleCheck,
   RedirectGoogleLogin,
 } from 'components/auth';
@@ -44,7 +44,7 @@ export const AppRoutes = () => {
       </Route>
       <Route path={path.googleLogin} element={<RedirectGoogleLogin />} />
       <Route path={path.googleCheck} element={<RedirectGoogleCheck />} />
-      <Route path={path.redirect} element={<RedirectOnSuccess />} />
+      <Route path={path.redirect} element={<RedirectOnRegister />} />
     </Routes>
   );
 };

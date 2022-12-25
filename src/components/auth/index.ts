@@ -3,7 +3,7 @@ export * from './auth-container';
 export * from './auth-error-msg';
 export * from './login-form';
 export * from './logout';
-export * from './redirect-success';
+export * from './redirect-on-register';
 export * from './register-form';
 export * from './remember-me-checkbox';
 export * from './require-auth';
