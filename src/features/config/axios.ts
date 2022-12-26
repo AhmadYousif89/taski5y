@@ -32,12 +32,11 @@ const onResponse = (response: AxiosResponse): AxiosResponse => {
 
 const onResponseError = async (error: AxiosError) => {
   const prevRequest = error.config as AxiosRequestConfig & { sent: boolean };
-  if (error.response?.status === 401 && !prevRequest.sent) {
-    prevRequest.sent = true;
+  if (error.response?.status === 401) {
     try {
       const response = await axiosPrivate.get('/auth/refresh');
       if (prevRequest.headers) {
-        prevRequest.headers['Authorization'] = `Bearer ${response.data.accessToken}`;
+        prevRequest.headers.authorization = `Bearer ${response.data.accessToken}`;
       }
       return axiosPrivate({
         ...prevRequest,

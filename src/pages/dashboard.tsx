@@ -22,7 +22,7 @@ export const Dashboard = () => {
     useAppSelector(taskSelector);
 
   useEffect(() => {
-    if (user && !user.isRegistered) dispatch(updateUser({ isRegistered: true }));
+    if (!user?.registered) dispatch(updateUser({ registered: true }));
   }, [user]);
 
   let content = <TaskList />;

@@ -13,7 +13,7 @@ export type User = {
   name: string;
   image: string;
   email: string;
-  isRegistered: boolean;
+  registered: boolean;
   provider: 'google' | 'No_Provider';
   createdAt: string;
   updatedAt: string;

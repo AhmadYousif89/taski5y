@@ -63,8 +63,8 @@ export const RegisterForm = () => {
   );
 
   useEffect(() => {
-    if (user && !user.isRegistered) navigate(path.redirect);
-    if (user && user.isRegistered) navigate(path.dashboard);
+    if (user && !user.registered) navigate(path.redirect);
+    if (user && user.registered) navigate(path.dashboard);
   }, [user]);
 
   const onFormSubmit = async (e: FormEvent) => {
