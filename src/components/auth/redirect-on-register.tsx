@@ -10,12 +10,12 @@ import { AuthSuccessMsg } from './auth-success-msg';
 export const RedirectOnRegister = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { registered } = user as User;
 
   useEffect(() => {
-    if (registered) navigate(path.dashboard);
+    if (!user) navigate(path.root);
+    if (user?.registered) navigate(path.dashboard);
     if (user) addTimer(() => navigate(path.dashboard));
-  }, [user, registered]);
+  }, [user]);
 
   return <AuthSuccessMsg />;
 };

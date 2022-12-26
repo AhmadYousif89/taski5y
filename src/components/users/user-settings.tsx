@@ -38,8 +38,13 @@ export const UserSettings: FC<Props> = ({ showUserProfile }) => {
       <ul
         aria-label="account-setting-menu"
         className="grid auto-cols-[minmax(max-content,1fr)] gap-6 py-2 text-xl text-color-base">
-        <li onClick={() => showUserProfile(true)} className="li-item">
-          <span onClick={() => dispatch(toggleSideMenu())}>Manage account</span>
+        <li
+          onClick={() => {
+            showUserProfile(true);
+            dispatch(toggleSideMenu());
+          }}
+          className="li-item">
+          <span>Manage account</span>
         </li>
         <li className="li-item" onClick={() => setModal(true)}>
           <span className="text-red-500">Delete account</span>

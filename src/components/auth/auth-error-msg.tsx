@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { SpinnerIcon } from 'assets/icons';
 import { ResponseStatus } from 'features/types';
+import { modifyLocalStorage } from 'helpers/modify-local-storage';
 
 type Props = {
   extraMsg?: string;
@@ -10,7 +11,9 @@ type Props = {
 };
 
 export const AuthErrorMsg: FC<Props> = ({ status, errorMsg, successMsg, extraMsg }) => {
-  const sessionExpired = JSON.parse(localStorage.getItem('error') as string);
+  const sessionExpired = JSON.parse(
+    modifyLocalStorage({ type: 'get', key: 'server_error' }) as string,
+  );
 
   const sessionExpireMsg = (
     <p className="absolute -top-24 left-1/2 w-full max-w-md -translate-x-1/2 rounded-md bg-slate-800 py-6 text-center text-2xl text-sky-300">

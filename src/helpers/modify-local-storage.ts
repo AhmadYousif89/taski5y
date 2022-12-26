@@ -1,5 +1,5 @@
 type LocalStorageType = {
-  type: 'set' | 'get' | 'remove' | 'clear';
+  type: 'set' | 'get' | 'remove';
   key: 'persist' | 'has_access' | 'server_error';
   value?: string;
 };
