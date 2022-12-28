@@ -36,7 +36,7 @@ const initFormValues: FormValues = {
 export const RegisterForm = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const { status, error } = useAppSelector(authSelector);
@@ -67,7 +67,7 @@ export const RegisterForm = () => {
   useEffect(() => {
     if (user && !user.registered) navigate(path.redirect);
     if (user && user.registered) navigate(path.dashboard);
-    if (location.pathname !== path.root && location.pathname !== path.register) {
+    if (location.href !== (path.root || path.register)) {
       setIsLoading(false);
     }
   }, [user, location.pathname, path]);
