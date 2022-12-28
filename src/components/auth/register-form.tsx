@@ -65,12 +65,13 @@ export const RegisterForm = () => {
   );
 
   useEffect(() => {
+    console.log(location);
     if (user && !user.registered) navigate(path.redirect);
     if (user && user.registered) navigate(path.dashboard);
     if (location.href !== (path.root || path.register)) {
       setIsLoading(false);
     }
-  }, [user, location.pathname, path]);
+  }, [user, location, path]);
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
