@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import googleLogo from 'assets/google.png';
 
@@ -36,6 +36,7 @@ const initFormValues: FormValues = {
 export const RegisterForm = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const { status, error } = useAppSelector(authSelector);
@@ -66,11 +67,10 @@ export const RegisterForm = () => {
   useEffect(() => {
     if (user && !user.registered) navigate(path.redirect);
     if (user && user.registered) navigate(path.dashboard);
-
-    return () => {
+    if (location.pathname !== path.root && location.pathname !== path.register) {
       setIsLoading(false);
-    };
-  }, [user]);
+    }
+  }, [user, location.pathname, path]);
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();

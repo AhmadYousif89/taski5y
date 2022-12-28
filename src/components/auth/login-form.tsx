@@ -42,7 +42,6 @@ export const LoginForm = () => {
   useEffect(() => {
     if (user) navigate(path.dashboard);
     return () => {
-      setIsLoading(false);
       dispatch(resetAuth());
     };
   }, [user]);
