@@ -19,10 +19,10 @@ export const Menu: FC<SideMenuProps> = ({ children, className }) => {
 
   useEffect(() => {
     const focusMenu = () => menuRef.current?.focus();
-    menuRef.current?.addEventListener('transitionend', focusMenu);
+    menuRef.current?.addEventListener('transitionrun', focusMenu);
 
     return () => {
-      menuRef.current?.removeEventListener('transitionend', focusMenu);
+      menuRef.current?.removeEventListener('transitionrun', focusMenu);
     };
   }, []);
 

@@ -14,13 +14,7 @@ export const RedirectGoogleCheck = () => {
 
   useEffect(() => {
     if (user) navigate(path.dashboard);
-    addTimer(
-      () =>
-        dispatch(loginWithGoogle()).then(() =>
-          navigate(path.dashboard, { replace: true }),
-        ),
-      2,
-    );
+    addTimer(() => dispatch(loginWithGoogle()).then(() => navigate(path.dashboard)));
   }, [user]);
 
   return <AuthSuccessMsg isRegister={false} />;

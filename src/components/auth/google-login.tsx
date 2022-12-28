@@ -14,9 +14,7 @@ export const RedirectGoogleLogin = () => {
 
   useEffect(() => {
     if (user) navigate(path.dashboard);
-    addTimer(() =>
-      dispatch(loginWithGoogle()).then(() => navigate(path.dashboard, { replace: true })),
-    );
+    addTimer(() => dispatch(loginWithGoogle()).then(() => navigate(path.dashboard)));
   }, [user]);
 
   return <AuthSuccessMsg />;
