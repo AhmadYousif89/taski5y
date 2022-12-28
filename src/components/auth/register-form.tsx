@@ -18,7 +18,6 @@ import { GetInputValues, Divider, Button, Input } from 'components/ui';
 
 import { AuthErrorMsg } from './auth-error-msg';
 import { AuthContainer } from './auth-container';
-import { addTimer } from 'helpers/timeout';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword'>, string>;
@@ -68,13 +67,11 @@ export const RegisterForm = () => {
     if (user && !user.registered) navigate(path.redirect);
     if (user && user.registered) navigate(path.dashboard);
 
-    const unload = () => {
-      addTimer(() => setIsLoading(false));
-    };
-    window.addEventListener('beforeunload', unload);
+    const unload = () => setIsLoading(false);
+    window.addEventListener('unload', unload);
 
     return () => {
-      window.removeEventListener('beforeunload', unload);
+      window.removeEventListener('unload', unload);
     };
   }, [user]);
 

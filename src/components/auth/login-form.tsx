@@ -17,7 +17,6 @@ import { AuthErrorMsg } from './auth-error-msg';
 import { AuthContainer } from './auth-container';
 import { TrustDevice } from './remember-me-checkbox';
 import { SwitchFormButton } from './switch-form-button';
-import { addTimer } from 'helpers/timeout';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword' | 'name'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword' | 'name'>, string>;
@@ -42,14 +41,12 @@ export const LoginForm = () => {
 
   useEffect(() => {
     if (user) navigate(path.dashboard);
-    const unload = () => {
-      addTimer(() => setIsLoading(false));
-    };
-    window.addEventListener('beforeunload', unload);
+    const unload = () => setIsLoading(false);
+    window.addEventListener('unload', unload);
 
     return () => {
       dispatch(resetAuth());
-      window.removeEventListener('beforeunload', unload);
+      window.removeEventListener('unload', unload);
     };
   }, [user]);
 
