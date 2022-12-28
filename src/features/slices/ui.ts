@@ -8,6 +8,7 @@ const storedTheme = <AppTheme>localStorage.getItem('mode');
 const initialState: UIState = {
   mode: storedTheme ? storedTheme : 'dark-theme',
   menuIsVisible: false,
+  profileIsVisible: false,
 };
 
 const uiSlice = createSlice({
@@ -21,9 +22,12 @@ const uiSlice = createSlice({
     toggleSideMenu(state) {
       state.menuIsVisible = !state.menuIsVisible;
     },
+    setProfile(state, { payload }: { payload: boolean }) {
+      state.profileIsVisible = payload;
+    },
   },
 });
 
-export const { toggleSideMenu, toggleAppTheme } = uiSlice.actions;
+export const { toggleSideMenu, toggleAppTheme, setProfile } = uiSlice.actions;
 export const uiSelector = (state: RootState) => state.ui;
 export default uiSlice.reducer;

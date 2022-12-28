@@ -1,29 +1,17 @@
-import {
-  Ref,
-  useState,
-  useEffect,
-  forwardRef,
-  ChangeEvent,
-  HTMLInputTypeAttribute,
-} from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 
 import { InputError } from './input-error';
 import { AuthInputNames } from 'components/auth/types';
 import { TaskInputNames } from 'components/tasks/types';
+import { GetInputValues, GetInputValidation } from './input';
 
-type InputNames = AuthInputNames | TaskInputNames;
-type InputValidator = (arg: string) => boolean;
-type InputValidation = { name: InputNames; isValid: boolean };
-export type InputPropObj = { name: InputNames; value: string };
-export type GetInputValidation = ({ name, isValid }: InputValidation) => void;
-export type GetInputValues = ({ name, value }: InputPropObj) => void;
+type TextareaNames = AuthInputNames | TaskInputNames;
 
-type InputProps = {
-  id?: InputNames;
-  name: InputNames;
+interface TextAreaProps {
+  id?: TextareaNames;
+  name: TextareaNames;
   value: string;
   label?: string;
-  type?: HTMLInputTypeAttribute;
   className?: string;
   placeholder?: string;
   inputErrMsg?: string;
@@ -32,15 +20,13 @@ type InputProps = {
   isRequired?: boolean;
   showInputErr?: boolean;
   isFormSubmitted?: boolean;
-  inputValidator?: InputValidator;
   getValue: GetInputValues;
   getValidity?: GetInputValidation;
-};
+}
 
-const CustomInput = (props: InputProps, ref: Ref<HTMLInputElement>) => {
+export const TextArea = (props: TextAreaProps) => {
   const {
     id,
-    type,
     name,
     label,
     value,
@@ -49,7 +35,6 @@ const CustomInput = (props: InputProps, ref: Ref<HTMLInputElement>) => {
     placeholder,
     inputErrMsg,
     getValidity,
-    inputValidator,
     validate = true,
     placeholderErrMsg,
     isRequired = true,
@@ -60,7 +45,7 @@ const CustomInput = (props: InputProps, ref: Ref<HTMLInputElement>) => {
   const [inputValue, setInputValue] = useState<string>(value);
   const [isTouched, setIsTouched] = useState(false);
 
-  const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setIsTouched(true);
     setInputValue(e.target.value);
   };
@@ -72,26 +57,7 @@ const CustomInput = (props: InputProps, ref: Ref<HTMLInputElement>) => {
     setIsTouched(false);
   };
 
-  let isValid = false;
-  const PASSWORD_REGEX = /^((?!.*[\s])(?=.*\d).{3,})/;
-  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  switch (name) {
-    case 'email':
-      isValid = EMAIL_REGEX.test(inputValue);
-      break;
-    case 'password':
-      isValid = PASSWORD_REGEX.test(inputValue);
-      break;
-    case 'name':
-      isValid = inputValue.trim().length > 0;
-      break;
-    case 'title':
-      isValid = inputValue.trim().length > 0;
-      break;
-    default:
-      isValid = inputValidator ? inputValidator(inputValue) : true;
-  }
+  const isValid = inputValue.trim().length > 0;
 
   const isError = !isValid && isTouched;
 
@@ -116,17 +82,17 @@ const CustomInput = (props: InputProps, ref: Ref<HTMLInputElement>) => {
             {label}
           </label>
         ) : null}
-        <input
+        <textarea
           id={id}
-          ref={ref}
+          cols={3}
+          rows={3}
           name={name}
-          type={type}
           value={value}
           onBlur={onInputBlur}
           required={isRequired}
           onChange={onInputChange}
           placeholder={inputPlaceHolder}
-          className={`${showVisualErr} ${className} w-full rounded-md bg-transparent px-6 py-3 text-2xl text-color-base shadow-md ring-1 placeholder:text-xl placeholder:text-color-base placeholder:opacity-75 focus:outline-none focus:ring-2 focus:ring-color-validating`}
+          className={`${showVisualErr} ${className} w-full resize-none rounded-md bg-transparent px-6 py-3 text-2xl text-color-base shadow-md ring-1 placeholder:text-xl placeholder:text-color-base placeholder:opacity-75 focus:outline-none focus:ring-2 focus:ring-color-validating`}
         />
       </div>
       {validate && showInputErr && isError ? (
@@ -135,5 +101,3 @@ const CustomInput = (props: InputProps, ref: Ref<HTMLInputElement>) => {
     </div>
   );
 };
-
-export const Input = forwardRef(CustomInput);

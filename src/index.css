@@ -73,7 +73,7 @@
     @apply text-green-400;
   }
   .grid-container {
-    @apply mx-4 mb-16 grid grid-cols-[repeat(auto-fit,minmax(32rem,.65fr))] justify-center gap-8;
+    @apply mx-4 mb-16 grid grid-cols-[repeat(auto-fit,minmax(32rem,64rem))] place-items-stretch justify-center gap-8;
   }
   .btn-circle {
     @apply h-12 w-12 cursor-pointer rounded-full ring-2 ring-color-base hover:ring-color-highlight active:bg-btn-color-highlight xs:h-14 xs:w-14;

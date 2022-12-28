@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { useAppDispatch } from 'app/hooks';
 import { LogoutIcon, SettingsIcon } from 'assets/icons';
@@ -7,12 +7,10 @@ import { Card, ActionModal, Backdrop } from 'components/ui';
 
 import { signOut, deleteUser } from 'features/services/auth';
 import { setAuthActionType } from 'features/slices/auth';
-import { toggleSideMenu } from 'features/slices/ui';
+import { setProfile, toggleSideMenu } from 'features/slices/ui';
 import { resetTasks } from 'features/slices/task';
 
-type Props = { showUserProfile: Dispatch<SetStateAction<boolean>> };
-
-export const UserSettings: FC<Props> = ({ showUserProfile }) => {
+export const UserSettings = () => {
   const dispatch = useAppDispatch();
   const settingRef = useRef<HTMLButtonElement>(null);
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -40,7 +38,7 @@ export const UserSettings: FC<Props> = ({ showUserProfile }) => {
         className="grid auto-cols-[minmax(max-content,1fr)] gap-6 py-2 text-xl text-color-base">
         <li
           onClick={() => {
-            showUserProfile(true);
+            dispatch(setProfile(true));
             dispatch(toggleSideMenu());
           }}
           className="li-item">

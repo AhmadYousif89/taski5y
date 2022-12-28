@@ -3,12 +3,12 @@ import { useEffect } from 'react';
 import { useAuth, useAppDispatch, useAppSelector } from 'app/hooks';
 import {
   TaskList,
-  TodoTaskList,
-  InProgressTaskList,
-  CompletedTaskList,
-  DisplayTaskPanels,
   SortField,
   SearchBar,
+  TodoTaskList,
+  CompletedTaskList,
+  DisplayTaskPanels,
+  InProgressTaskList,
 } from 'components/tasks';
 import { Button } from 'components/ui';
 import { BackArrowIcon } from 'assets/icons';

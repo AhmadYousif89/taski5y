@@ -53,7 +53,7 @@ export const TaskUpdateButtons: FC<Props> = ({
         <>
           <ActionModal
             icon={<InfoIcon />}
-            msg="You have unsaved changes ?"
+            msg="You have unsaved changes, Task will be marked as completed ?"
             confirmAction={markTaskCompleted}
             closeModal={() => setModal(false)}
           />

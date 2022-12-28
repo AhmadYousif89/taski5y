@@ -12,6 +12,7 @@ import { addTimer } from 'helpers/timeout';
 import { useForm } from 'hooks/use-form';
 import { TaskStats } from './task-stats';
 import { TaskInputNames } from './types';
+import { TextArea } from 'components/ui/textarea';
 
 type FormValidity = Record<TaskInputNames, boolean>;
 type FormValues = Record<TaskInputNames, string>;
@@ -75,12 +76,10 @@ export const TaskForm = () => {
         </fieldset>
 
         <fieldset aria-label="task-details-input">
-          <Input
+          <TextArea
             id={'details'}
-            type={'text'}
             name={'details'}
             value={details}
-            className={'h-28'}
             inputErrMsg={'Required'}
             placeholder={'Write your task details'}
             placeholderErrMsg={'please enter some details about your task'}
@@ -97,9 +96,8 @@ export const TaskForm = () => {
             <Select
               name={'priority'}
               label={'Priority'}
-              htmlFor={'priority'}
+              options={['High', 'Normal']}
               isFormSubmitted={isSubmitted}
-              optionValues={['High', 'Normal']}
               getValue={getFormValues as GetSelectValues}
             />
           </fieldset>
@@ -110,9 +108,8 @@ export const TaskForm = () => {
             <Select
               name={'status'}
               label={'Status'}
-              htmlFor={'status'}
+              options={['Todo', 'InProgress']}
               isFormSubmitted={isSubmitted}
-              optionValues={['Todo', 'InProgress']}
               getValue={getFormValues as GetSelectValues}
             />
           </fieldset>

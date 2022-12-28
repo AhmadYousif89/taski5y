@@ -1,18 +1,14 @@
-import { Dispatch, FC, SetStateAction } from 'react';
-
-import { toggleSideMenu, uiSelector } from 'features/slices/ui';
+import { setProfile, toggleSideMenu, uiSelector } from 'features/slices/ui';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { MenuIcon, CloseIcon } from 'assets/icons';
 
-type Props = { setShowProfile: Dispatch<SetStateAction<boolean>> };
-
-export const MenuButton: FC<Props> = ({ setShowProfile }) => {
+export const MenuButton = () => {
   const dispatch = useAppDispatch();
   const { menuIsVisible } = useAppSelector(uiSelector);
 
   const onClickHandler = () => {
+    dispatch(setProfile(false));
     dispatch(toggleSideMenu());
-    setShowProfile(false);
   };
 
   return (

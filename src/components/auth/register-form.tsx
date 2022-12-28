@@ -1,4 +1,4 @@
-import { FormEvent, useEffect } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import googleLogo from 'assets/google.png';
@@ -37,6 +37,7 @@ export const RegisterForm = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const { status, error } = useAppSelector(authSelector);
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
     FormValidity,
@@ -130,13 +131,19 @@ export const RegisterForm = () => {
         </fieldset>
 
         <Divider>
-          <span className="center-absolute flex-center h-14 w-14 cursor-default rounded-full text-xl font-bold tracking-wider text-color-base ring-2 ring-color-base">
-            OR
+          <span
+            className={`center-absolute flex-center h-12 w-12 cursor-default rounded-full font-bold tracking-wider text-color-base before:h-full before:w-full before:rounded-full before:border-2 before:border-r-amber-500 before:border-t-sky-500 before:border-b-sky-500 before:border-l-amber-500 ${
+              isLoading
+                ? 'before:absolute before:animate-spin'
+                : 'border-2 border-neutral-500 before:hidden'
+            }`}>
+            {isLoading ? '' : 'OR'}
           </span>
         </Divider>
 
         <Button
           onClick={() => {
+            setIsLoading(true);
             window.open(
               import.meta.env.PROD
                 ? `${import.meta.env.VITE_API_URL}/auth/google`

@@ -1,13 +1,4 @@
-import {
-  Dispatch,
-  FC,
-  FormEvent,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useAuth, useAppDispatch, useAppSelector } from 'app/hooks';
 
 import { updateUser } from 'features/services/auth';
@@ -20,8 +11,8 @@ import { GetInputValues, Button, Input } from 'components/ui';
 import { BackArrowIcon, UploadIcon, CheckMarkIcon, SpinnerIcon } from 'assets/icons';
 import { addTimer } from 'helpers/timeout';
 import { useForm } from 'hooks/use-form';
+import { setProfile } from 'features/slices/ui';
 
-type Props = { showUserProfile: Dispatch<SetStateAction<boolean>> };
 type FormValidity = Record<AuthInputNames, boolean>;
 type FormValues = Record<AuthInputNames, string>;
 
@@ -38,7 +29,7 @@ const initFormValues: FormValues = {
   confirmPassword: '',
 };
 
-export const UserProfile: FC<Props> = ({ showUserProfile }) => {
+export const UserProfile = () => {
   const { user } = useAuth();
   const dispatch = useAppDispatch();
   const { status } = useAppSelector(authSelector);
@@ -177,7 +168,7 @@ export const UserProfile: FC<Props> = ({ showUserProfile }) => {
             label="Back"
             title="back to task form"
             icon={<BackArrowIcon />}
-            onClick={() => showUserProfile(false)}
+            onClick={() => dispatch(setProfile(false))}
           />
           {isSubmitted && status === 'fulfilled' && (
             <p className="absolute -top-14 -left-3 flex items-center gap-2 text-center text-xl text-color-valid xs:left-1/3 xs:text-2xl">

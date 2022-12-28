@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { ActionModal, Backdrop } from 'components/ui';
 
-import { toggleSideMenu } from 'features/slices/ui';
+import { setProfile, toggleSideMenu } from 'features/slices/ui';
 import { getAllTasks } from 'features/services/tasks';
 import { taskSelector, setTaskActionType } from 'features/slices/task';
 
@@ -51,7 +51,10 @@ export const TaskList = () => {
       <div className="my-20 flex flex-col text-center text-color-base">
         <h2 className="text-3xl">You don't have any active tasks</h2>
         <button
-          onClick={() => dispatch(toggleSideMenu())}
+          onClick={() => {
+            dispatch(setProfile(false));
+            dispatch(toggleSideMenu());
+          }}
           className="mt-8 block self-center rounded-md px-6 py-4 text-3xl text-color-base ring-color-base transition-colors hover:ring-2 hover:transition-transform active:translate-y-1 active:bg-sky-500">
           Create new task ?
         </button>
