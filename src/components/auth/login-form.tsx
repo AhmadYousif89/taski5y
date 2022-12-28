@@ -42,6 +42,7 @@ export const LoginForm = () => {
   useEffect(() => {
     if (user) navigate(path.dashboard);
     return () => {
+      setIsLoading(false);
       dispatch(resetAuth());
     };
   }, [user]);
@@ -119,7 +120,7 @@ export const LoginForm = () => {
                 ? 'before:absolute before:animate-spin'
                 : 'border-2 border-neutral-500 before:hidden'
             }`}>
-            {isLoading ? '' : 'OR'}
+            OR
           </span>
         </Divider>
 

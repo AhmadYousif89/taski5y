@@ -66,6 +66,10 @@ export const RegisterForm = () => {
   useEffect(() => {
     if (user && !user.registered) navigate(path.redirect);
     if (user && user.registered) navigate(path.dashboard);
+
+    return () => {
+      setIsLoading(false);
+    };
   }, [user]);
 
   const onFormSubmit = async (e: FormEvent) => {
@@ -137,7 +141,7 @@ export const RegisterForm = () => {
                 ? 'before:absolute before:animate-spin'
                 : 'border-2 border-neutral-500 before:hidden'
             }`}>
-            {isLoading ? '' : 'OR'}
+            OR
           </span>
         </Divider>
 
