@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import googleLogo from 'assets/google.png';
 
@@ -18,6 +18,7 @@ import { GetInputValues, Divider, Button, Input } from 'components/ui';
 
 import { AuthErrorMsg } from './auth-error-msg';
 import { AuthContainer } from './auth-container';
+import { addTimer } from 'helpers/timeout';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword'>, string>;
@@ -36,7 +37,6 @@ const initFormValues: FormValues = {
 export const RegisterForm = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  // const location = useLocation();
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const { status, error } = useAppSelector(authSelector);
@@ -65,13 +65,18 @@ export const RegisterForm = () => {
   );
 
   useEffect(() => {
-    console.log(location);
     if (user && !user.registered) navigate(path.redirect);
     if (user && user.registered) navigate(path.dashboard);
-    if (location.href !== (path.root || path.register)) {
-      setIsLoading(false);
-    }
-  }, [user, location, path]);
+
+    const unload = () => {
+      addTimer(() => setIsLoading(false));
+    };
+    window.addEventListener('beforeunload', unload);
+
+    return () => {
+      window.removeEventListener('beforeunload', unload);
+    };
+  }, [user]);
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
