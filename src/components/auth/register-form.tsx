@@ -139,7 +139,7 @@ export const RegisterForm = () => {
 
         <Divider>
           <span
-            className={`center-absolute flex-center h-12 w-12 cursor-default rounded-full font-bold tracking-wider text-color-base before:h-full before:w-full before:rounded-full before:border-2 before:border-r-amber-500 before:border-t-sky-500 before:border-b-sky-500 before:border-l-amber-500 ${
+            className={`center-absolute flex-center h-12 w-12 cursor-default rounded-full font-bold tracking-wider text-color-base before:h-full before:w-full before:rounded-full before:border-2 before:border-r-amber-500 before:border-t-red-500 before:border-b-green-500 before:border-l-sky-500 ${
               isLoading
                 ? 'before:absolute before:animate-spin'
                 : 'border-2 border-neutral-500 before:hidden'
