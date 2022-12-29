@@ -10,7 +10,7 @@ export const SearchBar = () => {
   return (
     <form aria-label="Task-search-bar" className="mx-auto w-1/2">
       <fieldset
-        className="overflow-hidden rounded-md ring-2 ring-color-base drop-shadow-lg focus-within:ring-color-highlight"
+        className="overflow-hidden rounded-md ring-2 ring-color-base drop-shadow-md focus-within:ring-color-highlight"
         aria-label="search-for-tasks">
         <input
           type="text"
