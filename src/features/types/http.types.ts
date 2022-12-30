@@ -2,10 +2,11 @@ export type AppPaths = {
   root: '/';
   login: '/login';
   register: '/register';
-  redirect: '/redirect';
+  redirectOnRegister: '/register/redirect';
+  redirectOnLogin: '/login/redirect';
   dashboard: '/dashboard';
-  googleCheck: '/google/check';
-  googleLogin: '/google/login';
+  googleRegister: '/auth/google/signup';
+  googleLogin: '/auth/google/signin';
   passwordReset: '/password-reset';
   notFound: '*';
 };

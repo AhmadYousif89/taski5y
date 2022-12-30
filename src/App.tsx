@@ -13,16 +13,14 @@ function App() {
   const dispatch = useAppDispatch();
   const { status, actionType } = useAppSelector(authSelector);
   const persist = modifyLocalStorage({ type: 'get', key: 'persist' });
-  const hasAccess = modifyLocalStorage({ type: 'get', key: 'has_access' });
+  const isLoggedIn = modifyLocalStorage({ type: 'get', key: 'logged_in' });
 
   useEffect(() => {
-    if (hasAccess === 'false' || !hasAccess) {
-      modifyLocalStorage({ type: 'remove', key: 'persist' });
-    }
-    if (persist === 'false' || !persist) {
-      modifyLocalStorage({ type: 'remove', key: 'has_access' });
-    }
-    if (persist === 'true' && hasAccess === 'true') {
+    if (isLoggedIn !== 'true') modifyLocalStorage({ type: 'remove', key: 'persist' });
+
+    if (persist !== 'true') modifyLocalStorage({ type: 'remove', key: 'logged_in' });
+
+    if (persist === 'true' && isLoggedIn === 'true') {
       dispatch(setAuthActionType('refresh'));
       dispatch(getUser());
     }

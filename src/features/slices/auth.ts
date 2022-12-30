@@ -54,7 +54,6 @@ const authSlice = createSlice({
       .addCase(signUp.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
         state.user = payload;
-        modifyLocalStorage({ type: 'set', key: 'has_access', value: 'true' });
         modifyLocalStorage({ type: 'remove', key: 'server_error' });
       })
       .addCase(signUp.rejected, (state, { payload }) => {
@@ -70,7 +69,6 @@ const authSlice = createSlice({
       .addCase(signIn.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
         state.user = payload;
-        modifyLocalStorage({ type: 'set', key: 'has_access', value: 'true' });
         modifyLocalStorage({ type: 'remove', key: 'server_error' });
       })
       .addCase(signIn.rejected, (state, { payload }) => {
@@ -86,13 +84,16 @@ const authSlice = createSlice({
       .addCase(loginWithGoogle.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
         state.user = payload;
-        modifyLocalStorage({ type: 'set', key: 'has_access', value: 'true' });
         modifyLocalStorage({ type: 'remove', key: 'server_error' });
       })
       .addCase(loginWithGoogle.rejected, (state, { payload }) => {
         state.status = 'rejected';
         state.user = null;
-        state.error = payload || initError;
+        state.error = {
+          statusCode: payload?.statusCode || 0,
+          message: 'Google authentication failed',
+          error: payload?.error,
+        };
       });
 
     builder
@@ -101,7 +102,7 @@ const authSlice = createSlice({
       })
       .addCase(signOut.fulfilled, () => {
         modifyLocalStorage({ type: 'remove', key: 'persist' });
-        modifyLocalStorage({ type: 'remove', key: 'has_access' });
+        modifyLocalStorage({ type: 'remove', key: 'logged_in' });
         return initialState;
       })
       .addCase(signOut.rejected, (state, { payload }) => {
@@ -157,7 +158,7 @@ const authSlice = createSlice({
       })
       .addCase(deleteUser.fulfilled, () => {
         modifyLocalStorage({ type: 'remove', key: 'persist' });
-        modifyLocalStorage({ type: 'remove', key: 'has_access' });
+        modifyLocalStorage({ type: 'remove', key: 'logged_in' });
         return initialState;
       })
       .addCase(deleteUser.rejected, (state, { payload }) => {

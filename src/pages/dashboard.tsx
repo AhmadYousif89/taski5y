@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
-
-import { useAuth, useAppDispatch, useAppSelector } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import {
   TaskList,
   SortField,
@@ -12,18 +10,12 @@ import {
 } from 'components/tasks';
 import { Button } from 'components/ui';
 import { BackArrowIcon } from 'assets/icons';
-import { updateUser } from 'features/services/auth';
 import { taskSelector, setTaskActivePanel } from 'features/slices/task';
 
 export const Dashboard = () => {
-  const { user } = useAuth();
   const dispatch = useAppDispatch();
   const { totalTasks, totalCompletedTasks, activeTaskPanel } =
     useAppSelector(taskSelector);
-
-  useEffect(() => {
-    if (!user?.registered) dispatch(updateUser({ registered: true }));
-  }, [user]);
 
   let content = <TaskList />;
 

@@ -13,6 +13,7 @@ import { authSelector, resetAuth } from 'features/slices/auth';
 
 import googleLogo from 'assets/google.png';
 import { AuthButton } from './auth-button';
+import { SignInType } from 'features/types';
 import { AuthErrorMsg } from './auth-error-msg';
 import { AuthContainer } from './auth-container';
 import { TrustDevice } from './remember-me-checkbox';
@@ -40,7 +41,7 @@ export const LoginForm = () => {
   const formIsValid = [emailIsValid, passwordIsValid].every(Boolean);
 
   useEffect(() => {
-    if (user) navigate(path.dashboard);
+    if (user && user.registered) navigate(path.redirectOnLogin);
     const unload = () => setIsLoading(false);
     window.addEventListener('unload', unload);
 
@@ -53,7 +54,7 @@ export const LoginForm = () => {
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formIsValid) return;
-    const user = { email, password };
+    const user: SignInType = { email, password };
     dispatch(signIn(user));
   };
 

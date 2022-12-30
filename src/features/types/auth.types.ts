@@ -1,3 +1,4 @@
+export type AuthType = 'register' | 'login';
 export type SignUpType = {
   name: string;
   email: string;

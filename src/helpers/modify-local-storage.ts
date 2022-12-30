@@ -1,26 +1,18 @@
 type LocalStorageType = {
-  type: 'set' | 'get' | 'remove';
-  key: 'persist' | 'has_access' | 'server_error';
+  type: 'set' | 'get' | 'remove' | 'clear';
+  key: 'persist' | 'server_error' | 'logged_in';
   value?: string;
 };
 
-export const modifyLocalStorage = (action: LocalStorageType) => {
-  const { type, key, value } = action;
-
-  switch (type) {
-    case 'set': {
-      if (value) localStorage.setItem(key, value);
-      break;
-    }
-    case 'get': {
-      return localStorage.getItem(key);
-    }
-    case 'remove': {
-      localStorage.removeItem(key);
-      break;
-    }
-
-    default:
-      throw new Error('');
+export const modifyLocalStorage = ({ type, key, value }: LocalStorageType) => {
+  if (type === 'get') {
+    const keyItem = localStorage.getItem(key);
+    return keyItem;
+  }
+  if (type === 'set' && value) {
+    localStorage.setItem(key, value);
+  }
+  if (type === 'remove') {
+    localStorage.removeItem(key);
   }
 };

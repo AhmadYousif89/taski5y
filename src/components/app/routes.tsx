@@ -9,19 +9,19 @@ import {
   RequireAuth,
   RegisterForm,
   ResetPassword,
-  RedirectOnRegister,
-  RedirectGoogleCheck,
-  RedirectGoogleLogin,
+  GoogleRedirect,
+  AuthRedirect,
 } from 'components/auth';
 
 export const path: AppPaths = {
   root: '/',
   login: '/login',
+  redirectOnLogin: '/login/redirect',
   register: '/register',
-  redirect: '/redirect',
+  redirectOnRegister: '/register/redirect',
   dashboard: '/dashboard',
-  googleCheck: '/google/check',
-  googleLogin: '/google/login',
+  googleRegister: '/auth/google/signup',
+  googleLogin: '/auth/google/signin',
   passwordReset: '/password-reset',
   notFound: '*',
 };
@@ -30,8 +30,8 @@ export const AppRoutes = () => {
   return (
     <Routes>
       <Route element={<AppLayout />}>
-        {[path.root, path.register].map((path, i) => (
-          <Route key={i} path={path} element={<RegisterForm />} />
+        {[path.root, path.register].map(path => (
+          <Route key={path} path={path} element={<RegisterForm />} />
         ))}
         <Route path={path.login} element={<LoginForm />} />
         <Route path={path.passwordReset} element={<ResetPassword />} />
@@ -42,9 +42,11 @@ export const AppRoutes = () => {
 
         <Route path={path.notFound} element={<NotFound />} />
       </Route>
-      <Route path={path.googleLogin} element={<RedirectGoogleLogin />} />
-      <Route path={path.googleCheck} element={<RedirectGoogleCheck />} />
-      <Route path={path.redirect} element={<RedirectOnRegister />} />
+
+      <Route path={path.redirectOnRegister} element={<AuthRedirect authType="register" />} />
+      <Route path={path.redirectOnLogin} element={<AuthRedirect authType="login" />} />
+      <Route path={path.googleRegister} element={<GoogleRedirect authType="register" />} />
+      <Route path={path.googleLogin} element={<GoogleRedirect authType="login" />} />
     </Routes>
   );
 };

@@ -44,11 +44,7 @@ export const RegisterForm = () => {
     FormValues
   >({ initFormValidity, initFormValues });
 
-  const {
-    name: nameIsValid,
-    email: emailIsValid,
-    password: passwordIsValid,
-  } = formValidity;
+  const { name: nameIsValid, email: emailIsValid, password: passwordIsValid } = formValidity;
   const { name, email, password } = formValues;
 
   const formIsValid = [nameIsValid, emailIsValid, passwordIsValid].every(Boolean);
@@ -64,9 +60,8 @@ export const RegisterForm = () => {
   );
 
   useEffect(() => {
-    if (user && !user.registered) navigate(path.redirect);
     if (user && user.registered) navigate(path.dashboard);
-
+    if (user && !user.registered) navigate(path.redirectOnRegister);
     const unload = () => setIsLoading(false);
     window.addEventListener('unload', unload);
 
