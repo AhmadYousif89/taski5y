@@ -63,7 +63,7 @@ export const TextArea = (props: TextAreaProps) => {
 
   useEffect(() => {
     getValidity && getValidity({ name, isValid });
-    getValue({ name, value: inputValue.trim() });
+    getValue({ name, value: inputValue });
     if (isFormSubmitted) resetInput();
   }, [isFormSubmitted, inputValue, isValid]);
 
@@ -71,8 +71,7 @@ export const TextArea = (props: TextAreaProps) => {
     validate && showInputErr && isError
       ? 'ring-color-invalid'
       : 'ring-color-base focus:valid:ring-color-valid';
-  const inputPlaceHolder =
-    validate && showInputErr && isError ? placeholderErrMsg : placeholder;
+  const inputPlaceHolder = validate && showInputErr && isError ? placeholderErrMsg : placeholder;
 
   return (
     <div className="flex w-full flex-col items-center">
@@ -95,9 +94,7 @@ export const TextArea = (props: TextAreaProps) => {
           className={`${showVisualErr} ${className} w-full resize-none rounded-md bg-transparent px-6 py-3 text-2xl text-color-base shadow-md ring-1 placeholder:text-xl placeholder:text-color-base placeholder:opacity-75 focus:outline-none focus:ring-2 focus:ring-color-validating`}
         />
       </div>
-      {validate && showInputErr && isError ? (
-        <InputError msg={inputErrMsg || ''} />
-      ) : null}
+      {validate && showInputErr && isError ? <InputError msg={inputErrMsg || ''} /> : null}
     </div>
   );
 };

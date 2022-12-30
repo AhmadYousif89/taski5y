@@ -4,9 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { path } from 'components/app';
 import { Card, ThemeSwitcher } from 'components/ui';
 
-type Props = PropsWithChildren;
-
-export const AuthContainer: FC<Props> = ({ children }) => {
+export const AuthContainer: FC<PropsWithChildren> = ({ children }) => {
   return (
     <section className="mx-4 translate-y-40" aria-label="auth-container">
       <Card className="relative mx-auto flex max-w-2xl flex-col items-center">

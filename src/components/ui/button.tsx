@@ -8,9 +8,9 @@ type ButtonProps = {
   icon?: JSX.Element;
   isDisabled?: boolean;
   onClick?: () => void;
-} & PropsWithChildren;
+};
 
-export const Button: FC<ButtonProps> = ({
+export const Button: FC<PropsWithChildren<ButtonProps>> = ({
   icon,
   title,
   label,

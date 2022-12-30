@@ -10,9 +10,9 @@ type ImageFigureProps = {
   onClick?: () => void;
   status?: ResponseStatus;
   actionType?: AuthActionType;
-} & PropsWithChildren;
+};
 
-export const ImageFigure: FC<ImageFigureProps> = ({
+export const ImageFigure: FC<PropsWithChildren<ImageFigureProps>> = ({
   src,
   alt,
   status,

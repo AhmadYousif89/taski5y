@@ -3,7 +3,6 @@ export * from './list-all-completed';
 export * from './list-all-inprogress';
 export * from './list-all-tasks';
 export * from './list-all-todo';
-export * from './task-button';
 export * from './task-completed-item';
 export * from './task-form';
 export * from './task-panel';

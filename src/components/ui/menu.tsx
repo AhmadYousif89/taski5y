@@ -4,11 +4,11 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { toggleSideMenu, uiSelector } from 'features/slices/ui';
 import { Backdrop } from './backdrop';
 
-interface SideMenuProps extends PropsWithChildren {
+type SideMenuProps = {
   className?: string;
-}
+};
 
-export const Menu: FC<SideMenuProps> = ({ children, className }) => {
+export const Menu: FC<PropsWithChildren<SideMenuProps>> = ({ children, className }) => {
   const dispatch = useAppDispatch();
   const menuRef = useRef<HTMLDivElement>(null);
   const { menuIsVisible } = useAppSelector(uiSelector);

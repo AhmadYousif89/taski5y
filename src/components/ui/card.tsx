@@ -3,13 +3,18 @@ import { FC, PropsWithChildren } from 'react';
 import { TaskPriority } from 'features/types';
 import { StarIcon } from 'assets/icons';
 
-interface CardProps extends PropsWithChildren {
+type CardProps = {
   className?: string;
   priority?: TaskPriority;
   onClick?: (arg?: any) => void;
-}
+};
 
-export const Card: FC<CardProps> = ({ className, children, priority, onClick }) => {
+export const Card: FC<PropsWithChildren<CardProps>> = ({
+  className,
+  children,
+  priority,
+  onClick,
+}) => {
   const styles = className ? className : '';
 
   return (

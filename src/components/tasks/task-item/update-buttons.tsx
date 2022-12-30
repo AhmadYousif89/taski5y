@@ -1,10 +1,9 @@
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 
 import { useAppDispatch } from 'app/hooks';
-import { TaskButton } from '../task-button';
-import { InfoIcon, SpinnerIcon } from 'assets/icons';
-import { ActionModal, Backdrop } from 'components/ui';
 import { updateTask } from 'features/services/tasks';
+import { InfoIcon, SpinnerIcon } from 'assets/icons';
+import { ActionModal, Backdrop, Button } from 'components/ui';
 
 type Props = {
   taskId: string;
@@ -62,11 +61,17 @@ export const TaskUpdateButtons: FC<Props> = ({
       ) : null}
       <div aria-label="task-update-buttons" className="flex items-center gap-4">
         {showUpdateBtn || isEditing ? (
-          <TaskButton onClick={updateTaskDetailHandler}>
+          <Button
+            className="bg-btn-color-base px-4 text-xl !ring-0 hover:bg-btn-color-highlight hover:ring-0"
+            onClick={updateTaskDetailHandler}>
             {isUpdating ? <SpinnerIcon className="h-7 w-7" /> : 'save'}
-          </TaskButton>
+          </Button>
         ) : null}
-        <TaskButton onClick={markTaskCompleted} title={'complete'} />
+        <Button
+          onClick={markTaskCompleted}
+          className="bg-btn-color-base px-4 text-xl !ring-0 hover:bg-btn-color-highlight hover:ring-0"
+          label={'complete'}
+        />
       </div>
     </>
   );

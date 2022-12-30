@@ -2,9 +2,9 @@ import { FC, PropsWithChildren } from 'react';
 
 type Props = {
   className?: string;
-} & PropsWithChildren;
+};
 
-export const Divider: FC<Props> = ({ children, className = '' }) => {
+export const Divider: FC<PropsWithChildren<Props>> = ({ children, className = '' }) => {
   return (
     <div
       aria-hidden={true}
