@@ -39,14 +39,13 @@ export const AppRoutes = () => {
         <Route element={<RequireAuth />}>
           <Route path={path.dashboard} element={<Dashboard />} />
         </Route>
-
-        <Route path={path.notFound} element={<NotFound />} />
       </Route>
 
       <Route path={path.redirectOnRegister} element={<AuthRedirect authType="register" />} />
       <Route path={path.redirectOnLogin} element={<AuthRedirect authType="login" />} />
       <Route path={path.googleRegister} element={<GoogleRedirect authType="register" />} />
       <Route path={path.googleLogin} element={<GoogleRedirect authType="login" />} />
+      <Route path={path.notFound} element={<NotFound />} />
     </Routes>
   );
 };
