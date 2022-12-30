@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useAppSelector } from 'app/hooks';
@@ -30,15 +30,14 @@ export const ActionModal: FC<ActionModalProps> = ({
   showWarning = true,
   confirmAction,
 }) => {
+  const actionModalRef = useRef<HTMLDivElement>(null);
   const { status } = useAppSelector(authSelector);
 
   let content = (
     <div className="flex w-full flex-col gap-4 text-center">
       <span className="mb-4 self-center">{icon ? icon : <WarningIcon />}</span>
       <h3 className="px-2 text-2xl xs:text-3xl">{msg}</h3>
-      {showWarning && (
-        <p className="text-xl xs:text-2xl">This action can not be undone.</p>
-      )}
+      {showWarning && <p className="text-xl xs:text-2xl">This action can not be undone.</p>}
       <div className="mt-6 flex w-full justify-center gap-12">
         <Button
           label="Confirm"
@@ -116,12 +115,17 @@ export const ActionModal: FC<ActionModalProps> = ({
       </div>
     );
 
+  useEffect(() => {
+    if (actionModalRef.current) actionModalRef.current.querySelectorAll('button')[1]?.focus();
+  }, [actionModalRef.current]);
+
   const modalRoot = document.getElementById('modal-root') as HTMLDivElement;
 
   const modalElement = (
     <section
+      ref={actionModalRef}
       aria-label="modal"
-      className="flex-center fixed top-1/2 left-1/2 z-40 mx-auto w-10/12 max-w-3xl -translate-y-1/2 -translate-x-1/2 rounded-lg bg-neutral-800 py-24 text-color-base">
+      className="flex-center fixed top-1/2 left-1/2 z-40 mx-auto w-10/12 max-w-3xl -translate-y-1/2 -translate-x-1/2 rounded-lg bg-neutral-800 pt-20 pb-24 text-color-base shadow-md">
       {content}
     </section>
   );

@@ -1,3 +1,4 @@
+/*eslint-env node*/
 /** @type {import('tailwindcss').Config} */
 const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
@@ -10,7 +11,7 @@ module.exports = {
     },
 
     screens: {
-      xs: '570px',
+      xs: '540px',
       md: '640px',
       ...defaultTheme.screens,
     },

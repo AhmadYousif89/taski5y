@@ -5,10 +5,10 @@ export const debounce = (
   delay = 1000,
 ) => {
   let timeout: number | NodeJS.Timeout;
-  return (event: ChangeEvent<HTMLInputElement>) => {
+  return (e: ChangeEvent<HTMLInputElement>) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
-      cb(event);
+      cb(e);
     }, delay);
   };
 };

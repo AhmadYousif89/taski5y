@@ -1,8 +1,8 @@
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import {
   TaskList,
-  SortField,
-  SearchBar,
+  SortTasks,
+  SearchTasks,
   TodoTaskList,
   CompletedTaskList,
   DisplayTaskPanels,
@@ -14,8 +14,7 @@ import { taskSelector, setTaskActivePanel } from 'features/slices/task';
 
 export const Dashboard = () => {
   const dispatch = useAppDispatch();
-  const { totalTasks, totalCompletedTasks, activeTaskPanel } =
-    useAppSelector(taskSelector);
+  const { totalTasks, totalCompletedTasks, activeTaskPanel } = useAppSelector(taskSelector);
 
   let content = <TaskList />;
 
@@ -47,9 +46,9 @@ export const Dashboard = () => {
       <section className="lg:mx-auto lg:w-10/12" aria-label="tasks-section">
         <DisplayTaskPanels />
         <section className="flex flex-col" aria-label="task-search-sort">
-          <div className="flex items-center">
-            <SortField />
-            <SearchBar />
+          <div className="flex-center relative gap-4">
+            <SortTasks />
+            <SearchTasks />
           </div>
           <p className="m-8 text-center text-2xl tracking-wide text-color-highlight">
             Viewing {activeTaskPanel ? activeTaskPanel : 'All'} Tasks

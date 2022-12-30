@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { Card } from 'components/ui';
+import { Button, Card } from 'components/ui';
 import { useAppDispatch } from 'app/hooks';
 
 import { Task } from 'features/types';
@@ -9,6 +9,7 @@ import { setTaskActionType } from 'features/slices/task';
 
 import { addTimer } from 'helpers/timeout';
 import { DisplayTaskTime } from './task-item/display-time';
+import { TrashIcon } from 'assets/icons';
 
 export const CompletedTaskItem: FC<{ task: Task }> = ({ task }) => {
   const dispatch = useAppDispatch();
@@ -25,11 +26,12 @@ export const CompletedTaskItem: FC<{ task: Task }> = ({ task }) => {
         <h2 className="text-3xl tracking-wide">{task.title}</h2>
         <DisplayTaskTime label="created" time={task.createdAt} />
         <div className="text-2xl">{task.details}</div>
-        <button
+        <Button
+          title="delete task"
           onClick={deleteTaskHandler}
-          className="mt-4 cursor-pointer self-center rounded-md px-6 py-2 text-2xl active:bg-btn-color-base max-xs:bg-red-600 xs:ring-1 xs:ring-color-base  xs:hover:bg-red-600">
-          Delete
-        </button>
+          className="self-center ring-2 ring-color-base">
+          <TrashIcon />
+        </Button>
       </li>
     </Card>
   );

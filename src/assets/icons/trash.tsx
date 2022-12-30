@@ -1,10 +1,10 @@
-export const TrashIcon = ({ className }: { className: string }) => {
+export const TrashIcon = ({ className = '' }: { className?: string }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      className={`${className} h-8 w-8 rotate-180`}>
+      className={`${className} h-8 w-8 rotate-180 fill-red-500`}>
       <path d="M3.375 3C2.339 3 1.5 3.84 1.5 4.875v.75c0 1.036.84 1.875 1.875 1.875h17.25c1.035 0 1.875-.84 1.875-1.875v-.75C22.5 3.839 21.66 3 20.625 3H3.375z" />
       <path
         fillRule="evenodd"

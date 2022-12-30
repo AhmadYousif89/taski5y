@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 
 import { useAppDispatch } from 'app/hooks';
-import { ActionModal, Backdrop } from 'components/ui';
+import { ActionModal, Backdrop, Button } from 'components/ui';
 import { deleteTasks } from 'features/services/tasks';
 import { setTaskActionType } from 'features/slices/task';
 
@@ -32,13 +32,12 @@ export const TaskDeleteButton: FC<Props> = ({ taskId }) => {
           <Backdrop onClick={() => setModal(false)} />
         </>
       ) : null}
-      <button
-        type={'button'}
+      <Button
         title="delete task"
-        className="absolute top-10 right-[18px] cursor-pointer"
+        className="absolute top-5 right-[3px] !ring-0"
         onClick={() => setModal(true)}>
-        <TrashIcon className="transition-colors hover:fill-rose-600" />
-      </button>
+        <TrashIcon />
+      </Button>
     </>
   );
 };

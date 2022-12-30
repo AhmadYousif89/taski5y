@@ -28,7 +28,7 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
       title={title}
       onClick={onClick}
       disabled={isDisabled}
-      className={`${cursorStyle} ${className} flex-center gap-4 rounded-md px-6 py-3 text-2xl text-color-base transition-transform hover:ring-2 hover:ring-color-highlight active:translate-y-1 max-xs:ring-1 max-xs:ring-color-highlight`}>
+      className={`${cursorStyle} ${className} flex-center gap-4 rounded-md px-6 py-3 text-2xl text-color-base transition-transform hover:ring-2 hover:ring-color-highlight focus:bg-color-card active:translate-y-1 max-xs:ring-1 max-xs:ring-color-highlight`}>
       {children} {icon} {label}
     </button>
   );

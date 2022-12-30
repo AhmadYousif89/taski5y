@@ -31,5 +31,6 @@ module.exports = {
     'react/jsx-uses-react': 'warn',
     'react/no-unescaped-entities': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
   },
 };

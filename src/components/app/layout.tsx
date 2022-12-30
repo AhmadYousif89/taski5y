@@ -25,8 +25,8 @@ export const AppLayout = () => {
           <span>Taskify</span>
           <img src={appLogo} alt="logo" width={30} />
         </h1>
-        {user ? <MenuButton /> : null}
         {user ? <UserSettings /> : null}
+        {user ? <MenuButton /> : null}
       </header>
 
       <Menu aria-label="task-menu" className="[&>*]:mx-12">
