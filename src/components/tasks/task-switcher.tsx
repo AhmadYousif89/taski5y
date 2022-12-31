@@ -23,7 +23,9 @@ export const SwitchTaskStatus: FC<SwitcherProps> = ({ taskId, taskStatus, onSwit
   return (
     <div className="flex items-center gap-4">
       <button
-        onKeyDown={e => (e.key === 'Enter' ? updateTaskStatus() : null)}
+        onKeyDown={e => {
+          if (e.key === 'Enter') updateTaskStatus();
+        }}
         className="flex cursor-default items-center">
         <div
           onClick={updateTaskStatus}

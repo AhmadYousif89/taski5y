@@ -1,32 +1,28 @@
-import { useLocation } from 'react-router-dom';
 import { Task, TaskSortOrder, TaskSortType } from 'features/types';
 
-export const sortTasks = (data: Task[]) => {
-  const location = useLocation();
+export const sortTasks = (tasks: Task[], params: { order: TaskSortOrder; type: TaskSortType }) => {
+  const data = tasks ? [...tasks] : [];
 
-  const params = new URLSearchParams(location.search);
-  const sortOrder = params.get('sort') as TaskSortOrder;
-  const sortType = params.get('type') as TaskSortType;
-
-  const tasks = [...data];
-
-  return tasks.sort((taskA, taskB) => {
-    switch (sortType) {
+  const sortedData = data.sort((taskA, taskB) => {
+    const { order, type } = params;
+    switch (type) {
       case 'alpha': {
-        if (sortOrder === 'asc')
+        if (order === 'asc')
           return taskA.title.toLowerCase().localeCompare(taskB.title.toLowerCase());
         else return taskB.title.toLowerCase().localeCompare(taskA.title.toLowerCase());
       }
       case 'createdAt': {
-        if (sortOrder === 'asc') return taskA.createdAt.localeCompare(taskB.createdAt);
+        if (order === 'asc') return taskA.createdAt.localeCompare(taskB.createdAt);
         else return taskB.createdAt.localeCompare(taskA.createdAt);
       }
       case 'priority': {
-        if (sortOrder === 'asc') return taskA.priority === 'Normal' ? -1 : 1;
+        if (order === 'asc') return taskA.priority === 'Normal' ? -1 : 1;
         else return taskB.priority === 'Normal' ? -1 : 1;
       }
       default:
         return taskA.priority.localeCompare(taskB.priority);
     }
   });
+
+  return sortedData;
 };

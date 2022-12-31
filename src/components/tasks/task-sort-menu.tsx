@@ -1,33 +1,29 @@
 import { useRef, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { path } from 'components/app';
 import { Card } from 'components/ui';
 import { ArrowIcon, SortIcon } from 'assets/icons';
 
+import { useSortParams } from 'hooks/use-sort-params';
 import { useAppSelector } from 'app/hooks';
 import { taskSelector } from 'features/slices/task';
-import { TaskSortOrder, TaskSortType } from 'features/types';
 
 import { useClickOutside } from 'hooks/use-click-outside';
 
 export const SortTasks = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const { tasks } = useAppSelector(taskSelector);
 
   const sortMenuRef = useRef<HTMLDivElement>(null);
   const [toggleMenu, setToggleMenu] = useState(false);
+  const { resetParams, order, type } = useSortParams();
 
   const openSortMenuHandler = () => setToggleMenu(true);
   const closeSortMenuHandler = () => setToggleMenu(false);
 
   useClickOutside(sortMenuRef, closeSortMenuHandler);
-
-  const params = new URLSearchParams(location.search);
-  const sortOrder = params.get('sort') as TaskSortOrder;
-  const sortType = params.get('type') as TaskSortType;
-  const isSortAsc = sortOrder === 'asc';
+  const isSortAsc = order === 'asc';
 
   const sortByAlphabetHandler = () =>
     navigate(`${path.dashboard}?sort=${isSortAsc ? 'desc' : 'asc'}&type=alpha`);
@@ -38,7 +34,10 @@ export const SortTasks = () => {
   const sortByPriorityHandler = () =>
     navigate(`${path.dashboard}?sort=${isSortAsc ? 'desc' : 'asc'}&type=priority`);
 
-  const unsortHandler = () => navigate(`${path.dashboard}?`);
+  const unsortHandler = () => {
+    resetParams();
+    navigate(`${path.dashboard}`);
+  };
 
   const sortList = (
     <Card className="absolute top-full left-0 translate-y-2 ring-1 ring-color-base">
@@ -48,12 +47,12 @@ export const SortTasks = () => {
           onClick={() => sortByAlphabetHandler()}
           className="li-item grid grid-cols-[5rem,auto] items-center gap-2">
           <span className="flex items-center">
-            {sortType === 'alpha' ? (
+            {type === 'alpha' ? (
               <ArrowIcon
                 className={`${isSortAsc ? 'rotate-0' : 'rotate-180'} transition-all duration-300`}
               />
             ) : null}
-            {sortType === 'alpha' ? sortOrder : 'by'}
+            {type === 'alpha' ? order : 'by'}
           </span>
           <span>alphabet</span>
         </button>
@@ -62,12 +61,12 @@ export const SortTasks = () => {
           onClick={() => sortByDateHandler()}
           className="li-item grid grid-cols-[5rem,auto] items-center gap-2">
           <span className="flex items-center">
-            {sortType === 'createdAt' ? (
+            {type === 'createdAt' ? (
               <ArrowIcon
                 className={`${isSortAsc ? 'rotate-0' : 'rotate-180'} transition-all duration-300`}
               />
             ) : null}
-            {sortType === 'createdAt' ? sortOrder : 'by'}
+            {type === 'createdAt' ? order : 'by'}
           </span>
           <span>date</span>
         </button>
@@ -76,12 +75,12 @@ export const SortTasks = () => {
           onClick={() => sortByPriorityHandler()}
           className="li-item grid grid-cols-[5rem,auto] items-center gap-2">
           <span className="flex items-center">
-            {sortType === 'priority' ? (
+            {type === 'priority' ? (
               <ArrowIcon
                 className={`${isSortAsc ? 'rotate-0' : 'rotate-180'} transition-all duration-300`}
               />
             ) : null}
-            {sortType === 'priority' ? sortOrder : 'by'}
+            {type === 'priority' ? order : 'by'}
           </span>
           <span>priority</span>
         </button>

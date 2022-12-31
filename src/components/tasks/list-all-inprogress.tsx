@@ -2,16 +2,18 @@ import { useAppSelector } from 'app/hooks';
 import { taskSelector } from 'features/slices/task';
 
 import { TaskItem } from './task-item';
-import { sortTasks, searchTasks } from './helpers';
+import { searchTasks, sortTasks } from './helpers';
+import { useSortParams } from 'hooks/use-sort-params';
 
 export const InProgressTaskList = () => {
   const { tasks, searchedTaskQuery: query } = useAppSelector(taskSelector);
+  const { order, type } = useSortParams();
 
   const inProgressTasks = tasks.filter(task => task.status === 'InProgress');
 
   let filteredInProgressTasks = searchTasks(inProgressTasks, query);
-
-  filteredInProgressTasks = sortTasks(filteredInProgressTasks);
+  const sortedData = sortTasks(filteredInProgressTasks, { order, type });
+  filteredInProgressTasks = sortedData;
 
   let content = (
     <ul className="grid-container">

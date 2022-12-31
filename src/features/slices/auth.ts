@@ -1,7 +1,6 @@
+import { RootState } from 'app/store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { RootState } from 'app/store';
-import { AuthActionType, ResponseError, ResponseStatus, User } from '../types';
 import {
   signUp,
   signIn,
@@ -13,6 +12,7 @@ import {
   loginWithGoogle,
 } from '../services/auth';
 import { modifyLocalStorage } from 'helpers/modify-local-storage';
+import { AuthActionType, ResponseError, ResponseStatus, User } from '../types';
 
 export type AuthState = {
   user: User | null;
@@ -84,7 +84,6 @@ const authSlice = createSlice({
       .addCase(loginWithGoogle.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
         state.user = payload;
-        modifyLocalStorage({ type: 'remove', key: 'server_error' });
       })
       .addCase(loginWithGoogle.rejected, (state, { payload }) => {
         state.status = 'rejected';

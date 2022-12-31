@@ -9,11 +9,17 @@ import { taskSelector, setTaskActionType } from 'features/slices/task';
 
 import { TaskItem } from './task-item';
 import { addTimer } from 'helpers/timeout';
-import { sortTasks, searchTasks } from './helpers';
+import { searchTasks, sortTasks } from './helpers';
+import { useSortParams } from 'hooks/use-sort-params';
 
 export const TaskList = () => {
   const dispatch = useAppDispatch();
   const { tasks, actionType, searchedTaskQuery: query } = useAppSelector(taskSelector);
+  const { order, type } = useSortParams();
+
+  let updatedTasks = [...tasks];
+  const sortedData = sortTasks(updatedTasks, { order, type });
+  updatedTasks = sortedData;
 
   const fetchTasks = () => {
     dispatch(setTaskActionType('fetching'));
@@ -41,10 +47,6 @@ export const TaskList = () => {
       </>
     );
   }
-
-  let updatedTasks = [...tasks];
-
-  updatedTasks = sortTasks(updatedTasks);
 
   if (updatedTasks.length === 0) {
     return (

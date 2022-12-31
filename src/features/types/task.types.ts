@@ -1,5 +1,7 @@
-export type TaskSortOrder = 'asc' | 'desc';
-export type TaskSortType = 'alpha' | 'priority' | 'createdAt' | 'updatedAt';
+import { ResponseError, ResponseStatus } from './http.types';
+
+export type TaskSortOrder = 'asc' | 'desc' | '';
+export type TaskSortType = 'alpha' | 'priority' | 'createdAt' | 'updatedAt' | '';
 export type TaskActionType = 'fetching' | 'creating' | 'updating' | 'deleting' | '';
 export type TaskStatus = 'Todo' | 'InProgress' | 'Completed' | '';
 export type TaskPriority = 'Normal' | 'High';
@@ -12,4 +14,17 @@ export type Task = {
   priority: TaskPriority;
   createdAt: string;
   updatedAt: string;
+};
+export type TaskState = {
+  tasks: Task[];
+  completedTasks: Task[];
+  totalTasks: number;
+  totalTodoTasks: number;
+  totalInProgressTasks: number;
+  totalCompletedTasks: number;
+  searchedTaskQuery: string;
+  activeTaskPanel: TaskStatus;
+  actionType: TaskActionType;
+  status: ResponseStatus;
+  error: Partial<ResponseError>;
 };

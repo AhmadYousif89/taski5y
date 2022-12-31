@@ -2,15 +2,17 @@ import { useAppSelector } from 'app/hooks';
 import { taskSelector } from 'features/slices/task';
 
 import { TaskItem } from './task-item';
-import { sortTasks, searchTasks } from './helpers';
+import { searchTasks, sortTasks } from './helpers';
+import { useSortParams } from 'hooks/use-sort-params';
 
 export const TodoTaskList = () => {
   const { tasks, searchedTaskQuery: query } = useAppSelector(taskSelector);
+  const { order, type } = useSortParams();
 
   const todoTasks = tasks.filter(task => task.status === 'Todo');
-
   let filteredTodoTasks = searchTasks(todoTasks, query);
-  filteredTodoTasks = sortTasks(filteredTodoTasks);
+  const sortedData = sortTasks(filteredTodoTasks, { order, type });
+  filteredTodoTasks = sortedData;
 
   let content = (
     <ul className="grid-container">

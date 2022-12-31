@@ -20,6 +20,7 @@ export const GoogleRedirect: FC<{ authType: AuthType }> = ({ authType }) => {
       addTimer(() =>
         dispatch(loginWithGoogle()).then(() => {
           modifyLocalStorage({ type: 'set', key: 'logged_in', value: 'true' });
+          modifyLocalStorage({ type: 'remove', key: 'server_error' });
           navigate(path.dashboard);
         }),
       );

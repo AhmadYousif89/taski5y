@@ -1,42 +1,13 @@
+import { RootState } from 'app/store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { RootState } from 'app/store';
-import {
-  getAllTasks,
-  addNewTask,
-  updateTask,
-  deleteTasks,
-} from 'features/services/tasks';
-import {
-  Task,
-  TaskStatus,
-  ResponseError,
-  ResponseStatus,
-  TaskActionType,
-} from 'features/types';
-
-interface TaskState {
-  tasks: Task[];
-  todoTasks: Task[];
-  completedTasks: Task[];
-  inProgressTasks: Task[];
-  totalTasks: number;
-  totalTodoTasks: number;
-  totalInProgressTasks: number;
-  totalCompletedTasks: number;
-  searchedTaskQuery: string;
-  activeTaskPanel: TaskStatus;
-  actionType: TaskActionType;
-  status: ResponseStatus;
-  error: Partial<ResponseError>;
-}
+import { getAllTasks, addNewTask, updateTask, deleteTasks } from 'features/services/tasks';
+import { TaskStatus, ResponseError, TaskActionType, TaskState } from 'features/types';
 
 const initError: Partial<ResponseError> = { statusCode: 0, message: '', error: '' };
 
 const initialState: TaskState = {
   tasks: [],
-  todoTasks: [],
-  inProgressTasks: [],
   completedTasks: [],
   status: 'idle',
   totalTasks: 0,
@@ -80,9 +51,7 @@ const taskSlice = createSlice({
         state.completedTasks = payload.filter(t => t.status === 'Completed');
         state.totalTasks = state.tasks.length;
         state.totalTodoTasks = state.tasks.filter(t => t.status === 'Todo').length;
-        state.totalInProgressTasks = state.tasks.filter(
-          t => t.status === 'InProgress',
-        ).length;
+        state.totalInProgressTasks = state.tasks.filter(t => t.status === 'InProgress').length;
         state.totalCompletedTasks = state.completedTasks.length;
       })
       .addCase(getAllTasks.rejected, (state, { payload }) => {
@@ -113,9 +82,7 @@ const taskSlice = createSlice({
       .addCase(updateTask.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
         const updatedTaskId = payload.id;
-        state.tasks = state.tasks.map(task =>
-          task.id !== updatedTaskId ? task : { ...payload },
-        );
+        state.tasks = state.tasks.map(task => (task.id !== updatedTaskId ? task : { ...payload }));
         state.totalTodoTasks = state.tasks.filter(task => task.status === 'Todo').length;
         state.totalInProgressTasks = state.tasks.filter(
           task => task.status === 'InProgress',
