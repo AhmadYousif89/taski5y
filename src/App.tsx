@@ -12,13 +12,13 @@ import { modifyLocalStorage } from 'helpers/modify-local-storage';
 function App() {
   const dispatch = useAppDispatch();
   const { status, actionType } = useAppSelector(authSelector);
-  const persist = modifyLocalStorage({ type: 'get', key: 'persist' });
-  const isLoggedIn = modifyLocalStorage({ type: 'get', key: 'logged_in' });
+  const persist = modifyLocalStorage({ action: 'get', key: 'persist' });
+  const isLoggedIn = modifyLocalStorage({ action: 'get', key: 'logged_in' });
 
   useEffect(() => {
-    if (isLoggedIn !== 'true') modifyLocalStorage({ type: 'remove', key: 'persist' });
+    if (isLoggedIn !== 'true') modifyLocalStorage({ action: 'remove', key: 'persist' });
 
-    if (persist !== 'true') modifyLocalStorage({ type: 'remove', key: 'logged_in' });
+    if (persist !== 'true') modifyLocalStorage({ action: 'remove', key: 'logged_in' });
 
     if (persist === 'true' && isLoggedIn === 'true') {
       dispatch(setAuthActionType('refresh'));

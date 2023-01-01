@@ -8,9 +8,11 @@ import { getAllTasks } from 'features/services/tasks';
 import { taskSelector, setTaskActionType } from 'features/slices/task';
 
 import { TaskItem } from './task-item';
-import { addTimer } from 'helpers/timeout';
+import { wait } from 'helpers/wait';
 import { searchTasks, sortTasks } from './helpers';
 import { useSortParams } from 'hooks/use-sort-params';
+import { SearchErrMsg } from './search-error-msg';
+import { SearchMsg } from './search-msg';
 
 export const TaskList = () => {
   const dispatch = useAppDispatch();
@@ -24,7 +26,7 @@ export const TaskList = () => {
   const fetchTasks = () => {
     dispatch(setTaskActionType('fetching'));
     dispatch(getAllTasks());
-    addTimer(() => dispatch(setTaskActionType('')), 1);
+    wait(() => dispatch(setTaskActionType('')), 1);
   };
 
   useEffect(() => {
@@ -39,6 +41,7 @@ export const TaskList = () => {
       </>
     );
   }
+
   if (actionType === 'deleting') {
     return (
       <>
@@ -57,7 +60,7 @@ export const TaskList = () => {
             dispatch(setProfile(false));
             dispatch(toggleSideMenu());
           }}
-          className="mt-8 block self-center rounded-md px-6 py-4 text-3xl text-color-base ring-color-base transition-colors hover:ring-2 hover:transition-transform active:translate-y-1 active:bg-sky-500">
+          className="mt-8 block self-center rounded-md px-6 py-4 text-2xl text-color-base ring-color-base transition-colors hover:ring-2 hover:transition-transform active:translate-y-1 active:bg-sky-500">
           Create new task ?
         </button>
       </div>
@@ -66,23 +69,14 @@ export const TaskList = () => {
 
   updatedTasks = searchTasks(updatedTasks, query);
 
-  if (query && updatedTasks.length === 0) {
-    return (
-      <h2 className="mt-20 text-center text-3xl text-color-base">
-        Your search didn't match any result!
-      </h2>
-    );
-  }
+  if (query && updatedTasks.length === 0) return <SearchErrMsg />;
 
-  const searchMsg =
-    query && updatedTasks.length > 0 ? (
-      <h3 className="ml-8 text-3xl text-color-base">Search result</h3>
-    ) : null;
+  const searchMsg = query && updatedTasks.length > 0 ? <SearchMsg tasks={updatedTasks} /> : null;
 
   return (
     <>
       {searchMsg}
-      <ul aria-label="task-list" className="grid-container mt-8 mb-16">
+      <ul aria-label="task-list" className="grid-container mt-8">
         {updatedTasks.map(task => (
           <TaskItem key={task.id} task={task} />
         ))}

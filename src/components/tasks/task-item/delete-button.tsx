@@ -6,7 +6,7 @@ import { deleteTasks } from 'features/services/tasks';
 import { setTaskActionType } from 'features/slices/task';
 
 import { TrashIcon } from 'assets/icons';
-import { addTimer } from 'helpers/timeout';
+import { wait } from 'helpers/wait';
 
 type Props = { taskId: string };
 
@@ -17,7 +17,7 @@ export const TaskDeleteButton: FC<Props> = ({ taskId }) => {
   const deleteTaskHandler = () => {
     dispatch(setTaskActionType('deleting'));
     dispatch(deleteTasks(taskId));
-    addTimer(() => dispatch(setTaskActionType('')), 1);
+    wait(() => dispatch(setTaskActionType('')), 1);
   };
 
   return (

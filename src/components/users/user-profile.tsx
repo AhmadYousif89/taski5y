@@ -9,7 +9,7 @@ import { AuthInputNames } from 'components/auth/types';
 import { GetInputValues, Button, Input } from 'components/ui';
 
 import { BackArrowIcon, UploadIcon, CheckMarkIcon, SpinnerIcon } from 'assets/icons';
-import { addTimer } from 'helpers/timeout';
+import { wait } from 'helpers/wait';
 import { useForm } from 'hooks/use-form';
 import { setProfile } from 'features/slices/ui';
 
@@ -64,7 +64,7 @@ export const UserProfile = () => {
         : { name: name || user?.name, email: email || user?.email }; // update only the username and email
     dispatch(updateUser(data));
     setIsSubmitted(true);
-    addTimer(() => {
+    wait(() => {
       dispatch(resetAuthStatus());
       setIsSubmitted(false);
     }, 3);

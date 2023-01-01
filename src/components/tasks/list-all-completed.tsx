@@ -4,14 +4,17 @@ import { useAppSelector } from 'app/hooks';
 import { taskSelector } from 'features/slices/task';
 import { ActionModal, Backdrop } from 'components/ui';
 import { CompletedTaskItem } from './task-completed-item';
+import { SearchErrMsg } from './search-error-msg';
+import { SearchMsg } from './search-msg';
+import { NoTasksMsg } from './no-tasks-msg';
 
 export const CompletedTaskList = () => {
   const { actionType, completedTasks, searchedTaskQuery: query } = useAppSelector(taskSelector);
   const { order, type } = useSortParams();
 
-  let filteredCompletedTasks = searchTasks(completedTasks, query);
-  const sortedData = sortTasks(filteredCompletedTasks, { order, type });
-  filteredCompletedTasks = sortedData;
+  let filteredTasks = searchTasks(completedTasks, query);
+  const sortedData = sortTasks(filteredTasks, { order, type });
+  filteredTasks = sortedData;
 
   if (actionType === 'deleting') {
     return (
@@ -24,37 +27,22 @@ export const CompletedTaskList = () => {
 
   let content = (
     <ul className="grid-container">
-      {filteredCompletedTasks.map(task => (
+      {filteredTasks.map(task => (
         <CompletedTaskItem key={task.id} task={task} />
       ))}
     </ul>
   );
-  if (filteredCompletedTasks.length === 0) {
-    content = (
-      <h2 className="mt-8 text-center text-3xl text-color-base">
-        You have {filteredCompletedTasks.length} completed task
-      </h2>
-    );
-  }
-  if (query && filteredCompletedTasks.length === 0) {
-    content = (
-      <h3 className="mt-8 text-center text-3xl text-color-base">
-        your search didn't match any results
-      </h3>
-    );
-  }
+  if (filteredTasks.length === 0)
+    content = <NoTasksMsg msg={`You have ${filteredTasks.length} completed task`} />;
 
-  const searchMsg =
-    query && filteredCompletedTasks.length > 0 ? (
-      <h3 className="ml-8 text-3xl text-color-base">Search result</h3>
-    ) : null;
+  if (query && filteredTasks.length === 0) content = <SearchErrMsg />;
+
+  const searchMsg = query && filteredTasks.length > 0 ? <SearchMsg tasks={filteredTasks} /> : null;
 
   return (
-    <section className="mt-8 flex flex-col">
-      <>
-        {searchMsg}
-        {content}
-      </>
+    <section className="mt-8 flex flex-col gap-8">
+      {searchMsg}
+      {content}
     </section>
   );
 };

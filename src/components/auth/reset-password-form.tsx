@@ -11,7 +11,7 @@ import { GetInputValues, Input } from 'components/ui';
 
 import { AuthInputNames } from './types';
 import { AuthButton } from './auth-button';
-import { addTimer } from 'helpers/timeout';
+import { wait } from 'helpers/wait';
 import { AuthErrorMsg } from './auth-error-msg';
 import { AuthContainer } from './auth-container';
 
@@ -43,15 +43,13 @@ export const ResetPassword = () => {
     confirmPassword: confirmPasswordIsValid,
   } = formValidity;
 
-  const formIsValid = [emailIsValid, passwordIsValid, confirmPasswordIsValid].every(
-    Boolean,
-  );
+  const formIsValid = [emailIsValid, passwordIsValid, confirmPasswordIsValid].every(Boolean);
 
   useEffect(() => {
     if (user) navigate(path.dashboard);
     if (status === 'fulfilled') {
       setIsSubmitted(true);
-      addTimer(() => {
+      wait(() => {
         navigate(path.login);
         setIsSubmitted(false);
       });

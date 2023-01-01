@@ -18,6 +18,7 @@ import { GetInputValues, Divider, Button, Input } from 'components/ui';
 
 import { AuthErrorMsg } from './auth-error-msg';
 import { AuthContainer } from './auth-container';
+import { TrustDevice } from './remember-me-checkbox';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword'>, string>;
@@ -128,8 +129,9 @@ export const RegisterForm = () => {
           />
         </fieldset>
 
-        <fieldset className="xs:mx-auto xs:w-1/2">
+        <fieldset className="flex justify-between gap-2">
           <AuthButton title="create" status={status} formIsValid={formIsValid} />
+          <TrustDevice />
         </fieldset>
 
         <Divider>

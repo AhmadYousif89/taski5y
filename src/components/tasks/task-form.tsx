@@ -8,7 +8,7 @@ import { addNewTask } from 'features/services/tasks';
 import { TaskStatus, TaskPriority } from 'features/types';
 import { taskSelector, resetTaskStatus } from 'features/slices/task';
 
-import { addTimer } from 'helpers/timeout';
+import { wait } from 'helpers/wait';
 import { useForm } from 'hooks/use-form';
 import { TaskStats } from './task-stats';
 import { TaskInputNames } from './types';
@@ -49,7 +49,7 @@ export const TaskForm = () => {
     };
     setIsSubmitted(true);
     dispatch(addNewTask(newTask));
-    addTimer(() => {
+    wait(() => {
       setIsSubmitted(false);
       dispatch(resetTaskStatus());
     });

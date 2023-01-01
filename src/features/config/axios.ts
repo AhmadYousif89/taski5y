@@ -47,9 +47,9 @@ const onResponseError = async (error: AxiosError) => {
     }
   }
   if (error.response?.status === 403) {
-    localStorage.clear();
+    modifyLocalStorage({ action: 'clear' });
     modifyLocalStorage({
-      type: 'set',
+      action: 'set',
       key: 'server_error',
       value: JSON.stringify(error.response.data),
     });

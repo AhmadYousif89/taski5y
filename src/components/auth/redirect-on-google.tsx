@@ -5,7 +5,7 @@ import { modifyLocalStorage } from 'helpers/modify-local-storage';
 import { loginWithGoogle } from 'features/services/auth';
 import { useAppDispatch, useAuth } from 'app/hooks';
 import { AuthSuccessMsg } from './auth-success-msg';
-import { addTimer } from 'helpers/timeout';
+import { wait } from 'helpers/wait';
 import { AuthType } from 'features/types';
 import { path } from 'components/app';
 
@@ -13,17 +13,15 @@ export const GoogleRedirect: FC<{ authType: AuthType }> = ({ authType }) => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const isLoggedIn = modifyLocalStorage({ type: 'get', key: 'logged_in' });
+  const isLoggedIn = modifyLocalStorage({ action: 'get', key: 'logged_in' });
 
   useEffect(() => {
     if (isLoggedIn !== 'true') {
-      addTimer(() =>
-        dispatch(loginWithGoogle()).then(() => {
-          modifyLocalStorage({ type: 'set', key: 'logged_in', value: 'true' });
-          modifyLocalStorage({ type: 'remove', key: 'server_error' });
-          navigate(path.dashboard);
-        }),
-      );
+      wait(() => dispatch(loginWithGoogle())).then(() => {
+        modifyLocalStorage({ action: 'set', key: 'logged_in', value: 'true' });
+        modifyLocalStorage({ action: 'remove', key: 'server_error' });
+        navigate(path.dashboard);
+      });
     }
 
     if (user && isLoggedIn === 'true') navigate(path.dashboard);

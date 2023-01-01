@@ -11,9 +11,7 @@ type Props = {
 };
 
 export const AuthErrorMsg: FC<Props> = ({ status, errorMsg, successMsg, extraMsg }) => {
-  const sessionExpired = JSON.parse(
-    modifyLocalStorage({ type: 'get', key: 'server_error' }) as string,
-  );
+  const sessionExpired = modifyLocalStorage({ action: 'get', key: 'server_error' });
 
   const sessionExpireMsg = (
     <p className="absolute -top-24 left-1/2 w-full max-w-md -translate-x-1/2 rounded-md bg-slate-800 py-6 text-center text-2xl text-sky-300">

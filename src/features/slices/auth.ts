@@ -54,7 +54,7 @@ const authSlice = createSlice({
       .addCase(signUp.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
         state.user = payload;
-        modifyLocalStorage({ type: 'remove', key: 'server_error' });
+        modifyLocalStorage({ action: 'remove', key: 'server_error' });
       })
       .addCase(signUp.rejected, (state, { payload }) => {
         state.status = 'rejected';
@@ -69,7 +69,7 @@ const authSlice = createSlice({
       .addCase(signIn.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
         state.user = payload;
-        modifyLocalStorage({ type: 'remove', key: 'server_error' });
+        modifyLocalStorage({ action: 'remove', key: 'server_error' });
       })
       .addCase(signIn.rejected, (state, { payload }) => {
         state.status = 'rejected';
@@ -100,8 +100,8 @@ const authSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(signOut.fulfilled, () => {
-        modifyLocalStorage({ type: 'remove', key: 'persist' });
-        modifyLocalStorage({ type: 'remove', key: 'logged_in' });
+        modifyLocalStorage({ action: 'remove', key: 'persist' });
+        modifyLocalStorage({ action: 'remove', key: 'logged_in' });
         return initialState;
       })
       .addCase(signOut.rejected, (state, { payload }) => {
@@ -156,8 +156,8 @@ const authSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(deleteUser.fulfilled, () => {
-        modifyLocalStorage({ type: 'remove', key: 'persist' });
-        modifyLocalStorage({ type: 'remove', key: 'logged_in' });
+        modifyLocalStorage({ action: 'remove', key: 'persist' });
+        modifyLocalStorage({ action: 'remove', key: 'logged_in' });
         return initialState;
       })
       .addCase(deleteUser.rejected, (state, { payload }) => {

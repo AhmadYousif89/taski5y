@@ -7,7 +7,7 @@ import { Task } from 'features/types';
 import { deleteTasks } from 'features/services/tasks';
 import { setTaskActionType } from 'features/slices/task';
 
-import { addTimer } from 'helpers/timeout';
+import { wait } from 'helpers/wait';
 import { DisplayTaskTime } from './task-item/display-time';
 import { TrashIcon } from 'assets/icons';
 
@@ -17,7 +17,7 @@ export const CompletedTaskItem: FC<{ task: Task }> = ({ task }) => {
   const deleteTaskHandler = () => {
     dispatch(setTaskActionType('deleting'));
     dispatch(deleteTasks(task.id));
-    addTimer(() => dispatch(setTaskActionType('')), 1);
+    wait(() => dispatch(setTaskActionType('')), 1);
   };
 
   return (
