@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { AppTheme, UIState } from 'features/types';
 import { modifyLocalStorage } from 'helpers/modify-local-storage';
 
-const storedTheme = <AppTheme>modifyLocalStorage({ action: 'get', key: 'mode' });
+const storedTheme = modifyLocalStorage({ action: 'get', key: 'mode' }) as AppTheme;
 
 const initialState: UIState = {
   mode: storedTheme ? storedTheme : 'dark-theme',
@@ -18,7 +18,7 @@ const uiSlice = createSlice({
   reducers: {
     toggleAppTheme(state) {
       state.mode = state.mode === 'dark-theme' ? 'light-theme' : 'dark-theme';
-      localStorage.setItem('mode', state.mode);
+      modifyLocalStorage({ action: 'set', key: 'mode', value: state.mode });
     },
     toggleSideMenu(state) {
       state.menuIsVisible = !state.menuIsVisible;

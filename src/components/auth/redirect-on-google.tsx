@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { modifyLocalStorage } from 'helpers/modify-local-storage';
 import { loginWithGoogle } from 'features/services/auth';
 import { useAppDispatch, useAuth } from 'app/hooks';
-import { AuthSuccessMsg } from './auth-success-msg';
+import { AuthRedirectMsg } from './auth-redirect-msg';
 import { wait } from 'helpers/wait';
 import { AuthType } from 'features/types';
 import { path } from 'components/app';
@@ -27,5 +27,5 @@ export const GoogleRedirect: FC<{ authType: AuthType }> = ({ authType }) => {
     if (user && isLoggedIn === 'true') navigate(path.dashboard);
   }, [user, isLoggedIn]);
 
-  return <AuthSuccessMsg authType={authType} />;
+  return <AuthRedirectMsg authType={authType} />;
 };

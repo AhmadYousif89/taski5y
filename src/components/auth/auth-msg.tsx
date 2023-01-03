@@ -10,7 +10,7 @@ type Props = {
   errorMsg: string | string[] | JSX.Element;
 };
 
-export const AuthErrorMsg: FC<Props> = ({ status, errorMsg, successMsg, extraMsg }) => {
+export const AuthMsg: FC<Props> = ({ status, errorMsg, successMsg, extraMsg }) => {
   const sessionExpired = modifyLocalStorage({ action: 'get', key: 'server_error' });
 
   const sessionExpireMsg = (

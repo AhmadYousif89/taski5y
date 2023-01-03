@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useAuth, useAppDispatch, useAppSelector } from 'app/hooks';
 
+import { setProfile } from 'features/slices/ui';
 import { updateUser } from 'features/services/auth';
 import { authSelector, resetAuthStatus } from 'features/slices/auth';
 
@@ -8,10 +9,9 @@ import { TrustDevice } from 'components/auth';
 import { AuthInputNames } from 'components/auth/types';
 import { GetInputValues, Button, Input } from 'components/ui';
 
-import { BackArrowIcon, UploadIcon, CheckMarkIcon, SpinnerIcon } from 'assets/icons';
+import { useForm } from 'hooks';
 import { wait } from 'helpers/wait';
-import { useForm } from 'hooks/use-form';
-import { setProfile } from 'features/slices/ui';
+import { BackArrowIcon, UploadIcon, CheckMarkIcon, SpinnerIcon } from 'assets/icons';
 
 type FormValidity = Record<AuthInputNames, boolean>;
 type FormValues = Record<AuthInputNames, string>;

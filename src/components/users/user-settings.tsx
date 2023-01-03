@@ -4,11 +4,11 @@ import { useAppDispatch } from 'app/hooks';
 import { LogoutIcon, SettingsIcon } from 'assets/icons';
 import { Card, ActionModal, Backdrop } from 'components/ui';
 
-import { signOut, deleteUser } from 'features/services/auth';
-import { setAuthActionType } from 'features/slices/auth';
-import { setProfile, toggleSideMenu } from 'features/slices/ui';
+import { useClickListener } from 'hooks';
 import { resetTasks } from 'features/slices/task';
-import { useClickListener } from 'hooks/use-click-listener';
+import { setAuthActionType } from 'features/slices/auth';
+import { signOut, deleteUser } from 'features/services/auth';
+import { setProfile, toggleSideMenu } from 'features/slices/ui';
 
 export const UserSettings = () => {
   const dispatch = useAppDispatch();

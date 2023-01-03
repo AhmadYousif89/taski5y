@@ -5,17 +5,15 @@ import { path } from 'components/app';
 import { Card } from 'components/ui';
 import { ArrowIcon, SortIcon } from 'assets/icons';
 
-import { useSortParams } from 'hooks/use-sort-params';
-import { useClickListener } from 'hooks/use-click-listener';
 import { useAppSelector } from 'app/hooks';
 import { taskSelector } from 'features/slices/task';
+import { useSearchParams, useClickListener } from 'hooks';
 
 export const SortTasks = () => {
   const navigate = useNavigate();
+  const { sort, type } = useSearchParams();
   const { tasks } = useAppSelector(taskSelector);
-
   const [toggleMenu, setToggleMenu] = useState(false);
-  const { resetParams, order, type } = useSortParams();
 
   const openSortMenuHandler = () => setToggleMenu(true);
   const closeSortMenuHandler = () => setToggleMenu(false);
@@ -25,7 +23,7 @@ export const SortTasks = () => {
     onClickOutside: () => closeSortMenuHandler(),
   });
 
-  const isSortAsc = order === 'asc';
+  const isSortAsc = sort === 'asc';
 
   const sortByAlphabetHandler = () =>
     navigate(`${path.dashboard}?sort=${isSortAsc ? 'desc' : 'asc'}&type=alpha`);
@@ -37,7 +35,6 @@ export const SortTasks = () => {
     navigate(`${path.dashboard}?sort=${isSortAsc ? 'desc' : 'asc'}&type=priority`);
 
   const unsortHandler = () => {
-    resetParams();
     navigate(`${path.dashboard}`);
   };
 
@@ -54,7 +51,7 @@ export const SortTasks = () => {
                 className={`${isSortAsc ? 'rotate-0' : 'rotate-180'} transition-all duration-300`}
               />
             ) : null}
-            {type === 'alpha' ? order : 'by'}
+            {type === 'alpha' ? sort : 'by'}
           </span>
           <span>alphabet</span>
         </button>
@@ -68,7 +65,7 @@ export const SortTasks = () => {
                 className={`${isSortAsc ? 'rotate-0' : 'rotate-180'} transition-all duration-300`}
               />
             ) : null}
-            {type === 'createdAt' ? order : 'by'}
+            {type === 'createdAt' ? sort : 'by'}
           </span>
           <span>date</span>
         </button>
@@ -82,7 +79,7 @@ export const SortTasks = () => {
                 className={`${isSortAsc ? 'rotate-0' : 'rotate-180'} transition-all duration-300`}
               />
             ) : null}
-            {type === 'priority' ? order : 'by'}
+            {type === 'priority' ? sort : 'by'}
           </span>
           <span>priority</span>
         </button>

@@ -1,8 +1,8 @@
-import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FormEvent, useEffect, useState } from 'react';
 
+import { useForm } from 'hooks';
 import { path } from 'components/app';
-import { useForm } from 'hooks/use-form';
 import { GetInputValues, Divider, Button, Input } from 'components/ui';
 import { useAuth, useAppDispatch, useAppSelector } from 'app/hooks';
 
@@ -14,7 +14,7 @@ import { authSelector, resetAuth } from 'features/slices/auth';
 import googleLogo from 'assets/google.png';
 import { AuthButton } from './auth-button';
 import { SignInType } from 'features/types';
-import { AuthErrorMsg } from './auth-error-msg';
+import { AuthMsg } from './auth-msg';
 import { AuthContainer } from './auth-container';
 import { TrustDevice } from './remember-me-checkbox';
 import { SwitchFormButton } from './switch-form-button';
@@ -144,7 +144,7 @@ export const LoginForm = () => {
         />
       </form>
 
-      <AuthErrorMsg status={status} errorMsg={userErrorMsg} />
+      <AuthMsg status={status} errorMsg={userErrorMsg} />
     </AuthContainer>
   );
 };

@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useAuth } from 'app/hooks';
 import { AuthType } from 'features/types';
 
-export const AuthSuccessMsg: FC<{ authType: AuthType }> = ({ authType }) => {
+export const AuthRedirectMsg: FC<{ authType: AuthType }> = ({ authType }) => {
   const { user } = useAuth();
 
   return (

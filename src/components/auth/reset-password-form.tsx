@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { FormEvent, useEffect, useState } from 'react';
 
-import { useForm } from 'hooks/use-form';
+import { useForm } from 'hooks';
 import { resetPassword } from 'features/services/auth';
 import { authSelector, resetAuth } from 'features/slices/auth';
 import { useAuth, useAppDispatch, useAppSelector } from 'app/hooks';
@@ -12,7 +12,7 @@ import { GetInputValues, Input } from 'components/ui';
 import { AuthInputNames } from './types';
 import { AuthButton } from './auth-button';
 import { wait } from 'helpers/wait';
-import { AuthErrorMsg } from './auth-error-msg';
+import { AuthMsg } from './auth-msg';
 import { AuthContainer } from './auth-container';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'name'>, boolean>;
@@ -128,7 +128,7 @@ export const ResetPassword = () => {
           />
         </fieldset>
 
-        <AuthErrorMsg
+        <AuthMsg
           status={status}
           extraMsg={message}
           errorMsg={error.message}

@@ -7,20 +7,20 @@ import { setProfile, toggleSideMenu } from 'features/slices/ui';
 import { getAllTasks } from 'features/services/tasks';
 import { taskSelector, setTaskActionType } from 'features/slices/task';
 
-import { TaskItem } from './task-item';
 import { wait } from 'helpers/wait';
+import { TaskItem } from './task-item';
+import { useSearchParams } from 'hooks';
 import { searchTasks, sortTasks } from './helpers';
-import { useSortParams } from 'hooks/use-sort-params';
 import { SearchErrMsg } from './search-error-msg';
 import { SearchMsg } from './search-msg';
 
 export const TaskList = () => {
   const dispatch = useAppDispatch();
   const { tasks, actionType, searchedTaskQuery: query } = useAppSelector(taskSelector);
-  const { order, type } = useSortParams();
+  const { sort, type } = useSearchParams();
 
   let updatedTasks = [...tasks];
-  const sortedData = sortTasks(updatedTasks, { order, type });
+  const sortedData = sortTasks(updatedTasks, { sort, type });
   updatedTasks = sortedData;
 
   const fetchTasks = () => {

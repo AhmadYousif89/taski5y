@@ -6,7 +6,7 @@ import { AuthType } from 'features/types';
 import { wait } from 'helpers/wait';
 import { updateUser } from 'features/services/auth';
 import { useAppDispatch, useAuth } from 'app/hooks';
-import { AuthSuccessMsg } from './auth-success-msg';
+import { AuthRedirectMsg } from './auth-redirect-msg';
 import { modifyLocalStorage } from 'helpers/modify-local-storage';
 
 export const AuthRedirect: FC<{ authType: AuthType }> = ({ authType }) => {
@@ -33,5 +33,5 @@ export const AuthRedirect: FC<{ authType: AuthType }> = ({ authType }) => {
     if (!user) navigate(path.root);
   }, [user, isLoggedIn]);
 
-  return <AuthSuccessMsg authType={authType} />;
+  return <AuthRedirectMsg authType={authType} />;
 };

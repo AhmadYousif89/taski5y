@@ -3,10 +3,10 @@ type LSAction = 'set' | 'get' | 'remove' | 'clear';
 type LocalStorageType<A extends LSAction> = {
   action: A;
 } & (A extends 'set'
-  ? { value: string; key: LSKeys }
+  ? { value: any; key: LSKeys }
   : A extends 'clear'
-  ? { value?: string; key?: LSKeys }
-  : { value?: string; key: LSKeys });
+  ? { value?: any; key?: LSKeys }
+  : { value?: any; key: LSKeys });
 
 const keys: LSKeys[] = ['persist', 'logged_in', 'server_error'];
 
@@ -17,19 +17,26 @@ const keys: LSKeys[] = ['persist', 'logged_in', 'server_error'];
  * @param {string} options.action - The type of action to perform. Must be one of 'set', 'get', 'remove', or 'clear'.
  * @param {string} [options.key] - The key of the item in the local storage to perform the action on. Required for 'set', 'get', and 'remove' actions.
  * @param {string} [options.value] - The value to set for the item in the local storage. Required for 'set' action.
- * @returns {string | null | void} The value of the item in the local storage for 'get' action as string or null or does not return anything for the rest of actions.
+ * @returns {any} The value of the item in the local storage for 'get' action after parsing.
  */
 export const modifyLocalStorage = <A extends LSAction>({
   action,
   value,
   key,
-}: LocalStorageType<A>): string | null | void => {
+}: LocalStorageType<A>): any => {
   if (action === 'get' && key) {
-    const keyItem = localStorage.getItem(key);
-    return keyItem;
+    try {
+      return localStorage.getItem(key);
+    } catch (err) {
+      console.log(err);
+    }
   }
-  if (action === 'set' && key && value) {
-    localStorage.setItem(key, value);
+  if (action === 'set' && key) {
+    try {
+      localStorage.setItem(key, value);
+    } catch (err) {
+      console.log(err);
+    }
   }
   if (action === 'remove' && key) {
     localStorage.removeItem(key);

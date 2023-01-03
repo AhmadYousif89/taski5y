@@ -3,19 +3,19 @@ import { taskSelector } from 'features/slices/task';
 
 import { TaskItem } from './task-item';
 import { searchTasks, sortTasks } from './helpers';
-import { useSortParams } from 'hooks/use-sort-params';
+import { useSearchParams } from 'hooks';
 import { SearchErrMsg } from './search-error-msg';
 import { SearchMsg } from './search-msg';
 import { NoTasksMsg } from './no-tasks-msg';
 
 export const InProgressTaskList = () => {
   const { tasks, searchedTaskQuery: query } = useAppSelector(taskSelector);
-  const { order, type } = useSortParams();
+  const { sort, type } = useSearchParams();
 
   const inProgressTasks = tasks.filter(task => task.status === 'InProgress');
 
   let filteredTasks = searchTasks(inProgressTasks, query);
-  const sortedData = sortTasks(filteredTasks, { order, type });
+  const sortedData = sortTasks(filteredTasks, { sort, type });
   filteredTasks = sortedData;
 
   let content = (

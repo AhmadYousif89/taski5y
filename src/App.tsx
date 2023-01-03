@@ -6,7 +6,6 @@ import { Backdrop, ActionModal } from 'components/ui';
 
 import { getUser } from 'features/services/auth';
 import { authSelector, setAuthActionType } from 'features/slices/auth';
-
 import { modifyLocalStorage } from 'helpers/modify-local-storage';
 
 function App() {
@@ -16,9 +15,10 @@ function App() {
   const isLoggedIn = modifyLocalStorage({ action: 'get', key: 'logged_in' });
 
   useEffect(() => {
-    if (isLoggedIn !== 'true') modifyLocalStorage({ action: 'remove', key: 'persist' });
+    if (!isLoggedIn || isLoggedIn !== 'true')
+      modifyLocalStorage({ action: 'remove', key: 'persist' });
 
-    if (persist !== 'true') modifyLocalStorage({ action: 'remove', key: 'logged_in' });
+    if (!persist || persist !== 'true') modifyLocalStorage({ action: 'remove', key: 'logged_in' });
 
     if (persist === 'true' && isLoggedIn === 'true') {
       dispatch(setAuthActionType('refresh'));

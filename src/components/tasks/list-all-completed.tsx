@@ -1,6 +1,6 @@
-import { searchTasks, sortTasks } from './helpers';
-import { useSortParams } from 'hooks/use-sort-params';
 import { useAppSelector } from 'app/hooks';
+import { useSearchParams } from 'hooks';
+import { searchTasks, sortTasks } from './helpers';
 import { taskSelector } from 'features/slices/task';
 import { ActionModal, Backdrop } from 'components/ui';
 import { CompletedTaskItem } from './task-completed-item';
@@ -10,10 +10,10 @@ import { NoTasksMsg } from './no-tasks-msg';
 
 export const CompletedTaskList = () => {
   const { actionType, completedTasks, searchedTaskQuery: query } = useAppSelector(taskSelector);
-  const { order, type } = useSortParams();
+  const { sort, type } = useSearchParams();
 
   let filteredTasks = searchTasks(completedTasks, query);
-  const sortedData = sortTasks(filteredTasks, { order, type });
+  const sortedData = sortTasks(filteredTasks, { sort, type });
   filteredTasks = sortedData;
 
   if (actionType === 'deleting') {

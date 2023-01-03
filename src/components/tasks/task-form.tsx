@@ -8,8 +8,8 @@ import { addNewTask } from 'features/services/tasks';
 import { TaskStatus, TaskPriority } from 'features/types';
 import { taskSelector, resetTaskStatus } from 'features/slices/task';
 
+import { useForm } from 'hooks';
 import { wait } from 'helpers/wait';
-import { useForm } from 'hooks/use-form';
 import { TaskStats } from './task-stats';
 import { TaskInputNames } from './types';
 import { TextArea } from 'components/ui/textarea';

@@ -1,10 +1,10 @@
-import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FormEvent, useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector, useAuth } from 'app/hooks';
 
 import googleLogo from 'assets/google.png';
 
-import { useAppDispatch, useAppSelector, useAuth } from 'app/hooks';
-import { useForm } from 'hooks/use-form';
+import { useForm } from 'hooks';
 import { AuthInputNames } from './types';
 import { AuthButton } from './auth-button';
 
@@ -16,9 +16,8 @@ import { authSelector } from 'features/slices/auth';
 import { path } from 'components/app';
 import { GetInputValues, Divider, Button, Input } from 'components/ui';
 
-import { AuthErrorMsg } from './auth-error-msg';
+import { AuthMsg } from './auth-msg';
 import { AuthContainer } from './auth-container';
-import { TrustDevice } from './remember-me-checkbox';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword'>, string>;
@@ -129,9 +128,8 @@ export const RegisterForm = () => {
           />
         </fieldset>
 
-        <fieldset className="flex justify-between gap-2">
+        <fieldset className="mx-auto w-1/2">
           <AuthButton title="create" status={status} formIsValid={formIsValid} />
-          <TrustDevice />
         </fieldset>
 
         <Divider>
@@ -161,7 +159,7 @@ export const RegisterForm = () => {
         />
       </form>
 
-      <AuthErrorMsg status={status} errorMsg={userErrorMsg} />
+      <AuthMsg status={status} errorMsg={userErrorMsg} />
     </AuthContainer>
   );
 };

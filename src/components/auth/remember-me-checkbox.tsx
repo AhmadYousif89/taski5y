@@ -1,7 +1,7 @@
-import { usePersist } from 'hooks/use-persist';
+import { usePersist } from 'hooks';
 
 export const TrustDevice = () => {
-  const [persist, setPersist] = usePersist('persist', false);
+  const [persist, setPersist] = usePersist(false);
 
   return (
     <label htmlFor="persist" className="flex-center w-full gap-2 text-xl text-color-base">
