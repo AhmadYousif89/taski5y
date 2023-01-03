@@ -1,8 +1,8 @@
 /**
- * helper function that takes a callback function as a first arg and number of seconds as a second arg (the time to await before running cb()).
- * @param {function} cb - a callback function.
- * @param {number} [sec=3] - time to wait in seconds defaults to 3 sec.
- * @returns {Promise} new promise of type unknown.
+ * Returns a Promise that resolves after a specified number of seconds.
+ * @param {() => void} cb - A callback function to be called when the Promise is resolved.
+ * @param {number} [sec=3] - The number of seconds to wait before resolving the Promise.
+ * @returns {Promise<unknown>} - A Promise that resolves after the specified number of seconds.
  */
 export const wait = (cb: () => void, sec = 3): Promise<unknown> =>
   new Promise(resolve => setTimeout(() => resolve(cb()), sec * 1000));

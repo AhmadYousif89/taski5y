@@ -22,13 +22,11 @@ export const UserImage = ({ maxHeight = 300 }: { maxHeight?: number }) => {
     const file = e.target.files?.[0];
     if (file?.type.match(/^image\//)) {
       const originalURL = await readFileAsDataURL(file);
-      const image = await resizeImage(
-        maxHeight,
-        originalURL as string,
-        canvas as HTMLCanvasElement,
-      );
-      dispatch(resetAuthStatus());
-      setImage(image as string);
+      if (originalURL && canvas) {
+        const image = await resizeImage(maxHeight, `${originalURL}`, canvas);
+        setImage(image + '');
+        dispatch(resetAuthStatus());
+      }
     }
   };
 
@@ -44,8 +42,7 @@ export const UserImage = ({ maxHeight = 300 }: { maxHeight?: number }) => {
   };
 
   useEffect(() => {
-    if (status !== 'loading' && actionType === 'uploading image')
-      dispatch(setAuthActionType(''));
+    if (status !== 'loading' && actionType === 'uploading image') dispatch(setAuthActionType(''));
   }, [status]);
 
   useEffect(() => {

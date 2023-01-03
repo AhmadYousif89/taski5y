@@ -60,5 +60,5 @@ const onResponseError = async (error: AxiosError) => {
   return Promise.reject(error);
 };
 
-axiosPrivate.interceptors.response.use(onResponse, onResponseError);
 axiosPrivate.interceptors.request.use(onRequest, onRequestError);
+axiosPrivate.interceptors.response.use(onResponse, onResponseError);

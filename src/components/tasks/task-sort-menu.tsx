@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { MutableRefObject, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { path } from 'components/app';
@@ -6,23 +6,25 @@ import { Card } from 'components/ui';
 import { ArrowIcon, SortIcon } from 'assets/icons';
 
 import { useSortParams } from 'hooks/use-sort-params';
+import { useClickListener } from 'hooks/use-click-listener';
 import { useAppSelector } from 'app/hooks';
 import { taskSelector } from 'features/slices/task';
-
-import { useClickOutside } from 'hooks/use-click-outside';
 
 export const SortTasks = () => {
   const navigate = useNavigate();
   const { tasks } = useAppSelector(taskSelector);
 
-  const sortMenuRef = useRef<HTMLDivElement>(null);
   const [toggleMenu, setToggleMenu] = useState(false);
   const { resetParams, order, type } = useSortParams();
 
   const openSortMenuHandler = () => setToggleMenu(true);
   const closeSortMenuHandler = () => setToggleMenu(false);
 
-  useClickOutside(sortMenuRef, closeSortMenuHandler);
+  const sortRef = useClickListener({
+    onClickInside: () => openSortMenuHandler(),
+    onClickOutside: () => closeSortMenuHandler(),
+  });
+
   const isSortAsc = order === 'asc';
 
   const sortByAlphabetHandler = () =>
@@ -99,7 +101,7 @@ export const SortTasks = () => {
           tabIndex={0}
           role={'button'}
           title="sort tasks"
-          ref={sortMenuRef}
+          ref={sortRef as MutableRefObject<HTMLDivElement>}
           onKeyDown={e => {
             if (e.key === 'Enter') openSortMenuHandler();
           }}

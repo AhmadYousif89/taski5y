@@ -9,7 +9,7 @@ export const TrustDevice = () => {
         type="checkbox"
         name="persist"
         id="persist"
-        onChange={() => setPersist((p: boolean) => !p)}
+        onChange={() => setPersist((p: any) => !p)}
         checked={persist}
         className="w-max accent-indigo-400"
       />

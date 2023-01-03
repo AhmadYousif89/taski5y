@@ -1,13 +1,14 @@
 import { modifyLocalStorage } from 'helpers/modify-local-storage';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
+type UsePersistType = [boolean, Dispatch<SetStateAction<boolean>>];
 const persistKey = modifyLocalStorage({ action: 'get', key: 'persist' });
 
-export const usePersist = () => {
-  const [persist, setPersist] = useState(JSON.parse(persistKey as string) || false);
+export const usePersist = (): UsePersistType => {
+  const [persist, setPersist] = useState<boolean>(Boolean(persistKey));
 
   useEffect(() => {
-    modifyLocalStorage({ action: 'set', key: 'persist', value: JSON.stringify(persist) });
+    modifyLocalStorage({ action: 'set', key: 'persist', value: `${persist}` });
   }, [persist]);
 
   return [persist, setPersist];

@@ -1,22 +1,24 @@
-import { useRef, useState } from 'react';
+import { MutableRefObject, useState } from 'react';
 
 import { useAppDispatch } from 'app/hooks';
 import { LogoutIcon, SettingsIcon } from 'assets/icons';
-import { useClickOutside } from 'hooks/use-click-outside';
 import { Card, ActionModal, Backdrop } from 'components/ui';
 
 import { signOut, deleteUser } from 'features/services/auth';
 import { setAuthActionType } from 'features/slices/auth';
 import { setProfile, toggleSideMenu } from 'features/slices/ui';
 import { resetTasks } from 'features/slices/task';
+import { useClickListener } from 'hooks/use-click-listener';
 
 export const UserSettings = () => {
   const dispatch = useAppDispatch();
-  const settingRef = useRef<HTMLButtonElement>(null);
   const [toggleMenu, setToggleMenu] = useState(false);
   const [modal, setModal] = useState(false);
 
-  useClickOutside(settingRef, () => setToggleMenu(false));
+  const settingRef = useClickListener({
+    onClickInside: () => setToggleMenu(true),
+    onClickOutside: () => setToggleMenu(false),
+  });
 
   const logoutHandler = () => {
     dispatch(signOut());
@@ -72,7 +74,7 @@ export const UserSettings = () => {
       <button
         type={'button'}
         title="settings"
-        ref={settingRef}
+        ref={settingRef as MutableRefObject<HTMLButtonElement>}
         onClick={() => setToggleMenu(p => !p)}
         className="btn-circle flex-center relative">
         <SettingsIcon />

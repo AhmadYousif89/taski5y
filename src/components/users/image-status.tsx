@@ -2,11 +2,7 @@ import { FC } from 'react';
 import { ResponseStatus } from 'features/types';
 import { SpinnerIcon, CheckMarkIcon, WarningIcon } from 'assets/icons';
 
-type ImageStatusProps = {
-  status: ResponseStatus;
-};
-
-export const DisplayImageStatus: FC<ImageStatusProps> = ({ status }) => {
+export const DisplayImageStatus: FC<{ status: ResponseStatus }> = ({ status }) => {
   return (
     <>
       {status === 'loading' ? (
