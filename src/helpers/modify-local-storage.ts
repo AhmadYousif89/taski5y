@@ -1,14 +1,14 @@
-type Action = 'set' | 'get' | 'remove' | 'clear';
-type Keys = 'persist' | 'server_error' | 'logged_in' | 'mode';
-type LocalStorageType<A extends Action> = {
+export type LSKeys = 'persist' | 'server_error' | 'logged_in' | 'mode';
+type LSAction = 'set' | 'get' | 'remove' | 'clear';
+type LocalStorageType<A extends LSAction> = {
   action: A;
 } & (A extends 'set'
-  ? { value: string; key: Keys }
+  ? { value: string; key: LSKeys }
   : A extends 'clear'
-  ? { value?: string; key?: Keys }
-  : { value?: string; key: Keys });
+  ? { value?: string; key?: LSKeys }
+  : { value?: string; key: LSKeys });
 
-const keys: Keys[] = ['persist', 'logged_in', 'server_error'];
+const keys: LSKeys[] = ['persist', 'logged_in', 'server_error'];
 
 /**
  * performs a specified action on an item in the local storage.
@@ -19,7 +19,7 @@ const keys: Keys[] = ['persist', 'logged_in', 'server_error'];
  * @param {string} [options.value] - The value to set for the item in the local storage. Required for 'set' action.
  * @returns {string | null | void} The value of the item in the local storage for 'get' action as string or null or does not return anything for the rest of actions.
  */
-export const modifyLocalStorage = <A extends Action>({
+export const modifyLocalStorage = <A extends LSAction>({
   action,
   value,
   key,
