@@ -5,7 +5,7 @@ import { AppTheme, UIState } from 'features/types';
 import { modifyLocalStorage } from 'helpers/modify-local-storage';
 
 const storedTheme = <AppTheme>modifyLocalStorage({ action: 'get', key: 'mode' });
-console.log(storedTheme);
+
 const initialState: UIState = {
   mode: storedTheme ? storedTheme : 'dark-theme',
   menuIsVisible: false,
