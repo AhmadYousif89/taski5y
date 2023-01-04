@@ -12,7 +12,7 @@
     "test": "vitest run",
     "test:w": "vitest watch",
     "test:coverage": "vitest run --coverage",
-    "lint": "eslint src/**/*"
+    "lint": "eslint src/**/*.{js,jsx,ts,tsx}"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.6",
@@ -39,6 +39,7 @@
     "c8": "^7.12.0",
     "eslint": "^8.27.0",
     "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "jsdom": "^20.0.2",
     "postcss": "^8.4.18",
     "prettier": "^2.7.1",

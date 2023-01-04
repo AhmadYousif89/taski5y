@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import {
   InputPropObj,
   SelectPropObj,
@@ -16,22 +16,24 @@ export const useForm = <TypeValidity, TypeValue>({
   const [formValues, setFormValues] = useState(initFormValues);
   const [formValidity, setFormValidity] = useState(initFormValidity);
 
-  const getFormValidity: GetInputValidation = ({ name, isValid }) => {
+  const getFormValidity: GetInputValidation = useCallback(({ name, isValid }) => {
     setFormValidity(prevState => ({
       ...prevState,
       [name]: isValid,
     }));
-  };
+  }, []);
+
   type FormValuesProps = InputPropObj | SelectPropObj;
-  const getFormValues: GetInputValues | GetSelectValues = ({
-    name,
-    value,
-  }: FormValuesProps) => {
-    setFormValues(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+
+  const getFormValues: GetInputValues | GetSelectValues = useCallback(
+    ({ name, value }: FormValuesProps) => {
+      setFormValues(prevState => ({
+        ...prevState,
+        [name]: value,
+      }));
+    },
+    [],
+  );
 
   return { formValidity, getFormValidity, formValues, getFormValues };
 };

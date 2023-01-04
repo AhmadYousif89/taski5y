@@ -7,14 +7,15 @@ export const useSearchParams = () => {
 
   const sort = new URLSearchParams(location.search).get('sort') as TaskSortOrder;
   const type = new URLSearchParams(location.search).get('type') as TaskSortType;
-  const searchParams = new URLSearchParams();
 
   useEffect(() => {
+    const searchParams = new URLSearchParams();
     searchParams.set('sort', sort);
     searchParams.set('type', type);
-    if (sort && type)
+    if (sort && type) {
       history.replaceState({}, '', `${location.pathname}?${searchParams.toString()}`);
-  }, [sort, type]);
+    }
+  }, [location.pathname, sort, type]);
 
   return { sort, type };
 };

@@ -12,15 +12,7 @@ import {
   loginWithGoogle,
 } from '../services/auth';
 import { modifyLocalStorage } from 'helpers/modify-local-storage';
-import { AuthActionType, ResponseError, ResponseStatus, User } from '../types';
-
-export type AuthState = {
-  user: User | null;
-  message: string;
-  error: ResponseError;
-  status: ResponseStatus;
-  actionType: AuthActionType;
-};
+import { AuthActionType, ResponseError, AuthState } from '../types';
 
 const initError: ResponseError = { statusCode: 0, message: '', error: '' };
 
@@ -156,8 +148,7 @@ const authSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(deleteUser.fulfilled, () => {
-        modifyLocalStorage({ action: 'remove', key: 'persist' });
-        modifyLocalStorage({ action: 'remove', key: 'logged_in' });
+        modifyLocalStorage({ action: 'clear', exclude: ['mode', 'server_error'] });
         return initialState;
       })
       .addCase(deleteUser.rejected, (state, { payload }) => {

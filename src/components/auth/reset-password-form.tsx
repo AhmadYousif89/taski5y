@@ -54,13 +54,13 @@ export const ResetPassword = () => {
         setIsSubmitted(false);
       });
     }
-  }, [status, user]);
+  }, [navigate, status, user]);
 
   useEffect(() => {
     return () => {
       dispatch(resetAuth());
     };
-  }, []);
+  }, [dispatch]);
 
   const onFormSubmit = (e: FormEvent) => {
     e.preventDefault();

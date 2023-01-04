@@ -40,7 +40,7 @@ export const SortTasks = () => {
 
   const sortList = (
     <Card className="absolute top-full left-0 translate-y-2 ring-1 ring-color-base">
-      <div className="flex flex-col gap-6 py-2 text-center capitalize text-color-base">
+      <div className="flex flex-col gap-6 py-2 text-center text-color-base">
         <button
           type={'button'}
           onClick={() => sortByAlphabetHandler()}
@@ -84,7 +84,7 @@ export const SortTasks = () => {
           <span>priority</span>
         </button>
 
-        <button type={'button'} onClick={() => unsortHandler()} className="li-item !py-2">
+        <button type={'button'} onClick={() => unsortHandler()} className="li-item">
           <span>unsort</span>
         </button>
       </div>

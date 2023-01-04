@@ -92,7 +92,7 @@ const CustomInput = (props: InputProps, ref: Ref<HTMLInputElement>) => {
     getValidity && getValidity({ name, isValid });
     getValue({ name, value: inputValue });
     if (isFormSubmitted) resetInput();
-  }, [isFormSubmitted, inputValue, isValid]);
+  }, [isFormSubmitted, name, inputValue, isValid, getValidity, getValue]);
 
   const showVisualErr =
     validate && showInputErr && isError

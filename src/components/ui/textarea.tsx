@@ -65,7 +65,7 @@ export const TextArea = (props: TextAreaProps) => {
     getValidity && getValidity({ name, isValid });
     getValue({ name, value: inputValue });
     if (isFormSubmitted) resetInput();
-  }, [isFormSubmitted, inputValue, isValid]);
+  }, [isFormSubmitted, inputValue, isValid, getValidity, name, getValue]);
 
   const showVisualErr =
     validate && showInputErr && isError

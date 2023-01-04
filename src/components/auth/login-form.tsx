@@ -13,7 +13,7 @@ import { authSelector, resetAuth } from 'features/slices/auth';
 
 import googleLogo from 'assets/google.png';
 import { AuthButton } from './auth-button';
-import { SignInType } from 'features/types';
+import { AuthSignIn } from 'features/types';
 import { AuthMsg } from './auth-msg';
 import { AuthContainer } from './auth-container';
 import { TrustDevice } from './remember-me-checkbox';
@@ -49,12 +49,12 @@ export const LoginForm = () => {
       dispatch(resetAuth());
       window.removeEventListener('unload', unload);
     };
-  }, [user]);
+  }, [dispatch, navigate, user]);
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formIsValid) return;
-    const user: SignInType = { email, password };
+    const user: AuthSignIn = { email, password };
     dispatch(signIn(user));
   };
 

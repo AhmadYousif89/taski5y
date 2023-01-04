@@ -31,7 +31,7 @@ export const AuthRedirect: FC<{ authType: AuthType }> = ({ authType }) => {
     if (user && isLoggedIn === 'true') navigate(path.dashboard);
 
     if (!user) navigate(path.root);
-  }, [user, isLoggedIn]);
+  }, [user, isLoggedIn, navigate, dispatch]);
 
   return <AuthRedirectMsg authType={authType} />;
 };

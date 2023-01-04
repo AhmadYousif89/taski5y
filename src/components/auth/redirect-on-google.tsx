@@ -25,7 +25,7 @@ export const GoogleRedirect: FC<{ authType: AuthType }> = ({ authType }) => {
     }
 
     if (user && isLoggedIn === 'true') navigate(path.dashboard);
-  }, [user, isLoggedIn]);
+  }, [user, isLoggedIn, navigate, dispatch]);
 
   return <AuthRedirectMsg authType={authType} />;
 };

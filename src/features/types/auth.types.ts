@@ -1,10 +1,19 @@
+import { ResponseError, ResponseStatus } from './http.types';
+
 export type AuthType = 'register' | 'login';
-export type SignUpType = {
+export type AuthState = {
+  user: User | null;
+  message: string;
+  error: ResponseError;
+  status: ResponseStatus;
+  actionType: AuthActionType;
+};
+export type AuthSignUp = {
   name: string;
   email: string;
   password: string;
 };
-export type SignInType = {
+export type AuthSignIn = {
   email: string;
   password: string;
 };

@@ -21,14 +21,13 @@ export const Select: FC<SelectProps> = props => {
   const { id, name, label, getValue, options, isFormSubmitted = false } = props;
   const [selectedValue, setSelectedValue] = useState<string>('');
 
-  const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) =>
-    setSelectedValue(e.target.value);
+  const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => setSelectedValue(e.target.value);
   const resetSelect = () => setSelectedValue('');
 
   useEffect(() => {
     getValue({ name, value: selectedValue as SelectValues });
     if (isFormSubmitted) resetSelect();
-  }, [isFormSubmitted, selectedValue]);
+  }, [isFormSubmitted, selectedValue, name, getValue]);
 
   const optList = options.map((opt, i) => (
     <option key={i} value={opt}>
@@ -38,9 +37,7 @@ export const Select: FC<SelectProps> = props => {
 
   return (
     <>
-      <legend className="mb-1 cursor-default bg-color-card text-xl text-color-base">
-        {label}
-      </legend>
+      <legend className="mb-1 cursor-default bg-color-card text-xl text-color-base">{label}</legend>
       <select
         id={id}
         name={name}

@@ -49,7 +49,7 @@ export const UserSettings = () => {
         <li className="li-item" onClick={() => setModal(true)}>
           <span className="text-red-500">Delete account</span>
         </li>
-        <li className="flex-center li-item gap-4" onClick={() => logoutHandler()}>
+        <li className="li-item flex-center gap-4" onClick={() => logoutHandler()}>
           <LogoutIcon />
           <span>Logout</span>
         </li>

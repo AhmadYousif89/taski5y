@@ -9,7 +9,7 @@ import { AuthInputNames } from './types';
 import { AuthButton } from './auth-button';
 
 import { API_URL } from 'features/config';
-import { SignUpType } from 'features/types';
+import { AuthSignUp } from 'features/types';
 import { signUp } from 'features/services/auth';
 import { authSelector } from 'features/slices/auth';
 
@@ -68,12 +68,12 @@ export const RegisterForm = () => {
     return () => {
       window.removeEventListener('unload', unload);
     };
-  }, [user]);
+  }, [navigate, user]);
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formIsValid) return;
-    const newUser: SignUpType = { name, email, password };
+    const newUser: AuthSignUp = { name, email, password };
     dispatch(signUp(newUser));
   };
 

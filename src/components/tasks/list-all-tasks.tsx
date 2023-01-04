@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { ActionModal, Backdrop } from 'components/ui';
@@ -23,15 +23,15 @@ export const TaskList = () => {
   const sortedData = sortTasks(updatedTasks, { sort, type });
   updatedTasks = sortedData;
 
-  const fetchTasks = () => {
+  const fetchTasks = useCallback(() => {
     dispatch(setTaskActionType('fetching'));
     dispatch(getAllTasks());
     wait(() => dispatch(setTaskActionType('')), 1);
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     fetchTasks();
-  }, []);
+  }, [fetchTasks]);
 
   if (actionType === 'fetching') {
     return (

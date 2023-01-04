@@ -18,11 +18,12 @@ export const Menu: FC<PropsWithChildren<SideMenuProps>> = ({ children, className
     : '-translate-y-full opacity-0 invisible';
 
   useEffect(() => {
+    const ref = menuRef.current;
     const focusMenu = () => menuRef.current?.focus();
-    menuRef.current?.addEventListener('transitionrun', focusMenu);
+    ref?.addEventListener('transitionrun', focusMenu);
 
     return () => {
-      menuRef.current?.removeEventListener('transitionrun', focusMenu);
+      ref?.removeEventListener('transitionrun', focusMenu);
     };
   }, []);
 

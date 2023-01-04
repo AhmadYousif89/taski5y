@@ -88,7 +88,7 @@
     @apply mt-4 text-xl text-color-invalid;
   }
   .li-item {
-    @apply rounded-md bg-color-card p-4 ring-1 ring-color-base hover:ring-color-highlight;
+    @apply rounded-md bg-color-card py-3 px-4 capitalize tracking-wider ring-1 ring-color-base hover:ring-color-highlight;
   }
 }
 
