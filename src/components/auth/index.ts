@@ -5,7 +5,7 @@ export * from './login-form';
 export * from './logout';
 export * from './redirect-on-auth';
 export * from './register-form';
-export * from './remember-me-checkbox';
+export * from './trust-device-checkbox';
 export * from './require-auth';
 export * from './reset-password-form';
 export * from './switch-form-button';

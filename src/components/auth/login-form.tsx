@@ -16,7 +16,7 @@ import { AuthButton } from './auth-button';
 import { AuthSignIn } from 'features/types';
 import { AuthMsg } from './auth-msg';
 import { AuthContainer } from './auth-container';
-import { TrustDevice } from './remember-me-checkbox';
+import { TrustDevice } from './trust-device-checkbox';
 import { SwitchFormButton } from './switch-form-button';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword' | 'name'>, boolean>;

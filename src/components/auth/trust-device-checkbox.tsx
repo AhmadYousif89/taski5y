@@ -1,7 +1,15 @@
+import { useEffect } from 'react';
 import { usePersist } from 'hooks';
+import { modifyLocalStorage } from 'helpers/modify-local-storage';
 
 export const TrustDevice = () => {
-  const [persist, setPersist] = usePersist(false);
+  const persistKey = modifyLocalStorage({ action: 'get', key: 'persist' });
+  const [persist, setPersist] = usePersist(persistKey, false);
+
+  useEffect(() => {
+    if (!persistKey) setPersist(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [persistKey]);
 
   return (
     <label htmlFor="persist" className="flex-center w-full gap-2 text-xl text-color-base">

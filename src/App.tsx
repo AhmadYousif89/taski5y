@@ -25,7 +25,7 @@ function App() {
       dispatch(getUser());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoggedIn, persist]);
+  }, []);
 
   if (status === 'loading') {
     switch (actionType) {
