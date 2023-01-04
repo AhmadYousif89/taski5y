@@ -8,10 +8,7 @@ type DebounceType = (e: ChangeEvent<HTMLInputElement>) => void;
  * @param {number} [delay=1000] - The delay in milliseconds before the callback function will be called.
  * @returns {function} A new function that takes an event as argument.
  */
-export const debounce = (
-  cb: (e: ChangeEvent<HTMLInputElement>) => void,
-  delay = 1000,
-): DebounceType => {
+export const debounce = (cb: DebounceType, delay = 1000): DebounceType => {
   let timeout: number | NodeJS.Timeout;
   return (e: ChangeEvent<HTMLInputElement>) => {
     clearTimeout(timeout);

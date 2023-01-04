@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from 'react';
+import { FC } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useAppSelector } from 'app/hooks';
@@ -30,7 +30,6 @@ export const ActionModal: FC<ActionModalProps> = ({
   showWarning = true,
   confirmAction,
 }) => {
-  const actionModalRef = useRef<HTMLDivElement>(null);
   const { status } = useAppSelector(authSelector);
 
   let content = (
@@ -115,15 +114,10 @@ export const ActionModal: FC<ActionModalProps> = ({
       </div>
     );
 
-  useEffect(() => {
-    if (actionModalRef.current) actionModalRef.current.querySelectorAll('button')[1]?.focus();
-  }, [actionModalRef.current]);
-
   const modalRoot = document.getElementById('modal-root') as HTMLDivElement;
 
   const modalElement = (
     <section
-      ref={actionModalRef}
       aria-label="modal"
       className="flex-center fixed top-1/2 left-1/2 z-40 mx-auto w-10/12 max-w-3xl -translate-y-1/2 -translate-x-1/2 rounded-lg bg-neutral-800 pt-20 pb-24 text-color-base shadow-md">
       {content}
