@@ -4,7 +4,7 @@ import { useAppDispatch } from 'app/hooks';
 import { LogoutIcon, SettingsIcon } from 'assets/icons';
 import { Card, ActionModal, Backdrop } from 'components/ui';
 
-import { useClickListener } from 'hooks';
+import { useEventListener } from 'hooks';
 import { resetTasks } from 'features/slices/task';
 import { setAuthActionType } from 'features/slices/auth';
 import { signOut, deleteUser } from 'features/services/auth';
@@ -15,9 +15,9 @@ export const UserSettings = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [modal, setModal] = useState(false);
 
-  const settingRef = useClickListener({
-    onClickInside: () => setToggleMenu(true),
-    onClickOutside: () => setToggleMenu(false),
+  const settingRef = useEventListener({
+    insideElement: () => setToggleMenu(true),
+    outsideElement: () => setToggleMenu(false),
   });
 
   const logoutHandler = () => {

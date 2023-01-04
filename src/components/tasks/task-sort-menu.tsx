@@ -7,7 +7,7 @@ import { ArrowIcon, SortIcon } from 'assets/icons';
 
 import { useAppSelector } from 'app/hooks';
 import { taskSelector } from 'features/slices/task';
-import { useSearchParams, useClickListener } from 'hooks';
+import { useSearchParams, useEventListener } from 'hooks';
 
 export const SortTasks = () => {
   const navigate = useNavigate();
@@ -18,9 +18,9 @@ export const SortTasks = () => {
   const openSortMenuHandler = () => setToggleMenu(true);
   const closeSortMenuHandler = () => setToggleMenu(false);
 
-  const sortRef = useClickListener({
-    onClickInside: () => openSortMenuHandler(),
-    onClickOutside: () => closeSortMenuHandler(),
+  const sortRef = useEventListener({
+    insideElement: () => openSortMenuHandler(),
+    outsideElement: () => closeSortMenuHandler(),
   });
 
   const isSortAsc = sort === 'asc';
@@ -34,11 +34,9 @@ export const SortTasks = () => {
   const sortByPriorityHandler = () =>
     navigate(`${path.dashboard}?sort=${isSortAsc ? 'desc' : 'asc'}&type=priority`);
 
-  const unsortHandler = () => {
-    navigate(`${path.dashboard}`);
-  };
+  const unsortHandler = () => navigate(`${path.dashboard}`);
 
-  const sortList = (
+  const sortingList = (
     <Card className="absolute top-full left-0 translate-y-2 ring-1 ring-color-base">
       <div className="flex flex-col gap-6 py-2 text-center text-color-base">
         <button
@@ -105,7 +103,7 @@ export const SortTasks = () => {
           onClick={openSortMenuHandler}
           className="flex-center absolute left-[3%] z-[15] cursor-pointer rounded-md bg-color-card py-5 pl-4 pr-1 text-xl text-color-base ring-2 ring-color-base active:ring-color-highlight xs:left-[10%] lg:left-[20%]">
           <span>Sort</span> <SortIcon />
-          {toggleMenu && <>{sortList}</>}
+          {toggleMenu && <>{sortingList}</>}
         </div>
       ) : null}
     </>

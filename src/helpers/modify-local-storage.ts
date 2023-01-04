@@ -10,6 +10,15 @@ export type LocalStorageType<A extends LSAction> =
 
 const keys: LSKeys[] = ['persist', 'logged_in', 'server_error', 'mode'];
 
+/**
+ * Perform various action types on the local storage based on the provided options.
+ * @param {LocalStorageType<A>} options - An object containing options for modifying the application keys in the local storage.
+ * @param {LSAction} options.action - The action to be performed on the local storage.
+ * @param {LSKeys} options.key - The key of the item to be modified in the local storage.
+ * @param {any} options.value - The value to be set for the item in the local storage.
+ * @param {LSKeys | LSKeys[]} options.exclude - A string or an array of strings representing the keys of items to be excluded when clearing the local storage.
+ * @return {any} The value of the item in the local storage with the specified key, if the action is 'get'.
+ */
 export const modifyLocalStorage = <A extends LSAction>(options: LocalStorageType<A>): any => {
   const { action } = options;
 

@@ -1,8 +1,6 @@
 import { FC, PropsWithChildren } from 'react';
 
-type Props = {
-  className?: string;
-};
+type Props = { className?: string };
 
 export const Divider: FC<PropsWithChildren<Props>> = ({ children, className = '' }) => {
   return (
