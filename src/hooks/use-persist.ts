@@ -1,12 +1,16 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { modifyLocalStorage } from 'helpers/modify-local-storage';
+import { LSKeys, modifyLocalStorage } from 'helpers/modify-local-storage';
 
-export const usePersist = <I>(key: string, initialValue: I): [I, Dispatch<SetStateAction<I>>] => {
-  const [persist, setPersist] = useState<I>(JSON.parse(key) || initialValue);
+export const usePersist = <I>(
+  item: string,
+  initialValue: I,
+  key: LSKeys = 'persist',
+): [I, Dispatch<SetStateAction<I>>] => {
+  const [persist, setPersist] = useState<I>(JSON.parse(item) || initialValue);
 
   useEffect(() => {
-    modifyLocalStorage({ action: 'set', key: 'persist', value: JSON.stringify(persist) });
-  }, [persist]);
+    modifyLocalStorage({ action: 'set', key, value: JSON.stringify(persist) });
+  }, [key, persist]);
 
   return [persist, setPersist];
 };
