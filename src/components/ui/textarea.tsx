@@ -39,7 +39,7 @@ export const TextArea = (props: TextAreaProps) => {
     placeholderErrMsg,
     isRequired = true,
     showInputErr = true,
-    isFormSubmitted = false,
+    isFormSubmitted = false
   } = props;
 
   const [inputValue, setInputValue] = useState<string>(value);

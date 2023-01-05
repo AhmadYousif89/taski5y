@@ -1,7 +1,9 @@
 /**
- * Reads the contents of a File object and returns the data as a data URL.
- * @param {Blob} file - The File object to read.
- * @returns {Promise} A promise that resolves with the data URL.
+ * Reads a file as a data URL.
+ * @param {File} file - The file to be read.
+ * @returns {Promise<unknown>} A promise that resolves with the file content as a data URL.
+ * @example
+ * readFileAsDataURL(file).then(dataURL => console.log(dataURL));
  */
 export const readFileAsDataURL = (file: File): Promise<unknown> => {
   return new Promise(resolve => {
@@ -19,11 +21,13 @@ export const readFileAsDataURL = (file: File): Promise<unknown> => {
  * @param {string} imageURL - The URL of the image to resize.
  * @param {HTMLCanvasElement} canvas - The canvas element to use for resizing the image.
  * @returns {Promise} A promise that resolves with the resized image as a data URL.
+ * @example
+ * resizeImage(100, imageURL, canvas).then(dataURL => console.log(dataURL));
  */
 export const resizeImage = (
   maxHeight: number,
   imageURL: string,
-  canvas: HTMLCanvasElement,
+  canvas: HTMLCanvasElement
 ): Promise<unknown> =>
   new Promise(resolve => {
     const image = new Image();

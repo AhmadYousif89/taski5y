@@ -8,8 +8,8 @@ type InputNames = AuthInputNames | TaskInputNames;
 type InputValidator = (arg: string) => boolean;
 type InputValidation = { name: InputNames; isValid: boolean };
 export type InputPropObj = { name: InputNames; value: string };
-export type GetInputValidation = ({ name, isValid }: InputValidation) => void;
 export type GetInputValues = ({ name, value }: InputPropObj) => void;
+export type GetInputValidation = ({ name, isValid }: InputValidation) => void;
 
 type InputProps = {
   id?: InputNames;
@@ -47,7 +47,7 @@ const CustomInput = (props: InputProps, ref: Ref<HTMLInputElement>) => {
     placeholderErrMsg,
     isRequired = true,
     showInputErr = true,
-    isFormSubmitted = false,
+    isFormSubmitted = false
   } = props;
 
   const [inputValue, setInputValue] = useState<string>(value);

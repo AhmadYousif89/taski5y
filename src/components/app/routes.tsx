@@ -10,7 +10,7 @@ import {
   RegisterForm,
   ResetPassword,
   GoogleRedirect,
-  AuthRedirect,
+  AuthRedirect
 } from 'components/auth';
 
 export const path: AppPaths = {
@@ -23,7 +23,7 @@ export const path: AppPaths = {
   googleRegister: '/auth/google/signup',
   googleLogin: '/auth/google/signin',
   passwordReset: '/password-reset',
-  notFound: '*',
+  notFound: '*'
 };
 
 export const AppRoutes = () => {

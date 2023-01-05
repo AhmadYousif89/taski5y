@@ -21,7 +21,7 @@ const initFormValidity: FormValidity = {
   title: false,
   details: false,
   priority: false,
-  status: false,
+  status: false
 };
 const initFormValues: FormValues = { title: '', details: '', priority: '', status: '' };
 
@@ -30,9 +30,9 @@ export const TaskForm = () => {
   const { status } = useAppSelector(taskSelector);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
-    FormValidity,
-    FormValues
-  >({ initFormValidity, initFormValues });
+    FormValues,
+    FormValidity
+  >({ initFormValues, initFormValidity });
 
   const { title, details, status: statusValue, priority } = formValues;
   const { title: titleIsValid, details: detailsIsValid } = formValidity;
@@ -45,7 +45,7 @@ export const TaskForm = () => {
       title,
       details,
       status: (statusValue as TaskStatus) || 'Todo',
-      priority: (priority as TaskPriority) || 'Normal',
+      priority: (priority as TaskPriority) || 'Normal'
     };
     setIsSubmitted(true);
     dispatch(addNewTask(newTask));

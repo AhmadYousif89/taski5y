@@ -9,7 +9,7 @@ const storedTheme = modifyLocalStorage({ action: 'get', key: 'mode' }) as AppThe
 const initialState: UIState = {
   mode: storedTheme ? storedTheme : 'dark-theme',
   menuIsVisible: false,
-  profileIsVisible: false,
+  profileIsVisible: false
 };
 
 const uiSlice = createSlice({
@@ -25,8 +25,8 @@ const uiSlice = createSlice({
     },
     setProfile(state, { payload }: { payload: boolean }) {
       state.profileIsVisible = payload;
-    },
-  },
+    }
+  }
 });
 
 export const { toggleSideMenu, toggleAppTheme, setProfile } = uiSlice.actions;

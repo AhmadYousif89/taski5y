@@ -19,18 +19,18 @@ import { GetInputValues, Divider, Button, Input } from 'components/ui';
 import { AuthMsg } from './auth-msg';
 import { AuthContainer } from './auth-container';
 
-type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword'>, boolean>;
 type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword'>, string>;
+type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword'>, boolean>;
 
-const initFormValidity: FormValidity = {
-  name: false,
-  email: false,
-  password: false,
-};
 const initFormValues: FormValues = {
   name: '',
   email: '',
-  password: '',
+  password: ''
+};
+const initFormValidity: FormValidity = {
+  name: false,
+  email: false,
+  password: false
 };
 
 export const RegisterForm = () => {
@@ -40,9 +40,9 @@ export const RegisterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { status, error } = useAppSelector(authSelector);
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
-    FormValidity,
-    FormValues
-  >({ initFormValidity, initFormValues });
+    FormValues,
+    FormValidity
+  >({ initFormValues, initFormValidity });
 
   const { name: nameIsValid, email: emailIsValid, password: passwordIsValid } = formValidity;
   const { name, email, password } = formValues;
@@ -150,7 +150,7 @@ export const RegisterForm = () => {
               import.meta.env.PROD
                 ? `${import.meta.env.VITE_API_URL}/auth/google`
                 : `${API_URL}/auth/google`,
-              '_self',
+              '_self'
             );
           }}
           label="Continue with google"

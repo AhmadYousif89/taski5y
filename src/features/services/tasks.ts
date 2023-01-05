@@ -3,18 +3,17 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosPrivate } from 'features/config';
 import { ResponseError, Task } from 'features/types';
 
-export const getAllTasks = createAsyncThunk<
-  Task[],
-  void,
-  { rejectValue: Partial<ResponseError> }
->('all/tasks', async (_, { rejectWithValue }) => {
-  try {
-    const { data } = await axiosPrivate.get('/tasks');
-    return data;
-  } catch (err: any) {
-    return rejectWithValue(err.response.data);
+export const getAllTasks = createAsyncThunk<Task[], void, { rejectValue: Partial<ResponseError> }>(
+  'all/tasks',
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPrivate.get('/tasks');
+      return data;
+    } catch (err: any) {
+      return rejectWithValue(err.response.data);
+    }
   }
-});
+);
 
 export const addNewTask = createAsyncThunk<
   Task,
@@ -37,7 +36,7 @@ export const updateTask = createAsyncThunk<
   try {
     const { data } = await axiosPrivate(`/tasks/${patch.id}`, {
       method: 'PATCH',
-      data: { ...patch },
+      data: { ...patch }
     });
     return data;
   } catch (err: any) {

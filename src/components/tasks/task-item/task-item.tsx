@@ -68,9 +68,7 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
             setShowUpdateBtn={setShowUpdateBtn}
           />
         </footer>
-        {taskWasUpdated ? (
-          <DisplayTaskTime label="updated" time={task.updatedAt} />
-        ) : null}
+        {taskWasUpdated ? <DisplayTaskTime label="updated" time={task.updatedAt} /> : null}
       </li>
     </Card>
   );

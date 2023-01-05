@@ -17,7 +17,7 @@ const initialState: TaskState = {
   activeTaskPanel: '',
   searchedTaskQuery: '',
   error: initError,
-  actionType: '',
+  actionType: ''
 };
 
 const taskSlice = createSlice({
@@ -38,7 +38,7 @@ const taskSlice = createSlice({
     },
     setTaskActionType(state, { payload }: PayloadAction<TaskActionType>) {
       state.actionType = payload;
-    },
+    }
   },
   extraReducers(builder) {
     builder
@@ -85,7 +85,7 @@ const taskSlice = createSlice({
         state.tasks = state.tasks.map(task => (task.id !== updatedTaskId ? task : { ...payload }));
         state.totalTodoTasks = state.tasks.filter(task => task.status === 'Todo').length;
         state.totalInProgressTasks = state.tasks.filter(
-          task => task.status === 'InProgress',
+          task => task.status === 'InProgress'
         ).length;
         // Case => Task was marked as complete
         if (payload.status === 'Completed') {
@@ -111,7 +111,7 @@ const taskSlice = createSlice({
         state.totalTasks = state.tasks.length;
         state.totalTodoTasks = state.tasks.filter(task => task.status === 'Todo').length;
         state.totalInProgressTasks = state.tasks.filter(
-          task => task.status === 'InProgress',
+          task => task.status === 'InProgress'
         ).length;
         state.completedTasks = state.completedTasks.filter(task => task.id !== taskId);
         state.totalCompletedTasks = state.completedTasks.length;
@@ -120,7 +120,7 @@ const taskSlice = createSlice({
         state.status = 'rejected';
         state.error = payload || initError;
       });
-  },
+  }
 });
 
 export const {
@@ -128,7 +128,7 @@ export const {
   resetTaskStatus,
   setTaskSearchQuery,
   setTaskActivePanel,
-  setTaskActionType,
+  setTaskActionType
 } = taskSlice.actions;
 export const taskSelector = (state: RootState) => state.tasks;
 export default taskSlice.reducer;

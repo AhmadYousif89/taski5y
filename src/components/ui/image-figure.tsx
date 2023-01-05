@@ -19,7 +19,7 @@ export const ImageFigure: FC<PropsWithChildren<ImageFigureProps>> = ({
   onClick,
   children,
   actionType,
-  className = '',
+  className = ''
 }) => {
   const animateBorder =
     actionType === 'uploading image'

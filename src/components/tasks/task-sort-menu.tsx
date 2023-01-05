@@ -20,7 +20,7 @@ export const SortTasks = () => {
 
   const sortRef = useEventListener({
     insideElement: () => openSortMenuHandler(),
-    outsideElement: () => closeSortMenuHandler(),
+    outsideElement: () => closeSortMenuHandler()
   });
 
   const isSortAsc = sort === 'asc';

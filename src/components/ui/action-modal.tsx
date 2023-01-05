@@ -28,7 +28,7 @@ export const ActionModal: FC<ActionModalProps> = ({
   closeModal,
   extraAction,
   showWarning = true,
-  confirmAction,
+  confirmAction
 }) => {
   const { status } = useAppSelector(authSelector);
 

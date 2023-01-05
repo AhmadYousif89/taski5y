@@ -13,7 +13,7 @@ export const Card: FC<PropsWithChildren<CardProps>> = ({
   className,
   children,
   priority,
-  onClick,
+  onClick
 }) => {
   const styles = className ? className : '';
 

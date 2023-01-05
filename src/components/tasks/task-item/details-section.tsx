@@ -15,7 +15,7 @@ export const DetailsSection: FC<Props> = ({
   isEditing,
   setIsEditing,
   setShowUpdateBtn,
-  setUpdatedDetails,
+  setUpdatedDetails
 }) => {
   const onBlurHandler = (e: ChangeEvent<HTMLDivElement>) => {
     setUpdatedDetails(e.target.textContent as string);
@@ -42,9 +42,7 @@ export const DetailsSection: FC<Props> = ({
         {taskDetails}
       </div>
       {isUpdating ? (
-        <p className={`text-green absolute left-0 -bottom-12 text-xl uppercase`}>
-          updating
-        </p>
+        <p className={`text-green absolute left-0 -bottom-12 text-xl uppercase`}>updating</p>
       ) : null}
       {isEditing && !isUpdating ? (
         <p className="text-amber absolute left-0 -bottom-12 text-xl uppercase tracking-wide">

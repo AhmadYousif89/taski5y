@@ -17,7 +17,7 @@ export const UserSettings = () => {
 
   const settingRef = useEventListener({
     insideElement: () => setToggleMenu(true),
-    outsideElement: () => setToggleMenu(false),
+    outsideElement: () => setToggleMenu(false)
   });
 
   const logoutHandler = () => {

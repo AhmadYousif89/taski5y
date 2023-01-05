@@ -14,7 +14,7 @@ export const DisplayTaskPanels = () => {
       title: 'Todo',
       count: totalTodoTasks,
       tooltip: 'show only new tasks',
-      togglePanels: () => dispatch(setTaskActivePanel('Todo')),
+      togglePanels: () => dispatch(setTaskActivePanel('Todo'))
     },
     {
       id: 'p2',
@@ -22,7 +22,7 @@ export const DisplayTaskPanels = () => {
       title: 'InProgress',
       count: totalInProgressTasks,
       tooltip: 'show only in progress tasks',
-      togglePanels: () => dispatch(setTaskActivePanel('InProgress')),
+      togglePanels: () => dispatch(setTaskActivePanel('InProgress'))
     },
     {
       id: 'p3',
@@ -30,8 +30,8 @@ export const DisplayTaskPanels = () => {
       title: 'Completed',
       count: totalCompletedTasks,
       tooltip: 'show only completed tasks',
-      togglePanels: () => dispatch(setTaskActivePanel('Completed')),
-    },
+      togglePanels: () => dispatch(setTaskActivePanel('Completed'))
+    }
   ];
 
   return (

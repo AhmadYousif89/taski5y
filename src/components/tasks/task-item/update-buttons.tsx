@@ -24,7 +24,7 @@ export const TaskUpdateButtons: FC<Props> = ({
   setShowUpdateBtn,
   showUpdateBtn,
   setIsUpdating,
-  setIsEditing,
+  setIsEditing
 }) => {
   const dispatch = useAppDispatch();
   const [modal, setModal] = useState(false);

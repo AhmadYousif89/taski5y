@@ -18,7 +18,7 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
   children,
   className,
   isDisabled = false,
-  type = 'button',
+  type = 'button'
 }) => {
   const cursorStyle = isDisabled ? 'cursor-not-allowed' : 'cursor-pointer';
 

@@ -7,7 +7,7 @@ export default axios.create({ baseURL: API_URL });
 export const axiosPrivate = axios.create({
   baseURL: API_URL,
   withCredentials: true,
-  headers: { 'Content-Type': 'application/json' },
+  headers: { 'Content-Type': 'application/json' }
 });
 
 let accessToken = '';
@@ -40,7 +40,7 @@ const onResponseError = async (error: AxiosError) => {
       }
       return axiosPrivate({
         ...prevRequest,
-        headers: JSON.parse(JSON.stringify(prevRequest.headers)),
+        headers: JSON.parse(JSON.stringify(prevRequest.headers))
       });
     } catch (refreshErr) {
       return Promise.reject(refreshErr);
@@ -51,7 +51,7 @@ const onResponseError = async (error: AxiosError) => {
     modifyLocalStorage({
       action: 'set',
       key: 'server_error',
-      value: JSON.stringify(error.response.data),
+      value: JSON.stringify(error.response.data)
     });
     window.location.reload();
     return;

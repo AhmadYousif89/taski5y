@@ -32,9 +32,9 @@ export const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { status, error } = useAppSelector(authSelector);
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
-    FormValidity,
-    FormValues
-  >({ initFormValidity, initFormValues });
+    FormValues,
+    FormValidity
+  >({ initFormValues, initFormValidity });
 
   const { email, password } = formValues;
   const { email: emailIsValid, password: passwordIsValid } = formValidity;
@@ -135,7 +135,7 @@ export const LoginForm = () => {
               import.meta.env.PROD
                 ? `${import.meta.env.VITE_API_URL}/auth/google`
                 : `${API_URL}/auth/google`,
-              '_self',
+              '_self'
             );
           }}
           label="Sign in with google"

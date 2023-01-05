@@ -18,6 +18,9 @@ const keys: LSKeys[] = ['persist', 'logged_in', 'server_error', 'mode'];
  * @param {any} options.value - The value to be set for the item in the local storage.
  * @param {LSKeys | LSKeys[]} options.exclude - A string or an array of strings representing the keys of items to be excluded when clearing the local storage.
  * @return {any} The value of the item in the local storage with the specified key, if the action is 'get'.
+ * @example
+ * const key = modifyLocalStorage({ action: 'get', key: 'mode'})
+ * console.log(key) // 'dark-mode'
  */
 export const modifyLocalStorage = <A extends LSAction>(options: LocalStorageType<A>): any => {
   const { action } = options;

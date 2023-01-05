@@ -6,7 +6,7 @@ import {
   TodoTaskList,
   CompletedTaskList,
   DisplayTaskPanels,
-  InProgressTaskList,
+  InProgressTaskList
 } from 'components/tasks';
 import { Button } from 'components/ui';
 import { BackArrowIcon } from 'assets/icons';

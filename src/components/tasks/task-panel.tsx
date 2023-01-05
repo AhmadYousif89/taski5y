@@ -14,13 +14,7 @@ export type TaskPanelProps = {
   togglePanels: () => void;
 };
 
-export const TaskPanel: FC<TaskPanelProps> = ({
-  title,
-  count,
-  color,
-  tooltip,
-  togglePanels,
-}) => {
+export const TaskPanel: FC<TaskPanelProps> = ({ title, count, color, tooltip, togglePanels }) => {
   const { activeTaskPanel } = useAppSelector(taskSelector);
 
   const borderColor =
@@ -54,9 +48,7 @@ export const TaskPanel: FC<TaskPanelProps> = ({
           {count}
         </span>
       </div>
-      <p className={`rounded-md p-3 text-2xl capitalize tracking-wide md:text-4xl`}>
-        {title}
-      </p>
+      <p className={`rounded-md p-3 text-2xl capitalize tracking-wide md:text-4xl`}>{title}</p>
     </button>
   );
 };

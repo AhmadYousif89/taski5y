@@ -11,17 +11,23 @@ type Options = {
 };
 
 /**
- * A hook for adding an event listener to an element.
+ * A custom hook for adding an event listener to an element.
  * @param {Options} options - An object containing options for the event listener.
- * @param {EventType} [options.eventType='click'] - The type of event to listen for.
- * @param {(event: Event) => void} options.insideElement - A callback function to be called when the event occurs inside the element.
- * @param {(event: Event) => void} options.outsideElement - A callback function to be called when the event occurs outside the element.
+ * @property {eventType: EventType} [options.eventType='click'] - The type of event to listen for.
+ * @property {(event: Event) => void} options.insideElement - A callback function to be called when the event occurs inside the element.
+ * @property {(event: Event) => void} options.outsideElement - A callback function to be called when the event occurs outside the element.
  * @return {RefObject<HTMLElement>} A ref object that can be attached to an element to be listened to.
+ * @example
+ * const [toggle, setToggle] = useState(false);
+ * const ref = useEventListener({
+ * insideElement: () => setToggle(true),
+ * outsideElement: () => setToggle(false)
+ * });
  */
 export const useEventListener = ({
   eventType = 'click',
   insideElement,
-  outsideElement,
+  outsideElement
 }: Options): RefObject<HTMLElement> => {
   const elementRef = useRef<HTMLElement | null>(null);
 

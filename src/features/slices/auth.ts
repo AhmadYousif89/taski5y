@@ -9,7 +9,7 @@ import {
   updateUser,
   deleteUser,
   resetPassword,
-  loginWithGoogle,
+  loginWithGoogle
 } from '../services/auth';
 import { modifyLocalStorage } from 'helpers/modify-local-storage';
 import { AuthActionType, ResponseError, AuthState } from '../types';
@@ -21,7 +21,7 @@ const initialState: AuthState = {
   status: 'idle',
   message: '',
   user: null,
-  actionType: '',
+  actionType: ''
 };
 
 const authSlice = createSlice({
@@ -36,7 +36,7 @@ const authSlice = createSlice({
     },
     setAuthActionType(state, { payload }: PayloadAction<AuthActionType>) {
       state.actionType = payload;
-    },
+    }
   },
   extraReducers: builder => {
     builder
@@ -83,7 +83,7 @@ const authSlice = createSlice({
         state.error = {
           statusCode: payload?.statusCode || 0,
           message: 'Google authentication failed',
-          error: payload?.error,
+          error: payload?.error
         };
       });
 
@@ -156,7 +156,7 @@ const authSlice = createSlice({
         state.actionType = '';
         state.error = payload || initError;
       });
-  },
+  }
 });
 
 export const { resetAuth, setAuthActionType, resetAuthStatus } = authSlice.actions;

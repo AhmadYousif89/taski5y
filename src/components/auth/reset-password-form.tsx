@@ -21,7 +21,7 @@ type FormValues = Record<Exclude<AuthInputNames, 'name'>, string>;
 const initFormValidity: FormValidity = {
   email: false,
   password: false,
-  confirmPassword: false,
+  confirmPassword: false
 };
 const initFormValues: FormValues = { email: '', password: '', confirmPassword: '' };
 
@@ -32,16 +32,16 @@ export const ResetPassword = () => {
   const { status, message, error } = useAppSelector(authSelector);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
-    FormValidity,
-    FormValues
-  >({ initFormValidity, initFormValues });
+    FormValues,
+    FormValidity
+  >({ initFormValues, initFormValidity });
 
-  const { email, password, confirmPassword } = formValues;
   const {
     email: emailIsValid,
     password: passwordIsValid,
-    confirmPassword: confirmPasswordIsValid,
+    confirmPassword: confirmPasswordIsValid
   } = formValidity;
+  const { email, password, confirmPassword } = formValues;
 
   const formIsValid = [emailIsValid, passwordIsValid, confirmPasswordIsValid].every(Boolean);
 

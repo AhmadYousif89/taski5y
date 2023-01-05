@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "prettier": "npx prettier --write ./*.html ./src/**/*.{js,jsx,ts,tsx}",
+    "prettier": "npx prettier --write src/**/*.{js,jsx,ts,tsx}",
     "test": "vitest run",
     "test:w": "vitest watch",
     "test:coverage": "vitest run --coverage",

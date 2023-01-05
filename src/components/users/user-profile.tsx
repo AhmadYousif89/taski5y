@@ -20,13 +20,13 @@ const initFormValidity: FormValidity = {
   name: false,
   email: false,
   password: false,
-  confirmPassword: false,
+  confirmPassword: false
 };
 const initFormValues: FormValues = {
   name: '',
   email: '',
   password: '',
-  confirmPassword: '',
+  confirmPassword: ''
 };
 
 export const UserProfile = () => {
@@ -44,7 +44,7 @@ export const UserProfile = () => {
     name: nameIsValid,
     email: emailIsValid,
     password: passwordIsValid,
-    confirmPassword: confirmPasswordIsValid,
+    confirmPassword: confirmPasswordIsValid
   } = formValidity;
   const { name, email, password, confirmPassword } = formValues;
 

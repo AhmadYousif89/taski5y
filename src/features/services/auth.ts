@@ -8,13 +8,13 @@ export const signUp = createAsyncThunk<User, AuthSignUp, { rejectValue: Response
   async (user: AuthSignUp, { rejectWithValue }) => {
     try {
       const { data } = await axios.post(`/auth/register`, user, {
-        withCredentials: true,
+        withCredentials: true
       });
       return data;
     } catch (err: any) {
       return rejectWithValue(err.response.data);
     }
-  },
+  }
 );
 
 export const signIn = createAsyncThunk<User, AuthSignIn, { rejectValue: ResponseError }>(
@@ -23,13 +23,13 @@ export const signIn = createAsyncThunk<User, AuthSignIn, { rejectValue: Response
     try {
       // Don't use axiosPrivate on this end point !
       const { data } = await axios.post(`/auth/login`, credentials, {
-        withCredentials: true,
+        withCredentials: true
       });
       return data;
     } catch (err: any) {
       return rejectWithValue(err.response.data);
     }
-  },
+  }
 );
 
 export const loginWithGoogle = createAsyncThunk<User, void, { rejectValue: ResponseError }>(
@@ -37,13 +37,13 @@ export const loginWithGoogle = createAsyncThunk<User, void, { rejectValue: Respo
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await axios.get(`/auth/google/login`, {
-        withCredentials: true,
+        withCredentials: true
       });
       return data;
     } catch (err: any) {
       return rejectWithValue(err.response.data);
     }
-  },
+  }
 );
 
 export const signOut = createAsyncThunk<{ message: string }, void, { rejectValue: ResponseError }>(
@@ -55,7 +55,7 @@ export const signOut = createAsyncThunk<{ message: string }, void, { rejectValue
     } catch (err: any) {
       return rejectWithValue(err.response.data);
     }
-  },
+  }
 );
 
 export const resetPassword = createAsyncThunk<string, AuthSignIn, { rejectValue: ResponseError }>(
@@ -67,7 +67,7 @@ export const resetPassword = createAsyncThunk<string, AuthSignIn, { rejectValue:
     } catch (err: any) {
       return rejectWithValue(err.response.data);
     }
-  },
+  }
 );
 
 export const getUser = createAsyncThunk<User, void, { rejectValue: ResponseError }>(
@@ -79,7 +79,7 @@ export const getUser = createAsyncThunk<User, void, { rejectValue: ResponseError
     } catch (err: any) {
       return rejectWithValue(err.response.data);
     }
-  },
+  }
 );
 
 export const updateUser = createAsyncThunk<User, Partial<User>, { rejectValue: ResponseError }>(
@@ -88,13 +88,13 @@ export const updateUser = createAsyncThunk<User, Partial<User>, { rejectValue: R
     try {
       const { data } = await axiosPrivate(`/users/me`, {
         data: { ...patch },
-        method: 'PATCH',
+        method: 'PATCH'
       });
       return data;
     } catch (err: any) {
       return rejectWithValue(err.response.data);
     }
-  },
+  }
 );
 
 export const deleteUser = createAsyncThunk<

@@ -8,9 +8,9 @@ export const store = configureStore({
   reducer: {
     ui: uiReducer,
     auth: authReducer,
-    tasks: taskReducer,
+    tasks: taskReducer
   },
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: process.env.NODE_ENV !== 'production'
 });
 
 export type AppDispatch = typeof store.dispatch;
