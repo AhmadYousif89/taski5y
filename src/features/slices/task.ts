@@ -31,7 +31,7 @@ const taskSlice = createSlice({
       state.status = 'idle';
     },
     setTaskSearchQuery(state, { payload }: PayloadAction<string>) {
-      state.searchedTaskQuery = payload.toLowerCase();
+      state.searchedTaskQuery = payload;
     },
     setTaskActivePanel(state, { payload }: PayloadAction<TaskStatus>) {
       state.activeTaskPanel = payload;

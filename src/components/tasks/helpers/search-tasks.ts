@@ -12,7 +12,9 @@ import { Task } from 'features/types';
 export const searchTasks = (tasks: Task[], query: string): Task[] => {
   if (query) {
     return tasks.filter(
-      task => task.title.toLowerCase().includes(query) || task.details.toLowerCase().includes(query)
+      task =>
+        task.title.toLowerCase().includes(query.toLowerCase()) ||
+        task.details.toLowerCase().includes(query.toLowerCase())
     );
   }
   return tasks;

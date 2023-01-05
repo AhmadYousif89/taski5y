@@ -1,14 +1,14 @@
-export type LSKeys = 'persist' | 'server_error' | 'logged_in' | 'mode';
 export type LSAction = 'set' | 'get' | 'remove' | 'clear';
+export type LSKeys = 'persist' | 'server_error' | 'logged_in' | 'mode';
 // prettier-ignore
-export type LocalStorageType<A extends LSAction> =
-  (
-    A extends 'set' ? {action: A; value: any; key: LSKeys } :
-    A extends 'clear' ? {action: A; exclude?: LSKeys | LSKeys[] } : 
-    {action: A; key: LSKeys }
-  )
+export type LocalStorageType<A extends LSAction> = 
+ (
+   A extends 'set' ? { action: A; value: any; key: LSKeys } :
+   A extends 'clear' ? { action: A; exclude?: LSKeys| LSKeys[] } :
+   { action: A; key: LSKeys }
+ )
 
-const keys: LSKeys[] = ['persist', 'logged_in', 'server_error', 'mode'];
+export const keys: LSKeys[] = ['persist', 'logged_in', 'server_error', 'mode'];
 
 /**
  * Perform various action types on the local storage based on the provided options.
@@ -46,11 +46,13 @@ export const modifyLocalStorage = <A extends LSAction>(options: LocalStorageType
     if (typeof options.exclude === 'string') {
       const keysToBeRemoved = keys.filter(k => k !== options.exclude);
       keysToBeRemoved.forEach(k => localStorage.removeItem(k));
-    } else if (Array.isArray(options.exclude) && options.exclude.length > 0) {
+      return;
+    }
+    if (Array.isArray(options.exclude) && options.exclude.length > 0) {
       const keysToBeRemoved = keys.filter(k => !options.exclude?.includes(k));
       keysToBeRemoved.forEach(k => localStorage.removeItem(k));
-    } else {
-      keys.forEach(k => localStorage.removeItem(k));
+      return;
     }
+    keys.forEach(k => localStorage.removeItem(k));
   }
 };

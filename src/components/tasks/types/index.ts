@@ -9,7 +9,7 @@ export type TaskFormValidation = {
 export type TaskInputNames = 'title' | 'details' | 'status' | 'priority';
 export type GetTaskFormValues = ({ name, value }: TaskFormValues) => void;
 export type GetTaskFormValidation = ({ type, isValid }: TaskFormValidation) => void;
-export interface TaskFormProps {
+export type TaskFormProps = {
   getValidity: GetTaskFormValidation;
   getValue: GetTaskFormValues;
-}
+};

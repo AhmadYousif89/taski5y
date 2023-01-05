@@ -31,9 +31,7 @@ export const sortTasks = (
         return sort === 'asc'
           ? taskA.priority === 'High'
             ? 1
-            : taskB.priority === 'High'
-            ? -1
-            : 0
+            : -1
           : taskA.priority.localeCompare(taskB.priority);
       default:
         return 0;

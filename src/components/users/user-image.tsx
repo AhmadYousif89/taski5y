@@ -6,7 +6,7 @@ import { ActionModal, Backdrop, ImageFigure } from 'components/ui';
 import { updateUser } from 'features/services/auth';
 import { authSelector, resetAuthStatus, setAuthActionType } from 'features/slices/auth';
 
-import { readFileAsDataURL, resizeImage } from 'helpers/image-processing';
+import { readFileAsDataURL, resizeImage } from 'helpers/image-utils';
 import defaultUserImg from 'assets/avatar-default.png';
 
 export const UserImage = ({ maxHeight = 300 }: { maxHeight?: number }) => {

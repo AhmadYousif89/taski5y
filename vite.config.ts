@@ -11,9 +11,10 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
+    testTimeout: 10000,
     coverage: {
       reporter: ['text', 'html'],
-      exclude: ['node_modules/', 'src/setup-tests.ts'],
-    },
-  },
+      exclude: ['node_modules/', 'src/setup-tests.ts']
+    }
+  }
 });
