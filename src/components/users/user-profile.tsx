@@ -36,8 +36,8 @@ export const UserProfile = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
-    FormValidity,
-    FormValues
+    FormValues,
+    FormValidity
   >({ initFormValidity, initFormValues });
 
   const {
