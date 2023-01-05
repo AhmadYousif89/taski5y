@@ -34,7 +34,7 @@ export const LoginForm = () => {
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
     FormValues,
     FormValidity
-  >({ initFormValues, initFormValidity });
+  >({ initFormValidity, initFormValues });
 
   const { email, password } = formValues;
   const { email: emailIsValid, password: passwordIsValid } = formValidity;

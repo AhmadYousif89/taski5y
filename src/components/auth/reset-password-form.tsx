@@ -34,7 +34,7 @@ export const ResetPassword = () => {
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
     FormValues,
     FormValidity
-  >({ initFormValues, initFormValidity });
+  >({ initFormValidity, initFormValues });
 
   const {
     email: emailIsValid,

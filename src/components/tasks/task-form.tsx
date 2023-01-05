@@ -32,7 +32,7 @@ export const TaskForm = () => {
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
     FormValues,
     FormValidity
-  >({ initFormValues, initFormValidity });
+  >({ initFormValidity, initFormValues });
 
   const { title, details, status: statusValue, priority } = formValues;
   const { title: titleIsValid, details: detailsIsValid } = formValidity;

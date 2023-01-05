@@ -42,7 +42,7 @@ export const RegisterForm = () => {
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
     FormValues,
     FormValidity
-  >({ initFormValues, initFormValidity });
+  >({ initFormValidity, initFormValues });
 
   const { name: nameIsValid, email: emailIsValid, password: passwordIsValid } = formValidity;
   const { name, email, password } = formValues;
