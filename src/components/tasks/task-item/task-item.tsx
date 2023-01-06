@@ -1,10 +1,8 @@
-import { FC, useEffect, useState } from 'react';
-
-import { useAppSelector } from 'app/hooks';
+import { FC } from 'react';
 
 import { Card } from 'components/ui';
 import { Task } from 'features/types';
-import { taskSelector } from 'features/slices/task';
+import { TaskProvider } from './context';
 
 import { TaskDeleteButton } from './delete-button';
 import { SwitchTaskStatus } from '../task-switcher';
@@ -13,63 +11,30 @@ import { DisplayTaskTime } from './display-time';
 import { DetailsSection } from './details-section';
 
 export const TaskItem: FC<{ task: Task }> = ({ task }) => {
-  const { status } = useAppSelector(taskSelector);
-  const [isEditing, setIsEditing] = useState(false);
-  const [isUpdating, setIsUpdating] = useState(false);
-  const [updatedDetails, setUpdatedDetails] = useState('');
-  const [showUpdateBtn, setShowUpdateBtn] = useState(false);
-
-  useEffect(() => {
-    if (status === 'fulfilled') {
-      setIsUpdating(false);
-      setShowUpdateBtn(false);
-    }
-  }, [status]);
-
-  const taskWasUpdated = task.createdAt !== task.updatedAt;
+  const wasUpdated = task.createdAt !== task.updatedAt;
   const styles = task.status === 'InProgress' ? 'ring-1 ring-color-validating' : '';
 
   return (
-    <Card priority={task.priority} className={`relative ${styles}`}>
-      <li className="flex flex-col gap-6 py-6 px-4 text-color-base md:text-3xl">
-        <TaskDeleteButton taskId={task.id} />
+    <TaskProvider>
+      <Card priority={task.priority} className={`relative ${styles}`}>
+        <li className="flex flex-col gap-6 py-6 px-4 text-color-base md:text-3xl">
+          <TaskDeleteButton taskId={task.id} />
 
-        <header className="space-y-4 self-start">
-          <h2 className="text-3xl tracking-wide">{task.title}</h2>
-          <DisplayTaskTime label="created" time={task.createdAt} />
-        </header>
+          <header className="space-y-4 self-start">
+            <h2 className="text-3xl tracking-wide">{task.title}</h2>
+            <DisplayTaskTime label="created" time={task.createdAt} />
+          </header>
 
-        <DetailsSection
-          taskDetails={task.details}
-          setIsEditing={setIsEditing}
-          setShowUpdateBtn={setShowUpdateBtn}
-          setUpdatedDetails={setUpdatedDetails}
-          isUpdating={isUpdating}
-          isEditing={isEditing}
-        />
+          <DetailsSection taskDetails={task.details} />
 
-        <footer className="mt-6 flex items-end justify-between gap-4">
-          <SwitchTaskStatus
-            taskId={task.id}
-            taskStatus={task.status}
-            onSwitch={() => {
-              setIsUpdating(true);
-              setShowUpdateBtn(true);
-            }}
-          />
-          <TaskUpdateButtons
-            taskId={task.id}
-            isEditing={isEditing}
-            isUpdating={isUpdating}
-            updatedDetails={updatedDetails}
-            showUpdateBtn={showUpdateBtn}
-            setIsEditing={setIsEditing}
-            setIsUpdating={setIsUpdating}
-            setShowUpdateBtn={setShowUpdateBtn}
-          />
-        </footer>
-        {taskWasUpdated ? <DisplayTaskTime label="updated" time={task.updatedAt} /> : null}
-      </li>
-    </Card>
+          <footer className="mt-6 flex items-end justify-between gap-4">
+            <SwitchTaskStatus taskId={task.id} taskStatus={task.status} />
+            <TaskUpdateButtons taskId={task.id} />
+          </footer>
+
+          {wasUpdated ? <DisplayTaskTime label="updated" time={task.updatedAt} /> : null}
+        </li>
+      </Card>
+    </TaskProvider>
   );
 };

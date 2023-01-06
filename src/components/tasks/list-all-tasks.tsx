@@ -1,54 +1,40 @@
-import { useCallback, useEffect } from 'react';
-
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { ActionModal, Backdrop } from 'components/ui';
-
 import { setProfile, toggleSideMenu } from 'features/slices/ui';
-import { getAllTasks } from 'features/services/tasks';
-import { taskSelector, setTaskActionType } from 'features/slices/task';
+import { ActionModal, Backdrop } from 'components/ui';
+import { taskSelector } from 'features/slices/task';
 
-import { wait } from 'helpers';
 import { TaskItem } from './task-item';
 import { useSearchParams } from 'hooks';
-import { searchTasks, sortTasks } from './helpers';
-import { SearchErrMsg } from './search-error-msg';
 import { SearchMsg } from './search-msg';
+import { SearchErrMsg } from './search-error-msg';
+import { searchTasks, sortTasks } from './helpers';
+import { useFetchTasks } from './hooks/use-fetch-tasks';
 
 export const TaskList = () => {
   const dispatch = useAppDispatch();
-  const { tasks, actionType, searchedTaskQuery: query } = useAppSelector(taskSelector);
+  const { actionType, searchedTaskQuery: query } = useAppSelector(taskSelector);
   const { sort, type } = useSearchParams();
+  const tasks = useFetchTasks();
 
   let updatedTasks = [...tasks];
   const sortedData = sortTasks(updatedTasks, { sort, type });
   updatedTasks = sortedData;
 
-  const fetchTasks = useCallback(() => {
-    dispatch(setTaskActionType('fetching'));
-    dispatch(getAllTasks());
-    wait(() => dispatch(setTaskActionType('')), 1);
-  }, [dispatch]);
-
-  useEffect(() => {
-    fetchTasks();
-  }, [fetchTasks]);
-
-  if (actionType === 'fetching') {
-    return (
-      <>
-        <ActionModal actionType="transition" msg="loading" />
-        <Backdrop />
-      </>
-    );
-  }
-
-  if (actionType === 'deleting') {
-    return (
-      <>
-        <ActionModal actionType="transition" msg="deleting" />
-        <Backdrop />
-      </>
-    );
+  switch (actionType) {
+    case 'fetching':
+      return (
+        <>
+          <ActionModal actionType="transition" msg="loading" />
+          <Backdrop />
+        </>
+      );
+    case 'deleting':
+      return (
+        <>
+          <ActionModal actionType="transition" msg="deleting" />
+          <Backdrop />
+        </>
+      );
   }
 
   if (updatedTasks.length === 0) {

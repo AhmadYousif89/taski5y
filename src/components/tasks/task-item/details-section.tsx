@@ -1,30 +1,22 @@
-import { ChangeEvent, Dispatch, FC, SetStateAction } from 'react';
+import { ChangeEvent, FC } from 'react';
+import { useTaskItem } from './context';
 
-type Props = {
-  taskDetails: string;
-  isUpdating: boolean;
-  isEditing: boolean;
-  setUpdatedDetails: (arg: string) => void;
-  setShowUpdateBtn: Dispatch<SetStateAction<boolean>>;
-  setIsEditing: Dispatch<SetStateAction<boolean>>;
-};
+export const DetailsSection: FC<{ taskDetails: string }> = ({ taskDetails }) => {
+  const {
+    state: { isUpdating, isEditing },
+    setTaskIsEditing,
+    setTaskUpdateBtn,
+    updateTaskDetails
+  } = useTaskItem();
 
-export const DetailsSection: FC<Props> = ({
-  taskDetails,
-  isUpdating,
-  isEditing,
-  setIsEditing,
-  setShowUpdateBtn,
-  setUpdatedDetails
-}) => {
   const onBlurHandler = (e: ChangeEvent<HTMLDivElement>) => {
-    setUpdatedDetails(e.target.textContent as string);
+    updateTaskDetails(e.target.textContent as string);
   };
   const onInputHandler = (e: ChangeEvent<HTMLDivElement>) => {
-    setIsEditing(true);
+    setTaskIsEditing(true);
     if (taskDetails === e.target.textContent) {
-      setShowUpdateBtn(false);
-      setIsEditing(false);
+      setTaskUpdateBtn(false);
+      setTaskIsEditing(false);
     }
   };
 

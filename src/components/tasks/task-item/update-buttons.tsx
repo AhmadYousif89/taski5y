@@ -1,48 +1,35 @@
-import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { FC, useState } from 'react';
 
+import { useTaskItem } from './context';
 import { useAppDispatch } from 'app/hooks';
 import { updateTask } from 'features/services/tasks';
 import { InfoIcon, SpinnerIcon } from 'assets/icons';
 import { ActionModal, Backdrop, Button } from 'components/ui';
 
-type Props = {
-  taskId: string;
-  isEditing: boolean;
-  isUpdating: boolean;
-  updatedDetails: string;
-  showUpdateBtn: boolean;
-  setIsEditing: Dispatch<SetStateAction<boolean>>;
-  setIsUpdating: Dispatch<SetStateAction<boolean>>;
-  setShowUpdateBtn: Dispatch<SetStateAction<boolean>>;
-};
-
-export const TaskUpdateButtons: FC<Props> = ({
-  taskId,
-  isEditing,
-  isUpdating,
-  updatedDetails,
-  setShowUpdateBtn,
-  showUpdateBtn,
-  setIsUpdating,
-  setIsEditing
-}) => {
+export const TaskUpdateButtons: FC<{ taskId: string }> = ({ taskId }) => {
   const dispatch = useAppDispatch();
   const [modal, setModal] = useState(false);
+  const {
+    state: { isEditing, isUpdating, updatedDetails, showUpdateBtn },
+    setTaskIsUpdating,
+    setTaskUpdateBtn,
+    setTaskIsEditing
+  } = useTaskItem();
 
   const markTaskCompleted = () => {
     if (isEditing && !modal) {
       setModal(true);
       return;
     }
-    setIsUpdating(true);
-    setShowUpdateBtn(true);
+    setTaskIsUpdating(true);
+    setTaskUpdateBtn(true);
     dispatch(updateTask({ id: taskId, status: 'Completed' }));
   };
 
   const updateTaskDetailHandler = () => {
-    setIsEditing(false);
-    setIsUpdating(true);
-    setShowUpdateBtn(true);
+    setTaskUpdateBtn(true);
+    setTaskIsEditing(false);
+    setTaskIsUpdating(true);
     dispatch(updateTask({ id: taskId, details: updatedDetails }));
   };
 
@@ -52,9 +39,9 @@ export const TaskUpdateButtons: FC<Props> = ({
         <>
           <ActionModal
             icon={<InfoIcon />}
-            msg="You have unsaved changes, Task will be marked as completed ?"
             confirmAction={markTaskCompleted}
             closeModal={() => setModal(false)}
+            msg="You have unsaved changes, Task will be marked as completed ?"
           />
           <Backdrop onClick={() => setModal(false)} />
         </>
@@ -68,9 +55,9 @@ export const TaskUpdateButtons: FC<Props> = ({
           </Button>
         ) : null}
         <Button
+          label={'complete'}
           onClick={markTaskCompleted}
           className="bg-btn-color-base px-4 text-xl !ring-0 hover:bg-btn-color-highlight hover:ring-0"
-          label={'complete'}
         />
       </div>
     </>

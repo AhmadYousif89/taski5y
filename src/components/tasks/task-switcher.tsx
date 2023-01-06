@@ -3,15 +3,18 @@ import { FC } from 'react';
 import { useAppDispatch } from 'app/hooks';
 import { TaskStatus } from 'features/types';
 import { updateTask } from 'features/services/tasks';
+import { useTaskItem } from './task-item/context';
 
-type SwitcherProps = { taskId: string; taskStatus: TaskStatus; onSwitch: () => void };
+type SwitcherProps = { taskId: string; taskStatus: TaskStatus };
 
-export const SwitchTaskStatus: FC<SwitcherProps> = ({ taskId, taskStatus, onSwitch }) => {
+export const SwitchTaskStatus: FC<SwitcherProps> = ({ taskId, taskStatus }) => {
   const dispatch = useAppDispatch();
+  const { setTaskIsUpdating, setTaskUpdateBtn } = useTaskItem();
 
   const updateTaskStatus = () => {
     dispatch(updateTask({ id: taskId, status: taskStatus === 'Todo' ? 'InProgress' : 'Todo' }));
-    onSwitch();
+    setTaskIsUpdating(true);
+    setTaskUpdateBtn(true);
   };
 
   const switchBgColor = taskStatus === 'InProgress' ? 'bg-amber-400' : 'bg-neutral-500';

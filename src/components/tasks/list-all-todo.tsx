@@ -5,8 +5,8 @@ import { TaskItem } from './task-item';
 import { useSearchParams } from 'hooks';
 import { searchTasks, sortTasks } from './helpers';
 import { SearchErrMsg } from './search-error-msg';
-import { SearchMsg } from './search-msg';
 import { NoTasksMsg } from './no-tasks-msg';
+import { SearchMsg } from './search-msg';
 
 export const TodoTaskList = () => {
   const { tasks, searchedTaskQuery: query } = useAppSelector(taskSelector);
