@@ -1,13 +1,8 @@
 import { FC } from 'react';
-import { formatDistanceToNow, parseISO } from 'date-fns';
+import { getTimeDifference } from './helpers/get-time-difference';
 
 export const TaskTime: FC<{ time: string }> = ({ time }) => {
-  let timeAgo = '';
-  if (time) {
-    const date = parseISO(time);
-    const timePeriod = formatDistanceToNow(date);
-    timeAgo = `${timePeriod} ago`;
-  }
+  const timeAgo = getTimeDifference(time);
   return (
     <div title={time}>
       <>{timeAgo}</>

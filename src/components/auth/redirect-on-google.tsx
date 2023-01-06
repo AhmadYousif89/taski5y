@@ -1,11 +1,11 @@
 import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { modifyLocalStorage } from 'helpers/modify-local-storage';
-import { loginWithGoogle } from 'features/services/auth';
 import { useAppDispatch, useAuth } from 'app/hooks';
+import { loginWithGoogle } from 'features/services/auth';
+
 import { AuthRedirectMsg } from './auth-redirect-msg';
-import { wait } from 'helpers/wait';
+import { wait, modifyLocalStorage } from 'helpers';
 import { AuthType } from 'features/types';
 import { path } from 'components/app';
 

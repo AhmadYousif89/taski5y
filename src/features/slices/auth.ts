@@ -11,7 +11,7 @@ import {
   resetPassword,
   loginWithGoogle
 } from '../services/auth';
-import { modifyLocalStorage } from 'helpers/modify-local-storage';
+import { modifyLocalStorage } from 'helpers';
 import { AuthActionType, ResponseError, AuthState } from '../types';
 
 const initError: ResponseError = { statusCode: 0, message: '', error: '' };

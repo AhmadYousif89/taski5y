@@ -13,8 +13,8 @@ export default defineConfig({
     environment: 'jsdom',
     testTimeout: 10000,
     coverage: {
-      reporter: ['text', 'html'],
-      exclude: ['node_modules/', 'src/setup-tests.ts']
+      reporter: ['text', 'json', 'html'],
+      exclude: ['node_modules/', 'src/test/setup-tests.ts']
     }
   }
 });

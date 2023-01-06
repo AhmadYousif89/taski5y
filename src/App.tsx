@@ -4,9 +4,9 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { AppRoutes } from 'components/app';
 import { Backdrop, ActionModal } from 'components/ui';
 
+import { modifyLocalStorage } from 'helpers';
 import { getUser } from 'features/services/auth';
 import { authSelector, setAuthActionType } from 'features/slices/auth';
-import { modifyLocalStorage } from 'helpers/modify-local-storage';
 
 function App() {
   const dispatch = useAppDispatch();

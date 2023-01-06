@@ -2,7 +2,7 @@ import { RootState } from 'app/store';
 import { createSlice } from '@reduxjs/toolkit';
 
 import { AppTheme, UIState } from 'features/types';
-import { modifyLocalStorage } from 'helpers/modify-local-storage';
+import { modifyLocalStorage } from 'helpers';
 
 const storedTheme = modifyLocalStorage({ action: 'get', key: 'mode' }) as AppTheme;
 

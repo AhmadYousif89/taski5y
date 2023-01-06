@@ -1,15 +1,15 @@
 import { FC } from 'react';
 
-import { Button, Card } from 'components/ui';
 import { useAppDispatch } from 'app/hooks';
+import { Button, Card } from 'components/ui';
 
 import { Task } from 'features/types';
 import { deleteTasks } from 'features/services/tasks';
 import { setTaskActionType } from 'features/slices/task';
 
-import { wait } from 'helpers/wait';
-import { DisplayTaskTime } from './task-item/display-time';
+import { wait } from 'helpers';
 import { TrashIcon } from 'assets/icons';
+import { DisplayTaskTime } from './task-item/display-time';
 
 export const CompletedTaskItem: FC<{ task: Task }> = ({ task }) => {
   const dispatch = useAppDispatch();

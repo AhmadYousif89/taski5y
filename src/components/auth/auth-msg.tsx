@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { SpinnerIcon } from 'assets/icons';
+import { modifyLocalStorage } from 'helpers';
 import { ResponseStatus } from 'features/types';
-import { modifyLocalStorage } from 'helpers/modify-local-storage';
 
 type Props = {
   extraMsg?: string;

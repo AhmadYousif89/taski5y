@@ -9,8 +9,8 @@ import { TrustDevice } from 'components/auth';
 import { AuthInputNames } from 'components/auth/types';
 import { GetInputValues, Button, Input } from 'components/ui';
 
+import { wait } from 'helpers';
 import { useForm } from 'hooks';
-import { wait } from 'helpers/wait';
 import { BackArrowIcon, UploadIcon, CheckMarkIcon, SpinnerIcon } from 'assets/icons';
 
 type FormValidity = Record<AuthInputNames, boolean>;

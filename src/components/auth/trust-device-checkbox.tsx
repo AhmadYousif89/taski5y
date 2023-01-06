@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { usePersist } from 'hooks';
-import { modifyLocalStorage } from 'helpers/modify-local-storage';
+import { modifyLocalStorage } from 'helpers';
 
 export const TrustDevice = () => {
   const keyItem = modifyLocalStorage({ action: 'get', key: 'persist' });

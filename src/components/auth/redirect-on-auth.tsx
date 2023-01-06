@@ -1,13 +1,13 @@
 import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useAppDispatch, useAuth } from 'app/hooks';
+import { updateUser } from 'features/services/auth';
+
 import { path } from 'components/app';
 import { AuthType } from 'features/types';
-import { wait } from 'helpers/wait';
-import { updateUser } from 'features/services/auth';
-import { useAppDispatch, useAuth } from 'app/hooks';
+import { wait, modifyLocalStorage } from 'helpers';
 import { AuthRedirectMsg } from './auth-redirect-msg';
-import { modifyLocalStorage } from 'helpers/modify-local-storage';
 
 export const AuthRedirect: FC<{ authType: AuthType }> = ({ authType }) => {
   const { user } = useAuth();

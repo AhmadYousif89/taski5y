@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { modifyLocalStorage } from 'helpers/modify-local-storage';
+import { modifyLocalStorage } from 'helpers';
 import { API_URL } from '.';
 
 export default axios.create({ baseURL: API_URL });

@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { FormEvent, useEffect, useState } from 'react';
 
 import { useForm } from 'hooks';
+import { AuthInputNames } from './types';
 import { resetPassword } from 'features/services/auth';
 import { authSelector, resetAuth } from 'features/slices/auth';
 import { useAuth, useAppDispatch, useAppSelector } from 'app/hooks';
@@ -9,10 +10,9 @@ import { useAuth, useAppDispatch, useAppSelector } from 'app/hooks';
 import { path } from 'components/app';
 import { GetInputValues, Input } from 'components/ui';
 
-import { AuthInputNames } from './types';
-import { AuthButton } from './auth-button';
-import { wait } from 'helpers/wait';
+import { wait } from 'helpers';
 import { AuthMsg } from './auth-msg';
+import { AuthButton } from './auth-button';
 import { AuthContainer } from './auth-container';
 
 type FormValidity = Record<Exclude<AuthInputNames, 'name'>, boolean>;

@@ -7,7 +7,7 @@ import { setProfile, toggleSideMenu } from 'features/slices/ui';
 import { getAllTasks } from 'features/services/tasks';
 import { taskSelector, setTaskActionType } from 'features/slices/task';
 
-import { wait } from 'helpers/wait';
+import { wait } from 'helpers';
 import { TaskItem } from './task-item';
 import { useSearchParams } from 'hooks';
 import { searchTasks, sortTasks } from './helpers';
