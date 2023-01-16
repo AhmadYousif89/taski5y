@@ -37,13 +37,9 @@ export const UserImage = ({ maxHeight = 300 }: { maxHeight?: number }) => {
     resetImage();
   };
   const uploadImage = () => {
-    dispatch(setAuthActionType('uploading_image'));
+    dispatch(setAuthActionType('upload_image'));
     dispatch(updateUser({ image }));
   };
-
-  useEffect(() => {
-    if (status !== 'loading' && actionType === 'uploading_image') dispatch(setAuthActionType(''));
-  }, [status, actionType, dispatch]);
 
   useEffect(() => {
     const fileInput = inputRef.current;

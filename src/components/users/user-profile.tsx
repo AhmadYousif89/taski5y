@@ -1,17 +1,17 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
+
+import { useForm } from 'hooks';
 import { useAuth, useAppDispatch, useAppSelector } from 'app/hooks';
 
 import { toggleProfile } from 'features/slices/ui';
 import { updateUser } from 'features/services/auth';
-import { authSelector, resetAuthStatus } from 'features/slices/auth';
+import { authSelector, setAuthActionType } from 'features/slices/auth';
 
 import { TrustDevice } from 'components/auth';
 import { AuthInputNames } from 'components/auth/types';
-import { GetInputValues, Button, Input } from 'components/ui';
+import { GetInputValues, Button, Input, Loading } from 'components/ui';
 
-import { wait } from 'helpers';
-import { useForm } from 'hooks';
-import { BackArrowIcon, UploadIcon, CheckMarkIcon, SpinnerIcon } from 'assets/icons';
+import { BackArrowIcon, UploadIcon } from 'assets/icons';
 
 type FormValidity = Record<AuthInputNames, boolean>;
 type FormValues = Record<AuthInputNames, string>;
@@ -60,28 +60,24 @@ export const UserProfile = () => {
       user?.provider === 'google'
         ? { name: name || user?.name } // just update the username if the user sign in with google
         : password
-        ? { name: name || user?.name, email: email || user?.email, password } // case we need to update the password
+        ? { name: name || user?.name, email: email || user?.email, password } // if we need to update all fields
         : { name: name || user?.name, email: email || user?.email }; // update only the username and email
+    dispatch(setAuthActionType('profile_update'));
     dispatch(updateUser(data));
     setIsSubmitted(true);
-    wait(() => {
-      dispatch(resetAuthStatus());
-      setIsSubmitted(false);
-    }, 3);
   };
 
   useEffect(() => {
     if (user?.provider === 'google' && emailRef.current) emailRef.current.disabled = true;
-  }, [user?.provider]);
+    if (status === 'fulfilled') setIsSubmitted(false);
+  }, [user?.provider, status, dispatch]);
 
   return (
     <section className="mt-8 text-color-base">
       <h2 className="mb-8 text-center text-4xl">Manage your account</h2>
       <form className="flex flex-col gap-6" onSubmit={onFormSubmit}>
         <div className="mt-8 flex flex-col gap-6">
-          <h3 className="text-3xl">
-            {user?.provider === 'google' ? 'User' : 'Update'} information
-          </h3>
+          <h3 className="text-3xl">User information</h3>
 
           <fieldset className="flex items-center" aria-label="update-name-input">
             <Input
@@ -170,22 +166,18 @@ export const UserProfile = () => {
             icon={<BackArrowIcon />}
             onClick={() => dispatch(toggleProfile(false))}
           />
-          {isSubmitted && status === 'fulfilled' && (
-            <p className="absolute -top-14 -left-3 flex items-center gap-2 text-center text-xl text-color-valid xs:left-1/3 xs:text-2xl">
-              <CheckMarkIcon />
-              Profile Updated
-            </p>
-          )}
+
           <Button
             isDisabled={!formIsValid}
-            label="Submit"
             title="submit your changes"
             type="submit"
             icon={
               isSubmitted && status === 'loading' ? (
-                <SpinnerIcon className="h-8 w-8" />
+                <Loading />
               ) : (
-                <UploadIcon />
+                <>
+                  <UploadIcon /> Submit
+                </>
               )
             }
           />

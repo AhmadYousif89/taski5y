@@ -1,8 +1,6 @@
 import { FC } from 'react';
-import { useAppDispatch } from 'app/hooks';
-import { ResponseStatus } from 'features/types';
-import { toggleNotification } from 'features/slices/ui';
 import { Loading } from 'components/ui';
+import { ResponseStatus } from 'features/types';
 
 type AuthButtonProps = {
   title: string;
@@ -12,11 +10,9 @@ type AuthButtonProps = {
 };
 
 export const AuthButton: FC<AuthButtonProps> = ({ title, className = '', status, formIsValid }) => {
-  const dispatch = useAppDispatch();
   return (
     <button
       type={'submit'}
-      onClick={() => dispatch(toggleNotification(true))}
       disabled={!formIsValid || status === 'loading'}
       className={`${
         formIsValid ? 'cursor-pointer' : 'cursor-not-allowed'

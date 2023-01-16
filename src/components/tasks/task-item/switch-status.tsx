@@ -4,7 +4,6 @@ import { useTaskItem } from './context';
 import { useAppDispatch } from 'app/hooks';
 import { TaskStatus } from 'features/types';
 import { updateTask } from 'features/services/tasks';
-import { toggleNotification } from 'features/slices/ui';
 import { setTaskActionType } from 'features/slices/task';
 
 type SwitcherProps = { taskId: string; taskStatus: TaskStatus };
@@ -16,7 +15,6 @@ export const SwitchTaskStatus: FC<SwitcherProps> = ({ taskId, taskStatus }) => {
   const updateTaskStatus = () => {
     setTaskUpdateBtn(true);
     setTaskIsUpdating(true);
-    dispatch(toggleNotification(true));
     dispatch(setTaskActionType('updating'));
     dispatch(updateTask({ id: taskId, status: taskStatus === 'Todo' ? 'InProgress' : 'Todo' }));
   };

@@ -3,7 +3,6 @@ import { FC, useState } from 'react';
 import { useTaskItem } from './context';
 import { useAppDispatch } from 'app/hooks';
 import { updateTask } from 'features/services/tasks';
-import { toggleNotification } from 'features/slices/ui';
 import { setTaskActionType } from 'features/slices/task';
 
 import { InfoIcon, SpinnerIcon } from 'assets/icons';
@@ -26,7 +25,6 @@ export const TaskUpdateButtons: FC<{ taskId: string }> = ({ taskId }) => {
     }
     setTaskIsUpdating(true);
     setTaskUpdateBtn(true);
-    dispatch(toggleNotification(true));
     dispatch(setTaskActionType('updating'));
     dispatch(updateTask({ id: taskId, status: 'Completed' }));
   };
@@ -35,7 +33,6 @@ export const TaskUpdateButtons: FC<{ taskId: string }> = ({ taskId }) => {
     setTaskUpdateBtn(true);
     setTaskIsEditing(false);
     setTaskIsUpdating(true);
-    dispatch(toggleNotification(true));
     dispatch(setTaskActionType('updating'));
     dispatch(updateTask({ id: taskId, details: updatedDetails }));
   };

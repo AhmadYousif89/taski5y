@@ -1,13 +1,14 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useAddTimer, useSessionError } from 'hooks';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { authSelector } from 'features/slices/auth';
-import { taskSelector } from 'features/slices/task';
+import { authSelector, setAuthActionType } from 'features/slices/auth';
+import { setTaskActionType, taskSelector } from 'features/slices/task';
 import { toggleNotification, uiSelector } from 'features/slices/ui';
 
-import { CheckMarkIcon, CloseIcon, SpinnerIcon } from 'assets/icons';
+import { CloseIcon, SpinnerIcon } from 'assets/icons';
 import { modifyLocalStorage } from 'helpers';
+import { Success } from './success';
 import { Error } from './error';
 
 export const Notification = () => {
@@ -52,6 +53,13 @@ export const Notification = () => {
         </div>
       );
     }
+    if (authActionType === 'profile_update' || authActionType === 'upload_image') {
+      notification = (
+        <Success>
+          <p>Profile updated</p>
+        </Success>
+      );
+    }
   }
   if (authStatus === 'rejected') {
     notification = (
@@ -60,12 +68,18 @@ export const Notification = () => {
   }
   /* Task action cases */
   if (taskStatus === 'fulfilled') {
-    if (taskActionType === 'updating' || taskActionType === 'creating') {
+    if (taskActionType && taskActionType !== 'fetching') {
       notification = (
-        <div className="flex-center gap-4 text-slate-300">
-          <p>Task {taskActionType === 'updating' ? 'updated' : 'created'}</p>
-          <CheckMarkIcon className="h-9 w-9 text-green-500" />
-        </div>
+        <Success>
+          <p>
+            Task
+            {taskActionType === 'updating'
+              ? ' updated'
+              : taskActionType === 'creating'
+              ? ' created'
+              : ' deleted'}
+          </p>
+        </Success>
       );
     }
   }
@@ -73,15 +87,27 @@ export const Notification = () => {
     notification = <Error errorMsg={authErrorMsg} defaultMsg="Something went wrong!" />;
   }
 
+  const resetActionType = useCallback(() => {
+    dispatch(setTaskActionType(''));
+    dispatch(setAuthActionType(''));
+  }, [dispatch]);
+
   const duration = 5;
 
   useEffect(() => {
     if (notificationIsVisible && notification && !sessionError) {
       addTimer(() => {
         dispatch(toggleNotification(false));
+        resetActionType();
       }, duration);
     }
-  }, [dispatch, addTimer, sessionError, notification, notificationIsVisible]);
+  }, [dispatch, addTimer, sessionError, resetActionType, notification, notificationIsVisible]);
+
+  useEffect(() => {
+    if (authStatus !== 'idle' || taskStatus !== 'idle') {
+      dispatch(toggleNotification(true));
+    }
+  }, [dispatch, authStatus, taskStatus]);
 
   const closeNotificationHandler = () => {
     if (sessionError) {
@@ -89,6 +115,7 @@ export const Notification = () => {
       setSessionError('');
     }
     if (notificationIsVisible) {
+      resetActionType();
       dispatch(toggleNotification(false));
       clearTimeout(timers[0]);
     }

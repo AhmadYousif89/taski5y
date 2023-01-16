@@ -52,7 +52,7 @@ export const ResetPassword = () => {
       wait(() => {
         navigate(path.login);
         setIsSubmitted(false);
-      }).then(() => dispatch(setAuthActionType('')));
+      });
     }
   }, [dispatch, navigate, status, user]);
 

@@ -24,7 +24,8 @@ export type AuthActionType =
   | 'refresh_user'
   | 'password_reset'
   | 'delete_account'
-  | 'uploading_image'
+  | 'profile_update'
+  | 'upload_image'
   | '';
 export type User = {
   id: string;
