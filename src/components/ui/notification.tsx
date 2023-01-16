@@ -83,9 +83,6 @@ export const Notification = () => {
       );
     }
   }
-  if (taskStatus === 'rejected') {
-    notification = <Error errorMsg={authErrorMsg} defaultMsg="Something went wrong!" />;
-  }
 
   const resetActionType = useCallback(() => {
     dispatch(setTaskActionType(''));

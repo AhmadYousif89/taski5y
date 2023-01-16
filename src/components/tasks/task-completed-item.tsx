@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { useAppDispatch } from 'app/hooks';
 import { Button, Card } from 'components/ui';
@@ -12,6 +12,7 @@ import { DisplayTaskTime } from './task-item/display-time';
 
 export const CompletedTaskItem: FC<{ task: Task }> = ({ task }) => {
   const dispatch = useAppDispatch();
+  const [animate, setAnimate] = useState(false);
 
   const deleteTaskHandler = async () => {
     dispatch(setTaskActionType('deleting'));
@@ -19,8 +20,16 @@ export const CompletedTaskItem: FC<{ task: Task }> = ({ task }) => {
     dispatch(setTaskActionType(''));
   };
 
+  const transition = animate
+    ? 'translate-y-0 opacity-100 visible'
+    : 'translate-y-10 opacity-0 invisible';
+
+  useEffect(() => {
+    setAnimate(true);
+  }, []);
+
   return (
-    <Card className={`ring-1 ring-color-valid`}>
+    <Card className={`${transition} ring-1 ring-color-valid transition-transform duration-700`}>
       <li className="flex w-full flex-col gap-8 p-4 text-color-base md:text-3xl">
         <h2 className="text-3xl tracking-wide">{task.title}</h2>
         <DisplayTaskTime label="created" time={task.createdAt} />
