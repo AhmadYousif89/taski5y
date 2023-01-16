@@ -105,7 +105,7 @@ export const Notification = () => {
           : 'after:bg-slate-300'
       } after:left-0 after:bottom-0 after:h-1 after:w-full xs:max-w-3xl`}>
       <button
-        className="rounded-md p-1 shadow-xl ring-2 ring-slate-500 hover:ring-red-500"
+        className="rounded-md p-1 ring-2 ring-slate-500 hover:ring-red-500"
         onClick={closeNotificationHandler}>
         <CloseIcon className="h-5 w-5" />
       </button>
