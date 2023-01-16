@@ -132,7 +132,7 @@ export const Notification = () => {
           : 'translate-y-32'
       } absolute top-0 left-1/2 z-50 flex w-11/12 -translate-x-1/2 items-center gap-4 overflow-hidden rounded-md bg-slate-800 px-4 py-8 text-center text-2xl shadow-md after:absolute ${
         notificationIsVisible && !sessionError
-          ? `after:animate-[loading_${duration || 5}s_linear_forwards]` // 5 seconds same as timer
+          ? `after:animate-[loading_5s_linear_forwards]` // 5 seconds same as timer
           : 'after:bg-slate-300'
       } after:left-0 after:bottom-0 after:h-1 after:w-full xs:max-w-3xl`}>
       <button
