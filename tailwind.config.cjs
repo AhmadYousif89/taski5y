@@ -27,6 +27,10 @@ module.exports = {
           '100%': { backgroundColor: 'rgb(240 70 70)', transform: 'translateX(0)' }
         }
       },
+      animation: {
+        loading: 'loading 5s linear forwards',
+        slide: 'slide 300ms ease-out forwards'
+      },
       fontFamily: {
         'Roboto Mono': ['Roboto Mono', ...defaultTheme.fontFamily.sans]
       },

@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 
+import { useAddTimer, useSessionError } from 'hooks';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { authSelector } from 'features/slices/auth';
 import { taskSelector } from 'features/slices/task';
@@ -7,9 +8,7 @@ import { toggleNotification, uiSelector } from 'features/slices/ui';
 
 import { CheckMarkIcon, CloseIcon, SpinnerIcon } from 'assets/icons';
 import { modifyLocalStorage } from 'helpers';
-import { Loading } from './loading';
 import { Error } from './error';
-import { useSessionError } from 'hooks';
 
 export const Notification = () => {
   const dispatch = useAppDispatch();
@@ -22,6 +21,7 @@ export const Notification = () => {
   const { notificationIsVisible } = useAppSelector(uiSelector);
   const { status: taskStatus, actionType: taskActionType } = useAppSelector(taskSelector);
   const { sessionError, setSessionError } = useSessionError();
+  const { timers, addTimer } = useAddTimer();
 
   const authErrorMsg = Array.isArray(authError.message) ? (
     <ul className="flex flex-col gap-2">
@@ -40,9 +40,6 @@ export const Notification = () => {
     notification = <p className="text-slate-300">{sessionError}</p>;
   }
   /* Auth action cases */
-  if (authStatus === 'loading') {
-    notification = <Loading />;
-  }
   if (authStatus === 'fulfilled') {
     if (authActionType === 'password_reset') {
       notification = (
@@ -63,46 +60,20 @@ export const Notification = () => {
   }
   /* Task action cases */
   if (taskStatus === 'fulfilled') {
-    if (taskActionType === 'updating') {
+    if (taskActionType === 'updating' || taskActionType === 'creating') {
       notification = (
         <div className="flex-center gap-4 text-slate-300">
-          <p>Task updated</p>
-          <CheckMarkIcon className="h-9 w-9 text-green-500" />
-        </div>
-      );
-    }
-    if (taskActionType === 'creating') {
-      notification = (
-        <div className="flex-center gap-4 text-slate-300">
-          <p>Task created</p>
+          <p>Task {taskActionType === 'updating' ? 'updated' : 'created'}</p>
           <CheckMarkIcon className="h-9 w-9 text-green-500" />
         </div>
       );
     }
   }
+  if (taskStatus === 'rejected') {
+    notification = <Error errorMsg={authErrorMsg} defaultMsg="Something went wrong!" />;
+  }
 
   const duration = 5;
-  const timers: NodeJS.Timeout[] = useMemo(() => [], []);
-
-  const addTimer = useCallback(
-    (cb: () => void, duration: number) => {
-      if (timers.length === 0) {
-        timers.push(
-          setTimeout(() => {
-            cb();
-            timers.shift();
-          }, duration * 1000)
-        );
-      } else {
-        clearTimeout(timers[0]);
-        timers[0] = setTimeout(() => {
-          cb();
-          timers.shift();
-        }, duration * 1000);
-      }
-    },
-    [timers]
-  );
 
   useEffect(() => {
     if (notificationIsVisible && notification && !sessionError) {
@@ -127,12 +98,10 @@ export const Notification = () => {
     <div
       aria-label="notification-section"
       className={`${
+        notificationIsVisible && !sessionError ? `animate-slide` : 'translate-y-32'
+      } fixed top-0 left-1/2 z-50 flex w-11/12 -translate-x-1/2 items-center gap-4 overflow-hidden rounded-md bg-slate-800 px-4 py-8 text-center text-2xl shadow-md after:absolute ${
         notificationIsVisible && !sessionError
-          ? `animate-[slide_300ms_ease-out_forwards]`
-          : 'translate-y-32'
-      } absolute top-0 left-1/2 z-50 flex w-11/12 -translate-x-1/2 items-center gap-4 overflow-hidden rounded-md bg-slate-800 px-4 py-8 text-center text-2xl shadow-md after:absolute ${
-        notificationIsVisible && !sessionError
-          ? `after:animate-[loading_5s_linear_forwards]` // 5 seconds same as timer
+          ? `after:animate-loading` /* 5 seconds same as timer */
           : 'after:bg-slate-300'
       } after:left-0 after:bottom-0 after:h-1 after:w-full xs:max-w-3xl`}>
       <button
@@ -146,5 +115,5 @@ export const Notification = () => {
     </div>
   );
 
-  return (notificationIsVisible && notification) || sessionError ? content : <></>;
+  return (notificationIsVisible && notification) || sessionError ? content : null;
 };
