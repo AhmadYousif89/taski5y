@@ -20,7 +20,7 @@ export const SwitchTaskStatus: FC<SwitcherProps> = ({ taskId, taskStatus }) => {
   };
 
   const switchColor = taskStatus === 'InProgress' ? 'bg-amber-400' : 'bg-neutral-500';
-  const switchAnimation =
+  const transition =
     taskStatus === 'InProgress'
       ? 'translate-x-full bg-amber-600'
       : 'translate-x-0 bg-btn-color-base';
@@ -35,7 +35,7 @@ export const SwitchTaskStatus: FC<SwitcherProps> = ({ taskId, taskStatus }) => {
         <div
           onClick={updateTaskStatus}
           className={`${switchColor} flex h-4 w-14 cursor-pointer items-center rounded-full transition-colors duration-200`}>
-          <div className={`${switchAnimation} h-7 w-7 rounded-full transition-all duration-200`} />
+          <div className={`${transition} h-7 w-7 rounded-full transition-all duration-200`} />
         </div>
       </button>
       <span className="text-xl capitalize">in progress</span>
