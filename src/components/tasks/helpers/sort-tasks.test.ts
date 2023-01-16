@@ -79,7 +79,7 @@ describe('Test Sorting function', () => {
   test('it should sort task items by priority in descending order', () => {
     const sortedTasks = sortTasks(tasks, { sort: 'desc', type: 'priority' });
     expect(sortedTasks[0].title).toBe('Third Task');
-    expect(sortedTasks[1].title).toBe('First Task');
-    expect(sortedTasks[2].title).toBe('Second Task');
+    expect(sortedTasks[1].title).toBe('Second Task');
+    expect(sortedTasks[2].title).toBe('First Task');
   });
 });

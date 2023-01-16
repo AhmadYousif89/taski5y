@@ -55,7 +55,7 @@ export const ActionModal: FC<ActionModalProps> = ({
   if (actionType === 'transition')
     content = (
       <div className="flex items-center gap-8">
-        <SpinnerIcon className="text-sky h-12 w-12" />
+        <SpinnerIcon className="h-12 w-12 text-sky-500" />
         <h3 className="text-3xl uppercase">{msg}</h3>
       </div>
     );

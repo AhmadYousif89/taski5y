@@ -5,7 +5,7 @@ import { Task } from 'features/types';
 import { TaskProvider } from './context';
 
 import { TaskDeleteButton } from './delete-button';
-import { SwitchTaskStatus } from '../task-switcher';
+import { SwitchTaskStatus } from './switch-status';
 import { TaskUpdateButtons } from './update-buttons';
 import { DisplayTaskTime } from './display-time';
 import { DetailsSection } from './details-section';

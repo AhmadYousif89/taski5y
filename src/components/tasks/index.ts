@@ -9,5 +9,4 @@ export * from './task-panel';
 export * from './task-search-bar';
 export * from './task-sort-menu';
 export * from './task-stats';
-export * from './task-switcher';
 export * from './task-time';

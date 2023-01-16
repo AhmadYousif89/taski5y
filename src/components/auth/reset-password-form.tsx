@@ -4,14 +4,13 @@ import { FormEvent, useEffect, useState } from 'react';
 import { useForm } from 'hooks';
 import { AuthInputNames } from './types';
 import { resetPassword } from 'features/services/auth';
-import { authSelector, resetAuth } from 'features/slices/auth';
+import { authSelector, resetAuth, setAuthActionType } from 'features/slices/auth';
 import { useAuth, useAppDispatch, useAppSelector } from 'app/hooks';
 
 import { path } from 'components/app';
 import { GetInputValues, Input } from 'components/ui';
 
 import { wait } from 'helpers';
-import { AuthMsg } from './auth-msg';
 import { AuthButton } from './auth-button';
 import { AuthContainer } from './auth-container';
 
@@ -29,7 +28,7 @@ export const ResetPassword = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { status, message, error } = useAppSelector(authSelector);
+  const { status } = useAppSelector(authSelector);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
     FormValues,
@@ -49,12 +48,13 @@ export const ResetPassword = () => {
     if (user) navigate(path.dashboard);
     if (status === 'fulfilled') {
       setIsSubmitted(true);
+      dispatch(setAuthActionType('password_reset'));
       wait(() => {
         navigate(path.login);
         setIsSubmitted(false);
-      });
+      }).then(() => dispatch(setAuthActionType('')));
     }
-  }, [navigate, status, user]);
+  }, [dispatch, navigate, status, user]);
 
   useEffect(() => {
     return () => {
@@ -127,13 +127,6 @@ export const ResetPassword = () => {
             formIsValid={formIsValid}
           />
         </fieldset>
-
-        <AuthMsg
-          status={status}
-          extraMsg={message}
-          errorMsg={error.message}
-          successMsg="redirecting to login"
-        />
       </form>
     </AuthContainer>
   );

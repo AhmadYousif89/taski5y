@@ -8,7 +8,7 @@ import { useEventListener } from 'hooks';
 import { resetTasks } from 'features/slices/task';
 import { setAuthActionType } from 'features/slices/auth';
 import { signOut, deleteUser } from 'features/services/auth';
-import { setProfile, toggleSideMenu } from 'features/slices/ui';
+import { toggleProfile, toggleSideMenu } from 'features/slices/ui';
 
 export const UserSettings = () => {
   const dispatch = useAppDispatch();
@@ -23,11 +23,11 @@ export const UserSettings = () => {
   const logoutHandler = () => {
     dispatch(signOut());
     dispatch(resetTasks());
-    dispatch(setAuthActionType('logout'));
+    dispatch(setAuthActionType('sign_out'));
   };
 
   const deleteAccountHandler = () => {
-    dispatch(setAuthActionType('delete'));
+    dispatch(setAuthActionType('delete_account'));
     dispatch(resetTasks());
     dispatch(deleteUser());
     setModal(false);
@@ -40,7 +40,7 @@ export const UserSettings = () => {
         className="grid auto-cols-[minmax(max-content,1fr)] gap-6 py-2 text-xl text-color-base">
         <li
           onClick={() => {
-            dispatch(setProfile(true));
+            dispatch(toggleProfile(true));
             dispatch(toggleSideMenu());
           }}
           className="li-item">

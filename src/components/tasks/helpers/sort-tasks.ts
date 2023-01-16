@@ -28,13 +28,13 @@ export const sortTasks = (
           ? taskA.createdAt.localeCompare(taskB.createdAt)
           : taskB.createdAt.localeCompare(taskA.createdAt);
       case 'priority':
-        return sort === 'asc'
-          ? taskA.priority === 'High'
-            ? 1
-            : -1
-          : taskA.priority.localeCompare(taskB.priority);
+        if (sort === 'asc') {
+          return taskA.priority < taskB.priority ? 1 : -1;
+        } else {
+          return taskA.priority > taskB.priority ? 1 : -1;
+        }
       default:
-        return 0;
+        return taskA.priority > taskB.priority ? 1 : -1;
     }
   };
 

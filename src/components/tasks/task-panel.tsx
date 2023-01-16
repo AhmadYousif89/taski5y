@@ -27,20 +27,20 @@ export const TaskPanel: FC<TaskPanelProps> = ({ title, count, color, tooltip, to
       : '';
   const textColor =
     color === 'sky'
-      ? 'text-sky'
+      ? 'text-sky-500'
       : color === 'amber'
-      ? 'text-amber'
+      ? 'text-amber-500'
       : color === 'green'
-      ? 'text-green'
+      ? 'text-green-500'
       : '';
 
   return (
     <button
-      title={tooltip}
       className={`${
         activeTaskPanel === title ? textColor : ''
       } flex h-full w-full cursor-default flex-col items-center gap-8 rounded-sm bg-transparent text-color-base transition-colors `}>
       <div
+        title={tooltip}
         onClick={() => togglePanels()}
         className={`relative ${borderColor} h-28 w-28 cursor-pointer rounded-full border-[5px] bg-transparent shadow-md md:h-32 md:w-32 lg:h-44 lg:w-44`}>
         <span

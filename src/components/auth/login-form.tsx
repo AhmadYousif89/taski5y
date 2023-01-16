@@ -14,7 +14,6 @@ import { authSelector, resetAuth } from 'features/slices/auth';
 import googleLogo from 'assets/google.png';
 import { AuthButton } from './auth-button';
 import { AuthSignIn } from 'features/types';
-import { AuthMsg } from './auth-msg';
 import { AuthContainer } from './auth-container';
 import { TrustDevice } from './trust-device-checkbox';
 import { SwitchFormButton } from './switch-form-button';
@@ -30,7 +29,7 @@ export const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const { status, error } = useAppSelector(authSelector);
+  const { status } = useAppSelector(authSelector);
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
     FormValues,
     FormValidity
@@ -57,16 +56,6 @@ export const LoginForm = () => {
     const user: AuthSignIn = { email, password };
     dispatch(signIn(user));
   };
-
-  const userErrorMsg = Array.isArray(error.message) ? (
-    <ul className="flex flex-col gap-2">
-      {error.message.map((err, idx) => (
-        <li key={idx}>{err}</li>
-      ))}
-    </ul>
-  ) : (
-    error.message
-  );
 
   return (
     <AuthContainer>
@@ -143,8 +132,6 @@ export const LoginForm = () => {
           className="self-center text-xl ring-1 ring-color-base"
         />
       </form>
-
-      <AuthMsg status={status} errorMsg={userErrorMsg} />
     </AuthContainer>
   );
 };

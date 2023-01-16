@@ -14,7 +14,7 @@ export const Logout = () => {
     dispatch(signOut());
     dispatch(resetTasks());
     dispatch(toggleSideMenu());
-    dispatch(setAuthActionType('logout'));
+    dispatch(setAuthActionType('sign_out'));
   };
 
   return (

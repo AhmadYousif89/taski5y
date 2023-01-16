@@ -18,14 +18,5 @@ export const useFetchTasks = () => {
     fetchTasks();
   }, [fetchTasks]);
 
-  /* Refetch on focus */
-  useEffect(() => {
-    const handleFocus = () => fetchTasks();
-    window.addEventListener('focus', handleFocus);
-    return () => {
-      window.removeEventListener('focus', handleFocus);
-    };
-  }, [fetchTasks]);
-
   return tasks;
 };

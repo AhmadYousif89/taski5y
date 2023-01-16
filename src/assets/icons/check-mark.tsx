@@ -1,4 +1,4 @@
-export const CheckMarkIcon = () => {
+export const CheckMarkIcon = ({ className = 'h-10 w-10' }: { className?: string }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,7 +6,7 @@ export const CheckMarkIcon = () => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-10 w-10">
+      className={`${className}`}>
       <path
         strokeLinecap="round"
         strokeLinejoin="round"

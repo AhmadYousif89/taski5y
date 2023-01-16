@@ -17,7 +17,15 @@ export type AuthSignIn = {
   email: string;
   password: string;
 };
-export type AuthActionType = 'logout' | 'delete' | 'refresh' | 'uploading image' | '';
+export type AuthActionType =
+  | 'sign_up'
+  | 'sign_in'
+  | 'sign_out'
+  | 'refresh_user'
+  | 'password_reset'
+  | 'delete_account'
+  | 'uploading_image'
+  | '';
 export type User = {
   id: string;
   name: string;

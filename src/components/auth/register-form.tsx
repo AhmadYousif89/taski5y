@@ -14,10 +14,8 @@ import { signUp } from 'features/services/auth';
 import { authSelector } from 'features/slices/auth';
 
 import { path } from 'components/app';
-import { GetInputValues, Divider, Button, Input } from 'components/ui';
-
-import { AuthMsg } from './auth-msg';
 import { AuthContainer } from './auth-container';
+import { GetInputValues, Divider, Button, Input } from 'components/ui';
 
 type FormValues = Record<Exclude<AuthInputNames, 'confirmPassword'>, string>;
 type FormValidity = Record<Exclude<AuthInputNames, 'confirmPassword'>, boolean>;
@@ -38,7 +36,7 @@ export const RegisterForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const { status, error } = useAppSelector(authSelector);
+  const { status } = useAppSelector(authSelector);
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
     FormValues,
     FormValidity
@@ -48,16 +46,6 @@ export const RegisterForm = () => {
   const { name, email, password } = formValues;
 
   const formIsValid = [nameIsValid, emailIsValid, passwordIsValid].every(Boolean);
-
-  const userErrorMsg = Array.isArray(error.message) ? (
-    <ul className="flex flex-col gap-2">
-      {error.message.map((err, idx) => (
-        <li key={idx}>{err}</li>
-      ))}
-    </ul>
-  ) : (
-    error.message
-  );
 
   useEffect(() => {
     if (user && user.registered) navigate(path.dashboard);
@@ -158,8 +146,6 @@ export const RegisterForm = () => {
           className="self-center text-xl ring-1 ring-color-base"
         />
       </form>
-
-      <AuthMsg status={status} errorMsg={userErrorMsg} />
     </AuthContainer>
   );
 };

@@ -1,4 +1,4 @@
-import { setProfile, toggleSideMenu, uiSelector } from 'features/slices/ui';
+import { toggleProfile, toggleSideMenu, uiSelector } from 'features/slices/ui';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { MenuIcon, CloseIcon } from 'assets/icons';
 
@@ -7,7 +7,7 @@ export const MenuButton = () => {
   const { menuIsVisible } = useAppSelector(uiSelector);
 
   const onClickHandler = () => {
-    dispatch(setProfile(false));
+    dispatch(toggleProfile(false));
     dispatch(toggleSideMenu());
   };
 

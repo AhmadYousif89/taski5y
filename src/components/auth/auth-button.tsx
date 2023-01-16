@@ -1,5 +1,7 @@
 import { FC } from 'react';
+import { useAppDispatch } from 'app/hooks';
 import { ResponseStatus } from 'features/types';
+import { toggleNotification } from 'features/slices/ui';
 
 interface Props {
   title: string;
@@ -9,9 +11,11 @@ interface Props {
 }
 
 export const AuthButton: FC<Props> = ({ title, className = '', status, formIsValid }) => {
+  const dispatch = useAppDispatch();
   return (
     <button
       type={'submit'}
+      onClick={() => dispatch(toggleNotification(true))}
       disabled={!formIsValid || status === 'loading'}
       className={`${
         formIsValid ? 'cursor-pointer' : 'cursor-not-allowed'

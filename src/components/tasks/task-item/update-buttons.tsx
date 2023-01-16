@@ -3,6 +3,9 @@ import { FC, useState } from 'react';
 import { useTaskItem } from './context';
 import { useAppDispatch } from 'app/hooks';
 import { updateTask } from 'features/services/tasks';
+import { toggleNotification } from 'features/slices/ui';
+import { setTaskActionType } from 'features/slices/task';
+
 import { InfoIcon, SpinnerIcon } from 'assets/icons';
 import { ActionModal, Backdrop, Button } from 'components/ui';
 
@@ -23,6 +26,8 @@ export const TaskUpdateButtons: FC<{ taskId: string }> = ({ taskId }) => {
     }
     setTaskIsUpdating(true);
     setTaskUpdateBtn(true);
+    dispatch(toggleNotification(true));
+    dispatch(setTaskActionType('updating'));
     dispatch(updateTask({ id: taskId, status: 'Completed' }));
   };
 
@@ -30,6 +35,8 @@ export const TaskUpdateButtons: FC<{ taskId: string }> = ({ taskId }) => {
     setTaskUpdateBtn(true);
     setTaskIsEditing(false);
     setTaskIsUpdating(true);
+    dispatch(toggleNotification(true));
+    dispatch(setTaskActionType('updating'));
     dispatch(updateTask({ id: taskId, details: updatedDetails }));
   };
 
@@ -51,7 +58,7 @@ export const TaskUpdateButtons: FC<{ taskId: string }> = ({ taskId }) => {
           <Button
             className="bg-btn-color-base px-4 text-xl !ring-0 hover:bg-btn-color-highlight hover:ring-0"
             onClick={updateTaskDetailHandler}>
-            {isUpdating ? <SpinnerIcon className="h-7 w-7" /> : 'save'}
+            {isUpdating ? <SpinnerIcon className="h-8 w-8" /> : 'save'}
           </Button>
         ) : null}
         <Button

@@ -21,7 +21,7 @@ function App() {
     if (!persist || persist !== 'true') modifyLocalStorage({ action: 'remove', key: 'logged_in' });
 
     if (persist === 'true' && isLoggedIn === 'true') {
-      dispatch(setAuthActionType('refresh'));
+      dispatch(setAuthActionType('refresh_user'));
       dispatch(getUser());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -29,21 +29,21 @@ function App() {
 
   if (status === 'loading') {
     switch (actionType) {
-      case 'refresh':
+      case 'refresh_user':
         return (
           <>
             <ActionModal actionType="transition" msg={'redirecting'} />
             <Backdrop />
           </>
         );
-      case 'logout':
+      case 'sign_out':
         return (
           <>
             <ActionModal actionType="transition" msg={'logging out'} />
             <Backdrop />
           </>
         );
-      case 'delete':
+      case 'delete_account':
         return (
           <>
             <ActionModal actionType="transition" msg={'deleting account'} />

@@ -1,6 +1,5 @@
 export * from './auth-button';
 export * from './auth-container';
-export * from './auth-msg';
 export * from './login-form';
 export * from './logout';
 export * from './redirect-on-auth';

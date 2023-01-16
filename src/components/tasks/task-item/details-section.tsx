@@ -34,10 +34,10 @@ export const DetailsSection: FC<{ taskDetails: string }> = ({ taskDetails }) => 
         {taskDetails}
       </div>
       {isUpdating ? (
-        <p className={`text-green absolute left-0 -bottom-12 text-xl uppercase`}>updating</p>
+        <p className={`absolute left-0 -bottom-12 text-xl uppercase text-green-500`}>updating</p>
       ) : null}
       {isEditing && !isUpdating ? (
-        <p className="text-amber absolute left-0 -bottom-12 text-xl uppercase tracking-wide">
+        <p className="absolute left-0 -bottom-12 text-xl uppercase tracking-wide text-amber-500">
           edited
         </p>
       ) : null}

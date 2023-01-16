@@ -63,15 +63,6 @@
   .border-green {
     @apply border-green-400;
   }
-  .text-sky {
-    @apply text-sky-400;
-  }
-  .text-amber {
-    @apply text-amber-500;
-  }
-  .text-green {
-    @apply text-green-400;
-  }
   .grid-container {
     @apply mx-4 mb-16 grid grid-cols-[repeat(auto-fit,minmax(32rem,.5fr))] place-items-stretch justify-center gap-8;
   }

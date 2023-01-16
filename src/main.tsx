@@ -13,11 +13,11 @@ if (!container) throw new Error('Container "root" was not found!');
 const root = ReactDOM.createRoot(container);
 
 root.render(
-  <StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
-  </StrictMode>
+  // <StrictMode>
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
+  // </StrictMode>
 );

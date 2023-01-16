@@ -1,18 +1,18 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 
 import { useForm } from 'hooks';
+import { TextArea } from 'components/ui/textarea';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { TaskIcon, CheckMarkIcon, SpinnerIcon } from 'assets/icons';
-import { GetInputValues, Select, GetSelectValues, Input } from 'components/ui';
+import { GetInputValues, Select, GetSelectValues, Input, Button } from 'components/ui';
 
 import { addNewTask } from 'features/services/tasks';
+import { toggleNotification } from 'features/slices/ui';
 import { TaskStatus, TaskPriority } from 'features/types';
-import { taskSelector, resetTaskStatus } from 'features/slices/task';
+import { taskSelector, setTaskActionType } from 'features/slices/task';
 
-import { wait } from 'helpers';
 import { TaskStats } from './task-stats';
 import { TaskInputNames } from './types';
-import { TextArea } from 'components/ui/textarea';
+import { TaskIcon, SpinnerIcon } from 'assets/icons';
 
 type FormValidity = Record<TaskInputNames, boolean>;
 type FormValues = Record<TaskInputNames, string>;
@@ -48,12 +48,14 @@ export const TaskForm = () => {
       priority: (priority as TaskPriority) || 'Normal'
     };
     setIsSubmitted(true);
+    dispatch(setTaskActionType('creating'));
+    dispatch(toggleNotification(true));
     dispatch(addNewTask(newTask));
-    wait(() => {
-      setIsSubmitted(false);
-      dispatch(resetTaskStatus());
-    });
   };
+
+  useEffect(() => {
+    if (status === 'fulfilled') setIsSubmitted(false);
+  }, [status]);
 
   return (
     <>
@@ -116,28 +118,22 @@ export const TaskForm = () => {
         </div>
 
         <fieldset>
-          <button
+          <Button
+            type={'submit'}
             title="create new task"
-            disabled={!formIsValid}
+            isDisabled={!formIsValid}
             className={`${
               formIsValid ? 'cursor-pointer' : 'cursor-not-allowed'
-            } flex-center w-full cursor-pointer gap-4 rounded-md bg-transparent px-6 py-4 text-3xl capitalize text-color-base shadow-md ring-1 ring-color-base transition-all active:translate-y-1`}>
-            <span>create task</span>
+            } flex-center w-full cursor-pointer gap-4 rounded-md bg-transparent px-6 py-4 capitalize text-color-base shadow-md ring-1 ring-color-base transition-all active:translate-y-1`}>
+            <span className="text-3xl">create task</span>
             <TaskIcon />
-          </button>
+          </Button>
         </fieldset>
 
-        {isSubmitted && status === 'fulfilled' ? (
-          <p className="flex-center absolute -bottom-16 left-1/2 w-full -translate-x-1/2 gap-2 text-center text-2xl text-color-valid">
-            <CheckMarkIcon />
-            <span>New task created</span>
-          </p>
-        ) : null}
-
         {isSubmitted && status === 'loading' ? (
-          <p className="flex-center absolute -bottom-16 left-1/2 w-full -translate-x-1/2 gap-2 text-center text-2xl text-color-valid">
+          <p className="flex-center absolute -bottom-16 left-1/2 w-full -translate-x-1/2 gap-2 text-center text-2xl text-amber-500">
             <SpinnerIcon className="h-10 w-10" />
-            <span>creating new task</span>
+            <span>Loading</span>
           </p>
         ) : null}
       </form>

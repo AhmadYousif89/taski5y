@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useAuth, useAppDispatch, useAppSelector } from 'app/hooks';
 
-import { setProfile } from 'features/slices/ui';
+import { toggleProfile } from 'features/slices/ui';
 import { updateUser } from 'features/services/auth';
 import { authSelector, resetAuthStatus } from 'features/slices/auth';
 
@@ -168,7 +168,7 @@ export const UserProfile = () => {
             label="Back"
             title="back to task form"
             icon={<BackArrowIcon />}
-            onClick={() => dispatch(setProfile(false))}
+            onClick={() => dispatch(toggleProfile(false))}
           />
           {isSubmitted && status === 'fulfilled' && (
             <p className="absolute -top-14 -left-3 flex items-center gap-2 text-center text-xl text-color-valid xs:left-1/3 xs:text-2xl">
