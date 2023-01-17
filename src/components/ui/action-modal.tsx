@@ -2,11 +2,9 @@ import { FC } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useAppSelector } from 'app/hooks';
-import { ImageFigure } from './image-figure';
 import { authSelector } from 'features/slices/auth';
 
-import { Button } from 'components/ui/button';
-import { DisplayImageStatus } from 'components/users/image-status';
+import { Button, DisplayImageStatus, ImageFigure } from 'components/ui';
 import { CloseIcon, SpinnerIcon, UploadIcon, WarningIcon } from 'assets/icons';
 
 type ActionModalProps = {
@@ -52,13 +50,14 @@ export const ActionModal: FC<ActionModalProps> = ({
     </div>
   );
 
-  if (actionType === 'transition')
+  if (actionType === 'transition') {
     content = (
       <div className="flex items-center gap-8">
         <SpinnerIcon className="h-12 w-12 text-sky-500" />
         <h3 className="text-3xl uppercase">{msg}</h3>
       </div>
     );
+  }
 
   const showImgUploadBtns = (
     <div className="relative w-full">
@@ -83,7 +82,7 @@ export const ActionModal: FC<ActionModalProps> = ({
     </div>
   );
 
-  if (actionType === 'upload')
+  if (actionType === 'upload') {
     content = (
       <div className="flex w-full flex-col items-center gap-4 text-center">
         {image ? (
@@ -113,6 +112,7 @@ export const ActionModal: FC<ActionModalProps> = ({
         )}
       </div>
     );
+  }
 
   const modalRoot = document.getElementById('modal-root') as HTMLDivElement;
 

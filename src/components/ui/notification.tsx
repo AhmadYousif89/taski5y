@@ -20,7 +20,7 @@ export const Notification = () => {
     actionType: authActionType
   } = useAppSelector(authSelector);
   const { notificationIsVisible } = useAppSelector(uiSelector);
-  const { status: taskStatus, actionType: taskActionType } = useAppSelector(taskSelector);
+  const { tasks, status: taskStatus, actionType: taskActionType } = useAppSelector(taskSelector);
   const { sessionError, setSessionError } = useSessionError();
   const { timers, addTimer } = useAddTimer();
 
@@ -73,21 +73,26 @@ export const Notification = () => {
         <Success>
           <p>
             Task
-            {taskActionType === 'updating'
-              ? ' updated'
-              : taskActionType === 'creating'
+            {taskActionType === 'create_success'
               ? ' created'
-              : ' deleted'}
+              : taskActionType === 'update_success'
+              ? ' updated'
+              : taskActionType === 'delete_success'
+              ? ' deleted'
+              : ''}
           </p>
         </Success>
       );
     }
   }
+  if (taskStatus === 'rejected' && tasks.length > 0) {
+    notification = <Error errorMsg={<p>Internal server error</p>} />;
+  }
 
   const resetActionType = useCallback(() => {
-    dispatch(setTaskActionType(''));
-    dispatch(setAuthActionType(''));
-  }, [dispatch]);
+    if (authActionType) dispatch(setAuthActionType(''));
+    if (taskActionType) dispatch(setTaskActionType(''));
+  }, [dispatch, authActionType, taskActionType]);
 
   const duration = 5;
 
@@ -101,10 +106,14 @@ export const Notification = () => {
   }, [dispatch, addTimer, sessionError, resetActionType, notification, notificationIsVisible]);
 
   useEffect(() => {
-    if (authStatus !== 'idle' || taskStatus !== 'idle') {
+    if (
+      (authStatus !== 'idle' || taskStatus !== 'idle') &&
+      !notificationIsVisible &&
+      notification
+    ) {
       dispatch(toggleNotification(true));
     }
-  }, [dispatch, authStatus, taskStatus]);
+  }, [dispatch, authStatus, taskStatus, notificationIsVisible, notification]);
 
   const closeNotificationHandler = () => {
     if (sessionError) {

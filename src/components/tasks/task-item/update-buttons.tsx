@@ -18,23 +18,33 @@ export const TaskUpdateButtons: FC<{ taskId: string }> = ({ taskId }) => {
     setTaskIsEditing
   } = useTaskItem();
 
-  const markTaskCompleted = () => {
+  const markTaskCompleted = async () => {
     if (isEditing && !modal) {
       setModal(true);
       return;
     }
     setTaskIsUpdating(true);
     setTaskUpdateBtn(true);
-    dispatch(setTaskActionType('updating'));
-    dispatch(updateTask({ id: taskId, status: 'Completed' }));
+    try {
+      dispatch(setTaskActionType('updating'));
+      const result = await dispatch(updateTask({ id: taskId, status: 'Completed' })).unwrap();
+      if (result) dispatch(setTaskActionType('update_success'));
+    } catch (err) {
+      dispatch(setTaskActionType(''));
+    }
   };
 
-  const updateTaskDetailHandler = () => {
+  const updateTaskDetailHandler = async () => {
     setTaskUpdateBtn(true);
     setTaskIsEditing(false);
     setTaskIsUpdating(true);
-    dispatch(setTaskActionType('updating'));
-    dispatch(updateTask({ id: taskId, details: updatedDetails }));
+    try {
+      dispatch(setTaskActionType('updating'));
+      const result = await dispatch(updateTask({ id: taskId, details: updatedDetails })).unwrap();
+      if (result) dispatch(setTaskActionType('update_success'));
+    } catch (err) {
+      dispatch(setTaskActionType(''));
+    }
   };
 
   return (

@@ -15,9 +15,13 @@ export const CompletedTaskItem: FC<{ task: Task }> = ({ task }) => {
   const [animate, setAnimate] = useState(false);
 
   const deleteTaskHandler = async () => {
-    dispatch(setTaskActionType('deleting'));
-    await dispatch(deleteTasks(task.id));
-    dispatch(setTaskActionType(''));
+    try {
+      dispatch(setTaskActionType('deleting'));
+      const result = await dispatch(deleteTasks(task.id)).unwrap();
+      if (result) dispatch(setTaskActionType('delete_success'));
+    } catch (err) {
+      dispatch(setTaskActionType(''));
+    }
   };
 
   const transition = animate

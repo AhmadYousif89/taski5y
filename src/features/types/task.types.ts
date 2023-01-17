@@ -2,7 +2,15 @@ import { ResponseError, ResponseStatus } from './http.types';
 
 export type TaskSortOrder = 'asc' | 'desc' | '';
 export type TaskSortType = 'alpha' | 'priority' | 'createdAt' | 'updatedAt' | '';
-export type TaskActionType = 'fetching' | 'creating' | 'updating' | 'deleting' | '';
+export type TaskActionType =
+  | 'fetching'
+  | 'creating'
+  | 'updating'
+  | 'deleting'
+  | 'create_success'
+  | 'update_success'
+  | 'delete_success'
+  | '';
 export type TaskStatus = 'Todo' | 'InProgress' | 'Completed' | '';
 export type TaskPriority = 'Normal' | 'High';
 export type Task = {

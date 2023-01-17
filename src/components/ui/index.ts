@@ -7,6 +7,7 @@ export * from './input';
 export * from './error';
 export * from './loading';
 export * from './image-figure';
+export * from './image-status';
 export * from './input-error';
 export * from './menu';
 export * from './menu-button';

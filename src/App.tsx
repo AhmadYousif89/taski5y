@@ -28,28 +28,29 @@ function App() {
   }, []);
 
   if (status === 'loading') {
-    switch (actionType) {
-      case 'refresh_user':
-        return (
-          <>
-            <ActionModal actionType="transition" msg={'redirecting'} />
-            <Backdrop />
-          </>
-        );
-      case 'sign_out':
-        return (
-          <>
-            <ActionModal actionType="transition" msg={'logging out'} />
-            <Backdrop />
-          </>
-        );
-      case 'delete_account':
-        return (
-          <>
-            <ActionModal actionType="transition" msg={'deleting account'} />
-            <Backdrop />
-          </>
-        );
+    if (actionType === 'refresh_user') {
+      return (
+        <>
+          <ActionModal actionType="transition" msg={'redirecting'} />
+          <Backdrop />
+        </>
+      );
+    }
+    if (actionType === 'sign_out') {
+      return (
+        <>
+          <ActionModal actionType="transition" msg={'logging out'} />
+          <Backdrop />
+        </>
+      );
+    }
+    if (actionType === 'delete_account') {
+      return (
+        <>
+          <ActionModal actionType="transition" msg={'deleting account'} />
+          <Backdrop />
+        </>
+      );
     }
   }
 

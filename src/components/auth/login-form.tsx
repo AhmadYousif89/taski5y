@@ -9,7 +9,7 @@ import { useAuth, useAppDispatch, useAppSelector } from 'app/hooks';
 import { AuthInputNames } from './types';
 import { API_URL } from 'features/config';
 import { signIn } from 'features/services/auth';
-import { authSelector, resetAuth } from 'features/slices/auth';
+import { authSelector } from 'features/slices/auth';
 
 import googleLogo from 'assets/google.png';
 import { AuthButton } from './auth-button';
@@ -45,7 +45,6 @@ export const LoginForm = () => {
     window.addEventListener('unload', unload);
 
     return () => {
-      dispatch(resetAuth());
       window.removeEventListener('unload', unload);
     };
   }, [dispatch, navigate, user]);

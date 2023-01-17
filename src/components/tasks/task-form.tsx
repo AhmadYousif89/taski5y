@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { GetInputValues, Select, GetSelectValues, Input, Button } from 'components/ui';
 
 import { addNewTask } from 'features/services/tasks';
-import { toggleNotification } from 'features/slices/ui';
 import { TaskStatus, TaskPriority } from 'features/types';
 import { taskSelector, setTaskActionType } from 'features/slices/task';
 
@@ -48,14 +47,20 @@ export const TaskForm = () => {
       priority: (priority as TaskPriority) || 'Normal'
     };
     setIsSubmitted(true);
-    dispatch(setTaskActionType('creating'));
-    dispatch(toggleNotification(true));
-    dispatch(addNewTask(newTask));
+    try {
+      dispatch(setTaskActionType('creating'));
+      const result = await dispatch(addNewTask(newTask)).unwrap();
+      if (result) dispatch(setTaskActionType('create_success'));
+    } catch (err) {
+      dispatch(setTaskActionType(''));
+    }
   };
 
   useEffect(() => {
-    if (status === 'fulfilled') setIsSubmitted(false);
-  }, [status]);
+    if (status === 'fulfilled') {
+      setIsSubmitted(false);
+    }
+  }, [dispatch, status]);
 
   return (
     <>

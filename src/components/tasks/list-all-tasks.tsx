@@ -20,21 +20,21 @@ export const TaskList = () => {
   const sortedData = sortTasks(updatedTasks, { sort, type });
   updatedTasks = sortedData;
 
-  switch (actionType) {
-    case 'fetching':
-      return (
-        <>
-          <ActionModal actionType="transition" msg="loading" />
-          <Backdrop />
-        </>
-      );
-    case 'deleting':
-      return (
-        <>
-          <ActionModal actionType="transition" msg="deleting" />
-          <Backdrop />
-        </>
-      );
+  if (actionType === 'fetching') {
+    return (
+      <>
+        <ActionModal actionType="transition" msg="loading" />
+        <Backdrop />
+      </>
+    );
+  }
+  if (actionType === 'deleting') {
+    return (
+      <>
+        <ActionModal actionType="transition" msg="deleting" />
+        <Backdrop />
+      </>
+    );
   }
 
   if (updatedTasks.length === 0) {

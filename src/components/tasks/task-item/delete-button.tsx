@@ -12,9 +12,13 @@ export const TaskDeleteButton: FC<{ taskId: string }> = ({ taskId }) => {
   const [modal, setModal] = useState(false);
 
   const deleteTaskHandler = async () => {
-    dispatch(setTaskActionType('deleting'));
-    await dispatch(deleteTasks(taskId));
-    dispatch(setTaskActionType(''));
+    try {
+      dispatch(setTaskActionType('deleting'));
+      const result = await dispatch(deleteTasks(taskId)).unwrap();
+      if (result) dispatch(setTaskActionType('delete_success'));
+    } catch (err) {
+      dispatch(setTaskActionType(''));
+    }
   };
 
   return (

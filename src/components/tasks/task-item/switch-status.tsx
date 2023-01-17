@@ -12,11 +12,18 @@ export const SwitchTaskStatus: FC<SwitcherProps> = ({ taskId, taskStatus }) => {
   const dispatch = useAppDispatch();
   const { setTaskIsUpdating, setTaskUpdateBtn } = useTaskItem();
 
-  const updateTaskStatus = () => {
+  const updateTaskStatus = async () => {
     setTaskUpdateBtn(true);
     setTaskIsUpdating(true);
-    dispatch(setTaskActionType('updating'));
-    dispatch(updateTask({ id: taskId, status: taskStatus === 'Todo' ? 'InProgress' : 'Todo' }));
+    try {
+      dispatch(setTaskActionType('updating'));
+      const result = await dispatch(
+        updateTask({ id: taskId, status: taskStatus === 'Todo' ? 'InProgress' : 'Todo' })
+      ).unwrap();
+      if (result) dispatch(setTaskActionType('update_success'));
+    } catch (err) {
+      dispatch(setTaskActionType(''));
+    }
   };
 
   const switchColor = taskStatus === 'InProgress' ? 'bg-amber-400' : 'bg-neutral-500';
