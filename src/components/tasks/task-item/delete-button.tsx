@@ -35,7 +35,7 @@ export const TaskDeleteButton: FC<{ taskId: string }> = ({ taskId }) => {
       ) : null}
       <Button
         title="delete task"
-        className="absolute top-5 right-5 !p-2"
+        className="absolute top-5 right-1 !p-2"
         onClick={() => setModal(true)}>
         <TrashIcon />
       </Button>

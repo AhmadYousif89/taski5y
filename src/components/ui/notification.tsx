@@ -97,13 +97,21 @@ export const Notification = () => {
   const duration = 5;
 
   useEffect(() => {
-    if (notificationIsVisible && notification && !sessionError) {
+    if (notificationIsVisible && notification && !sessionError && timers.length === 0) {
       addTimer(() => {
         dispatch(toggleNotification(false));
         resetActionType();
       }, duration);
     }
-  }, [dispatch, addTimer, sessionError, resetActionType, notification, notificationIsVisible]);
+  }, [
+    dispatch,
+    addTimer,
+    sessionError,
+    resetActionType,
+    notification,
+    notificationIsVisible,
+    timers.length
+  ]);
 
   useEffect(() => {
     if (
