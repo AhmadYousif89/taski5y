@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 import appLogo from 'assets/logo.png';
 import { TaskForm } from 'components/tasks';
 import { UserSettings, UserInfo, UserProfile } from 'components/users';
-import { ThemeSwitcher, MenuButton, Menu, Button, Notification } from 'components/ui';
+import { ThemeSwitcher, MenuButton, Menu, Button } from 'components/ui';
 
 import { useAuth, useAppSelector } from 'app/hooks';
 import { toggleProfile, uiSelector } from 'features/slices/ui';
@@ -16,7 +16,6 @@ export const AppLayout = () => {
 
   return (
     <>
-      <Notification />
       <main
         aria-label="main-container"
         className={`${mode} flex min-h-[inherit] flex-col bg-color-base`}>

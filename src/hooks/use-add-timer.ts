@@ -21,11 +21,12 @@ export const useAddTimer = (): {
   const addTimer = useCallback(
     (cb: () => void, duration: number) => {
       if (timers.length === 0) {
-        const timer = setTimeout(() => {
-          cb();
-          timers.shift();
-        }, duration * 1000);
-        timers.push(timer);
+        timers.push(
+          setTimeout(() => {
+            cb();
+            timers.shift();
+          }, duration * 1000)
+        );
       } else {
         clearTimeout(timers[0]);
         timers[0] = setTimeout(() => {

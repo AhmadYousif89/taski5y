@@ -2,14 +2,15 @@ import { useCallback, useEffect } from 'react';
 
 import { useAddTimer, useSessionError } from 'hooks';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { authSelector, setAuthActionType } from 'features/slices/auth';
-import { setTaskActionType, taskSelector } from 'features/slices/task';
+import { authSelector, resetAuthStatus, setAuthActionType } from 'features/slices/auth';
+import { resetTaskStatus, setTaskActionType, taskSelector } from 'features/slices/task';
 import { toggleNotification, uiSelector } from 'features/slices/ui';
 
 import { CloseIcon, SpinnerIcon } from 'assets/icons';
 import { modifyLocalStorage } from 'helpers';
 import { Success } from './success';
 import { Error } from './error';
+import { createPortal } from 'react-dom';
 
 export const Notification = () => {
   const dispatch = useAppDispatch();
@@ -23,6 +24,7 @@ export const Notification = () => {
   const { tasks, status: taskStatus, actionType: taskActionType } = useAppSelector(taskSelector);
   const { sessionError, setSessionError } = useSessionError();
   const { timers, addTimer } = useAddTimer();
+  // const notification = useRef<string | JSX.Element>('');
 
   const authErrorMsg = Array.isArray(authError.message) ? (
     <ul className="flex flex-col gap-2">
@@ -68,19 +70,24 @@ export const Notification = () => {
   }
   /* Task action cases */
   if (taskStatus === 'fulfilled') {
-    if (taskActionType && taskActionType !== 'fetching') {
+    if (taskActionType === 'create_success') {
       notification = (
         <Success>
-          <p>
-            Task
-            {taskActionType === 'create_success'
-              ? ' created'
-              : taskActionType === 'update_success'
-              ? ' updated'
-              : taskActionType === 'delete_success'
-              ? ' deleted'
-              : ''}
-          </p>
+          <p>Task created</p>
+        </Success>
+      );
+    }
+    if (taskActionType === 'update_success') {
+      notification = (
+        <Success>
+          <p>Task updated</p>
+        </Success>
+      );
+    }
+    if (taskActionType === 'delete_success') {
+      notification = (
+        <Success>
+          <p>Task deleted</p>
         </Success>
       );
     }
@@ -89,39 +96,29 @@ export const Notification = () => {
     notification = <Error errorMsg={<p>Internal server error</p>} />;
   }
 
-  const resetActionType = useCallback(() => {
+  const resetActions = useCallback(() => {
     if (authActionType) dispatch(setAuthActionType(''));
+    if (authStatus !== 'idle') dispatch(resetAuthStatus());
+    if (taskStatus !== 'idle') dispatch(resetTaskStatus());
     if (taskActionType) dispatch(setTaskActionType(''));
-  }, [dispatch, authActionType, taskActionType]);
+  }, [dispatch, authStatus, taskStatus, authActionType, taskActionType]);
 
   const duration = 5;
 
   useEffect(() => {
-    if (notificationIsVisible && notification && !sessionError && timers.length === 0) {
+    if (notification && !sessionError && timers.length === 0) {
       addTimer(() => {
         dispatch(toggleNotification(false));
-        resetActionType();
+        resetActions();
       }, duration);
     }
-  }, [
-    dispatch,
-    addTimer,
-    sessionError,
-    resetActionType,
-    notification,
-    notificationIsVisible,
-    timers.length
-  ]);
+  }, [dispatch, addTimer, notification, sessionError, resetActions, timers]);
 
   useEffect(() => {
-    if (
-      (authStatus !== 'idle' || taskStatus !== 'idle') &&
-      !notificationIsVisible &&
-      notification
-    ) {
+    if ((authStatus !== 'idle' || taskStatus !== 'idle') && notification) {
       dispatch(toggleNotification(true));
     }
-  }, [dispatch, authStatus, taskStatus, notificationIsVisible, notification]);
+  }, [dispatch, authStatus, taskStatus, notification]);
 
   const closeNotificationHandler = () => {
     if (sessionError) {
@@ -129,9 +126,9 @@ export const Notification = () => {
       setSessionError('');
     }
     if (notificationIsVisible) {
-      resetActionType();
       dispatch(toggleNotification(false));
       clearTimeout(timers[0]);
+      resetActions();
     }
   };
 
@@ -156,5 +153,6 @@ export const Notification = () => {
     </div>
   );
 
-  return (notificationIsVisible && notification) || sessionError ? content : null;
+  const notificationEl = document.getElementById('notification-root') as HTMLDivElement;
+  return notification || sessionError ? createPortal(content, notificationEl) : null;
 };

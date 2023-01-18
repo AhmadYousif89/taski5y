@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import { store } from './app/store';
+import { Notification } from 'components/ui';
 
 const container = document.getElementById('root') as HTMLElement;
 import.meta.env.DEV && document.body.setAttribute('class', 'debug-screens');
@@ -18,6 +19,7 @@ root.render(
     <BrowserRouter>
       <App />
     </BrowserRouter>
+    <Notification />
   </Provider>
   // </StrictMode>
 );
