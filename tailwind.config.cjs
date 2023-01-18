@@ -28,7 +28,7 @@ module.exports = {
         }
       },
       animation: {
-        loading: 'loading 5s linear forwards',
+        loading: 'loading 3s linear forwards',
         slide: 'slide 300ms ease-out forwards'
       },
       fontFamily: {

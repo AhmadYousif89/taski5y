@@ -9,8 +9,7 @@ const storedTheme = modifyLocalStorage({ action: 'get', key: 'mode' }) as AppThe
 const initialState: UIState = {
   mode: storedTheme ? storedTheme : 'dark-theme',
   menuIsVisible: false,
-  profileIsVisible: false,
-  notificationIsVisible: false
+  profileIsVisible: false
 };
 
 const uiSlice = createSlice({
@@ -26,14 +25,10 @@ const uiSlice = createSlice({
     },
     toggleProfile(state, { payload }: PayloadAction<boolean>) {
       state.profileIsVisible = payload;
-    },
-    toggleNotification(state, { payload }: PayloadAction<boolean>) {
-      state.notificationIsVisible = payload;
     }
   }
 });
 
-export const { toggleSideMenu, toggleAppTheme, toggleProfile, toggleNotification } =
-  uiSlice.actions;
+export const { toggleSideMenu, toggleAppTheme, toggleProfile } = uiSlice.actions;
 export const uiSelector = (state: RootState) => state.ui;
 export default uiSlice.reducer;

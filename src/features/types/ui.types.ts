@@ -3,5 +3,4 @@ export type UIState = {
   mode: AppTheme;
   menuIsVisible: boolean;
   profileIsVisible: boolean;
-  notificationIsVisible: boolean;
 };
