@@ -1,15 +1,15 @@
-export type AppPaths = {
+export interface AppPaths {
   root: '/';
   login: '/login';
   register: '/register';
   redirectOnRegister: '/register/redirect';
   redirectOnLogin: '/login/redirect';
-  dashboard: '/dashboard';
   googleRegister: '/auth/google/signup';
-  googleLogin: '/auth/google/signin';
   passwordReset: '/password-reset';
+  googleLogin: '/auth/google/signin';
+  dashboard: '/dashboard';
   notFound: '*';
-};
+}
 export type ResponseStatus = 'idle' | 'loading' | 'fulfilled' | 'rejected';
 export type ResponseError = {
   statusCode: number;

@@ -1,24 +1,47 @@
+import { useSearchParams } from 'hooks';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { toggleProfile, toggleSideMenu } from 'features/slices/ui';
-import { ActionModal, Backdrop } from 'components/ui';
+import { ActionModal, Backdrop, Button } from 'components/ui';
 import { taskSelector } from 'features/slices/task';
 
 import { TaskItem } from './task-item';
-import { useSearchParams } from 'hooks';
 import { SearchMsg } from './search-msg';
+import { NoTaskMsg } from './no-task-msg';
 import { SearchErrMsg } from './search-error-msg';
 import { searchTasks, sortTasks } from './helpers';
 import { useFetchTasks } from './hooks/use-fetch-tasks';
 
 export const TaskList = () => {
-  const dispatch = useAppDispatch();
-  const { actionType, searchedTaskQuery: query } = useAppSelector(taskSelector);
-  const { sort, type } = useSearchParams();
   const tasks = useFetchTasks();
+  const dispatch = useAppDispatch();
+  const { sort, type, query } = useSearchParams();
+  const { actionType } = useAppSelector(taskSelector);
 
   let updatedTasks = [...tasks];
   const sortedData = sortTasks(updatedTasks, { sort, type });
   updatedTasks = sortedData;
+
+  updatedTasks = searchTasks(updatedTasks, query);
+
+  const searchMsg = query && updatedTasks.length > 0 ? <SearchMsg tasks={updatedTasks} /> : null;
+
+  if (updatedTasks.length === 0) {
+    return (
+      <div className="my-20 flex flex-col text-center text-color-base">
+        <NoTaskMsg msg="You don't have any active tasks" />
+        <Button
+          onClick={() => {
+            dispatch(toggleProfile(false));
+            dispatch(toggleSideMenu());
+          }}
+          className="mt-8 self-center !py-6">
+          Create new task ?
+        </Button>
+      </div>
+    );
+  }
+
+  if (query && updatedTasks.length === 0) return <SearchErrMsg />;
 
   if (actionType === 'fetching') {
     return (
@@ -36,28 +59,6 @@ export const TaskList = () => {
       </>
     );
   }
-
-  if (updatedTasks.length === 0) {
-    return (
-      <div className="my-20 flex flex-col text-center text-color-base">
-        <h2 className="text-3xl">You don't have any active tasks</h2>
-        <button
-          onClick={() => {
-            dispatch(toggleProfile(false));
-            dispatch(toggleSideMenu());
-          }}
-          className="mt-8 block self-center rounded-md px-6 py-4 text-2xl text-color-base ring-color-base transition-colors hover:ring-2 hover:transition-transform active:translate-y-1 active:bg-sky-500">
-          Create new task ?
-        </button>
-      </div>
-    );
-  }
-
-  updatedTasks = searchTasks(updatedTasks, query);
-
-  if (query && updatedTasks.length === 0) return <SearchErrMsg />;
-
-  const searchMsg = query && updatedTasks.length > 0 ? <SearchMsg tasks={updatedTasks} /> : null;
 
   return (
     <>

@@ -1,16 +1,16 @@
+import { useSearchParams } from 'hooks';
 import { useAppSelector } from 'app/hooks';
 import { taskSelector } from 'features/slices/task';
 
 import { TaskItem } from './task-item';
-import { useSearchParams } from 'hooks';
 import { searchTasks, sortTasks } from './helpers';
 import { SearchErrMsg } from './search-error-msg';
-import { NoTasksMsg } from './no-tasks-msg';
+import { NoTaskMsg } from './no-task-msg';
 import { SearchMsg } from './search-msg';
 
 export const TodoTaskList = () => {
-  const { tasks, searchedTaskQuery: query } = useAppSelector(taskSelector);
-  const { sort, type } = useSearchParams();
+  const { tasks } = useAppSelector(taskSelector);
+  const { sort, type, query } = useSearchParams();
 
   const todoTasks = tasks.filter(task => task.status === 'Todo');
   let filteredTasks = searchTasks(todoTasks, query);
@@ -25,12 +25,14 @@ export const TodoTaskList = () => {
     </ul>
   );
 
-  if (filteredTasks.length === 0)
-    content = <NoTasksMsg msg={`You have ${filteredTasks.length} in progress task`} />;
+  const searchMsg = query && filteredTasks.length > 0 ? <SearchMsg tasks={filteredTasks} /> : null;
 
   if (query && filteredTasks.length === 0) content = <SearchErrMsg />;
 
-  const searchMsg = query && filteredTasks.length > 0 ? <SearchMsg tasks={filteredTasks} /> : null;
+  if (filteredTasks.length === 0)
+    content = (
+      <NoTaskMsg className="mt-8" msg={`You have ${filteredTasks.length} in progress task`} />
+    );
 
   return (
     <section className="mt-8 flex flex-col gap-8">

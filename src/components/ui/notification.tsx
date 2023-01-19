@@ -21,7 +21,7 @@ export const Notification = () => {
   } = useAppSelector(authSelector);
   const { tasks, status: taskStatus, actionType: taskActionType } = useAppSelector(taskSelector);
   const { sessionError, setSessionError } = useSessionError();
-  const { timers, addTimer } = useAddTimer();
+  const { addTimer } = useAddTimer();
 
   const authErrorMsg = Array.isArray(authError.message) ? (
     <ul className="flex flex-col gap-2">

@@ -1,11 +1,32 @@
-import { useAppDispatch } from 'app/hooks';
+import { useNavigate } from 'react-router-dom';
+
+import { useSearchParams } from 'hooks';
 import { debounce } from 'helpers/debouncer';
-import { setTaskSearchQuery } from 'features/slices/task';
 
 export const SearchTasks = () => {
-  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { filter, sort, type } = useSearchParams();
 
-  const onUpdatedQuery = debounce(e => dispatch(setTaskSearchQuery(e.target.value)), 750);
+  const onUpdatedQuery = debounce(e => {
+    const query = e.target.value;
+
+    const searchURL =
+      sort && type && filter && query
+        ? `?sort=${sort}&type=${type}&filter=${filter}&query=${query}`
+        : sort && type && query
+        ? `?sort=${sort}&type=${type}&query=${query}`
+        : filter && query
+        ? `?filter=${filter}&query=${query}`
+        : sort && type
+        ? `?sort=${sort}&type=${type}`
+        : query
+        ? `?query=${query}`
+        : filter
+        ? `?filter=${filter}`
+        : '';
+
+    navigate(searchURL);
+  }, 750);
 
   return (
     <form aria-label="Task-search-bar" onSubmit={e => e.preventDefault()}>

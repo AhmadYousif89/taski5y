@@ -1,20 +1,19 @@
-import { Task, TaskSortOrder, TaskSortType } from 'features/types';
+import { Task } from 'features/types';
+import { SortOrder, SortType } from 'hooks';
 
+type Sort = { sort: SortOrder; type: SortType };
 /**
  * Sorts a list of tasks based on the specified sorting parameters.
  * @param {Task[]} tasks - The list of tasks to be sorted.
- * @param {{ sort: TaskSortOrder; type: TaskSortType }} params - An object containing the sorting parameters.
- * @property {TaskSortOrder} params.sort - The sort order (either 'asc' or 'desc').
- * @property {TaskSortType} params.type - The type of sorting to be applied (either 'alpha', 'createdAt', 'priority', or 'status').
+ * @param {Sort} params - An object containing the sorting parameters.
+ * @property {SortOrder} params.sort - The sort order ('asc' or 'desc').
+ * @property {SortType} params.type - The type of sorting to be applied ('alpha', 'date' or 'priority').
  * @returns {Task[]} The sorted list of tasks.
  * @example
  * const sortedTasks = sortTasks(tasks, { sort: 'asc', type: 'alpha' });
  * console.log(sortedTasks);
  */
-export const sortTasks = (
-  tasks: Task[],
-  { sort, type }: { sort: TaskSortOrder; type: TaskSortType }
-): Task[] => {
+export const sortTasks = (tasks: Task[], { sort, type }: Sort): Task[] => {
   const data = tasks ? [...tasks] : [];
 
   const sortFn = (taskA: Task, taskB: Task) => {
@@ -23,7 +22,7 @@ export const sortTasks = (
         return sort === 'asc'
           ? taskA.title.toLowerCase().localeCompare(taskB.title.toLowerCase())
           : taskB.title.toLowerCase().localeCompare(taskA.title.toLowerCase());
-      case 'createdAt':
+      case 'date':
         return sort === 'asc'
           ? taskA.createdAt.localeCompare(taskB.createdAt)
           : taskB.createdAt.localeCompare(taskA.createdAt);

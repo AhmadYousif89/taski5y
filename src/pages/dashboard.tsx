@@ -1,4 +1,5 @@
-import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { useNavigate } from 'react-router-dom';
+
 import {
   TaskList,
   SortTasks,
@@ -8,13 +9,18 @@ import {
   DisplayTaskPanels,
   InProgressTaskList
 } from 'components/tasks';
+import { path } from 'components/app';
 import { Button } from 'components/ui';
+import { useSearchParams } from 'hooks';
+import { useAppSelector } from 'app/hooks';
+import { taskSelector } from 'features/slices/task';
+
 import { BackArrowIcon } from 'assets/icons';
-import { taskSelector, setTaskActivePanel } from 'features/slices/task';
 
 export const Dashboard = () => {
-  const dispatch = useAppDispatch();
-  const { totalTasks, totalCompletedTasks, activeTaskPanel } = useAppSelector(taskSelector);
+  const navigate = useNavigate();
+  const { filter } = useSearchParams();
+  const { totalTasks, totalCompletedTasks } = useAppSelector(taskSelector);
 
   let content = <TaskList />;
 
@@ -27,7 +33,7 @@ export const Dashboard = () => {
           {totalCompletedTasks > 1 ? 's' : ''}
         </span>
         <Button
-          onClick={() => dispatch(setTaskActivePanel('Completed'))}
+          onClick={() => navigate(`?filter=completed`)}
           className="mt-8 h-24 w-24 !rounded-full hover:!ring hover:!ring-color-highlight active:translate-y-1"
           label="Here"
         />
@@ -35,11 +41,11 @@ export const Dashboard = () => {
     );
   }
 
-  if (activeTaskPanel === 'Todo') content = <TodoTaskList />;
+  if (filter === 'todo') content = <TodoTaskList />;
 
-  if (activeTaskPanel === 'InProgress') content = <InProgressTaskList />;
+  if (filter === 'in-progress') content = <InProgressTaskList />;
 
-  if (activeTaskPanel === 'Completed') content = <CompletedTaskList />;
+  if (filter === 'completed') content = <CompletedTaskList />;
 
   return (
     <>
@@ -51,14 +57,14 @@ export const Dashboard = () => {
             <SearchTasks />
           </div>
           <p className="m-8 text-center text-2xl tracking-wide text-color-highlight">
-            Viewing {activeTaskPanel ? activeTaskPanel : 'All'} Tasks
+            viewing {filter ? filter : 'All'} tasks
           </p>
-          {activeTaskPanel !== '' ? (
+          {filter !== null ? (
             <Button
               label="Back"
               className="self-center"
               icon={<BackArrowIcon />}
-              onClick={() => dispatch(setTaskActivePanel(''))}
+              onClick={() => navigate(`${path.dashboard}`)}
             />
           ) : null}
         </section>

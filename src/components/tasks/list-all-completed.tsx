@@ -5,25 +5,16 @@ import { taskSelector } from 'features/slices/task';
 import { ActionModal, Backdrop } from 'components/ui';
 import { CompletedTaskItem } from './task-completed-item';
 import { SearchErrMsg } from './search-error-msg';
+import { NoTaskMsg } from './no-task-msg';
 import { SearchMsg } from './search-msg';
-import { NoTasksMsg } from './no-tasks-msg';
 
 export const CompletedTaskList = () => {
-  const { actionType, completedTasks, searchedTaskQuery: query } = useAppSelector(taskSelector);
-  const { sort, type } = useSearchParams();
+  const { actionType, completedTasks } = useAppSelector(taskSelector);
+  const { sort, type, query } = useSearchParams();
 
   let filteredTasks = searchTasks(completedTasks, query);
   const sortedData = sortTasks(filteredTasks, { sort, type });
   filteredTasks = sortedData;
-
-  if (actionType === 'deleting') {
-    return (
-      <>
-        <ActionModal actionType="transition" msg="Deleting ..." />
-        <Backdrop />
-      </>
-    );
-  }
 
   let content = (
     <ul className="grid-container">
@@ -32,12 +23,24 @@ export const CompletedTaskList = () => {
       ))}
     </ul>
   );
-  if (filteredTasks.length === 0)
-    content = <NoTasksMsg msg={`You have ${filteredTasks.length} completed task`} />;
+
+  const searchMsg = query && filteredTasks.length > 0 ? <SearchMsg tasks={filteredTasks} /> : null;
 
   if (query && filteredTasks.length === 0) content = <SearchErrMsg />;
 
-  const searchMsg = query && filteredTasks.length > 0 ? <SearchMsg tasks={filteredTasks} /> : null;
+  if (filteredTasks.length === 0)
+    content = (
+      <NoTaskMsg className="mt-8" msg={`You have ${filteredTasks.length} completed task`} />
+    );
+
+  if (actionType === 'deleting') {
+    return (
+      <>
+        <ActionModal actionType="transition" msg="deleting" />
+        <Backdrop />
+      </>
+    );
+  }
 
   return (
     <section className="mt-8 flex flex-col gap-8">

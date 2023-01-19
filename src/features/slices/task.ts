@@ -2,7 +2,7 @@ import { RootState } from 'app/store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { getAllTasks, addNewTask, updateTask, deleteTasks } from 'features/services/tasks';
-import { TaskStatus, ResponseError, TaskActionType, TaskState } from 'features/types';
+import { ResponseError, TaskActionType, TaskState } from 'features/types';
 
 const initError: Partial<ResponseError> = { statusCode: 0, message: '', error: '' };
 
@@ -14,8 +14,6 @@ const initialState: TaskState = {
   totalTodoTasks: 0,
   totalInProgressTasks: 0,
   totalCompletedTasks: 0,
-  activeTaskPanel: '',
-  searchedTaskQuery: '',
   error: initError,
   actionType: ''
 };
@@ -29,12 +27,6 @@ const taskSlice = createSlice({
     },
     resetTaskStatus(state) {
       state.status = 'idle';
-    },
-    setTaskSearchQuery(state, { payload }: PayloadAction<string>) {
-      state.searchedTaskQuery = payload;
-    },
-    setTaskActivePanel(state, { payload }: PayloadAction<TaskStatus>) {
-      state.activeTaskPanel = payload;
     },
     setTaskActionType(state, { payload }: PayloadAction<TaskActionType>) {
       state.actionType = payload;
@@ -123,12 +115,6 @@ const taskSlice = createSlice({
   }
 });
 
-export const {
-  resetTasks,
-  resetTaskStatus,
-  setTaskSearchQuery,
-  setTaskActivePanel,
-  setTaskActionType
-} = taskSlice.actions;
+export const { resetTasks, resetTaskStatus, setTaskActionType } = taskSlice.actions;
 export const taskSelector = (state: RootState) => state.tasks;
 export default taskSlice.reducer;
