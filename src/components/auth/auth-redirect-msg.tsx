@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useAuth } from 'app/hooks';
+import { useAuth } from 'hooks';
 import { AuthType } from 'features/types';
 
 export const AuthRedirectMsg: FC<{ authType: AuthType }> = ({ authType }) => {

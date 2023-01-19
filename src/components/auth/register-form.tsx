@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { FormEvent, useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector, useAuth } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 
 import googleLogo from 'assets/google.png';
 
-import { useForm } from 'hooks';
+import { useForm, useAuth } from 'hooks';
 import { AuthInputNames } from './types';
 import { AuthButton } from './auth-button';
 

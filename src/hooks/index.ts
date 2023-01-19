@@ -1,3 +1,5 @@
+export * from './use-auth';
+export * from './use-task';
 export * from './use-form';
 export * from './use-persist';
 export * from './use-add-timer';

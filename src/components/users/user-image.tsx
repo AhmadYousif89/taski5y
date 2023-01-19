@@ -1,6 +1,7 @@
 import { ChangeEvent, useRef, useState, useEffect, useCallback } from 'react';
 
-import { useAuth, useAppDispatch, useAppSelector } from 'app/hooks';
+import { useAuth } from 'hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { ActionModal, Backdrop, ImageFigure } from 'components/ui';
 
 import { updateUser } from 'features/services/auth';

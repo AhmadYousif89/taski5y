@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useRef, useState } from 'react';
 
-import { useForm } from 'hooks';
-import { useAuth, useAppDispatch, useAppSelector } from 'app/hooks';
+import { useAuth, useForm } from 'hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 
 import { toggleProfile } from 'features/slices/ui';
 import { updateUser } from 'features/services/auth';

@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { FormEvent, useEffect, useState } from 'react';
 
-import { useForm } from 'hooks';
+import { useForm, useAuth } from 'hooks';
 import { AuthInputNames } from './types';
 import { resetPassword } from 'features/services/auth';
 import { authSelector, resetAuth, setAuthActionType } from 'features/slices/auth';
-import { useAuth, useAppDispatch, useAppSelector } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 
 import { path } from 'components/app';
 import { GetInputValues, Input } from 'components/ui';

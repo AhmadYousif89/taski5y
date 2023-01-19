@@ -1,7 +1,8 @@
 import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useAppDispatch, useAuth } from 'app/hooks';
+import { useAuth } from 'hooks';
+import { useAppDispatch } from 'app/hooks';
 import { updateUser } from 'features/services/auth';
 
 import { path } from 'components/app';

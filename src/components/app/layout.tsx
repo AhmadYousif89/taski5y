@@ -6,7 +6,8 @@ import { TaskForm } from 'components/tasks';
 import { UserSettings, UserInfo, UserProfile } from 'components/users';
 import { ThemeSwitcher, MenuButton, Menu, Button } from 'components/ui';
 
-import { useAuth, useAppSelector } from 'app/hooks';
+import { useAuth } from 'hooks';
+import { useAppSelector } from 'app/hooks';
 import { toggleProfile, uiSelector } from 'features/slices/ui';
 
 export const AppLayout = () => {
