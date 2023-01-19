@@ -53,7 +53,7 @@ describe('Test Sorting function', () => {
 
   // Test sorting by date (ascending)
   test('it should sort task items by date of creation in ascending order', () => {
-    const sortedTasks = sortTasks(tasks, { sort: 'asc', type: 'createdAt' });
+    const sortedTasks = sortTasks(tasks, { sort: 'asc', type: 'date' });
     expect(sortedTasks[0].title).toBe('First Task');
     expect(sortedTasks[1].title).toBe('Second Task');
     expect(sortedTasks[2].title).toBe('Third Task');
@@ -61,7 +61,7 @@ describe('Test Sorting function', () => {
 
   // Test sorting by date (descending)
   test('it should sort task items by date of creation in descending order', () => {
-    const sortedTasks = sortTasks(tasks, { sort: 'desc', type: 'createdAt' });
+    const sortedTasks = sortTasks(tasks, { sort: 'desc', type: 'date' });
     expect(sortedTasks[0].title).toBe('Third Task');
     expect(sortedTasks[1].title).toBe('Second Task');
     expect(sortedTasks[2].title).toBe('First Task');
