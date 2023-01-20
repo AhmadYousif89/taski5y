@@ -52,7 +52,7 @@ export const DisplayTaskPanels = () => {
   ];
 
   return (
-    <section className="my-16 flex items-center justify-evenly" aria-label="task-panels">
+    <section className="my-16 flex justify-between" aria-label="task-panels">
       {panels.map(panel => (
         <TaskPanel
           key={panel.id}
@@ -71,11 +71,11 @@ const TaskPanel: FC<TaskPanelProps> = ({ title, count, tooltip, togglePanels }) 
 
   const borderColor =
     title === 'todo'
-      ? 'border-sky'
+      ? 'border-sky-500'
       : title === 'in-progress'
-      ? 'border-amber'
+      ? 'border-amber-500'
       : title === 'completed'
-      ? 'border-green'
+      ? 'border-green-500'
       : '';
   const textColor =
     title === 'todo'
@@ -88,19 +88,19 @@ const TaskPanel: FC<TaskPanelProps> = ({ title, count, tooltip, togglePanels }) 
 
   return (
     <button
+      aria-pressed
       className={`${
         filter === title ? textColor : ''
-      } flex h-full w-full cursor-default flex-col items-center gap-8 rounded-sm bg-transparent text-color-base transition-colors `}>
+      } group flex h-full w-full cursor-default flex-col items-center gap-8 rounded-sm text-color-base transition-colors`}>
       <div
         title={tooltip}
-        onClick={() => togglePanels()}
-        className={`relative ${borderColor} h-28 w-28 cursor-pointer rounded-full border-[5px] bg-transparent shadow-md md:h-32 md:w-32 lg:h-44 lg:w-44`}>
-        <span
-          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl font-bold md:text-4xl`}>
-          {count}
-        </span>
+        onClick={() => {
+          togglePanels();
+        }}
+        className={`relative ${borderColor} h-28 w-28 cursor-pointer rounded-full border-4 shadow-md xs:h-32 xs:w-32 md:h-44 md:w-44`}>
+        <span className="center-absolute text-2xl xs:text-4xl">{count}</span>
       </div>
-      <p className={`rounded-md p-3 text-2xl capitalize tracking-wide md:text-4xl`}>{title}</p>
+      <p className="text-xl capitalize xs:text-3xl">{title}</p>
     </button>
   );
 };

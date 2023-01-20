@@ -19,9 +19,9 @@ const initError: ResponseError = { statusCode: 0, message: '', error: '' };
 const initialState: AuthState = {
   error: initError,
   status: 'idle',
+  actionType: '',
   message: '',
-  user: null,
-  actionType: ''
+  user: null
 };
 
 const authSlice = createSlice({

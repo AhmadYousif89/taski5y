@@ -54,15 +54,6 @@
 }
 
 @layer utilities {
-  .border-sky {
-    @apply border-sky-400;
-  }
-  .border-amber {
-    @apply border-amber-400;
-  }
-  .border-green {
-    @apply border-green-400;
-  }
   .grid-container {
     @apply mx-4 mb-16 grid grid-cols-[repeat(auto-fit,minmax(32rem,.5fr))] place-items-stretch justify-center gap-8;
   }
@@ -79,7 +70,7 @@
     @apply mt-4 text-xl text-color-invalid;
   }
   .li-item {
-    @apply rounded-md bg-color-card py-3 px-4 capitalize tracking-wider ring-1 ring-color-base hover:ring-color-highlight;
+    @apply rounded-md bg-color-card py-3 px-4 capitalize tracking-wider ring-1 ring-color-base transition-colors hover:bg-color-base hover:ring-color-highlight;
   }
 }
 

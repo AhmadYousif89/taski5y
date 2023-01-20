@@ -25,6 +25,8 @@ export const TaskList = () => {
 
   const searchMsg = query && updatedTasks.length > 0 ? <SearchMsg tasks={updatedTasks} /> : null;
 
+  if (query && updatedTasks.length === 0) return <SearchErrMsg />;
+
   if (updatedTasks.length === 0) {
     return (
       <div className="my-20 flex flex-col text-center text-color-base">
@@ -40,8 +42,6 @@ export const TaskList = () => {
       </div>
     );
   }
-
-  if (query && updatedTasks.length === 0) return <SearchErrMsg />;
 
   if (actionType === 'fetching') {
     return (

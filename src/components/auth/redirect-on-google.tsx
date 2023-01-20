@@ -17,14 +17,17 @@ export const GoogleRedirect: FC<{ authType: AuthType }> = ({ authType }) => {
   const isLoggedIn = modifyLocalStorage({ action: 'get', key: 'logged_in' });
 
   useEffect(() => {
-    if (isLoggedIn !== 'true') {
+    // user is not logged in i.e (no user)
+    if (!user && isLoggedIn !== 'true') {
       wait(() => dispatch(loginWithGoogle())).then(() => {
         modifyLocalStorage({ action: 'set', key: 'logged_in', value: 'true' });
+        modifyLocalStorage({ action: 'set', key: 'persist', value: 'true' });
         modifyLocalStorage({ action: 'remove', key: 'server_error' });
         navigate(path.dashboard);
       });
     }
 
+    // user is logged in
     if (user && isLoggedIn === 'true') navigate(path.dashboard);
   }, [user, isLoggedIn, navigate, dispatch]);
 

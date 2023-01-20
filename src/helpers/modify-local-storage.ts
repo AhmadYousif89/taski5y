@@ -1,14 +1,11 @@
+export const keys = ['persist', 'logged_in', 'server_error', 'mode'] as const;
 export type LSAction = 'set' | 'get' | 'remove' | 'clear';
-export type LSKeys = 'persist' | 'server_error' | 'logged_in' | 'mode';
+export type LSKeys = typeof keys[number];
 // prettier-ignore
 export type LocalStorageType<A extends LSAction> = 
- (
-   A extends 'set' ? { action: A; value: any; key: LSKeys } :
-   A extends 'clear' ? { action: A; exclude?: LSKeys| LSKeys[] } :
+   A extends 'set' ? { action: A; value: any; key: LSKeys } : 
+   A extends 'clear' ? { action: A; exclude?: LSKeys| LSKeys[] } : 
    { action: A; key: LSKeys }
- )
-
-export const keys: LSKeys[] = ['persist', 'logged_in', 'server_error', 'mode'];
 
 /**
  * Perform various action types on the local storage based on the provided options.

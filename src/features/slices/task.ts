@@ -9,12 +9,12 @@ const initError: Partial<ResponseError> = { statusCode: 0, message: '', error: '
 const initialState: TaskState = {
   tasks: [],
   completedTasks: [],
-  status: 'idle',
   totalTasks: 0,
   totalTodoTasks: 0,
   totalInProgressTasks: 0,
   totalCompletedTasks: 0,
   error: initError,
+  status: 'idle',
   actionType: ''
 };
 

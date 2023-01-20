@@ -14,12 +14,12 @@ export const SortTasks = () => {
   const { tasks } = useAppSelector(taskSelector);
   const [toggleMenu, setToggleMenu] = useState(false);
 
-  const openSortMenuHandler = () => setToggleMenu(true);
-  const closeSortMenuHandler = () => setToggleMenu(false);
+  const openSortMenu = () => setToggleMenu(true);
+  const closeSortMenu = () => setToggleMenu(false);
 
   const sortRef = useEventListener({
-    insideElement: () => openSortMenuHandler(),
-    outsideElement: () => closeSortMenuHandler()
+    insideElement: () => openSortMenu(),
+    outsideElement: () => closeSortMenu()
   });
 
   const [asc, desc]: SortOrder[] = ['asc', 'desc'];
@@ -52,9 +52,7 @@ export const SortTasks = () => {
           className="li-item grid grid-cols-[5rem,auto] items-center gap-2">
           <span className="flex items-center">
             {type === alpha ? (
-              <ArrowIcon
-                className={`${isSortAsc ? 'rotate-0' : 'rotate-180'} transition-all duration-300`}
-              />
+              <ArrowIcon className={`${isSortAsc ? 'animate-arrow-up' : 'animate-arrow-down'}`} />
             ) : null}
             {type === alpha ? sort : 'by'}
           </span>
@@ -66,9 +64,7 @@ export const SortTasks = () => {
           className="li-item grid grid-cols-[5rem,auto] items-center gap-2">
           <span className="flex items-center">
             {type === date ? (
-              <ArrowIcon
-                className={`${isSortAsc ? 'rotate-0' : 'rotate-180'} transition-all duration-300`}
-              />
+              <ArrowIcon className={`${isSortAsc ? 'animate-arrow-up' : 'animate-arrow-down'}`} />
             ) : null}
             {type === date ? sort : 'by'}
           </span>
@@ -80,9 +76,7 @@ export const SortTasks = () => {
           className="li-item grid grid-cols-[5rem,auto] items-center gap-2">
           <span className="flex items-center">
             {type === priority ? (
-              <ArrowIcon
-                className={`${isSortAsc ? 'rotate-0' : 'rotate-180'} transition-all duration-300`}
-              />
+              <ArrowIcon className={`${isSortAsc ? 'animate-arrow-up' : 'animate-arrow-down'}`} />
             ) : null}
             {type === priority ? sort : 'by'}
           </span>
@@ -90,7 +84,7 @@ export const SortTasks = () => {
         </button>
 
         <button type={'button'} onClick={() => unsortHandler()} className="li-item">
-          <span>unsort</span>
+          <span>reset</span>
         </button>
       </div>
     </Card>
@@ -105,11 +99,17 @@ export const SortTasks = () => {
           title="sort tasks"
           ref={sortRef as MutableRefObject<HTMLDivElement>}
           onKeyDown={e => {
-            if (e.key === 'Enter') openSortMenuHandler();
+            if (e.key === 'Enter') openSortMenu();
           }}
-          onClick={openSortMenuHandler}
-          className="flex-center absolute left-[3%] z-[15] cursor-pointer rounded-md bg-color-card py-5 pl-4 pr-1 text-xl text-color-base ring-2 ring-color-base active:ring-color-highlight xs:left-[10%] lg:left-[20%]">
-          <span>Sort</span> <SortIcon />
+          className="flex-center absolute left-[2%] z-[15] cursor-pointer gap-1 rounded-md bg-color-card py-4 pl-3 pr-1 text-xl text-color-base ring-1 ring-color-base active:ring-color-highlight xs:left-[10%] lg:left-[20%]">
+          <span>Sort</span>
+          {sort === asc ? (
+            <ArrowIcon className={'animate-arrow-up'} />
+          ) : sort === desc ? (
+            <ArrowIcon className={'animate-arrow-down'} />
+          ) : (
+            <SortIcon />
+          )}
           {toggleMenu && <>{sortingList}</>}
         </div>
       ) : null}

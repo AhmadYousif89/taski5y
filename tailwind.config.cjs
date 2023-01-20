@@ -25,11 +25,15 @@ module.exports = {
           '0%': { backgroundColor: 'rgb(205 215 225)', transform: 'translateX(-100%)' },
           '50%': { backgroundColor: 'rgb(245 160 10)' },
           '100%': { backgroundColor: 'rgb(240 70 70)', transform: 'translateX(0)' }
-        }
+        },
+        'arrow-up': { '0% ': { rotate: 'z 180deg' }, '100%': { color: 'rgb(74 222 100)' } },
+        'arrow-down': { '100%': { rotate: 'z -180deg', color: 'rgb(240 70 70)' } }
       },
       animation: {
         loading: 'loading 3s linear forwards',
-        slide: 'slide 300ms ease-out forwards'
+        slide: 'slide 300ms ease-out forwards',
+        'arrow-up': 'arrow-up 300ms linear forwards',
+        'arrow-down': 'arrow-down 300ms linear forwards'
       },
       fontFamily: {
         'Roboto Mono': ['Roboto Mono', ...defaultTheme.fontFamily.sans]

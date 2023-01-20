@@ -1,13 +1,12 @@
-export const ArrowIcon = ({ className = 'h-6 w-6' }: { className: string }) => {
+export const ArrowIcon = ({ className = '' }: { className: string }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={14}
       fill="none"
       strokeWidth={3}
       viewBox="0 0 24 24"
       stroke="currentColor"
-      className={`${className}`}>
+      className={`${className} h-6 w-7`}>
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
