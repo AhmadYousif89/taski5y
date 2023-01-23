@@ -29,8 +29,9 @@ export const ActionModal: FC<ActionModalProps> = ({
   confirmAction
 }) => {
   const { status } = useAppSelector(authSelector);
+  let content;
 
-  let content = (
+  content = (
     <div className="flex w-full flex-col gap-4 text-center">
       <span className="mb-4 self-center">{icon ? icon : <WarningIcon />}</span>
       <h3 className="px-2 text-2xl xs:text-3xl">{msg}</h3>
@@ -52,7 +53,7 @@ export const ActionModal: FC<ActionModalProps> = ({
 
   if (actionType === 'transition') {
     content = (
-      <div className="flex items-center gap-8">
+      <div className="flex-center gap-8 text-center">
         <SpinnerIcon className="h-12 w-12 text-sky-500" />
         <h3 className="text-3xl uppercase">{msg}</h3>
       </div>
@@ -124,5 +125,5 @@ export const ActionModal: FC<ActionModalProps> = ({
     </section>
   );
 
-  return <>{createPortal(modalElement, modalRoot)}</>;
+  return createPortal(modalElement, modalRoot);
 };

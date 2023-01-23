@@ -4,16 +4,16 @@ import { Card } from 'components/ui';
 import { Task } from 'features/types';
 import { TaskProvider } from './context';
 
+import { TaskInfo } from './task-info';
 import { TaskDeleteButton } from './delete-button';
 import { SwitchTaskStatus } from './switch-status';
+import { DetailsSection } from './details-section';
 import { TaskUpdateButtons } from './update-buttons';
 import { DisplayTaskTime } from './display-time';
-import { DetailsSection } from './details-section';
 
 export const TaskItem: FC<{ task: Task }> = ({ task }) => {
   const [animate, setAnimate] = useState(false);
 
-  const wasUpdated = task.createdAt !== task.updatedAt;
   const styles = task.status === 'InProgress' ? 'ring-1 ring-color-validating' : '';
   const transition = animate
     ? 'translate-y-0 opacity-100 visible'
@@ -27,23 +27,27 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
     <TaskProvider>
       <Card
         priority={task.priority}
-        className={`relative ${styles} ${transition} transition-transform duration-700`}>
-        <li className={`flex -translate-y-0 flex-col gap-6 py-6 px-4 text-color-base md:text-3xl`}>
-          <TaskDeleteButton taskId={task.id} />
-
-          <header className="space-y-4 self-start">
+        className={`relative ${styles} ${transition} h-fit transition-transform duration-500`}>
+        <li className="flex -translate-y-0 flex-col gap-6 py-6 px-2 text-color-base md:text-3xl">
+          <header className="relative flex items-center justify-between">
             <h2 className="text-3xl tracking-wide">{task.title}</h2>
-            <DisplayTaskTime label="created" time={task.createdAt} />
+            <TaskInfo task={task} />
           </header>
 
-          <DetailsSection taskDetails={task.details} />
+          <DetailsSection isExpired={task.isExpired} taskDetails={task.details} />
 
-          <footer className="mt-6 flex items-end justify-between gap-4">
-            <SwitchTaskStatus taskId={task.id} taskStatus={task.status} />
-            <TaskUpdateButtons taskId={task.id} />
+          <footer className="mt-12 flex justify-between gap-4">
+            <div className="relative w-full">
+              {!task.isExpired && <SwitchTaskStatus taskId={task.id} taskStatus={task.status} />}
+              <div className="absolute bottom-0 w-max">
+                <DisplayTaskTime task={task} />
+              </div>
+            </div>
+            <div className="flex flex-col justify-between gap-4">
+              {!task.isExpired && <TaskUpdateButtons taskId={task.id} />}
+              <TaskDeleteButton taskId={task.id} />
+            </div>
           </footer>
-
-          {wasUpdated ? <DisplayTaskTime label="updated" time={task.updatedAt} /> : null}
         </li>
       </Card>
     </TaskProvider>

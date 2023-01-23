@@ -1,23 +1,28 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
-import { useTask } from 'hooks';
-import { useAppDispatch } from 'app/hooks';
 import { getAllTasks } from 'features/services/tasks';
-import { setTaskActionType } from 'features/slices/task';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { setTaskActionType, taskSelector } from 'features/slices/task';
 
 export const useFetchTasks = () => {
-  const { tasks } = useTask();
   const dispatch = useAppDispatch();
+  const { tasks } = useAppSelector(taskSelector);
 
   const fetchTasks = useCallback(async () => {
-    dispatch(setTaskActionType('fetching'));
-    await dispatch(getAllTasks());
-    dispatch(setTaskActionType(''));
+    try {
+      dispatch(setTaskActionType('fetching'));
+      await dispatch(getAllTasks());
+      dispatch(setTaskActionType(''));
+    } catch (err) {
+      console.log(err);
+    }
   }, [dispatch]);
 
   useEffect(() => {
     fetchTasks();
   }, [fetchTasks]);
 
-  return tasks;
+  const memoTasks = useMemo(() => tasks, [tasks]);
+
+  return memoTasks;
 };

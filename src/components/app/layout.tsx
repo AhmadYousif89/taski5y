@@ -37,7 +37,7 @@ export const AppLayout = () => {
             <Button
               label="Manage account"
               title="go to user settings"
-              className="mt-24 self-center"
+              className="mt-12 self-center"
               onClick={() => dispatch(toggleProfile(true))}
             />
           )}

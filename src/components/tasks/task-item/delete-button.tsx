@@ -4,7 +4,6 @@ import { useAppDispatch } from 'app/hooks';
 import { deleteTasks } from 'features/services/tasks';
 import { setTaskActionType } from 'features/slices/task';
 
-import { TrashIcon } from 'assets/icons';
 import { ActionModal, Backdrop, Button } from 'components/ui';
 
 export const TaskDeleteButton: FC<{ taskId: string }> = ({ taskId }) => {
@@ -35,9 +34,9 @@ export const TaskDeleteButton: FC<{ taskId: string }> = ({ taskId }) => {
       ) : null}
       <Button
         title="delete task"
-        className="absolute top-5 right-1 !p-2"
+        className="self-end bg-slate-500 px-7 text-xl !ring-0 hover:bg-red-600 hover:ring-0"
         onClick={() => setModal(true)}>
-        <TrashIcon />
+        delete
       </Button>
     </>
   );

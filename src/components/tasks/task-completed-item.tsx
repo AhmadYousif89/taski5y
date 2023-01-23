@@ -1,14 +1,12 @@
 import { FC, useEffect, useState } from 'react';
 
+import { TaskInfo } from './task-item';
 import { useAppDispatch } from 'app/hooks';
 import { Button, Card } from 'components/ui';
 
 import { Task } from 'features/types';
 import { deleteTasks } from 'features/services/tasks';
 import { setTaskActionType } from 'features/slices/task';
-
-import { TrashIcon } from 'assets/icons';
-import { DisplayTaskTime } from './task-item/display-time';
 
 export const CompletedTaskItem: FC<{ task: Task }> = ({ task }) => {
   const dispatch = useAppDispatch();
@@ -35,14 +33,17 @@ export const CompletedTaskItem: FC<{ task: Task }> = ({ task }) => {
   return (
     <Card className={`${transition} ring-1 ring-color-valid transition-transform duration-700`}>
       <li className="flex w-full flex-col gap-8 p-4 text-color-base md:text-3xl">
-        <h2 className="text-3xl tracking-wide">{task.title}</h2>
-        <DisplayTaskTime label="created" time={task.createdAt} />
-        <div className="text-2xl">{task.details}</div>
+        <div className="relative my-4 flex items-center justify-between">
+          <h2 className="text-3xl tracking-wide">{task.title}</h2>
+          <TaskInfo task={task} />
+        </div>
+
+        <div className="rounded-lg p-4 text-2xl ring-1 ring-color-base">{task.details}</div>
         <Button
           title="delete task"
           onClick={deleteTaskHandler}
-          className="self-center ring-2 ring-color-base">
-          <TrashIcon />
+          className="my-4 self-center bg-slate-500 text-lg hover:bg-red-600 hover:ring-0">
+          delete
         </Button>
       </li>
     </Card>

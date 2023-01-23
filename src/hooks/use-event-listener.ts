@@ -1,6 +1,6 @@
 import { RefObject, useEffect, useRef } from 'react';
 
-type EventType = 'click' | 'touch';
+type EventType = 'click' | 'touch' | 'mouseover';
 
 type Callback = (event: Event) => void;
 
@@ -34,8 +34,11 @@ export const useEventListener = ({
   useEffect(() => {
     const eventHandler = (event: Event) => {
       const { current: element } = elementRef;
-      if (element && element.contains(event.target as Node)) insideElement(event);
-      else outsideElement(event);
+      if (element && element.contains(event.target as Node)) {
+        insideElement(event);
+      } else {
+        outsideElement(event);
+      }
     };
 
     document.addEventListener(eventType, eventHandler);

@@ -1,7 +1,10 @@
 import { ChangeEvent, FC } from 'react';
 import { useTaskItem } from './context';
 
-export const DetailsSection: FC<{ taskDetails: string }> = ({ taskDetails }) => {
+export const DetailsSection: FC<{ taskDetails: string; isExpired: boolean }> = ({
+  taskDetails,
+  isExpired
+}) => {
   const {
     state: { isUpdating, isEditing },
     setTaskIsEditing,
@@ -27,7 +30,7 @@ export const DetailsSection: FC<{ taskDetails: string }> = ({ taskDetails }) => 
       </span>
       <div
         className="relative break-words rounded-md px-12 py-4 text-2xl ring-1 ring-color-base"
-        contentEditable
+        contentEditable={!isExpired}
         suppressContentEditableWarning
         onInput={onInputHandler}
         onBlur={onBlurHandler}>

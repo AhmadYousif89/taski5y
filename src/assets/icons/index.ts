@@ -1,5 +1,7 @@
 export * from './arrow';
 export * from './back-arrow';
+export * from './db-arrow-up';
+export * from './db-arrow-down';
 export * from './calendar';
 export * from './close';
 export * from './camera';
@@ -12,7 +14,6 @@ export * from './info';
 export * from './settings';
 export * from './star';
 export * from './sun';
-export * from './trash';
 export * from './logout';
 export * from './task';
 export * from './upload';

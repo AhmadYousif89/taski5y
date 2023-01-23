@@ -1,11 +1,11 @@
-import { getTimeDifference } from './get-time-difference';
+import { getTaskTime } from './get-task-time';
 
 describe('Test getTimeDifference function', () => {
   it("should return a string 'less than a minute ago' for time differences less than a second", () => {
     const pastTime = new Date();
     pastTime.setMilliseconds(pastTime.getMilliseconds() - 500);
     const timeString = pastTime.toISOString();
-    expect(getTimeDifference(timeString)).to.equal('less than a minute ago');
+    expect(getTaskTime(timeString)).to.equal('less than a minute ago');
   });
 
   it("should return a string in the format 'X minutes ago' for time differences less than an hour", () => {
@@ -18,7 +18,7 @@ describe('Test getTimeDifference function', () => {
     );
     const expectedResult = `${timeDifferenceInMinutes} minutes ago`;
 
-    expect(getTimeDifference(timeString)).to.equal(expectedResult);
+    expect(getTaskTime(timeString)).to.equal(expectedResult);
   });
 
   it("should return a string in the format 'X hours ago' for time differences less than a day", () => {
@@ -31,7 +31,7 @@ describe('Test getTimeDifference function', () => {
     );
     const expectedResult = `${timeDifferenceInHours} hours ago`;
 
-    expect(getTimeDifference(timeString)).to.equal(expectedResult);
+    expect(getTaskTime(timeString)).to.equal(expectedResult);
   });
 
   it("should return a string in the format 'X days ago' for time differences less than a week", () => {
@@ -44,7 +44,7 @@ describe('Test getTimeDifference function', () => {
     );
     const expectedResult = `${timeDifferenceInDays} days ago`;
 
-    expect(getTimeDifference(timeString)).to.equal(expectedResult);
+    expect(getTaskTime(timeString)).to.equal(expectedResult);
   });
 
   it("should return a string 'X week ago' for time differences less than a month", () => {
@@ -55,7 +55,7 @@ describe('Test getTimeDifference function', () => {
     const timeDifferenceInWeeks = Math.floor(
       (currentTime.getTime() - pastTime.getTime()) / 1000 / 604800
     );
-    expect(getTimeDifference(timeString)).to.equal(`${timeDifferenceInWeeks} week ago`);
+    expect(getTaskTime(timeString)).to.equal(`${timeDifferenceInWeeks} week ago`);
   });
 
   it("should return a string 'X month ago' for time differences more than a month", () => {
@@ -66,6 +66,6 @@ describe('Test getTimeDifference function', () => {
     const timeDifferenceInMonths = Math.floor(
       (currentTime.getTime() - pastTime.getTime()) / 1000 / 2592000
     );
-    expect(getTimeDifference(timeString)).to.equal(`${timeDifferenceInMonths} month ago`);
+    expect(getTaskTime(timeString)).to.equal(`${timeDifferenceInMonths} month ago`);
   });
 });

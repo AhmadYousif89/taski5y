@@ -33,7 +33,7 @@ export const SwitchTaskStatus: FC<SwitcherProps> = ({ taskId, taskStatus }) => {
       : 'translate-x-0 bg-btn-color-base';
 
   return (
-    <div className="flex items-center gap-4">
+    <div aria-label="task switcher" className="flex items-center gap-4">
       <button
         onKeyDown={e => {
           if (e.key === 'Enter') updateTaskStatus();
@@ -41,8 +41,8 @@ export const SwitchTaskStatus: FC<SwitcherProps> = ({ taskId, taskStatus }) => {
         className="flex cursor-default items-center">
         <div
           onClick={updateTaskStatus}
-          className={`${switchColor} flex h-4 w-14 cursor-pointer items-center rounded-full transition-colors duration-200`}>
-          <div className={`${transition} h-7 w-7 rounded-full transition-all duration-200`} />
+          className={`${switchColor} flex h-3 w-12 cursor-pointer items-center rounded-full transition-colors duration-200`}>
+          <div className={`${transition} h-6 w-6 rounded-full transition-all duration-200`} />
         </div>
       </button>
       <span className="text-xl capitalize">in progress</span>

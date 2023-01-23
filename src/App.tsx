@@ -31,7 +31,7 @@ function App() {
     if (actionType === 'refresh_user') {
       return (
         <>
-          <ActionModal actionType="transition" msg={'redirecting'} />
+          <ActionModal actionType="transition" msg={'redirecting please wait'} />
           <Backdrop />
         </>
       );

@@ -4,6 +4,7 @@ export * from './button';
 export * from './card';
 export * from './divider';
 export * from './input';
+export * from './textarea';
 export * from './error';
 export * from './loading';
 export * from './image-figure';

@@ -36,8 +36,8 @@ export const TaskUpdateButtons: FC<{ taskId: string }> = ({ taskId }) => {
 
   const updateTaskDetailHandler = async () => {
     setTaskUpdateBtn(true);
-    setTaskIsEditing(false);
     setTaskIsUpdating(true);
+    setTaskIsEditing(false);
     try {
       dispatch(setTaskActionType('updating'));
       const result = await dispatch(updateTask({ id: taskId, details: updatedDetails })).unwrap();
@@ -65,7 +65,7 @@ export const TaskUpdateButtons: FC<{ taskId: string }> = ({ taskId }) => {
           <Button
             className="bg-btn-color-base px-4 text-xl !ring-0 hover:bg-btn-color-highlight hover:ring-0"
             onClick={updateTaskDetailHandler}>
-            {isUpdating ? <SpinnerIcon className="h-8 w-8" /> : 'save'}
+            {isUpdating ? <SpinnerIcon className="h-7 w-7" /> : 'save'}
           </Button>
         ) : null}
         <Button

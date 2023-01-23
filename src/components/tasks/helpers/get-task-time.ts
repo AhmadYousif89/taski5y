@@ -7,7 +7,7 @@
  * getTimeDifference("2022-12-31T21:56:41.997Z"); // "5 days ago"
  * getTimeDifference(new Date("2022-12-31T21:56:41.997Z")); // "5 days ago"
  */
-export const getTimeDifference = (time: string | Date): string => {
+export const getTaskTime = (time: string | Date): string => {
   let givenTime: Date;
   if (time instanceof Date) {
     givenTime = time;

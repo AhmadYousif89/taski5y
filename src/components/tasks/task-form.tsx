@@ -1,17 +1,24 @@
 import { FormEvent, useEffect, useState } from 'react';
 
-import { useForm } from 'hooks';
-import { TextArea } from 'components/ui/textarea';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { GetInputValues, Select, GetSelectValues, Input, Button } from 'components/ui';
+import {
+  Input,
+  Select,
+  Button,
+  Loading,
+  TextArea,
+  GetInputValues,
+  GetSelectValues
+} from 'components/ui';
 
+import { useForm } from 'hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { addNewTask } from 'features/services/tasks';
 import { TaskStatus, TaskPriority } from 'features/types';
 import { taskSelector, setTaskActionType } from 'features/slices/task';
 
+import { TaskIcon } from 'assets/icons';
 import { TaskStats } from './task-stats';
 import { TaskInputNames } from './types';
-import { TaskIcon, SpinnerIcon } from 'assets/icons';
 
 type FormValidity = Record<TaskInputNames, boolean>;
 type FormValues = Record<TaskInputNames, string>;
@@ -20,9 +27,10 @@ const initFormValidity: FormValidity = {
   title: false,
   details: false,
   priority: false,
-  status: false
+  status: false,
+  date: false
 };
-const initFormValues: FormValues = { title: '', details: '', priority: '', status: '' };
+const initFormValues: FormValues = { title: '', details: '', priority: '', status: '', date: '' };
 
 export const TaskForm = () => {
   const dispatch = useAppDispatch();
@@ -33,9 +41,17 @@ export const TaskForm = () => {
     FormValidity
   >({ initFormValidity, initFormValues });
 
-  const { title, details, status: statusValue, priority } = formValues;
-  const { title: titleIsValid, details: detailsIsValid } = formValidity;
-  const formIsValid = [titleIsValid, detailsIsValid].every(Boolean);
+  const { title, details, status: statusValue, priority, date } = formValues;
+  const { title: titleIsValid, details: detailsIsValid, date: dateIsValid } = formValidity;
+  const formIsValid = [titleIsValid, detailsIsValid, dateIsValid].every(Boolean);
+
+  const transformDate = (value: string): string => {
+    const d = new Date(value).toLocaleDateString();
+    const h = new Date().getHours();
+    const m = new Date().getMinutes();
+    const s = new Date().getSeconds();
+    return new Date(`${d} ${h}:${m}:${s}`).toISOString();
+  };
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -43,6 +59,8 @@ export const TaskForm = () => {
     const newTask = {
       title,
       details,
+      expireDate: transformDate(date),
+      // expireDate: '2023-01-23T02:25:00.000Z',
       status: (statusValue as TaskStatus) || 'Todo',
       priority: (priority as TaskPriority) || 'Normal'
     };
@@ -96,6 +114,23 @@ export const TaskForm = () => {
           />
         </fieldset>
 
+        <fieldset aria-label="task-date" className="relative">
+          <legend className="absolute top-0 z-10 ml-6 -translate-y-4 cursor-default bg-color-card text-xl text-color-base">
+            Time to finish
+          </legend>
+          <Input
+            id={'date'}
+            type={'date'}
+            name={'date'}
+            value={date}
+            className="h-20"
+            inputErrMsg={'Required'}
+            isFormSubmitted={isSubmitted}
+            getValidity={getFormValidity}
+            getValue={getFormValues as GetInputValues}
+          />
+        </fieldset>
+
         <div className="grid grid-cols-2 gap-4">
           <fieldset
             aria-label="task-status-input"
@@ -130,17 +165,12 @@ export const TaskForm = () => {
             className={`${
               formIsValid ? 'cursor-pointer' : 'cursor-not-allowed'
             } flex-center w-full cursor-pointer gap-4 rounded-md bg-transparent px-6 py-4 capitalize text-color-base shadow-md ring-1 ring-color-base transition-all active:translate-y-1`}>
-            <span className="text-3xl">create task</span>
-            <TaskIcon />
+            <span className="text-2xl">
+              {isSubmitted && status === 'loading' ? <Loading /> : 'create task'}
+            </span>
+            {status !== 'loading' && <TaskIcon />}
           </Button>
         </fieldset>
-
-        {isSubmitted && status === 'loading' ? (
-          <p className="flex-center absolute -bottom-16 left-1/2 w-full -translate-x-1/2 gap-2 text-center text-2xl text-amber-500">
-            <SpinnerIcon className="h-10 w-10" />
-            <span>Loading</span>
-          </p>
-        ) : null}
       </form>
     </>
   );
