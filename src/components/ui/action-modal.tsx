@@ -120,7 +120,7 @@ export const ActionModal: FC<ActionModalProps> = ({
   const modalElement = (
     <section
       aria-label="modal"
-      className="flex-center fixed top-1/2 left-1/2 z-40 mx-auto w-10/12 max-w-3xl -translate-y-1/2 -translate-x-1/2 rounded-lg bg-neutral-800 pt-20 pb-24 text-color-base shadow-md">
+      className="flex-center fixed top-1/2 left-1/2 z-40 mx-auto w-10/12 max-w-3xl -translate-y-1/2 -translate-x-1/2 rounded-lg bg-neutral-800 pt-20 pb-24 text-slate-100 shadow-md">
       {content}
     </section>
   );

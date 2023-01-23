@@ -77,31 +77,11 @@
 :root {
   font-family: Roboto Mono, sans-serif;
   font-size: 10px;
-  font-weight: 400;
-
-  color-scheme: light dark;
+  min-width: 320px;
+  color: #ffffffde;
   background-color: #212121;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
 }
 
 #root {
   min-height: 100vh;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  min-width: 320px;
-  min-height: 100vh;
-}
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #ffffffde;
-    background-color: #212121;
-  }
 }

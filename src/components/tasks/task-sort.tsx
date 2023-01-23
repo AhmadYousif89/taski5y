@@ -7,12 +7,14 @@ import { taskSelector } from 'features/slices/task';
 import { useSearchParams, useEventListener, SortOrder, SortType } from 'hooks';
 
 import { ArrowIcon, SortIcon } from 'assets/icons';
+import { useFetchTasks } from './hooks/use-fetch-tasks';
 
 export const SortTasks = () => {
   const navigate = useNavigate();
-  const { sort, type, filter, query } = useSearchParams();
-  const { tasks } = useAppSelector(taskSelector);
+  const tasks = useFetchTasks();
   const [toggleMenu, setToggleMenu] = useState(false);
+  const { completedTasks } = useAppSelector(taskSelector);
+  const { sort, type, filter, query } = useSearchParams();
 
   const openSortMenu = () => setToggleMenu(true);
   const closeSortMenu = () => setToggleMenu(false);
@@ -92,7 +94,7 @@ export const SortTasks = () => {
 
   return (
     <>
-      {tasks.length > 0 ? (
+      {tasks.length > 0 || (filter === 'completed' && completedTasks.length > 0) ? (
         <div
           tabIndex={0}
           role={'button'}

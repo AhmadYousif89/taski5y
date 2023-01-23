@@ -16,11 +16,11 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { taskSelector } from 'features/slices/task';
 
 import { BackArrowIcon } from 'assets/icons';
-import { toggleSideMenu } from 'features/slices/ui';
+import { toggleProfile, toggleSideMenu } from 'features/slices/ui';
 
 export const Dashboard = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { filter } = useSearchParams();
   const { totalTasks, totalCompletedTasks } = useAppSelector(taskSelector);
 
@@ -58,9 +58,12 @@ export const Dashboard = () => {
             <SortTasks />
             <SearchTasks />
             <Button
-              onClick={() => dispatch(toggleSideMenu())}
+              onClick={() => {
+                dispatch(toggleSideMenu());
+                dispatch(toggleProfile(false));
+              }}
               title="Add new task"
-              className="absolute right-[2%] bg-color-card ring-1 !ring-color-base hover:!ring-1 hover:!ring-color-highlight xs:right-[10%] lg:right-[20%]">
+              className="absolute right-[2%] bg-color-card xs:right-[10%] lg:right-[20%]">
               <span className="px-3 text-3xl">+</span>
             </Button>
           </div>

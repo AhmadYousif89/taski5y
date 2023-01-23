@@ -42,7 +42,7 @@ export const CompletedTaskItem: FC<{ task: Task }> = ({ task }) => {
         <Button
           title="delete task"
           onClick={deleteTaskHandler}
-          className="my-4 self-center bg-slate-500 text-lg hover:bg-red-600 hover:ring-0">
+          className="my-4 self-center bg-slate-500 hover:bg-red-600 hover:!ring-0">
           delete
         </Button>
       </li>

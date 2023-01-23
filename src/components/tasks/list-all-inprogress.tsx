@@ -1,15 +1,14 @@
 import { useSearchParams } from 'hooks';
-import { useAppSelector } from 'app/hooks';
-import { taskSelector } from 'features/slices/task';
 
 import { TaskItem } from './task-item';
-import { searchTasks, sortTasks } from './helpers';
-import { SearchErrMsg } from './search-error-msg';
-import { NoTaskMsg } from './no-task-msg';
 import { SearchMsg } from './search-msg';
+import { NoTaskMsg } from './no-task-msg';
+import { SearchErrMsg } from './search-error-msg';
+import { searchTasks, sortTasks } from './helpers';
+import { useFetchTasks } from './hooks/use-fetch-tasks';
 
 export const InProgressTaskList = () => {
-  const { tasks } = useAppSelector(taskSelector);
+  const tasks = useFetchTasks();
   const { sort, type, query } = useSearchParams();
 
   const inProgressTasks = tasks.filter(task => task.status === 'InProgress');

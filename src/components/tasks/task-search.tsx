@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useSearchParams } from 'hooks';
 import { debounce } from 'helpers/debouncer';
+import { SearchIcon } from 'assets/icons';
 
 export const SearchTasks = () => {
   const navigate = useNavigate();
@@ -49,8 +50,11 @@ export const SearchTasks = () => {
       aria-label="Task-search-bar"
       onSubmit={e => e.preventDefault()}>
       <fieldset
-        className="group relative mx-auto w-10/12 overflow-hidden rounded-md shadow-md ring-1 ring-color-base transition-all focus-within:ring-color-highlight hover:ring-color-highlight"
+        className="group relative mx-auto flex w-10/12 items-center overflow-hidden rounded-md shadow-md ring-1 ring-color-base transition-all focus-within:ring-color-highlight hover:ring-color-highlight"
         aria-label="search-for-tasks">
+        <span className="mx-2">
+          <SearchIcon />
+        </span>
         <input
           required
           ref={searchRef}
@@ -58,9 +62,9 @@ export const SearchTasks = () => {
           id="search"
           autoComplete="off"
           onChange={onUpdatedQuery}
-          placeholder="Search tasks"
+          placeholder="Type here"
           title="Search by task title or details"
-          className="peer w-full bg-color-base px-6 py-4 text-2xl tracking-wide text-color-base placeholder:text-xl placeholder:text-color-base placeholder:opacity-70"
+          className="peer w-full bg-color-base  py-4 text-2xl tracking-wide text-color-base outline-none placeholder:text-xl placeholder:text-color-base placeholder:opacity-70"
         />
         <label
           title="press ctrl + / to search"
