@@ -39,9 +39,11 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
           <footer className="mt-12 flex justify-between gap-4">
             <div className="relative w-full">
               {!task.isExpired && <SwitchTaskStatus taskId={task.id} taskStatus={task.status} />}
-              <div className="absolute bottom-0 w-max">
-                <DisplayTaskTime task={task} />
-              </div>
+              {task.expireDate && (
+                <div className="absolute bottom-0 w-max">
+                  <DisplayTaskTime task={task} />
+                </div>
+              )}
             </div>
             <div className="flex flex-col justify-between gap-4">
               {!task.isExpired && <TaskUpdateButtons taskId={task.id} />}

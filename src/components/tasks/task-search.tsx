@@ -32,7 +32,7 @@ export const SearchTasks = () => {
 
   useEffect(() => {
     const handler = (e: globalThis.KeyboardEvent) => {
-      if (searchRef.current && e.ctrlKey) {
+      if (searchRef.current && e.ctrlKey && e.key === '/') {
         searchRef.current.focus();
       }
     };
@@ -44,9 +44,12 @@ export const SearchTasks = () => {
   }, []);
 
   return (
-    <form aria-label="Task-search-bar" onSubmit={e => e.preventDefault()}>
+    <form
+      className="center-absolute w-2/3 md:max-w-3xl"
+      aria-label="Task-search-bar"
+      onSubmit={e => e.preventDefault()}>
       <fieldset
-        className="group relative mx-auto w-10/12 overflow-hidden rounded-md shadow-md ring-1 ring-color-base transition-all focus-within:ring-color-highlight hover:ring-color-highlight xs:w-full "
+        className="group relative mx-auto w-10/12 overflow-hidden rounded-md shadow-md ring-1 ring-color-base transition-all focus-within:ring-color-highlight hover:ring-color-highlight"
         aria-label="search-for-tasks">
         <input
           required
@@ -57,13 +60,13 @@ export const SearchTasks = () => {
           onChange={onUpdatedQuery}
           placeholder="Search tasks"
           title="Search by task title or details"
-          className="peer w-full bg-color-base px-6 py-4 text-2xl tracking-wide text-color-base placeholder:text-xl placeholder:text-color-base placeholder:opacity-50"
+          className="peer w-full bg-color-base px-6 py-4 text-2xl tracking-wide text-color-base placeholder:text-xl placeholder:text-color-base placeholder:opacity-70"
         />
         <label
-          title="press ctrl to search"
+          title="press ctrl + / to search"
           htmlFor="search"
-          className="flex-center absolute top-1/2 -right-6 h-10 w-16 -translate-y-1/2 -translate-x-1/2 rounded-md text-lg text-color-base text-opacity-50 ring-1 ring-color-base transition-all group-hover:text-opacity-90 group-hover:ring-color-highlight peer-valid:invisible peer-focus:invisible peer-focus:opacity-0">
-          ctrl
+          className="flex-center absolute top-1/2 -right-10 h-10 w-fit -translate-y-1/2 -translate-x-1/2 rounded px-2 text-lg tracking-tighter text-color-base text-opacity-70 ring-1 ring-color-base transition-all group-hover:text-opacity-90 group-hover:ring-color-highlight peer-valid:invisible peer-focus:invisible peer-focus:opacity-0">
+          ctrl + /
         </label>
       </fieldset>
     </form>

@@ -44,7 +44,7 @@ export const SortTasks = () => {
   const unsortHandler = () => navigate(sortBy(null));
 
   const sortingList = (
-    <Card className="absolute top-full left-0 translate-y-2 ring-1 ring-color-base">
+    <Card className="absolute top-full left-0 translate-y-2 py-4 ring-1 ring-color-base">
       <div className="flex flex-col gap-6 py-2 text-center text-color-base">
         <button
           type={'button'}
@@ -101,7 +101,7 @@ export const SortTasks = () => {
           onKeyDown={e => {
             if (e.key === 'Enter') openSortMenu();
           }}
-          className="flex-center absolute left-[2%] z-[15] cursor-pointer gap-1 rounded-md bg-color-card py-4 pl-3 pr-1 text-xl text-color-base ring-1 ring-color-base active:ring-color-highlight xs:left-[10%] lg:left-[20%]">
+          className="flex-center absolute left-[2%] z-[15] cursor-pointer gap-1 rounded-md bg-color-card py-4 pl-3 text-xl text-color-base ring-1 ring-color-base hover:ring-color-highlight active:ring-color-highlight xs:left-[10%] lg:left-[20%]">
           <span>Sort</span>
           {sort === asc ? (
             <ArrowIcon className={'animate-arrow-up'} />

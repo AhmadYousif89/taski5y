@@ -75,7 +75,7 @@ export const TaskForm = () => {
   };
 
   useEffect(() => {
-    if (status === 'fulfilled') {
+    if (status !== 'loading') {
       setIsSubmitted(false);
     }
   }, [dispatch, status]);

@@ -12,12 +12,14 @@ import {
 import { path } from 'components/app';
 import { Button } from 'components/ui';
 import { useSearchParams } from 'hooks';
-import { useAppSelector } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { taskSelector } from 'features/slices/task';
 
 import { BackArrowIcon } from 'assets/icons';
+import { toggleSideMenu } from 'features/slices/ui';
 
 export const Dashboard = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { filter } = useSearchParams();
   const { totalTasks, totalCompletedTasks } = useAppSelector(taskSelector);
@@ -52,9 +54,15 @@ export const Dashboard = () => {
       <section className="lg:mx-auto lg:w-10/12" aria-label="tasks-section">
         <DisplayTaskPanels />
         <section className="flex flex-col" aria-label="task-search-sort">
-          <div className="flex-center relative gap-4">
+          <div className="flex-center relative my-8">
             <SortTasks />
             <SearchTasks />
+            <Button
+              onClick={() => dispatch(toggleSideMenu())}
+              title="Add new task"
+              className="absolute right-[2%] bg-color-card ring-1 !ring-color-base hover:!ring-1 hover:!ring-color-highlight xs:right-[10%] lg:right-[20%]">
+              <span className="px-3 text-3xl">+</span>
+            </Button>
           </div>
           <p className="m-8 text-center text-2xl tracking-wide text-color-highlight">
             viewing {filter ? filter : 'All'} tasks

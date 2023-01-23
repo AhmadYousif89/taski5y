@@ -22,18 +22,23 @@ export const Menu: FC<PropsWithChildren<SideMenuProps>> = ({ children, className
     const focusMenu = () => menuRef.current?.focus();
     ref?.addEventListener('transitionrun', focusMenu);
 
+    const toggleMenu = (e: KeyboardEvent) =>
+      e.key === 'Escape' ? dispatch(toggleSideMenu()) : null;
+    if (document.activeElement === ref) {
+      ref?.addEventListener('keydown', toggleMenu);
+    }
+
     return () => {
       ref?.removeEventListener('transitionrun', focusMenu);
+      ref?.removeEventListener('keypress', toggleMenu);
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
       <div
         ref={menuRef}
         tabIndex={0}
-        onTouchMove={() => dispatch(toggleSideMenu())}
-        onKeyDown={e => (e.key === 'Escape' ? dispatch(toggleSideMenu()) : null)}
         className={`${className} ${animateMenu} fixed top-0 left-1/2 z-30 flex min-h-screen w-full origin-top -translate-x-1/2 flex-col bg-color-card shadow-md transition-all duration-700 md:w-2/3 lg:w-4/12 lg:min-w-[50rem]`}>
         <button
           type={'button'}
