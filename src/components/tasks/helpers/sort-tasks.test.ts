@@ -10,7 +10,9 @@ const tasks: Task[] = [
     details: 'this is my 1st task',
     status: 'Todo',
     priority: 'Normal',
-    userId: 'usr_1'
+    userId: 'usr_1',
+    expireDate: '',
+    isExpired: false
   },
   {
     id: 'tsk_2',
@@ -20,7 +22,9 @@ const tasks: Task[] = [
     details: 'this is my 2nd task',
     status: 'Completed',
     priority: 'Normal',
-    userId: 'usr_1'
+    userId: 'usr_1',
+    expireDate: '',
+    isExpired: false
   },
   {
     id: 'tsk_3',
@@ -30,7 +34,9 @@ const tasks: Task[] = [
     details: 'this is my 3rd task',
     status: 'InProgress',
     priority: 'High',
-    userId: 'usr_1'
+    userId: 'usr_1',
+    expireDate: '',
+    isExpired: false
   }
 ];
 
