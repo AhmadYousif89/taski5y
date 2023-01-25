@@ -97,7 +97,7 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
                     if (!task.isExpired) setModal(true);
                   }}
                   className={`absolute bottom-0 flex w-max flex-col justify-between gap-1`}>
-                  {!task.isExpired && <p className="cursor-default text-lg">Time to complete</p>}
+                  {!task.isExpired && <p className="cursor-default text-lg">Time to finish</p>}
                   <DisplayTaskTime task={task} />
                 </div>
               ) : (
