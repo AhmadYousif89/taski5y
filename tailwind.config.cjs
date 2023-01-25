@@ -3,7 +3,7 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  darkMode: 'media',
+  darkMode: 'class',
   theme: {
     debugScreens: {
       style: {
@@ -79,5 +79,5 @@ module.exports = {
       }
     }
   },
-  plugins: [require('tailwindcss-debug-screens')]
+  plugins: []
 };
