@@ -35,7 +35,11 @@ export const ActionModal: FC<ActionModalProps> = ({
 
   content = (
     <div className="flex w-full flex-col gap-4 text-center">
-      {title ? <h1 className="mb-8 text-3xl capitalize">{title}</h1> : null}
+      {title ? (
+        <h1 className="mb-8 cursor-default self-center rounded-md bg-neutral-900 py-4 px-8 text-2xl capitalize ring-2 ring-neutral-600">
+          {title}
+        </h1>
+      ) : null}
       <span className="mb-4 self-center">{icon ? icon : <WarningIcon />}</span>
       <h3 className="px-2 text-2xl">{msg}</h3>
       {showWarning && <p className="text-xl xs:text-2xl">This action can not be undone.</p>}
@@ -124,7 +128,7 @@ export const ActionModal: FC<ActionModalProps> = ({
   const modalElement = (
     <section
       aria-label="modal"
-      className="flex-center fixed top-1/2 left-1/2 z-40 mx-auto w-11/12 max-w-4xl -translate-y-1/2 -translate-x-1/2 rounded-lg bg-neutral-800 pt-20 pb-24 text-slate-100 shadow-md">
+      className="flex-center fixed top-1/2 left-1/2 z-40 mx-auto w-11/12 max-w-4xl -translate-y-1/2 -translate-x-1/2 rounded-lg bg-neutral-800 py-24 text-slate-100 shadow-md">
       {content}
     </section>
   );

@@ -20,16 +20,14 @@ export const Menu: FC<PropsWithChildren<SideMenuProps>> = ({ children, className
   useEffect(() => {
     const ref = menuRef.current;
     const focusMenu = () => menuRef.current?.focus();
-    ref?.addEventListener('transitionrun', focusMenu);
+    ref?.addEventListener('transitionstart', focusMenu);
 
     const toggleMenu = (e: KeyboardEvent) =>
       e.key === 'Escape' ? dispatch(toggleSideMenu()) : null;
-    if (document.activeElement === ref) {
-      ref?.addEventListener('keydown', toggleMenu);
-    }
+    ref?.addEventListener('keydown', toggleMenu);
 
     return () => {
-      ref?.removeEventListener('transitionrun', focusMenu);
+      ref?.removeEventListener('transitionstart', focusMenu);
       ref?.removeEventListener('keydown', toggleMenu);
     };
   }, [dispatch]);

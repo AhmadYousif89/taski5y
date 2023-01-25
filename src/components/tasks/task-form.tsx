@@ -22,7 +22,7 @@ import { taskSelector, setTaskActionType } from 'features/slices/task';
 import { TaskIcon } from 'assets/icons';
 import { TaskStats } from './task-stats';
 import { TaskInputNames } from './types';
-import { transformDateToISO } from 'helpers';
+import { timerValuesToISO } from 'helpers';
 
 type FormValidity = Record<TaskInputNames, boolean>;
 type FormValues = Record<TaskInputNames, string>;
@@ -49,7 +49,7 @@ export const TaskForm = () => {
   const { title: titleIsValid, details: detailsIsValid } = formValidity;
   const formIsValid = [titleIsValid, detailsIsValid].every(Boolean);
 
-  const time = transformDateToISO(timer);
+  const time = timerValuesToISO(timer);
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();

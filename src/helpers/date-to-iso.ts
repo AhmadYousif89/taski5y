@@ -1,6 +1,6 @@
 import { TimerValues } from 'components/ui';
 
-export const transformDateToISO = (values: TimerValues): string | null => {
+export const timerValuesToISO = (values: TimerValues): string | null => {
   const { days, hours, minutes, seconds } = values;
   if (days === 0 && hours === 0 && minutes === 0 && seconds === 0) {
     return null;

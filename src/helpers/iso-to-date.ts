@@ -1,4 +1,4 @@
-export const transformISOToDate = (date?: string | null): string => {
+export const formatISOString = (date?: string | null): string => {
   if (!date) return '';
   const currentDate = new Date();
   const inputDate = new Date(date);

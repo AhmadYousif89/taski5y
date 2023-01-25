@@ -22,7 +22,7 @@ export const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { filter } = useSearchParams();
-  const { tasks, totalTasks, totalCompletedTasks } = useAppSelector(taskSelector);
+  const { tasks, completedTasks, totalTasks, totalCompletedTasks } = useAppSelector(taskSelector);
 
   let content = <TaskList />;
 
@@ -57,7 +57,7 @@ export const Dashboard = () => {
           <div className="flex-center relative my-8">
             <SortTasks />
             <SearchTasks />
-            {tasks.length > 0 && (
+            {(tasks.length > 0 || completedTasks.length > 0) && (
               <Button
                 onClick={() => {
                   dispatch(toggleSideMenu());

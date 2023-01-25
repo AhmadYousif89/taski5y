@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import { Task } from 'features/types';
 import { getTaskTime } from '../helpers';
 import { useAppDispatch } from 'app/hooks';
-import { transformISOToDate } from 'helpers';
+import { formatISOString } from 'helpers';
 import { updateTask } from 'features/services/tasks';
 
 type Props = {
@@ -17,7 +17,7 @@ export const DisplayTaskTime: FC<Props> = ({ task, time, className }) => {
   const [showMsg, setShowMsg] = useState('Calculating ...');
 
   const timeAgo = getTaskTime(time || '');
-  const formattedTime = transformISOToDate(task?.expireDate);
+  const formattedTime = formatISOString(task?.expireDate);
 
   useEffect(() => {
     const currentDate = new Date();

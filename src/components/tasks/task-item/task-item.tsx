@@ -2,8 +2,10 @@ import { FC, useEffect, useState } from 'react';
 
 import { Task } from 'features/types';
 import { TaskProvider } from './context';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { updateTask } from 'features/services/tasks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { setTaskActionType, taskSelector } from 'features/slices/task';
+import { ActionModal, Backdrop, Button, Card, Loading, Timer, useTimer } from 'components/ui';
 
 import { TaskInfo } from './task-info';
 import { DisplayTaskTime } from './display-time';
@@ -11,9 +13,7 @@ import { TaskDeleteButton } from './delete-button';
 import { SwitchTaskStatus } from './switch-status';
 import { DetailsSection } from './details-section';
 import { TaskUpdateButtons } from './update-buttons';
-import { ActionModal, Backdrop, Button, Card, Loading, Timer, useTimer } from 'components/ui';
-import { transformDateToISO, transformISOToDate } from 'helpers';
-import { setTaskActionType, taskSelector } from 'features/slices/task';
+import { timerValuesToISO, formatISOString } from 'helpers';
 
 export const TaskItem: FC<{ task: Task }> = ({ task }) => {
   const dispatch = useAppDispatch();
@@ -28,12 +28,16 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
     ? 'translate-y-0 opacity-100 visible'
     : 'translate-y-10 opacity-0 invisible';
 
-  const time = transformDateToISO(timer);
-  const formattedTime = transformISOToDate(time);
+  const time = timerValuesToISO(timer);
+  const formattedTime = formatISOString(time);
 
   const updateTaskTime = async () => {
-    if (task.isExpired || time == null) {
+    if (time == null) {
       setErrMsg('Time is too short');
+      return;
+    }
+    if (task.isExpired) {
+      setErrMsg('Task is expired');
       return;
     }
     try {
@@ -70,12 +74,12 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
               <Timer getValues={getTimerValues} isSubmitted={actionType === 'update_success'} />
             }
           />
-          <Backdrop onClick={() => setModal(false)} />
+          <Backdrop onClick={onCloseModal} />
         </>
       )}
       <Card
         priority={task.priority}
-        className={`relative ${styles} ${transition} h-fit transition-transform duration-500`}>
+        className={`relative ${styles} ${transition} transition-transform duration-500`}>
         <li className="flex -translate-y-0 flex-col gap-6 py-6 px-2 text-color-base md:text-3xl">
           <header className="relative flex items-center justify-between">
             <h2 className="text-3xl tracking-wide">{task.title}</h2>
@@ -92,7 +96,8 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
                   onClick={() => {
                     if (!task.isExpired) setModal(true);
                   }}
-                  className={`absolute bottom-0 w-max`}>
+                  className={`absolute bottom-0 flex w-max flex-col justify-between gap-1`}>
+                  {!task.isExpired && <p className="cursor-default text-lg">Time to complete</p>}
                   <DisplayTaskTime task={task} />
                 </div>
               ) : (
