@@ -69,11 +69,6 @@ const CustomInput = (props: InputProps, ref: Ref<HTMLInputElement>) => {
   const PASSWORD_REGEX = /^((?!.*[\s])(?=.*\d).{3,})/;
   const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  const day = 1000 * 60 * 60 * 24;
-  const now = new Date();
-  const nextDay = new Date(now.getTime() + day).toISOString().slice(0, 10);
-  const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 1).toISOString().slice(0, 10);
-
   switch (name) {
     case 'email':
       isValid = EMAIL_REGEX.test(inputValue);
@@ -86,10 +81,6 @@ const CustomInput = (props: InputProps, ref: Ref<HTMLInputElement>) => {
       break;
     case 'title':
       isValid = inputValue.trim().length > 0;
-      break;
-    case 'date':
-      if (inputValue < nextDay || inputValue > lastDay) isValid = false;
-      else isValid = true;
       break;
     default:
       isValid = inputValidator ? inputValidator(inputValue) : true;
@@ -120,8 +111,6 @@ const CustomInput = (props: InputProps, ref: Ref<HTMLInputElement>) => {
         <input
           id={id}
           ref={ref}
-          min={nextDay}
-          max={lastDay}
           name={name}
           type={type}
           value={value}
