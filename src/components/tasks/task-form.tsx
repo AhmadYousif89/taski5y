@@ -1,13 +1,16 @@
 import { FormEvent, useEffect, useState } from 'react';
 
 import {
+  Timer,
+  useTimer,
   Input,
   Select,
   Button,
   Loading,
   TextArea,
   GetInputValues,
-  GetSelectValues
+  GetSelectValues,
+  GetInputValidation
 } from 'components/ui';
 
 import { useForm } from 'hooks';
@@ -19,6 +22,7 @@ import { taskSelector, setTaskActionType } from 'features/slices/task';
 import { TaskIcon } from 'assets/icons';
 import { TaskStats } from './task-stats';
 import { TaskInputNames } from './types';
+import { transformDateToISO } from 'helpers';
 
 type FormValidity = Record<TaskInputNames, boolean>;
 type FormValues = Record<TaskInputNames, string>;
@@ -27,10 +31,9 @@ const initFormValidity: FormValidity = {
   title: false,
   details: false,
   priority: false,
-  status: false,
-  date: false
+  status: false
 };
-const initFormValues: FormValues = { title: '', details: '', priority: '', status: '', date: '' };
+const initFormValues: FormValues = { title: '', details: '', priority: '', status: '' };
 
 export const TaskForm = () => {
   const dispatch = useAppDispatch();
@@ -40,18 +43,13 @@ export const TaskForm = () => {
     FormValues,
     FormValidity
   >({ initFormValidity, initFormValues });
+  const { timer, getTimerValues } = useTimer();
 
-  const { title, details, status: statusValue, priority, date } = formValues;
-  const { title: titleIsValid, details: detailsIsValid, date: dateIsValid } = formValidity;
-  const formIsValid = [titleIsValid, detailsIsValid, dateIsValid].every(Boolean);
+  const { title, details, status: statusValue, priority } = formValues;
+  const { title: titleIsValid, details: detailsIsValid } = formValidity;
+  const formIsValid = [titleIsValid, detailsIsValid].every(Boolean);
 
-  const transformDate = (value: string): string => {
-    const d = new Date(value).toLocaleDateString();
-    const h = new Date().getHours();
-    const m = new Date().getMinutes();
-    const s = new Date().getSeconds();
-    return new Date(`${d} ${h}:${m}:${s}`).toISOString();
-  };
+  const time = transformDateToISO(timer);
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -59,8 +57,7 @@ export const TaskForm = () => {
     const newTask = {
       title,
       details,
-      expireDate: transformDate(date),
-      // expireDate: '2023-01-23T02:25:00.000Z',
+      expireDate: time,
       status: (statusValue as TaskStatus) || 'Todo',
       priority: (priority as TaskPriority) || 'Normal'
     };
@@ -95,7 +92,7 @@ export const TaskForm = () => {
             placeholder={'Task title'}
             placeholderErrMsg={'please enter your task title'}
             isFormSubmitted={isSubmitted}
-            getValidity={getFormValidity}
+            getValidity={getFormValidity as GetInputValidation}
             getValue={getFormValues as GetInputValues}
           />
         </fieldset>
@@ -109,7 +106,7 @@ export const TaskForm = () => {
             placeholder={'Write your task details'}
             placeholderErrMsg={'please enter some details about your task'}
             isFormSubmitted={isSubmitted}
-            getValidity={getFormValidity}
+            getValidity={getFormValidity as GetInputValidation}
             getValue={getFormValues as GetInputValues}
           />
         </fieldset>
@@ -118,17 +115,9 @@ export const TaskForm = () => {
           <legend className="absolute top-0 z-10 ml-6 -translate-y-4 cursor-default bg-color-card text-xl text-color-base">
             Time to finish
           </legend>
-          <Input
-            id={'date'}
-            type={'date'}
-            name={'date'}
-            value={date}
-            className="h-20"
-            inputErrMsg={'Required'}
-            isFormSubmitted={isSubmitted}
-            getValidity={getFormValidity}
-            getValue={getFormValues as GetInputValues}
-          />
+          <div className="flex items-center justify-around rounded-md py-6 px-2 ring-1 ring-color-base">
+            <Timer getValues={getTimerValues} isSubmitted={isSubmitted} />
+          </div>
         </fieldset>
 
         <div className="grid grid-cols-2 gap-4">

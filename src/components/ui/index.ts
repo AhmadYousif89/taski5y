@@ -15,3 +15,4 @@ export * from './menu-button';
 export * from './select';
 export * from './theme-switcher';
 export * from './notification';
+export * from './timer';

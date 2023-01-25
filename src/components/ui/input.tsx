@@ -27,7 +27,7 @@ type InputProps = {
   isFormSubmitted?: boolean;
   inputValidator?: InputValidator;
   getValue: GetInputValues;
-  getValidity?: GetInputValidation;
+  getValidity: GetInputValidation;
 };
 
 const CustomInput = (props: InputProps, ref: Ref<HTMLInputElement>) => {

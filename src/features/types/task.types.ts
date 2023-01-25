@@ -34,6 +34,6 @@ export type Task = {
   priority: TaskPriority;
   createdAt: string;
   updatedAt: string;
-  expireDate: string;
+  expireDate: string | null;
   isExpired: boolean;
 };

@@ -11,7 +11,7 @@ export const TaskStats = () => {
         {+totalTasks > 1 ? 's' : ''}
       </h3>
       {totalTasks === 0 ? (
-        <span className="text-2xl">Start creating new tasks using the form below</span>
+        <span className="text-2xl">use the form below to add some tasks</span>
       ) : (
         ''
       )}

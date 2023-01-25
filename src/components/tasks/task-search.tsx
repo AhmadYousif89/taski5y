@@ -69,7 +69,7 @@ export const SearchTasks = () => {
         <label
           title="press ctrl + / to search"
           htmlFor="search"
-          className="flex-center absolute top-1/2 -right-10 h-10 w-fit -translate-y-1/2 -translate-x-1/2 rounded px-2 text-lg tracking-tighter text-color-base text-opacity-70 ring-1 ring-color-base transition-all group-hover:text-opacity-90 group-hover:ring-color-highlight peer-valid:invisible peer-focus:invisible peer-focus:opacity-0">
+          className="flex-center absolute top-1/2 -right-10 h-10 w-fit -translate-y-1/2 -translate-x-1/2 rounded-md bg-color-card bg-opacity-50 px-2 text-lg tracking-tighter text-color-base text-opacity-70 ring-1 ring-color-base transition-all group-hover:text-opacity-90 group-hover:ring-color-highlight peer-valid:invisible peer-focus:invisible peer-focus:opacity-0">
           ctrl + /
         </label>
       </fieldset>

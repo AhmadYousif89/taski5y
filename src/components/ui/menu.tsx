@@ -30,7 +30,7 @@ export const Menu: FC<PropsWithChildren<SideMenuProps>> = ({ children, className
 
     return () => {
       ref?.removeEventListener('transitionrun', focusMenu);
-      ref?.removeEventListener('keypress', toggleMenu);
+      ref?.removeEventListener('keydown', toggleMenu);
     };
   }, [dispatch]);
 
@@ -39,7 +39,7 @@ export const Menu: FC<PropsWithChildren<SideMenuProps>> = ({ children, className
       <div
         ref={menuRef}
         tabIndex={0}
-        className={`${className} ${animateMenu} fixed top-0 left-1/2 z-30 flex min-h-screen w-full origin-top -translate-x-1/2 flex-col bg-color-card shadow-md transition-all duration-700 md:w-2/3 lg:w-4/12 lg:min-w-[50rem]`}>
+        className={`${className} ${animateMenu} fixed top-0 left-1/2 z-30 flex min-h-screen w-full max-w-5xl origin-top -translate-x-1/2 flex-col bg-color-card shadow-md transition-all duration-700`}>
         <button
           type={'button'}
           className="btn-circle absolute top-14 right-0 text-xl font-bold text-color-base"

@@ -20,20 +20,17 @@ type Options = {
  * @example
  * const [toggle, setToggle] = useState(false);
  * const ref = useEventListener({
- * insideElement: () => setToggle(true),
- * outsideElement: () => setToggle(false)
+ *  insideElement: () => setToggle(true),
+ *  outsideElement: () => setToggle(false)
  * });
  */
-export const useEventListener = ({
-  eventType = 'click',
-  insideElement,
-  outsideElement
-}: Options): RefObject<HTMLElement> => {
-  const elementRef = useRef<HTMLElement | null>(null);
+export const useEventListener = (options: Options): RefObject<HTMLElement> => {
+  const ref = useRef<HTMLElement | null>(null);
+  const { eventType = 'click', insideElement, outsideElement } = options;
 
   useEffect(() => {
     const eventHandler = (event: Event) => {
-      const { current: element } = elementRef;
+      const { current: element } = ref;
       if (element && element.contains(event.target as Node)) {
         insideElement(event);
       } else {
@@ -48,5 +45,5 @@ export const useEventListener = ({
     };
   }, [eventType, insideElement, outsideElement]);
 
-  return elementRef;
+  return ref;
 };

@@ -22,7 +22,7 @@ export const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { filter } = useSearchParams();
-  const { totalTasks, totalCompletedTasks } = useAppSelector(taskSelector);
+  const { tasks, totalTasks, totalCompletedTasks } = useAppSelector(taskSelector);
 
   let content = <TaskList />;
 
@@ -57,15 +57,17 @@ export const Dashboard = () => {
           <div className="flex-center relative my-8">
             <SortTasks />
             <SearchTasks />
-            <Button
-              onClick={() => {
-                dispatch(toggleSideMenu());
-                dispatch(toggleProfile(false));
-              }}
-              title="Add new task"
-              className="absolute right-[2%] bg-color-card xs:right-[10%] lg:right-[20%]">
-              <span className="px-3 text-3xl">+</span>
-            </Button>
+            {tasks.length > 0 && (
+              <Button
+                onClick={() => {
+                  dispatch(toggleSideMenu());
+                  dispatch(toggleProfile(false));
+                }}
+                title="Add new task"
+                className="absolute right-[2%] bg-color-card xs:right-[10%] lg:right-[20%]">
+                <span className="px-3 text-3xl">+</span>
+              </Button>
+            )}
           </div>
           <p className="m-8 text-center text-2xl tracking-wide text-color-highlight">
             viewing {filter ? filter : 'All'} tasks

@@ -8,8 +8,9 @@ import { Button, DisplayImageStatus, ImageFigure } from 'components/ui';
 import { CloseIcon, SpinnerIcon, UploadIcon, WarningIcon } from 'assets/icons';
 
 type ActionModalProps = {
-  image?: any;
-  msg?: string;
+  image?: string;
+  title?: string;
+  msg?: string | JSX.Element;
   icon?: JSX.Element;
   showWarning?: boolean;
   actionType?: 'transition' | 'upload';
@@ -19,6 +20,7 @@ type ActionModalProps = {
 };
 
 export const ActionModal: FC<ActionModalProps> = ({
+  title,
   msg,
   icon,
   image,
@@ -33,13 +35,15 @@ export const ActionModal: FC<ActionModalProps> = ({
 
   content = (
     <div className="flex w-full flex-col gap-4 text-center">
+      {title ? <h1 className="mb-8 text-3xl capitalize">{title}</h1> : null}
       <span className="mb-4 self-center">{icon ? icon : <WarningIcon />}</span>
-      <h3 className="px-2 text-2xl xs:text-3xl">{msg}</h3>
+      <h3 className="px-2 text-2xl">{msg}</h3>
       {showWarning && <p className="text-xl xs:text-2xl">This action can not be undone.</p>}
       <div className="mt-6 flex w-full justify-center gap-12">
         <Button
           label="Confirm"
           onClick={confirmAction}
+          isDisabled={status === 'loading'}
           className="max-xs:bg-red-500 xs:ring-1 xs:ring-rose-500 xs:hover:bg-red-500"
         />
         <Button
@@ -120,7 +124,7 @@ export const ActionModal: FC<ActionModalProps> = ({
   const modalElement = (
     <section
       aria-label="modal"
-      className="flex-center fixed top-1/2 left-1/2 z-40 mx-auto w-10/12 max-w-3xl -translate-y-1/2 -translate-x-1/2 rounded-lg bg-neutral-800 pt-20 pb-24 text-slate-100 shadow-md">
+      className="flex-center fixed top-1/2 left-1/2 z-40 mx-auto w-11/12 max-w-4xl -translate-y-1/2 -translate-x-1/2 rounded-lg bg-neutral-800 pt-20 pb-24 text-slate-100 shadow-md">
       {content}
     </section>
   );
