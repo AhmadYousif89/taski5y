@@ -61,10 +61,10 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
   }, []);
 
   const modalTitle = (
-    <h2 className=" flex gap-4">
+    <div className=" flex gap-4">
       <span>set task timer</span>
       <ClockIcon />
-    </h2>
+    </div>
   );
 
   const displayModal = modal ? (
@@ -99,7 +99,7 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
     </div>
   ) : (
     <Button onClick={() => setModal(true)} className="self-start">
-      Set timer
+      Set timer <ClockIcon />
     </Button>
   );
 
