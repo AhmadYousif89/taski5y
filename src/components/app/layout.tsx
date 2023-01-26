@@ -30,7 +30,7 @@ export const AppLayout = () => {
           {user ? <MenuButton /> : null}
         </header>
 
-        <Menu aria-label="task-menu" className="[&>*]:mx-12">
+        <Menu aria-label="task-menu" className="[&>*]:mx-16 max-xs:[&>*]:mx-4">
           <UserInfo user={user} />
           {profileIsVisible ? <UserProfile /> : <TaskForm />}
           {!profileIsVisible && (

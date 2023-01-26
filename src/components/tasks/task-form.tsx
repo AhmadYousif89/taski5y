@@ -115,9 +115,7 @@ export const TaskForm = () => {
           <legend className="absolute top-0 z-10 ml-6 -translate-y-4 cursor-default bg-color-card text-xl text-color-base">
             Time to finish
           </legend>
-          <div className="rounded-md py-6 ring-1 ring-color-base">
-            <Timer getValues={getTimerValues} isSubmitted={isSubmitted} />
-          </div>
+          <Timer getValues={getTimerValues} isSubmitted={isSubmitted} />
         </fieldset>
 
         <div className="grid grid-cols-2 gap-4">
@@ -153,8 +151,8 @@ export const TaskForm = () => {
             isDisabled={!formIsValid}
             className={`${
               formIsValid ? 'cursor-pointer' : 'cursor-not-allowed'
-            } flex-center w-full cursor-pointer gap-4 rounded-md bg-transparent px-6 py-4 capitalize text-color-base shadow-md ring-1 ring-color-base transition-all active:translate-y-1`}>
-            <span className="text-2xl">
+            } flex-center mx-auto capitalize text-color-base shadow-md ring-1 ring-color-base transition-all active:translate-y-1 xs:w-1/2`}>
+            <span className="py-2 text-2xl">
               {actionType === 'creating' && status === 'loading' ? <Loading /> : 'create task'}
             </span>
             {status !== 'loading' && <TaskIcon />}

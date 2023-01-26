@@ -36,9 +36,9 @@ export const ActionModal: FC<ActionModalProps> = ({
   content = (
     <div className="flex w-full flex-col gap-4 text-center">
       {title ? (
-        <h1 className="mb-8 cursor-default self-center rounded-md bg-neutral-900 py-4 px-8 text-2xl capitalize ring-2 ring-neutral-600">
+        <h2 className="mb-8 cursor-default self-center rounded-md bg-neutral-900 py-4 px-8 text-2xl capitalize ring-2 ring-neutral-600">
           {title}
-        </h1>
+        </h2>
       ) : null}
       <div>{figure ? figure : <WarningIcon className="mx-auto h-16 w-16" />}</div>
       <h3 className="my-4 text-2xl">{message}</h3>

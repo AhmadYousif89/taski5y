@@ -55,7 +55,7 @@ export const DisplayTaskTime: FC<Props> = ({ task, type, className }) => {
             } flex items-center gap-4 text-xl`}
             title={expireTimeTitle}>
             {task.isExpired ? 'Failed to finish in time' : showMsg}
-            <ClockIcon />
+            {!task.isExpired && <ClockIcon />}
           </pre>
         )}
       </div>

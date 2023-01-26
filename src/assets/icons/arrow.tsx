@@ -3,10 +3,10 @@ export const ArrowIcon = ({ className = '' }: { className: string }) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
-      strokeWidth={3}
+      strokeWidth={2}
       viewBox="0 0 24 24"
       stroke="currentColor"
-      className={`${className} h-6 w-7`}>
+      className={`${className} h-7 w-7`}>
       <path
         strokeLinecap="round"
         strokeLinejoin="round"

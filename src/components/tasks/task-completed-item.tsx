@@ -34,7 +34,7 @@ export const CompletedTaskItem: FC<{ task: Task }> = ({ task }) => {
     <Card className={`${transition} ring-1 ring-color-valid transition-transform duration-700`}>
       <li className="flex w-full flex-col gap-8 p-4 text-color-base md:text-3xl">
         <div className="relative my-4 flex items-center justify-between">
-          <h2 className="text-3xl tracking-wide">{task.title}</h2>
+          <h2 className="h2">{task.title}</h2>
           <TaskInfo task={task} />
         </div>
 
@@ -42,7 +42,7 @@ export const CompletedTaskItem: FC<{ task: Task }> = ({ task }) => {
         <Button
           title="delete task"
           onClick={deleteTaskHandler}
-          className="my-4 self-center bg-slate-500 hover:bg-red-600 hover:!ring-0">
+          className="my-4 self-center bg-slate-500 text-neutral-200 hover:bg-red-600 hover:!ring-0">
           delete
         </Button>
       </li>

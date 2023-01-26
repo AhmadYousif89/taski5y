@@ -36,7 +36,7 @@ export const TaskDeleteButton: FC<{ taskId: string }> = ({ taskId }) => {
       {displayModal}
       <Button
         title="delete task"
-        className="self-end bg-slate-500 px-7 text-xl !ring-0 hover:bg-red-600 hover:ring-0"
+        className="self-end bg-slate-500 px-7 text-xl text-neutral-200 !ring-0 hover:bg-red-600 hover:ring-0"
         onClick={() => setModal(true)}>
         delete
       </Button>

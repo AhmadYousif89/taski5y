@@ -6,7 +6,7 @@ export const LogoutIcon = () => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="h-7 w-7">
+      className="h-8 w-8">
       <path
         strokeLinecap="round"
         strokeLinejoin="round"

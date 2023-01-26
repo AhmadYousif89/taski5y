@@ -61,10 +61,10 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
   }, []);
 
   const modalTitle = (
-    <div className="flex gap-4">
+    <h2 className=" flex gap-4">
       <span>set task timer</span>
       <ClockIcon />
-    </div>
+    </h2>
   );
 
   const displayModal = modal ? (
@@ -76,9 +76,11 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
         confirmAction={updateTaskTime}
         message={actionType === 'updating' ? <Loading className="text-2xl" /> : errMsg}
         figure={
-          <div className="rounded-md bg-opacity-10 bg-gradient-to-b from-stone-800 py-6 px-3 ring-2 ring-neutral-500 xs:px-6">
-            <Timer getValues={getTimerValues} isSubmitted={actionType === 'update_success'} />
-          </div>
+          <Timer
+            inModal={true}
+            getValues={getTimerValues}
+            isSubmitted={actionType === 'update_success'}
+          />
         }
       />
       <Backdrop onClick={onCloseModal} />
@@ -109,7 +111,7 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
         className={`relative ${styles} ${transition} transition-transform duration-500`}>
         <li className="flex -translate-y-0 flex-col gap-6 py-6 px-2 text-color-base md:text-3xl">
           <header className="relative flex items-center justify-between">
-            <h2 className="text-3xl tracking-wide">{task.title}</h2>
+            <h2 className="h2">{task.title}</h2>
             <TaskInfo task={task} />
           </header>
 
