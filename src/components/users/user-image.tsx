@@ -52,21 +52,22 @@ export const UserImage = ({ maxHeight = 300 }: { maxHeight?: number }) => {
     };
   }, [inputRef, resetImage]);
 
+  const displayModal = modal ? (
+    <>
+      <ActionModal
+        image={image}
+        actionType="upload"
+        closeModal={closeModal}
+        extraAction={triggerFileInput}
+        confirmAction={uploadImage}
+      />
+      <Backdrop onClick={closeModal} className="z-[35]" />
+    </>
+  ) : null;
+
   return (
     <>
-      {modal ? (
-        <>
-          <ActionModal
-            image={image}
-            actionType="upload"
-            closeModal={closeModal}
-            extraAction={triggerFileInput}
-            confirmAction={uploadImage}
-          />
-          <Backdrop onClick={closeModal} className="z-[35]" />
-        </>
-      ) : null}
-
+      {displayModal}
       <ImageFigure
         status={status}
         actionType={actionType}

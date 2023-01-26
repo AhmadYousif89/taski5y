@@ -14,6 +14,7 @@ import { SwitchTaskStatus } from './switch-status';
 import { DetailsSection } from './details-section';
 import { TaskUpdateButtons } from './update-buttons';
 import { timerValuesToISO, formatISOString } from 'helpers';
+import { ClockIcon } from 'assets/icons';
 
 export const TaskItem: FC<{ task: Task }> = ({ task }) => {
   const dispatch = useAppDispatch();
@@ -41,7 +42,6 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
       return;
     }
     try {
-      setErrMsg('');
       dispatch(setTaskActionType('updating'));
       await dispatch(updateTask({ id: task.id, expireDate: time }));
       dispatch(setTaskActionType('update_success'));
@@ -60,23 +60,50 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
     setAnimate(true);
   }, []);
 
+  const modalTitle = (
+    <div className="flex gap-4">
+      <span>set task timer</span>
+      <ClockIcon />
+    </div>
+  );
+
+  const displayModal = modal ? (
+    <>
+      <ActionModal
+        title={modalTitle}
+        showWarning={false}
+        closeModal={onCloseModal}
+        confirmAction={updateTaskTime}
+        message={actionType === 'updating' ? <Loading className="text-2xl" /> : errMsg}
+        figure={
+          <div className="rounded-md bg-opacity-10 bg-gradient-to-b from-stone-800 py-6 px-3 ring-2 ring-neutral-500 xs:px-6">
+            <Timer getValues={getTimerValues} isSubmitted={actionType === 'update_success'} />
+          </div>
+        }
+      />
+      <Backdrop onClick={onCloseModal} />
+    </>
+  ) : null;
+
+  const displaySwitch = !task.isExpired ? (
+    <SwitchTaskStatus taskId={task.id} taskStatus={task.status} />
+  ) : null;
+
+  const displayTimer = task.expireDate ? (
+    <div
+      onClick={() => !task.isExpired && setModal(true)}
+      className={`flex flex-col justify-between gap-1 self-start`}>
+      <DisplayTaskTime type="timer" task={task} />
+    </div>
+  ) : (
+    <Button onClick={() => setModal(true)} className="self-start">
+      Set timer
+    </Button>
+  );
+
   return (
     <TaskProvider>
-      {modal && (
-        <>
-          <ActionModal
-            showWarning={false}
-            title="set task timer"
-            confirmAction={updateTaskTime}
-            closeModal={onCloseModal}
-            msg={actionType === 'updating' ? <Loading /> : errMsg}
-            icon={
-              <Timer getValues={getTimerValues} isSubmitted={actionType === 'update_success'} />
-            }
-          />
-          <Backdrop onClick={onCloseModal} />
-        </>
-      )}
+      {displayModal}
       <Card
         priority={task.priority}
         className={`relative ${styles} ${transition} transition-transform duration-500`}>
@@ -88,26 +115,13 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
 
           <DetailsSection isExpired={task.isExpired} taskDetails={task.details} />
 
-          <footer className="mt-12 flex justify-between gap-4">
-            <div className="relative flex w-full flex-col justify-between">
-              {!task.isExpired && <SwitchTaskStatus taskId={task.id} taskStatus={task.status} />}
-              {task.expireDate ? (
-                <div
-                  onClick={() => {
-                    if (!task.isExpired) setModal(true);
-                  }}
-                  className={`absolute bottom-0 flex w-max flex-col justify-between gap-1`}>
-                  {!task.isExpired && <p className="cursor-default text-lg">Time to finish</p>}
-                  <DisplayTaskTime task={task} />
-                </div>
-              ) : (
-                <Button onClick={() => setModal(true)} className="self-start">
-                  Set timer
-                </Button>
-              )}
+          <footer className="mt-10 flex gap-4">
+            <div className="relative flex w-full flex-col justify-between gap-4">
+              {displaySwitch}
+              {displayTimer}
             </div>
             <div className="flex flex-col justify-between gap-4">
-              {!task.isExpired && <TaskUpdateButtons taskId={task.id} />}
+              {!task.isExpired ? <TaskUpdateButtons taskId={task.id} /> : null}
               <TaskDeleteButton taskId={task.id} />
             </div>
           </footer>

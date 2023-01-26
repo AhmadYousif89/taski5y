@@ -31,7 +31,7 @@ function App() {
     if (actionType === 'refresh_user') {
       return (
         <>
-          <ActionModal actionType="transition" msg={'redirecting please wait'} />
+          <ActionModal actionType="transition" message={'redirecting please wait'} />
           <Backdrop />
         </>
       );
@@ -39,7 +39,7 @@ function App() {
     if (actionType === 'sign_out') {
       return (
         <>
-          <ActionModal actionType="transition" msg={'logging out'} />
+          <ActionModal actionType="transition" message={'logging out'} />
           <Backdrop />
         </>
       );
@@ -47,7 +47,7 @@ function App() {
     if (actionType === 'delete_account') {
       return (
         <>
-          <ActionModal actionType="transition" msg={'deleting account'} />
+          <ActionModal actionType="transition" message={'deleting account'} />
           <Backdrop />
         </>
       );

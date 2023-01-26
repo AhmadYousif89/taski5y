@@ -1,25 +1,27 @@
 import { ChangeEvent, FC, useCallback, useEffect, useState } from 'react';
 
-const _7_Days = [...Array(7).keys()].map(i => `0${i}`);
-const _24_Hour = [...Array(24).keys()].map(i => `${i < 10 ? `0${i}` : `${i}`}`);
-const _60_Min_Sec = [...Array(60).keys()].map(i => `${i < 10 ? `0${i}` : `${i}`}`);
-
 const timerVariants = ['days', 'hours', 'minutes', 'seconds'] as const;
-
 export type TimerVariant = typeof timerVariants[number];
 export type TimerValues = Record<TimerVariant, number>;
 type TimerProps = {
   isSubmitted?: boolean;
   getValues: (values: TimerValues) => void;
 };
-
 const initTimerValues: TimerValues = { days: 0, hours: 0, minutes: 0, seconds: 0 };
 
 export const Timer: FC<TimerProps> = ({ isSubmitted, getValues }) => {
   const [values, setValues] = useState<TimerValues>(initTimerValues);
 
-  const timerHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-    setValues(pv => ({ ...pv, [e.target.name]: +e.target.value }));
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, valueAsNumber } = e.target;
+    if (
+      (name === 'days' && valueAsNumber > 6) ||
+      (name === 'hours' && valueAsNumber > 23) ||
+      ((name === 'minutes' || name === 'seconds') && valueAsNumber > 59)
+    ) {
+      return;
+    }
+    setValues(pv => ({ ...pv, [name]: valueAsNumber <= 0 ? 0 : valueAsNumber }));
   };
 
   const incrementTime = (type: TimerVariant) => {
@@ -57,45 +59,38 @@ export const Timer: FC<TimerProps> = ({ isSubmitted, getValues }) => {
   }, [isSubmitted, getValues, values]);
 
   return (
-    <div className="flex items-center justify-around gap-4">
+    <div className="flex items-center justify-evenly">
       {timerVariants.map(variant => {
-        const data = variant === 'days' ? _7_Days : variant === 'hours' ? _24_Hour : _60_Min_Sec;
         const displayValue = values[variant] < 10 ? `0${values[variant]}` : `${values[variant]}`;
 
         return (
           <div key={variant}>
-            <div className="flex items-center">
-              <span className="mr-4 hidden text-lg tracking-wider xs:block">
-                {variant.toUpperCase()}
-              </span>
+            <div className="relative flex flex-col items-start gap-2">
+              <span className="text-lg tracking-wider xs:block">{variant.toUpperCase()}</span>
 
-              <div className="rounded-xl bg-neutral-900 p-4">
-                <select
+              <div className="flex items-center justify-between">
+                <input
+                  type={'number'}
+                  max={variant === 'days' ? 6 : variant === 'hours' ? 23 : 59}
                   name={variant}
-                  className="w-full cursor-pointer appearance-none bg-neutral-900 text-center text-2xl text-color-base outline-none"
                   value={displayValue}
-                  onChange={timerHandler}>
-                  {data.map((h, i) => (
-                    <option value={h} key={i}>
-                      {h}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="ml-2 flex flex-col gap-2">
-                <button
-                  type={'button'}
-                  onClick={() => incrementTime(variant)}
-                  className="rounded-md px-2 text-xl ring-1 ring-neutral-600 hover:ring-neutral-400">
-                  +
-                </button>
-                <button
-                  type={'button'}
-                  onClick={() => decrementTime(variant)}
-                  className="rounded-md px-2 text-xl ring-1 ring-neutral-600 hover:ring-neutral-400">
-                  -
-                </button>
+                  onChange={onChangeHandler}
+                  className="w-16 cursor-pointer rounded-lg bg-neutral-900 p-4 text-center text-2xl text-color-base outline-none xs:w-24"
+                />
+                <div className="mx-2 flex flex-col gap-2">
+                  <button
+                    type={'button'}
+                    onClick={() => incrementTime(variant)}
+                    className="rounded-md px-2 text-2xl ring-1 ring-neutral-600 hover:ring-neutral-400">
+                    +
+                  </button>
+                  <button
+                    type={'button'}
+                    onClick={() => decrementTime(variant)}
+                    className="rounded-md px-2 text-2xl ring-1 ring-neutral-600 hover:ring-neutral-400">
+                    -
+                  </button>
+                </div>
               </div>
             </div>
           </div>

@@ -20,18 +20,20 @@ export const TaskDeleteButton: FC<{ taskId: string }> = ({ taskId }) => {
     }
   };
 
+  const displayModal = modal ? (
+    <>
+      <ActionModal
+        message="Delete this task ?"
+        confirmAction={() => deleteTaskHandler()}
+        closeModal={() => setModal(false)}
+      />
+      <Backdrop onClick={() => setModal(false)} />
+    </>
+  ) : null;
+
   return (
     <>
-      {modal ? (
-        <>
-          <ActionModal
-            msg="Delete this task ?"
-            confirmAction={() => deleteTaskHandler()}
-            closeModal={() => setModal(false)}
-          />
-          <Backdrop onClick={() => setModal(false)} />
-        </>
-      ) : null}
+      {displayModal}
       <Button
         title="delete task"
         className="self-end bg-slate-500 px-7 text-xl !ring-0 hover:bg-red-600 hover:ring-0"

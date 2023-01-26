@@ -4,6 +4,7 @@ export * from './db-arrow-up';
 export * from './search';
 export * from './calendar';
 export * from './close';
+export * from './clock';
 export * from './camera';
 export * from './menu';
 export * from './moon';

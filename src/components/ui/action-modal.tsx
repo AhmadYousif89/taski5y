@@ -9,9 +9,9 @@ import { CloseIcon, SpinnerIcon, UploadIcon, WarningIcon } from 'assets/icons';
 
 type ActionModalProps = {
   image?: string;
-  title?: string;
-  msg?: string | JSX.Element;
-  icon?: JSX.Element;
+  title?: string | JSX.Element;
+  message?: string | JSX.Element;
+  figure?: JSX.Element;
   showWarning?: boolean;
   actionType?: 'transition' | 'upload';
   closeModal?: () => void;
@@ -20,10 +20,10 @@ type ActionModalProps = {
 };
 
 export const ActionModal: FC<ActionModalProps> = ({
-  title,
-  msg,
-  icon,
   image,
+  title,
+  figure,
+  message,
   actionType,
   closeModal,
   extraAction,
@@ -40,8 +40,8 @@ export const ActionModal: FC<ActionModalProps> = ({
           {title}
         </h1>
       ) : null}
-      <span className="mb-4 self-center">{icon ? icon : <WarningIcon />}</span>
-      <h3 className="px-2 text-2xl">{msg}</h3>
+      <div>{figure ? figure : <WarningIcon className="mx-auto h-16 w-16" />}</div>
+      <h3 className="my-4 text-2xl">{message}</h3>
       {showWarning && <p className="text-xl xs:text-2xl">This action can not be undone.</p>}
       <div className="mt-6 flex w-full justify-center gap-12">
         <Button
@@ -63,7 +63,7 @@ export const ActionModal: FC<ActionModalProps> = ({
     content = (
       <div className="flex-center gap-8 text-center">
         <SpinnerIcon className="h-12 w-12 text-sky-500" />
-        <h3 className="text-3xl uppercase">{msg}</h3>
+        <h3 className="text-3xl uppercase">{message}</h3>
       </div>
     );
   }
@@ -128,7 +128,7 @@ export const ActionModal: FC<ActionModalProps> = ({
   const modalElement = (
     <section
       aria-label="modal"
-      className="flex-center fixed top-1/2 left-1/2 z-40 mx-auto w-11/12 max-w-4xl -translate-y-1/2 -translate-x-1/2 rounded-lg bg-neutral-800 py-24 text-slate-100 shadow-md">
+      className="flex-center fixed top-1/2 left-1/2 z-40 mx-auto w-11/12 max-w-4xl -translate-y-1/2 -translate-x-1/2 rounded-lg bg-neutral-800 px-4 py-24 text-slate-100 shadow-md">
       {content}
     </section>
   );

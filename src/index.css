@@ -4,6 +4,14 @@
 @tailwind utilities;
 
 @layer base {
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number'] {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance: textfield !important;
+  }
+
   .light-theme {
     --text-color-base: 30 41 59;
     --text-color-highlight: 98 118 230;
@@ -55,7 +63,7 @@
 
 @layer utilities {
   .grid-container {
-    @apply mx-4 mb-16 grid grid-cols-[repeat(auto-fit,minmax(32rem,.5fr))] place-items-stretch justify-center gap-8;
+    @apply mx-4 mb-20 grid min-w-[32rem] grid-cols-[repeat(auto-fit,minmax(32rem,.5fr))] justify-center gap-8 rounded-md p-8 shadow-md ring-2 ring-color-base;
   }
   .btn-circle {
     @apply h-12 w-12 cursor-pointer rounded-full ring-2 ring-color-base hover:ring-color-highlight active:bg-btn-color-highlight xs:h-14 xs:w-14;

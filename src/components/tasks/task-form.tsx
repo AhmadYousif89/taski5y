@@ -37,7 +37,7 @@ const initFormValues: FormValues = { title: '', details: '', priority: '', statu
 
 export const TaskForm = () => {
   const dispatch = useAppDispatch();
-  const { status } = useAppSelector(taskSelector);
+  const { status, actionType } = useAppSelector(taskSelector);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { formValidity, formValues, getFormValidity, getFormValues } = useForm<
     FormValues,
@@ -61,20 +61,20 @@ export const TaskForm = () => {
       status: (statusValue as TaskStatus) || 'Todo',
       priority: (priority as TaskPriority) || 'Normal'
     };
-    setIsSubmitted(true);
     try {
       dispatch(setTaskActionType('creating'));
       const result = await dispatch(addNewTask(newTask)).unwrap();
-      if (result) dispatch(setTaskActionType('create_success'));
+      if (result) {
+        setIsSubmitted(true);
+        dispatch(setTaskActionType('create_success'));
+      }
     } catch (err) {
       dispatch(setTaskActionType(''));
     }
   };
 
   useEffect(() => {
-    if (status !== 'loading') {
-      setIsSubmitted(false);
-    }
+    if (status !== 'loading') setIsSubmitted(false);
   }, [dispatch, status]);
 
   return (
@@ -115,7 +115,7 @@ export const TaskForm = () => {
           <legend className="absolute top-0 z-10 ml-6 -translate-y-4 cursor-default bg-color-card text-xl text-color-base">
             Time to finish
           </legend>
-          <div className="flex items-center justify-around rounded-md py-6 px-2 ring-1 ring-color-base">
+          <div className="rounded-md py-6 ring-1 ring-color-base">
             <Timer getValues={getTimerValues} isSubmitted={isSubmitted} />
           </div>
         </fieldset>
@@ -155,7 +155,7 @@ export const TaskForm = () => {
               formIsValid ? 'cursor-pointer' : 'cursor-not-allowed'
             } flex-center w-full cursor-pointer gap-4 rounded-md bg-transparent px-6 py-4 capitalize text-color-base shadow-md ring-1 ring-color-base transition-all active:translate-y-1`}>
             <span className="text-2xl">
-              {isSubmitted && status === 'loading' ? <Loading /> : 'create task'}
+              {actionType === 'creating' && status === 'loading' ? <Loading /> : 'create task'}
             </span>
             {status !== 'loading' && <TaskIcon />}
           </Button>

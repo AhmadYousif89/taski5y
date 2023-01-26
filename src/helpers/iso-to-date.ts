@@ -5,10 +5,10 @@ export const formatISOString = (date?: string | null): string => {
 
   const currentOffset = currentDate.getTimezoneOffset();
   const inputDateOffset = inputDate.getTimezoneOffset();
-  inputDate.setUTCMinutes(inputDate.getUTCMinutes() + (currentOffset - inputDateOffset));
   const timeDifference = inputDate.getTime() - currentDate.getTime();
+  inputDate.setUTCMinutes(inputDate.getUTCMinutes() + (currentOffset - inputDateOffset));
 
-  let seconds = timeDifference / 1000;
+  let seconds = Math.floor(timeDifference / 1000);
 
   const days = Math.floor(seconds / (60 * 60 * 24));
   seconds -= days * 60 * 60 * 24;
@@ -19,5 +19,5 @@ export const formatISOString = (date?: string | null): string => {
   const minutes = Math.floor(seconds / 60);
   seconds -= minutes * 60;
 
-  return `${days}d : ${hours}h : ${minutes}m : ${seconds.toFixed(0)}s`;
+  return `${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
 };

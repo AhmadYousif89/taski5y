@@ -57,20 +57,22 @@ export const UserSettings = () => {
     </Card>
   );
 
+  const displayModal = modal ? (
+    <>
+      <ActionModal
+        message="Delete this account with all related tasks ?"
+        confirmAction={deleteAccountHandler}
+        closeModal={() => setModal(false)}
+      />
+      <Backdrop className="!z-30" onClick={() => setModal(false)} />
+    </>
+  ) : null;
+
   return (
     <section
       aria-label="user-setting-menu"
       className="absolute top-1/2 right-[15%] z-10 -translate-y-1/2">
-      {modal ? (
-        <>
-          <ActionModal
-            msg="Delete this account with all related tasks ?"
-            confirmAction={deleteAccountHandler}
-            closeModal={() => setModal(false)}
-          />
-          <Backdrop className="!z-30" onClick={() => setModal(false)} />
-        </>
-      ) : null}
+      {displayModal}
       <button
         type={'button'}
         title="settings"

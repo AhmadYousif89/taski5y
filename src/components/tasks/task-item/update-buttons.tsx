@@ -47,19 +47,21 @@ export const TaskUpdateButtons: FC<{ taskId: string }> = ({ taskId }) => {
     }
   };
 
+  const displayModal = modal ? (
+    <>
+      <ActionModal
+        figure={<InfoIcon />}
+        confirmAction={markTaskCompleted}
+        closeModal={() => setModal(false)}
+        message="You have unsaved changes, Task will be marked as completed ?"
+      />
+      <Backdrop onClick={() => setModal(false)} />
+    </>
+  ) : null;
+
   return (
     <>
-      {modal ? (
-        <>
-          <ActionModal
-            icon={<InfoIcon />}
-            confirmAction={markTaskCompleted}
-            closeModal={() => setModal(false)}
-            msg="You have unsaved changes, Task will be marked as completed ?"
-          />
-          <Backdrop onClick={() => setModal(false)} />
-        </>
-      ) : null}
+      {displayModal}
       <div aria-label="task-update-buttons" className="flex items-center gap-4">
         {showUpdateBtn || isEditing ? (
           <Button

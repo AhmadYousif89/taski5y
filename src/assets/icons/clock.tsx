@@ -1,4 +1,4 @@
-export const InfoIcon = ({ className = 'h-16 w-16' }) => {
+export const ClockIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,11 +6,11 @@ export const InfoIcon = ({ className = 'h-16 w-16' }) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className={`${className} mx-auto stroke-sky-500`}>
+      className="h-9 w-9">
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
-        d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
+        d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
       />
     </svg>
   );

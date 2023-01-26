@@ -46,7 +46,7 @@ export const TaskList = () => {
   if (actionType === 'fetching') {
     return (
       <>
-        <ActionModal actionType="transition" msg="loading" />
+        <ActionModal actionType="transition" message="loading" />
         <Backdrop />
       </>
     );
@@ -54,7 +54,7 @@ export const TaskList = () => {
   if (actionType === 'deleting') {
     return (
       <>
-        <ActionModal actionType="transition" msg="deleting" />
+        <ActionModal actionType="transition" message="deleting" />
         <Backdrop />
       </>
     );
@@ -63,7 +63,7 @@ export const TaskList = () => {
   return (
     <>
       {searchMsg}
-      <ul aria-label="task-list" className="grid-container mt-8">
+      <ul aria-label="task-list" className="grid-container mt-4">
         {updatedTasks.map(task => (
           <TaskItem key={task.id} task={task} />
         ))}

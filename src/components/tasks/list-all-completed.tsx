@@ -36,7 +36,7 @@ export const CompletedTaskList = () => {
   if (actionType === 'deleting') {
     return (
       <>
-        <ActionModal actionType="transition" msg="deleting" />
+        <ActionModal actionType="transition" message="deleting" />
         <Backdrop />
       </>
     );
