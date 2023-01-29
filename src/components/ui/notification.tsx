@@ -85,7 +85,7 @@ export const Notification = () => {
       notification = (
         <Success>
           {taskActionType === 'delete_success' && <p>Task deleted</p>}
-          {taskActionType === 'delete_all_success' && <p>All tasks were deleted</p>}
+          {taskActionType === 'delete_all_success' && <p>All tasks deleted</p>}
         </Success>
       );
     }

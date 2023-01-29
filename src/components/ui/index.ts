@@ -11,7 +11,6 @@ export * from './image-figure';
 export * from './image-status';
 export * from './input-error';
 export * from './menu';
-export * from './menu-button';
 export * from './select';
 export * from './theme-switcher';
 export * from './notification';

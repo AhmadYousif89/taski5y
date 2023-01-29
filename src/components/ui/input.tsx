@@ -118,7 +118,7 @@ const CustomInput = (props: InputProps, ref: Ref<HTMLInputElement>) => {
           required={isRequired}
           onChange={onInputChange}
           placeholder={inputPlaceHolder}
-          className={`${showVisualErr} ${className} w-full rounded-md bg-transparent px-6 py-4 text-2xl text-color-base shadow-md ring-1 placeholder:text-xl placeholder:text-color-base placeholder:opacity-75 focus:outline-none focus:ring-2 focus:ring-color-validating`}
+          className={`${showVisualErr} ${className} w-full rounded-md bg-transparent px-6 py-4 text-2xl text-color-base shadow-md outline-none ring-1 placeholder:text-xl placeholder:text-color-base placeholder:opacity-75 focus:ring-2 focus:ring-color-validating`}
         />
       </div>
       {validate && showInputErr && isError ? <InputError msg={inputErrMsg || ''} /> : null}

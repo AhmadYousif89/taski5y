@@ -12,21 +12,28 @@ export const TaskUpdateButtons: FC<{ taskId: string }> = ({ taskId }) => {
   const dispatch = useAppDispatch();
   const [modal, setModal] = useState(false);
   const {
-    state: { isEditing, isUpdating, updatedDetails, showUpdateBtn },
+    state: { updatedDetails, isError, isEditing, isUpdating, showUpdateBtn },
     setTaskIsUpdating,
     setTaskUpdateBtn,
-    setTaskIsEditing
+    setTaskIsEditing,
+    setTaskHasError
   } = useTaskItem();
 
+  const onUpdate = () => {
+    dispatch(setTaskActionType('updating'));
+    setTaskHasError(false);
+    setTaskIsEditing(false);
+    setTaskUpdateBtn(true);
+    setTaskIsUpdating(true);
+  };
+
   const markTaskCompleted = async () => {
-    if (isEditing && !modal) {
+    if ((isEditing || isError) && !modal) {
       setModal(true);
       return;
     }
-    setTaskIsUpdating(true);
-    setTaskUpdateBtn(true);
     try {
-      dispatch(setTaskActionType('updating'));
+      onUpdate();
       const result = await dispatch(updateTask({ id: taskId, status: 'Completed' })).unwrap();
       if (result) dispatch(setTaskActionType('update_success'));
     } catch (err) {
@@ -35,11 +42,13 @@ export const TaskUpdateButtons: FC<{ taskId: string }> = ({ taskId }) => {
   };
 
   const updateTaskDetailHandler = async () => {
-    setTaskUpdateBtn(true);
-    setTaskIsUpdating(true);
-    setTaskIsEditing(false);
+    if (updatedDetails.trim().length === 0) {
+      setTaskHasError(true);
+      setTaskIsEditing(false);
+      return;
+    }
     try {
-      dispatch(setTaskActionType('updating'));
+      onUpdate();
       const result = await dispatch(updateTask({ id: taskId, details: updatedDetails })).unwrap();
       if (result) dispatch(setTaskActionType('update_success'));
     } catch (err) {
@@ -53,7 +62,7 @@ export const TaskUpdateButtons: FC<{ taskId: string }> = ({ taskId }) => {
         figure={<InfoIcon />}
         confirmAction={markTaskCompleted}
         closeModal={() => setModal(false)}
-        message="You have unsaved changes, Task will be marked as completed ?"
+        message="You have unsaved changes, proceed anyway ?"
       />
       <Backdrop onClick={() => setModal(false)} />
     </>

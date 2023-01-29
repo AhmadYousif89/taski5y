@@ -6,8 +6,7 @@ import {
   addNewTask,
   updateTask,
   deleteTasks,
-  deleteActiveTasks,
-  deleteCompletedTasks
+  deleteAllTasks
 } from 'features/services/tasks';
 import { ResponseError, TaskActionType, TaskState } from 'features/types';
 
@@ -121,31 +120,22 @@ const taskSlice = createSlice({
       });
 
     builder
-      .addCase(deleteActiveTasks.pending, state => {
+      .addCase(deleteAllTasks.pending, state => {
         state.status = 'loading';
       })
-      .addCase(deleteActiveTasks.fulfilled, state => {
+      .addCase(deleteAllTasks.fulfilled, (state, { payload }) => {
         state.status = 'fulfilled';
-        state.tasks = [];
-        state.totalTasks = 0;
-        state.totalTodoTasks = 0;
-        state.totalInProgressTasks = 0;
+        if (payload.status === 'active') {
+          state.tasks = [];
+          state.totalTasks = 0;
+          state.totalTodoTasks = 0;
+          state.totalInProgressTasks = 0;
+        } else if (payload.status === 'completed') {
+          state.completedTasks = [];
+          state.totalCompletedTasks = 0;
+        }
       })
-      .addCase(deleteActiveTasks.rejected, (state, { payload }) => {
-        state.status = 'rejected';
-        state.error = payload || initError;
-      });
-
-    builder
-      .addCase(deleteCompletedTasks.pending, state => {
-        state.status = 'loading';
-      })
-      .addCase(deleteCompletedTasks.fulfilled, state => {
-        state.status = 'fulfilled';
-        state.completedTasks = [];
-        state.totalCompletedTasks = 0;
-      })
-      .addCase(deleteCompletedTasks.rejected, (state, { payload }) => {
+      .addCase(deleteAllTasks.rejected, (state, { payload }) => {
         state.status = 'rejected';
         state.error = payload || initError;
       });

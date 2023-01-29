@@ -19,7 +19,7 @@ import { addNewTask } from 'features/services/tasks';
 import { TaskStatus, TaskPriority } from 'features/types';
 import { taskSelector, setTaskActionType } from 'features/slices/task';
 
-import { TaskIcon } from 'assets/icons';
+import { CreateTaskIcon } from 'assets/icons';
 import { TaskStats } from './task-stats';
 import { TaskInputNames } from './types';
 import { timerValuesToISO } from 'helpers';
@@ -46,8 +46,8 @@ export const TaskForm = () => {
   const { timer, getTimerValues } = useTimer();
 
   const { title, details, status: statusValue, priority } = formValues;
-  const { title: titleIsValid, details: detailsIsValid } = formValidity;
-  const formIsValid = [titleIsValid, detailsIsValid].every(Boolean);
+  const { title: titleIsValid, details: detailIsValid } = formValidity;
+  const formIsValid = [titleIsValid, detailIsValid].every(Boolean);
 
   const time = timerValuesToISO(timer);
 
@@ -63,8 +63,8 @@ export const TaskForm = () => {
     };
     try {
       dispatch(setTaskActionType('creating'));
-      await dispatch(addNewTask(newTask)).unwrap();
-      dispatch(setTaskActionType('create_success'));
+      const result = await dispatch(addNewTask(newTask)).unwrap();
+      if (result) dispatch(setTaskActionType('create_success'));
     } catch (err) {
       dispatch(setTaskActionType(''));
     } finally {
@@ -98,7 +98,6 @@ export const TaskForm = () => {
 
         <fieldset aria-label="task-details-input">
           <TextArea
-            id={'details'}
             name={'details'}
             value={details}
             inputErrMsg={'Required'}
@@ -154,7 +153,7 @@ export const TaskForm = () => {
             <span className="py-2 text-2xl">
               {actionType === 'creating' && status === 'loading' ? <Loading /> : 'create task'}
             </span>
-            {status !== 'loading' && <TaskIcon />}
+            {status !== 'loading' && <CreateTaskIcon />}
           </Button>
         </fieldset>
       </form>

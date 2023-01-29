@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 import appLogo from 'assets/logo.png';
 import { TaskForm } from 'components/tasks';
 import { UserSettings, UserInfo, UserProfile } from 'components/users';
-import { ThemeSwitcher, MenuButton, Menu, Button } from 'components/ui';
+import { ThemeSwitcher, Menu, Button } from 'components/ui';
 
 import { useAuth } from 'hooks';
 import { useAppSelector } from 'app/hooks';
@@ -27,7 +27,6 @@ export const AppLayout = () => {
             <img src={appLogo} alt="logo" width={30} />
           </h1>
           {user ? <UserSettings /> : null}
-          {user ? <MenuButton /> : null}
         </header>
 
         <Menu aria-label="task-menu" className="[&>*]:mx-16 max-xs:[&>*]:mx-4">

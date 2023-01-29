@@ -57,26 +57,15 @@ export const deleteTasks = createAsyncThunk<
   }
 });
 
-export const deleteActiveTasks = createAsyncThunk<
-  string,
-  void,
+export const deleteAllTasks = createAsyncThunk<
+  { count: number; status: 'completed' | 'active'; message: string },
+  'completed' | undefined,
   { rejectValue: Partial<ResponseError> }
->('delete/active/tasks', async (_, { rejectWithValue }) => {
+>('delete/active/tasks', async (status, { rejectWithValue }) => {
   try {
-    const { data } = await axiosPrivate.delete('/tasks');
-    return data;
-  } catch (err: any) {
-    return rejectWithValue(err.response.data);
-  }
-});
-
-export const deleteCompletedTasks = createAsyncThunk<
-  string,
-  void,
-  { rejectValue: Partial<ResponseError> }
->('delete/completed/tasks', async (_, { rejectWithValue }) => {
-  try {
-    const { data } = await axiosPrivate.delete(`/tasks?status=completed`);
+    const { data } = !status
+      ? await axiosPrivate.delete('/tasks')
+      : await axiosPrivate.delete(`/tasks?status=${status}`);
     return data;
   } catch (err: any) {
     return rejectWithValue(err.response.data);

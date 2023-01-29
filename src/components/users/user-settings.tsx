@@ -71,7 +71,7 @@ export const UserSettings = () => {
   return (
     <section
       aria-label="user-setting-menu"
-      className="absolute top-1/2 right-[15%] z-10 -translate-y-1/2">
+      className="absolute top-1/2 right-[3%] z-10 -translate-y-1/2  xs:right-[6%] lg:right-[9%]">
       {displayModal}
       <div
         title="settings"

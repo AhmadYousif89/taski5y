@@ -109,7 +109,7 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
       <Card
         priority={task.priority}
         className={`relative ${styles} ${transition} transition-transform duration-500`}>
-        <li className="flex -translate-y-0 flex-col gap-6 py-6 px-2 text-color-base md:text-3xl">
+        <li className="flex h-full -translate-y-0 flex-col gap-6 py-6 px-2 text-color-base md:text-3xl">
           <header className="relative flex items-center justify-between">
             <h2 className="h2">{task.title}</h2>
             <TaskInfo task={task} />
@@ -117,7 +117,7 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
 
           <DetailsSection isExpired={task.isExpired} taskDetails={task.details} />
 
-          <footer className="mt-10 flex gap-4">
+          <footer className="flex h-full items-end gap-4">
             <div className="relative flex w-full flex-col justify-between gap-4">
               {displaySwitch}
               {displayTimer}

@@ -63,7 +63,7 @@
 
 @layer utilities {
   .h2 {
-    @apply rounded-md bg-color-base bg-opacity-50 p-4 text-center text-2xl tracking-wide ring-2 ring-color-base;
+    @apply rounded-md bg-color-base bg-opacity-40 p-4 text-center text-xl tracking-wide ring-1 ring-color-highlight;
   }
   .grid-container {
     @apply mx-4 mb-20 grid min-w-[32rem] grid-cols-[repeat(auto-fit,minmax(32rem,.5fr))] justify-center gap-8 rounded-md p-8 shadow-md ring-2 ring-color-base;

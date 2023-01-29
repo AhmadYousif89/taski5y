@@ -49,11 +49,11 @@ export const SortTasks = () => {
         onClick={sortHandler}
         className="li-item flex items-center justify-between gap-8">
         <span className="flex items-center">
-          {
-            type === sortType ? 
-            <ArrowIcon className={`${isSortAsc ? 'animate-arrow-up' : 'animate-arrow-down'}`} /> :
-            'by'
-          }
+          {type === sortType ? (
+            <ArrowIcon className={`${isSortAsc ? 'animate-arrow-up' : 'animate-arrow-down'}`} />
+          ) : (
+            <SortIcon />
+          )}
         </span>
         <span className="w-full text-start">{type}</span>
       </button>
@@ -82,7 +82,7 @@ export const SortTasks = () => {
           onKeyDown={e => {
             if (e.key === 'Enter') openSortMenu();
           }}
-          className="flex-center absolute left-[2%] z-[15] cursor-pointer gap-2 rounded-md bg-color-card py-4 pl-3 text-xl text-color-base ring-1 ring-color-base hover:ring-color-highlight active:ring-color-highlight xs:left-[10%] lg:left-[18%]">
+          className="flex-center absolute left-[2%] z-[15] cursor-pointer gap-2 rounded-md bg-color-card py-4 pl-2 text-xl text-color-base ring-1 ring-color-base hover:ring-color-highlight active:ring-color-highlight xs:left-[10%] lg:left-[18%]">
           <span>Sort</span>
           {sortOrder === asc ? (
             <ArrowIcon className={'animate-arrow-up'} />
@@ -91,7 +91,7 @@ export const SortTasks = () => {
           ) : (
             <SortIcon />
           )}
-          {toggleMenu && <>{sortingList}</>}
+          {toggleMenu && sortingList}
         </div>
       ) : null}
     </>

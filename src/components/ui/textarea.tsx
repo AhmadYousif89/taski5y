@@ -8,17 +8,12 @@ import { GetInputValues, GetInputValidation } from './input';
 type TextareaNames = AuthInputNames | TaskInputNames;
 
 interface TextAreaProps {
-  id?: TextareaNames;
   name: TextareaNames;
   value: string;
-  label?: string;
+  inputErrMsg?: string;
   className?: string;
   placeholder?: string;
-  inputErrMsg?: string;
   placeholderErrMsg?: string;
-  validate?: boolean;
-  isRequired?: boolean;
-  showInputErr?: boolean;
   isFormSubmitted?: boolean;
   getValue: GetInputValues;
   getValidity?: GetInputValidation;
@@ -26,19 +21,14 @@ interface TextAreaProps {
 
 export const TextArea = (props: TextAreaProps) => {
   const {
-    id,
     name,
-    label,
     value,
     getValue,
     className,
-    placeholder,
     inputErrMsg,
-    getValidity,
-    validate = true,
+    placeholder,
     placeholderErrMsg,
-    isRequired = true,
-    showInputErr = true,
+    getValidity,
     isFormSubmitted = false
   } = props;
 
@@ -61,40 +51,30 @@ export const TextArea = (props: TextAreaProps) => {
 
   const isError = !isValid && isTouched;
 
+  const showVisualErr = isError
+    ? 'ring-color-invalid'
+    : 'ring-color-base focus:valid:ring-color-valid';
+
   useEffect(() => {
     getValidity && getValidity({ name, isValid });
     getValue({ name, value: inputValue });
     if (isFormSubmitted) resetInput();
   }, [isFormSubmitted, inputValue, isValid, getValidity, name, getValue]);
 
-  const showVisualErr =
-    validate && showInputErr && isError
-      ? 'ring-color-invalid'
-      : 'ring-color-base focus:valid:ring-color-valid';
-  const inputPlaceHolder = validate && showInputErr && isError ? placeholderErrMsg : placeholder;
-
   return (
     <div className="flex w-full flex-col items-center">
-      <div className="relative flex w-full items-center">
-        {label ? (
-          <label className="w-1/2 text-2xl" htmlFor={id}>
-            {label}
-          </label>
-        ) : null}
-        <textarea
-          id={id}
-          cols={3}
-          rows={3}
-          name={name}
-          value={value}
-          onBlur={onInputBlur}
-          required={isRequired}
-          onChange={onInputChange}
-          placeholder={inputPlaceHolder}
-          className={`${showVisualErr} ${className} w-full resize-none rounded-md bg-transparent px-6 py-3 text-2xl text-color-base shadow-md ring-1 placeholder:text-xl placeholder:text-color-base placeholder:opacity-75 focus:outline-none focus:ring-2 focus:ring-color-validating`}
-        />
-      </div>
-      {validate && showInputErr && isError ? <InputError msg={inputErrMsg || ''} /> : null}
+      <textarea
+        cols={3}
+        rows={3}
+        required
+        name={name}
+        value={value}
+        onBlur={onInputBlur}
+        onChange={onInputChange}
+        placeholder={isError ? placeholderErrMsg : placeholder}
+        className={`${showVisualErr} ${className} w-full resize-none rounded-md bg-transparent px-6 py-3 text-2xl text-color-base shadow-md outline-none ring-1 placeholder:text-xl placeholder:text-color-base placeholder:opacity-75 focus:ring-2 focus:ring-color-validating`}
+      />
+      {isError ? <InputError msg={inputErrMsg || ''} /> : null}
     </div>
   );
 };

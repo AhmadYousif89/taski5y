@@ -21,7 +21,7 @@ import { BackArrowIcon } from 'assets/icons';
 export const Dashboard = () => {
   const navigate = useNavigate();
   const { filter } = useSearchParams();
-  const { tasks, completedTasks, totalTasks, totalCompletedTasks } = useAppSelector(taskSelector);
+  const { totalTasks, totalCompletedTasks } = useAppSelector(taskSelector);
 
   let content = <TaskList />;
 
@@ -56,10 +56,10 @@ export const Dashboard = () => {
           <div className="flex-center relative my-8">
             <SortTasks />
             <SearchTasks />
-            {(tasks.length > 0 || completedTasks.length > 0) && <TaskOptions />}
+            {(totalTasks > 0 || totalCompletedTasks > 0) && <TaskOptions />}
           </div>
           <p className="m-8 text-center text-2xl tracking-wide text-color-highlight">
-            viewing {filter ? filter : 'All'} tasks
+            Viewing {filter ? filter : 'all'} tasks
           </p>
           {filter !== null ? (
             <Button

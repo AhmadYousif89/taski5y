@@ -1,47 +1,60 @@
-import { ChangeEvent, FC } from 'react';
+import { FC, ChangeEvent, useEffect, useId } from 'react';
 import { useTaskItem } from './context';
 
-export const DetailsSection: FC<{ taskDetails: string; isExpired: boolean }> = ({
-  taskDetails,
-  isExpired
-}) => {
+type Props = { taskDetails: string; isExpired: boolean };
+export const DetailsSection: FC<Props> = ({ taskDetails, isExpired }) => {
+  const inputId = useId();
   const {
-    state: { isUpdating, isEditing },
+    state: { updatedDetails, isError, isUpdating, isEditing },
+    setTaskHasError,
     setTaskIsEditing,
     setTaskUpdateBtn,
-    updateTaskDetails
+    setTaskUpdatedDetails
   } = useTaskItem();
 
-  const onBlurHandler = (e: ChangeEvent<HTMLDivElement>) => {
-    updateTaskDetails(e.target.textContent as string);
-  };
-  const onInputHandler = (e: ChangeEvent<HTMLDivElement>) => {
+  const isEqualString = (oldText: string, newText: string) => (oldText === newText ? true : false);
+
+  const onUpdate = (text: string) => {
+    setTaskHasError(false);
     setTaskIsEditing(true);
-    if (taskDetails === e.target.textContent) {
+    setTaskUpdateBtn(true);
+    setTaskUpdatedDetails(text);
+  };
+
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    onUpdate(e.target.value);
+    if (isEqualString(taskDetails, e.target.value)) {
       setTaskUpdateBtn(false);
       setTaskIsEditing(false);
     }
   };
 
+  useEffect(() => {
+    setTaskUpdatedDetails(taskDetails);
+  }, [setTaskUpdatedDetails, taskDetails]);
+
+  const textColor = isError ? 'text-red-500' : isEditing ? 'text-amber-500' : 'text-green-500';
+  const showMessage = isError ? 'this can not be empty' : isEditing ? 'editing' : 'updating';
+
   return (
-    <section className="relative">
-      <span className="absolute top-4 left-4 z-10 cursor-default text-3xl text-color-highlight opacity-60">
-        #
-      </span>
-      <div
-        className="relative break-words rounded-md px-12 py-4 text-2xl ring-1 ring-color-base"
-        contentEditable={!isExpired}
-        suppressContentEditableWarning
-        onInput={onInputHandler}
-        onBlur={onBlurHandler}>
-        {taskDetails}
-      </div>
-      {isUpdating ? (
-        <p className={`absolute left-0 -bottom-12 text-xl uppercase text-green-500`}>updating</p>
-      ) : null}
-      {isEditing && !isUpdating ? (
-        <p className="absolute left-0 -bottom-12 text-xl uppercase tracking-wide text-amber-500">
-          edited
+    <section className="relative mb-6">
+      <label
+        htmlFor={`${inputId}task-details`}
+        className="relative flex cursor-default items-center gap-4">
+        <span className="absolute left-0 px-2 text-2xl text-color-highlight opacity-80">#</span>
+        <input
+          type={'text'}
+          id={`${inputId}task-details`}
+          disabled={isExpired}
+          value={updatedDetails}
+          onChange={onChangeHandler}
+          placeholder="What's in your mind ?"
+          className="w-full rounded-md bg-transparent px-8 py-4 text-xl outline-none ring-1 ring-color-base focus:ring-color-highlight"
+        />
+      </label>
+      {isError || isUpdating || isEditing ? (
+        <p className={`absolute top-16 left-0 text-lg uppercase tracking-wide ${textColor}`}>
+          {showMessage}
         </p>
       ) : null}
     </section>
