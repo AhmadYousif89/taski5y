@@ -1,7 +1,13 @@
 import { RootState } from 'app/store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { getAllTasks, addNewTask, updateTask, deleteTasks } from 'features/services/tasks';
+import {
+  getAllTasks,
+  addNewTask,
+  updateTask,
+  deleteTasks,
+  deleteActiveTasks
+} from 'features/services/tasks';
 import { ResponseError, TaskActionType, TaskState } from 'features/types';
 
 const initError: Partial<ResponseError> = { statusCode: 0, message: '', error: '' };
@@ -109,6 +115,22 @@ const taskSlice = createSlice({
         state.totalCompletedTasks = state.completedTasks.length;
       })
       .addCase(deleteTasks.rejected, (state, { payload }) => {
+        state.status = 'rejected';
+        state.error = payload || initError;
+      });
+
+    builder
+      .addCase(deleteActiveTasks.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(deleteActiveTasks.fulfilled, state => {
+        state.status = 'fulfilled';
+        state.tasks = [];
+        state.totalTasks = 0;
+        state.totalTodoTasks = 0;
+        state.totalInProgressTasks = 0;
+      })
+      .addCase(deleteActiveTasks.rejected, (state, { payload }) => {
         state.status = 'rejected';
         state.error = payload || initError;
       });

@@ -56,3 +56,16 @@ export const deleteTasks = createAsyncThunk<
     return rejectWithValue(err.response.data);
   }
 });
+
+export const deleteActiveTasks = createAsyncThunk<
+  string,
+  void,
+  { rejectValue: Partial<ResponseError> }
+>('delete/all/tasks', async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await axiosPrivate.delete('/tasks');
+    return data;
+  } catch (err: any) {
+    return rejectWithValue(err.response.data);
+  }
+});

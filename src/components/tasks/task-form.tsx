@@ -63,13 +63,12 @@ export const TaskForm = () => {
     };
     try {
       dispatch(setTaskActionType('creating'));
-      const result = await dispatch(addNewTask(newTask)).unwrap();
-      if (result) {
-        setIsSubmitted(true);
-        dispatch(setTaskActionType('create_success'));
-      }
+      await dispatch(addNewTask(newTask)).unwrap();
+      dispatch(setTaskActionType('create_success'));
     } catch (err) {
       dispatch(setTaskActionType(''));
+    } finally {
+      setIsSubmitted(true);
     }
   };
 

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   TaskList,
   SortTasks,
+  TaskOptions,
   SearchTasks,
   TodoTaskList,
   CompletedTaskList,
@@ -12,15 +13,13 @@ import {
 import { path } from 'components/app';
 import { Button } from 'components/ui';
 import { useSearchParams } from 'hooks';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { useAppSelector } from 'app/hooks';
 import { taskSelector } from 'features/slices/task';
 
 import { BackArrowIcon } from 'assets/icons';
-import { toggleProfile, toggleSideMenu } from 'features/slices/ui';
 
 export const Dashboard = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const { filter } = useSearchParams();
   const { tasks, completedTasks, totalTasks, totalCompletedTasks } = useAppSelector(taskSelector);
 
@@ -57,17 +56,7 @@ export const Dashboard = () => {
           <div className="flex-center relative my-8">
             <SortTasks />
             <SearchTasks />
-            {(tasks.length > 0 || completedTasks.length > 0) && (
-              <Button
-                onClick={() => {
-                  dispatch(toggleSideMenu());
-                  dispatch(toggleProfile(false));
-                }}
-                title="Add new task"
-                className="absolute right-[2%] bg-color-card xs:right-[10%] lg:right-[20%]">
-                <span className="px-3 text-3xl">+</span>
-              </Button>
-            )}
+            {(tasks.length > 0 || completedTasks.length > 0) && <TaskOptions />}
           </div>
           <p className="m-8 text-center text-2xl tracking-wide text-color-highlight">
             viewing {filter ? filter : 'All'} tasks

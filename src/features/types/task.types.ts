@@ -7,7 +7,8 @@ const actionTypes = [
   'deleting',
   'create_success',
   'update_success',
-  'delete_success'
+  'delete_success',
+  'delete_all_success'
 ] as const;
 
 export type TaskActionType = typeof actionTypes[number] | '';

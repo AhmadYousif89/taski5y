@@ -36,23 +36,23 @@ export const UserSettings = () => {
   const settingList = (
     <Card className="absolute top-full -translate-x-1/2 translate-y-3 py-4 ring-1 ring-color-base transition-all">
       <ul
-        aria-label="account-setting-menu"
-        className="grid auto-cols-[minmax(max-content,1fr)] gap-6 py-2 text-xl text-color-base">
-        <li
+        aria-label="user-settings"
+        className="grid auto-cols-[minmax(max-content,1fr)] gap-4 py-2 text-xl text-color-base">
+        <button
           onClick={() => {
             dispatch(toggleProfile(true));
             dispatch(toggleSideMenu());
           }}
           className="li-item">
           <span>Manage account</span>
-        </li>
-        <li className="li-item" onClick={() => setModal(true)}>
+        </button>
+        <button className="li-item" onClick={() => setModal(true)}>
           <span className="text-red-500">Delete account</span>
-        </li>
-        <li className="li-item flex-center gap-4" onClick={() => logoutHandler()}>
+        </button>
+        <button className="li-item flex-center gap-4" onClick={() => logoutHandler()}>
           <LogoutIcon />
           <span>Logout</span>
-        </li>
+        </button>
       </ul>
     </Card>
   );
@@ -73,15 +73,16 @@ export const UserSettings = () => {
       aria-label="user-setting-menu"
       className="absolute top-1/2 right-[15%] z-10 -translate-y-1/2">
       {displayModal}
-      <button
-        type={'button'}
+      <div
         title="settings"
-        ref={settingRef as MutableRefObject<HTMLButtonElement>}
+        ref={settingRef as MutableRefObject<HTMLDivElement>}
         onClick={() => setToggleMenu(p => !p)}
         className="btn-circle flex-center relative">
-        <SettingsIcon />
+        <button className="rounded-full">
+          <SettingsIcon />
+        </button>
         {toggleMenu && <>{settingList}</>}
-      </button>
+      </div>
     </section>
   );
 };

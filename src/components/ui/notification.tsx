@@ -81,10 +81,11 @@ export const Notification = () => {
         </Success>
       );
     }
-    if (taskActionType === 'delete_success') {
+    if (taskActionType === 'delete_success' || taskActionType === 'delete_all_success') {
       notification = (
         <Success>
-          <p>Task deleted</p>
+          {taskActionType === 'delete_success' && <p>Task deleted</p>}
+          {taskActionType === 'delete_all_success' && <p>All active tasks deleted</p>}
         </Success>
       );
     }
