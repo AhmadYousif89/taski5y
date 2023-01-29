@@ -6,7 +6,8 @@ import {
   addNewTask,
   updateTask,
   deleteTasks,
-  deleteActiveTasks
+  deleteActiveTasks,
+  deleteCompletedTasks
 } from 'features/services/tasks';
 import { ResponseError, TaskActionType, TaskState } from 'features/types';
 
@@ -131,6 +132,20 @@ const taskSlice = createSlice({
         state.totalInProgressTasks = 0;
       })
       .addCase(deleteActiveTasks.rejected, (state, { payload }) => {
+        state.status = 'rejected';
+        state.error = payload || initError;
+      });
+
+    builder
+      .addCase(deleteCompletedTasks.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(deleteCompletedTasks.fulfilled, state => {
+        state.status = 'fulfilled';
+        state.completedTasks = [];
+        state.totalCompletedTasks = 0;
+      })
+      .addCase(deleteCompletedTasks.rejected, (state, { payload }) => {
         state.status = 'rejected';
         state.error = payload || initError;
       });

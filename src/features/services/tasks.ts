@@ -61,9 +61,22 @@ export const deleteActiveTasks = createAsyncThunk<
   string,
   void,
   { rejectValue: Partial<ResponseError> }
->('delete/all/tasks', async (_, { rejectWithValue }) => {
+>('delete/active/tasks', async (_, { rejectWithValue }) => {
   try {
     const { data } = await axiosPrivate.delete('/tasks');
+    return data;
+  } catch (err: any) {
+    return rejectWithValue(err.response.data);
+  }
+});
+
+export const deleteCompletedTasks = createAsyncThunk<
+  string,
+  void,
+  { rejectValue: Partial<ResponseError> }
+>('delete/completed/tasks', async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await axiosPrivate.delete(`/tasks?status=completed`);
     return data;
   } catch (err: any) {
     return rejectWithValue(err.response.data);
