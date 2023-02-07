@@ -34,7 +34,7 @@ export const UserSettings = () => {
   };
 
   const settingList = (
-    <Card className="absolute top-full -translate-x-1/2 translate-y-3 py-4 ring-1 ring-color-base transition-all">
+    <Card className="absolute top-full -translate-x-1/2 translate-y-3 py-4 ring-1 ring-color-base">
       <ul
         aria-label="user-settings"
         className="grid auto-cols-[minmax(max-content,1fr)] gap-4 py-2 text-xl text-color-base">

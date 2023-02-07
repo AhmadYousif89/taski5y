@@ -47,7 +47,7 @@ const onResponseError = async (error: AxiosError) => {
     }
   }
   if (error.response?.status === 403) {
-    modifyLocalStorage({ action: 'clear', exclude: 'mode' });
+    modifyLocalStorage({ action: 'clear', exclude: 'theme' });
     modifyLocalStorage({
       action: 'set',
       key: 'server_error',

@@ -21,7 +21,7 @@ export const AuthContainer: FC<PropsWithChildren> = ({ children }) => {
             </span>
           </NavLink>
 
-          <span className="[&>*]:center-absolute">
+          <span className="center-absolute z-10">
             <ThemeSwitcher />
           </span>
 

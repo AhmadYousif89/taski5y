@@ -13,15 +13,17 @@ import { toggleProfile, uiSelector } from 'features/slices/ui';
 export const AppLayout = () => {
   const { user } = useAuth();
   const dispatch = useDispatch();
-  const { mode, profileIsVisible } = useAppSelector(uiSelector);
+  const { profileIsVisible } = useAppSelector(uiSelector);
 
   return (
     <>
-      <main
-        aria-label="main-container"
-        className={`${mode} flex min-h-[inherit] flex-col bg-color-base`}>
+      <main aria-label="main-container" className={`flex min-h-[inherit] flex-col bg-color-base`}>
         <header className="relative bg-color-card py-8 shadow-md">
-          {user ? <ThemeSwitcher /> : null}
+          {user ? (
+            <span className="absolute top-1/2 left-[3%] z-10 translate-x-5 -translate-y-1/2 xs:left-[6%] lg:left-[9%]">
+              <ThemeSwitcher />
+            </span>
+          ) : null}
           <h1 className="mx-auto flex w-fit items-center gap-2 text-3xl capitalize text-color-base md:text-4xl">
             <span>Taskify</span>
             <img src={appLogo} alt="logo" width={30} />

@@ -1,4 +1,4 @@
-export const keys = ['persist', 'logged_in', 'server_error', 'mode'] as const;
+export const keys = ['persist', 'logged_in', 'server_error', 'theme'] as const;
 export type LSAction = 'set' | 'get' | 'remove' | 'clear';
 export type LSKeys = typeof keys[number];
 // prettier-ignore

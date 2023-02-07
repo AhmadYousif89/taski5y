@@ -1,6 +1,6 @@
-export type AppTheme = 'dark-theme' | 'light-theme';
+export type AppTheme = 'dark' | 'light' | 'system dark' | 'system light';
 export type UIState = {
-  mode: AppTheme;
+  theme: AppTheme;
   menuIsVisible: boolean;
   profileIsVisible: boolean;
 };

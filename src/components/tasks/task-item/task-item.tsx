@@ -8,13 +8,13 @@ import { setTaskActionType, taskSelector } from 'features/slices/task';
 import { ActionModal, Backdrop, Button, Card, Loading, Timer, useTimer } from 'components/ui';
 
 import { TaskInfo } from './task-info';
+import { ClockIcon } from 'assets/icons';
 import { DisplayTaskTime } from './display-time';
 import { TaskDeleteButton } from './delete-button';
 import { SwitchTaskStatus } from './switch-status';
 import { DetailsSection } from './details-section';
 import { TaskUpdateButtons } from './update-buttons';
-import { timerValuesToISO, formatISOString } from 'helpers';
-import { ClockIcon } from 'assets/icons';
+import { timerValueToISO, formatISOString } from 'helpers';
 
 export const TaskItem: FC<{ task: Task }> = ({ task }) => {
   const dispatch = useAppDispatch();
@@ -29,7 +29,7 @@ export const TaskItem: FC<{ task: Task }> = ({ task }) => {
     ? 'translate-y-0 opacity-100 visible'
     : 'translate-y-10 opacity-0 invisible';
 
-  const time = timerValuesToISO(timer);
+  const time = timerValueToISO(timer);
   const formattedTime = formatISOString(time);
 
   const updateTaskTime = async () => {

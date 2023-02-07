@@ -12,7 +12,8 @@
     -moz-appearance: textfield !important;
   }
 
-  .light-theme {
+  .light,
+  .system.light {
     --text-color-base: 30 41 59;
     --text-color-highlight: 98 118 230;
     --text-color-valid: 74 180 148;
@@ -36,7 +37,8 @@
     --icon-stroke-color: 30 41 59;
   }
 
-  .dark-theme {
+  .dark,
+  .system.dark {
     --text-color-base: 228 228 231;
     --text-color-highlight: 220 220 23;
     --text-color-valid: 74 222 128;
@@ -69,7 +71,7 @@
     @apply mx-4 mb-20 grid min-w-[32rem] grid-cols-[repeat(auto-fit,minmax(32rem,.5fr))] justify-center gap-8 rounded-md p-8 shadow-md ring-2 ring-color-base;
   }
   .btn-circle {
-    @apply h-12 w-12 cursor-pointer rounded-full ring-2 ring-color-base hover:ring-color-highlight active:bg-btn-color-highlight xs:h-14 xs:w-14;
+    @apply h-12 w-12 cursor-pointer rounded-full ring-2 ring-color-base hover:ring-color-highlight active:bg-btn-color-highlight xs:h-16 xs:w-16;
   }
   .center-absolute {
     @apply absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2;

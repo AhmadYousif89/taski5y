@@ -148,7 +148,7 @@ const authSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(deleteUser.fulfilled, () => {
-        modifyLocalStorage({ action: 'clear', exclude: ['mode', 'server_error'] });
+        modifyLocalStorage({ action: 'clear', exclude: ['theme', 'server_error'] });
         return initialState;
       })
       .addCase(deleteUser.rejected, (state, { payload }) => {

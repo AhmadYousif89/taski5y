@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
 
 import { AppRoutes } from 'components/app';
 import { Backdrop, ActionModal } from 'components/ui';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 
+import { useMatchMedia } from 'hooks';
 import { modifyLocalStorage } from 'helpers';
 import { getUser } from 'features/services/auth';
+import { toggleAppTheme } from 'features/slices/ui';
 import { authSelector, setAuthActionType } from 'features/slices/auth';
 
 function App() {
@@ -13,6 +15,7 @@ function App() {
   const { status, actionType } = useAppSelector(authSelector);
   const persist = modifyLocalStorage({ action: 'get', key: 'persist' });
   const isLoggedIn = modifyLocalStorage({ action: 'get', key: 'logged_in' });
+  const isDark = useMatchMedia('(prefers-color-scheme: dark)');
 
   useEffect(() => {
     if (!isLoggedIn || isLoggedIn !== 'true')
@@ -26,6 +29,11 @@ function App() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    const sysTheme = isDark ? 'system dark' : 'system light';
+    dispatch(toggleAppTheme(sysTheme));
+  }, [dispatch, isDark]);
 
   if (status === 'loading') {
     if (actionType === 'refresh_user') {

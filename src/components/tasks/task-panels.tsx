@@ -88,15 +88,13 @@ const TaskPanel: FC<TaskPanelProps> = ({ title, count, tooltip, togglePanels }) 
 
   return (
     <button
-      aria-pressed
+      aria-pressed={filter === title}
       className={`${
         filter === title ? textColor : ''
       } group flex h-full w-full cursor-default flex-col items-center gap-8 rounded-sm text-color-base transition-colors`}>
       <div
         title={tooltip}
-        onClick={() => {
-          togglePanels();
-        }}
+        onClick={togglePanels}
         className={`relative ${borderColor} h-28 w-28 cursor-pointer rounded-full border-4 shadow-md xs:h-32 xs:w-32 md:h-44 md:w-44`}>
         <span className="center-absolute text-2xl xs:text-4xl">{count}</span>
       </div>
