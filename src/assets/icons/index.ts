@@ -1,5 +1,6 @@
 export * from './arrow';
 export * from './back-arrow';
+export * from './device';
 export * from './db-arrow-up';
 export * from './search';
 export * from './calendar';

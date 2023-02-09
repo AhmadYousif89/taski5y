@@ -56,7 +56,7 @@ export const Timer: FC<TimerProps> = ({ isSubmitted, getValues, inModal }) => {
 
   const styleInput = inModal ? 'ring-neutral-500' : 'ring-color-base';
   const styleContainer = inModal
-    ? 'bg-gradient-to-b from-stone-800 ring-neutral-500'
+    ? 'bg-gradient-to-b from-stone-800 ring-neutral-500 text-neutral-100'
     : 'ring-color-base';
 
   useEffect(() => {
@@ -66,7 +66,7 @@ export const Timer: FC<TimerProps> = ({ isSubmitted, getValues, inModal }) => {
 
   return (
     <div
-      className={`${styleContainer} flex items-center justify-between rounded-md bg-opacity-10 py-6 px-3 shadow-md ring-1 xs:justify-evenly xs:px-6`}>
+      className={`${styleContainer} flex items-center justify-between rounded-md bg-opacity-10 py-6 px-3 text-color-base shadow-md ring-1 xs:justify-evenly xs:px-6`}>
       {timerVariants.map(variant => {
         const displayValue = values[variant] < 10 ? `0${values[variant]}` : `${values[variant]}`;
 
@@ -82,7 +82,7 @@ export const Timer: FC<TimerProps> = ({ isSubmitted, getValues, inModal }) => {
                   name={variant}
                   value={displayValue}
                   onChange={onChangeHandler}
-                  className={`${styleInput} w-16 cursor-pointer rounded-lg bg-color-base p-4 text-center text-2xl text-color-base outline-none ring-2 max-xs:scale-95 xs:w-24`}
+                  className={`${styleInput} w-16 cursor-pointer rounded-lg bg-gradient-to-b from-neutral-900 to-neutral-800 p-4 text-center text-2xl text-neutral-100 outline-none ring-2 max-xs:scale-95 xs:w-24`}
                 />
                 <div className="ml-2 flex flex-col gap-2 xs:ml-4">
                   <button

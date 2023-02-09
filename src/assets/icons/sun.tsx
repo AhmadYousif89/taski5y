@@ -1,4 +1,6 @@
-export const SunIcon = ({ className }: { className: string }) => {
+import { FC } from 'react';
+
+export const SunIcon: FC<{ className?: string }> = ({ className = '' }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

@@ -1,16 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="logo.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Personal Task Manager</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <div id="modal-root"></div>
-    <div id="backdrop-root"></div>
-    <div id="notification-root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personal Task Manager</title>
+  <script>
+    try {
+      if (localStorage.theme === 'dark' || !('theme' in localStorage) && matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.className = 'dark'
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    } catch (_) { }
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <div id="modal-root"></div>
+  <div id="backdrop-root"></div>
+  <div id="notification-root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

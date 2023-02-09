@@ -108,14 +108,14 @@ export const ActionModal: FC<ActionModalProps> = ({
             <Button
               onClick={extraAction}
               aria-label="upload-image-button"
-              className="w-2/3 flex-col border-2 border-dashed border-sky-500 !py-8">
+              className="w-2/3 flex-col rounded-3xl border-2 border-dashed border-sky-500 !py-8 ring-0 hover:ring-0">
               <UploadIcon className="h-14 w-14 stroke-sky-400 " />
               <p className="text-2xl sm:text-3xl">Select your image</p>
             </Button>
             <Button
               label="Cancel"
               onClick={closeModal}
-              className="mt-8 ring-1 ring-sky-500  max-xs:bg-sky-500 xs:hover:bg-sky-500"
+              className="mt-8 ring-1 ring-sky-500 hover:ring-0 max-xs:bg-sky-500 xs:hover:bg-sky-500"
             />
           </>
         )}
@@ -128,7 +128,7 @@ export const ActionModal: FC<ActionModalProps> = ({
   const modalElement = (
     <section
       aria-label="modal"
-      className="flex-center fixed top-1/2 left-1/2 z-40 mx-auto w-11/12 max-w-4xl -translate-y-1/2 -translate-x-1/2 rounded-lg bg-neutral-800 px-4 py-24 text-slate-100 shadow-md">
+      className="flex-center fixed top-1/2 left-1/2 z-40 mx-auto w-11/12 max-w-4xl -translate-y-1/2 -translate-x-1/2 rounded-lg bg-neutral-800 px-4 py-24 text-neutral-100 shadow-md">
       {content}
     </section>
   );

@@ -7,7 +7,7 @@ import { modifyLocalStorage } from 'helpers';
 const storedTheme = modifyLocalStorage({ action: 'get', key: 'theme' });
 
 const initialState: UIState = {
-  theme: storedTheme ?? '',
+  theme: storedTheme ?? 'device',
   menuIsVisible: false,
   profileIsVisible: false
 };
@@ -18,8 +18,7 @@ const uiSlice = createSlice({
   reducers: {
     toggleAppTheme(state, { payload }: PayloadAction<AppTheme>) {
       state.theme = payload;
-      document.documentElement.className = state.theme;
-      modifyLocalStorage({ action: 'set', key: 'theme', value: state.theme });
+      if (payload) modifyLocalStorage({ action: 'set', key: 'theme', value: state.theme });
     },
     toggleSideMenu(state) {
       state.menuIsVisible = !state.menuIsVisible;

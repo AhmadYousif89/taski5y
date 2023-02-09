@@ -1,4 +1,4 @@
-export type AppTheme = 'dark' | 'light' | 'system dark' | 'system light';
+export type AppTheme = 'dark' | 'light' | 'device';
 export type UIState = {
   theme: AppTheme;
   menuIsVisible: boolean;
