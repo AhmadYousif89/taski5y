@@ -143,7 +143,7 @@ export const RegisterForm = () => {
           }}
           label="Continue with google"
           icon={<img src={googleLogo} className="h-7" />}
-          className="self-center text-xl ring-1 ring-color-base"
+          className="self-center text-xl text-color-base ring-1 ring-color-base"
         />
       </form>
     </AuthContainer>

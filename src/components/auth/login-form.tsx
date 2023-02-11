@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { FormEvent, useEffect, useState } from 'react';
 
 import { useAuth, useForm } from 'hooks';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { path } from 'components/app';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { GetInputValues, Divider, Button, Input } from 'components/ui';
 
 import { AuthInputNames } from './types';
@@ -128,7 +128,7 @@ export const LoginForm = () => {
           }}
           label="Sign in with google"
           icon={<img src={googleLogo} className="h-7" />}
-          className="self-center text-xl ring-1 ring-color-base"
+          className="self-center text-xl text-color-base ring-1 ring-color-base"
         />
       </form>
     </AuthContainer>
